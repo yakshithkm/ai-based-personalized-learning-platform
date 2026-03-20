@@ -58,6 +58,16 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 - GET /api/analytics/me
 - GET /api/recommendations/me
 
+## Automated Testing
+- Backend integration tests use Jest + Supertest + mongodb-memory-server.
+- Run tests:
+   npm test
+
+## CI Pipeline
+- GitHub Actions workflow: .github/workflows/backend-ci.yml
+- Triggers on push and pull request for main/master.
+- Steps: install backend deps and run backend tests.
+
 ## Suggested Commit Messages By Feature
 1. Authentication
    feat(auth): add JWT-based register/login/profile with protected routes
@@ -85,6 +95,9 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 
 9. Docs and Setup
    docs(setup): add monorepo setup instructions, API overview, and run workflow
+
+10. Testing and CI
+   test(ci): add backend integration tests and GitHub Actions workflow
 
 ## Notes
 - The ML layer intentionally uses simple classical ML and heuristic scoring, not deep learning.
