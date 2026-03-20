@@ -21,6 +21,14 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 - backend: REST API + MongoDB models + recommendation orchestration
 - ml-service: Weak-topic analytics and lightweight ML scoring
 
+## Quick Start (All Services)
+1. Install root dependency:
+   npm install
+2. Start backend + ML + frontend together:
+   npm run dev
+3. Seed questions (optional if not already seeded):
+   npm run seed
+
 ## Backend Setup
 1. Open terminal in backend folder.
 2. Install dependencies:
