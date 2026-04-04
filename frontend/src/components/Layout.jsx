@@ -44,7 +44,7 @@ const Layout = ({ children }) => {
     <div className="app-shell">
       <aside className="sidebar">
         <div className="brand-wrap">
-          <h1 className="brand">PrepAI</h1>
+          <h1 className="brand">TutorMind</h1>
           <p className="exam-tag">{user?.targetExam} Prep</p>
         </div>
 

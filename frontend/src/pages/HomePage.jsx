@@ -72,7 +72,7 @@ const HomePage = () => {
     <div className="landing-page">
       <header className="landing-topbar">
         <Link className="landing-logo" to="/">
-          PrepAI
+          TutorMind
         </Link>
 
         <nav className="landing-nav">
@@ -98,7 +98,7 @@ const HomePage = () => {
         <div className="hero-badge">New: Personalized AI recommendations are live</div>
 
         <div className="hero-content centered">
-          <h1>Think better with PrepAI</h1>
+          <h1>Think better with TutorMind</h1>
           <p>Never miss a concept, a mistake pattern, or your next high-value question set.</p>
 
           <div className="hero-cta-row">

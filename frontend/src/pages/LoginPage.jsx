@@ -33,7 +33,7 @@ const LoginPage = () => {
       <div className="auth-shell">
         <header className="auth-brandbar">
           <Link to="/" className="landing-logo">
-            PrepAI Horizons
+            TutorMind
           </Link>
         </header>
 
