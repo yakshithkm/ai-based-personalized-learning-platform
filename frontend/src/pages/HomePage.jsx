@@ -1,6 +1,73 @@
 import { Link } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const HomePage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const { login, register } = useAuth();
+
+  const authMode = searchParams.get('auth');
+  const isAuthOpen = authMode === 'login' || authMode === 'register';
+
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
+  const [registerForm, setRegisterForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    targetExam: 'JEE',
+  });
+
+  const modeTitle = useMemo(() => {
+    if (authMode === 'register') return 'Create your account';
+    return 'Welcome back';
+  }, [authMode]);
+
+  const openAuth = (mode) => {
+    const next = new URLSearchParams(searchParams);
+    next.set('auth', mode);
+    setSearchParams(next);
+    setError('');
+  };
+
+  const closeAuth = () => {
+    const next = new URLSearchParams(searchParams);
+    next.delete('auth');
+    setSearchParams(next);
+    setError('');
+  };
+
+  const onLoginSubmit = async (event) => {
+    event.preventDefault();
+    setBusy(true);
+    setError('');
+    try {
+      await login(loginForm);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Login failed');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onRegisterSubmit = async (event) => {
+    event.preventDefault();
+    setBusy(true);
+    setError('');
+    try {
+      await register(registerForm);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Registration failed');
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="landing-page">
       <header className="landing-topbar">
@@ -16,12 +83,12 @@ const HomePage = () => {
         </nav>
 
         <div className="landing-actions">
-          <Link className="outline-btn" to="/login">
+          <button className="outline-btn" type="button" onClick={() => openAuth('login')}>
             Login
-          </Link>
-          <Link className="solid-btn" to="/register">
+          </button>
+          <button className="solid-btn" type="button" onClick={() => openAuth('register')}>
             Start free trial
-          </Link>
+          </button>
         </div>
       </header>
 
@@ -35,12 +102,12 @@ const HomePage = () => {
           <p>Never miss a concept, a mistake pattern, or your next high-value question set.</p>
 
           <div className="hero-cta-row">
-            <Link className="solid-btn" to="/register">
+            <button className="solid-btn" type="button" onClick={() => openAuth('register')}>
               Start free trial
-            </Link>
-            <Link className="outline-btn" to="/login">
+            </button>
+            <button className="outline-btn" type="button" onClick={() => openAuth('login')}>
               Login
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -80,6 +147,101 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {isAuthOpen && (
+        <section className="auth-overlay" onClick={closeAuth}>
+          <div className="auth-modal" onClick={(event) => event.stopPropagation()}>
+            <div className="auth-modal-head">
+              <h3>{modeTitle}</h3>
+              <button type="button" className="outline-btn close-btn" onClick={closeAuth}>
+                Close
+              </button>
+            </div>
+
+            {authMode === 'login' ? (
+              <form className="auth-modal-form" onSubmit={onLoginSubmit}>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={loginForm.email}
+                  onChange={(event) =>
+                    setLoginForm((prev) => ({ ...prev, email: event.target.value }))
+                  }
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={loginForm.password}
+                  onChange={(event) =>
+                    setLoginForm((prev) => ({ ...prev, password: event.target.value }))
+                  }
+                  required
+                />
+                {error && <div className="error-text">{error}</div>}
+                <button className="solid-btn" type="submit" disabled={busy}>
+                  {busy ? 'Logging in...' : 'Login'}
+                </button>
+                <small>
+                  New user?{' '}
+                  <Link to="/?auth=register" onClick={() => openAuth('register')}>
+                    Create account
+                  </Link>
+                </small>
+              </form>
+            ) : (
+              <form className="auth-modal-form" onSubmit={onRegisterSubmit}>
+                <input
+                  placeholder="Full Name"
+                  value={registerForm.name}
+                  onChange={(event) =>
+                    setRegisterForm((prev) => ({ ...prev, name: event.target.value }))
+                  }
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={registerForm.email}
+                  onChange={(event) =>
+                    setRegisterForm((prev) => ({ ...prev, email: event.target.value }))
+                  }
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Password (min 6 chars)"
+                  value={registerForm.password}
+                  onChange={(event) =>
+                    setRegisterForm((prev) => ({ ...prev, password: event.target.value }))
+                  }
+                  required
+                />
+                <select
+                  value={registerForm.targetExam}
+                  onChange={(event) =>
+                    setRegisterForm((prev) => ({ ...prev, targetExam: event.target.value }))
+                  }
+                >
+                  <option value="NEET">NEET</option>
+                  <option value="JEE">JEE</option>
+                  <option value="CET">CET</option>
+                </select>
+                {error && <div className="error-text">{error}</div>}
+                <button className="solid-btn" type="submit" disabled={busy}>
+                  {busy ? 'Registering...' : 'Create Account'}
+                </button>
+                <small>
+                  Already have an account?{' '}
+                  <Link to="/?auth=login" onClick={() => openAuth('login')}>
+                    Login
+                  </Link>
+                </small>
+              </form>
+            )}
+          </div>
+        </section>
+      )}
     </div>
   );
 };
