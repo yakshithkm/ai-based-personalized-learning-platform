@@ -12,6 +12,14 @@ import {
 } from 'recharts';
 import api from '../api/client';
 
+const chartTooltipStyle = {
+  backgroundColor: '#111827',
+  border: '1px solid rgba(96, 165, 250, 0.4)',
+  borderRadius: '12px',
+  boxShadow: '0 14px 30px rgba(15, 23, 42, 0.6)',
+  color: '#dbeafe',
+};
+
 const AnalyticsPage = () => {
   const [payload, setPayload] = useState(null);
   const [error, setError] = useState('');
@@ -49,11 +57,11 @@ const AnalyticsPage = () => {
         <h3>Subject-wise Accuracy (%)</h3>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={bySubject}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2b2b2b" />
-            <XAxis dataKey="subject" stroke="#cccccc" />
-            <YAxis stroke="#cccccc" />
-            <Tooltip />
-            <Bar dataKey="accuracy" fill="#f59e0b" />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.25)" />
+            <XAxis dataKey="subject" stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <Tooltip contentStyle={chartTooltipStyle} cursor={{ fill: 'rgba(96, 165, 250, 0.08)' }} />
+            <Bar dataKey="accuracy" fill="#60a5fa" radius={[10, 10, 0, 0]} isAnimationActive animationDuration={700} />
           </BarChart>
         </ResponsiveContainer>
       </section>
@@ -62,11 +70,20 @@ const AnalyticsPage = () => {
         <h3>Recent Accuracy Trend</h3>
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={trend}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2b2b2b" />
-            <XAxis dataKey="idx" stroke="#cccccc" />
-            <YAxis stroke="#cccccc" />
-            <Tooltip />
-            <Line type="monotone" dataKey="accuracy" stroke="#10b981" strokeWidth={2} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.25)" />
+            <XAxis dataKey="idx" stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <Tooltip contentStyle={chartTooltipStyle} cursor={{ stroke: 'rgba(96, 165, 250, 0.2)' }} />
+            <Line
+              type="monotone"
+              dataKey="accuracy"
+              stroke="#22c55e"
+              strokeWidth={3}
+              dot={{ r: 4, fill: '#22c55e' }}
+              activeDot={{ r: 6, fill: '#86efac' }}
+              isAnimationActive
+              animationDuration={700}
+            />
           </LineChart>
         </ResponsiveContainer>
       </section>
@@ -75,11 +92,20 @@ const AnalyticsPage = () => {
         <h3>Recent Time Taken (sec)</h3>
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={trend}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#2b2b2b" />
-            <XAxis dataKey="idx" stroke="#cccccc" />
-            <YAxis stroke="#cccccc" />
-            <Tooltip />
-            <Line type="monotone" dataKey="timeTakenSec" stroke="#3b82f6" strokeWidth={2} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.25)" />
+            <XAxis dataKey="idx" stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <Tooltip contentStyle={chartTooltipStyle} cursor={{ stroke: 'rgba(96, 165, 250, 0.2)' }} />
+            <Line
+              type="monotone"
+              dataKey="timeTakenSec"
+              stroke="#60a5fa"
+              strokeWidth={3}
+              dot={{ r: 4, fill: '#60a5fa' }}
+              activeDot={{ r: 6, fill: '#93c5fd' }}
+              isAnimationActive
+              animationDuration={700}
+            />
           </LineChart>
         </ResponsiveContainer>
       </section>

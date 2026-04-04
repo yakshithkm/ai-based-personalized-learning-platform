@@ -51,6 +51,7 @@ const PracticePage = () => {
   };
 
   const question = questions[currentIndex];
+  const progress = questions.length ? ((currentIndex + 1) / questions.length) * 100 : 0;
 
   const submitCurrent = async () => {
     if (!question || selectedAnswer === null) return;
@@ -111,17 +112,27 @@ const PracticePage = () => {
 
       {!!question && (
         <section className="panel">
-          <h3>
-            Question {currentIndex + 1} / {questions.length}
-          </h3>
+          <div className="progress-head">
+            <h3>
+              Question {currentIndex + 1} / {questions.length}
+            </h3>
+            <span className="progress-tag">{Math.round(progress)}% Complete</span>
+          </div>
+          <div className="progress-bar">
+            <span style={{ width: `${progress}%` }} />
+          </div>
+
           <p>{question.text}</p>
 
           <div className="option-list">
             {question.options.map((option, idx) => (
               <button
                 key={option}
-                className={`option-btn ${selectedAnswer === idx ? 'selected' : ''}`}
+                className={`option-btn ${selectedAnswer === idx ? 'selected' : ''} ${
+                  result && idx === result.correctAnswerIndex ? 'correct' : ''
+                } ${result && selectedAnswer === idx && !result.isCorrect ? 'wrong' : ''}`}
                 onClick={() => setSelectedAnswer(idx)}
+                disabled={Boolean(result)}
               >
                 {option}
               </button>
@@ -133,13 +144,16 @@ const PracticePage = () => {
               Submit Answer
             </button>
           ) : (
-            <div className="feedback-box">
+            <div className={`feedback-box ${result.isCorrect ? 'feedback-correct' : 'feedback-wrong'}`}>
               <strong>{result.isCorrect ? 'Correct Answer' : 'Incorrect Answer'}</strong>
               <p>{result.explanation}</p>
               {currentIndex < questions.length - 1 && (
                 <button className="outline-btn" onClick={nextQuestion}>
                   Next Question
                 </button>
+              )}
+              {currentIndex >= questions.length - 1 && (
+                <span className="progress-tag">Practice set completed</span>
               )}
             </div>
           )}

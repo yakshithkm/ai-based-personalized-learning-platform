@@ -24,6 +24,8 @@ const DashboardPage = () => {
   }, []);
 
   const perf = analytics?.performance;
+  const accuracy = perf?.overallAccuracy ?? 0;
+  const accuracyTone = accuracy >= 75 ? 'good' : accuracy >= 50 ? 'mid' : 'bad';
 
   return (
     <div className="page-grid">
@@ -35,17 +37,20 @@ const DashboardPage = () => {
       {error && <section className="panel error-text">{error}</section>}
 
       <section className="panel stats-grid">
-        <div>
+        <div className="metric-card metric-neutral">
           <h4>Total Attempts</h4>
           <strong>{perf?.totalAttempts ?? 0}</strong>
+          <p>Practice sessions completed</p>
         </div>
-        <div>
+        <div className={`metric-card metric-${accuracyTone}`}>
           <h4>Accuracy</h4>
-          <strong>{(perf?.overallAccuracy ?? 0).toFixed(1)}%</strong>
+          <strong>{accuracy.toFixed(1)}%</strong>
+          <p>{accuracy >= 75 ? 'High performance' : 'Needs focused revision'}</p>
         </div>
-        <div>
+        <div className="metric-card metric-neutral">
           <h4>Avg. Time</h4>
           <strong>{(perf?.averageTimeTakenSec ?? 0).toFixed(1)} sec</strong>
+          <p>Average response speed</p>
         </div>
       </section>
 
