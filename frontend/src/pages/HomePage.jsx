@@ -115,37 +115,6 @@ const HomePage = () => {
           <div className="horizon-ring" />
           <div className="horizon-line" />
         </div>
-
-        <div className="product-mockup" role="presentation">
-          <div className="mockup-sidebar">
-            <span className="mock-pill active">Daily notes</span>
-            <span className="mock-pill">All notes</span>
-            <span className="mock-pill">Tasks</span>
-            <span className="mock-pill">Map</span>
-          </div>
-
-          <div className="mockup-main">
-            <div className="mockup-search">Search anything...</div>
-            <div className="mockup-content">
-              <div className="mockup-text-block" />
-              <div className="mockup-text-block short" />
-              <div className="mockup-text-block" />
-              <div className="mockup-text-block medium" />
-              <div className="mockup-play">▶</div>
-            </div>
-          </div>
-
-          <div className="mockup-calendar">
-            <h4>April 2026</h4>
-            <div className="calendar-grid">
-              {Array.from({ length: 30 }).map((_, idx) => (
-                <span key={idx} className={idx === 10 ? 'active' : ''}>
-                  {idx + 1}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
       </section>
 
       {isAuthOpen && (
