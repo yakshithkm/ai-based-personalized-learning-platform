@@ -30,29 +30,53 @@ const LoginPage = () => {
 
   return (
     <div className="auth-page">
-      <form className="auth-card" onSubmit={onSubmit}>
-        <h2>Welcome Back</h2>
-        <p>Continue your AI-assisted exam preparation.</p>
+      <div className="auth-shell">
+        <header className="auth-brandbar">
+          <Link to="/" className="landing-logo">
+            PrepAI Horizons
+          </Link>
+        </header>
 
-        <input name="email" type="email" placeholder="Email" onChange={onChange} required />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          onChange={onChange}
-          required
-        />
+        <div className="auth-grid">
+          <section className="auth-feature-card">
+            <p className="hero-eyebrow">Smart Competitive Exam Prep</p>
+            <h2>Welcome Back</h2>
+            <p>
+              Continue your AI-assisted preparation with adaptive practice, weak-topic insights,
+              and exam-focused analytics.
+            </p>
+            <div className="chip-wrap">
+              <span className="chip">NEET</span>
+              <span className="chip">JEE</span>
+              <span className="chip">CET</span>
+            </div>
+          </section>
 
-        {error && <div className="error-text">{error}</div>}
+          <form className="auth-card auth-form-card" onSubmit={onSubmit}>
+            <h3>Login</h3>
+            <p>Continue where you left off.</p>
 
-        <button className="solid-btn" type="submit" disabled={busy}>
-          {busy ? 'Logging in...' : 'Login'}
-        </button>
+            <input name="email" type="email" placeholder="Email" onChange={onChange} required />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              onChange={onChange}
+              required
+            />
 
-        <small>
-          New user? <Link to="/register">Create account</Link>
-        </small>
-      </form>
+            {error && <div className="error-text">{error}</div>}
+
+            <button className="solid-btn" type="submit" disabled={busy}>
+              {busy ? 'Logging in...' : 'Login'}
+            </button>
+
+            <small>
+              New user? <Link to="/register">Create account</Link>
+            </small>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

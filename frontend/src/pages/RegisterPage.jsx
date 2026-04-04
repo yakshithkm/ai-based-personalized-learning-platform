@@ -35,36 +35,59 @@ const RegisterPage = () => {
 
   return (
     <div className="auth-page">
-      <form className="auth-card" onSubmit={onSubmit}>
-        <h2>Create Account</h2>
-        <p>Start personalized preparation for NEET, JEE, or CET.</p>
+      <div className="auth-shell">
+        <header className="auth-brandbar">
+          <Link to="/" className="landing-logo">
+            PrepAI Horizons
+          </Link>
+        </header>
 
-        <input name="name" placeholder="Full Name" onChange={onChange} required />
-        <input name="email" type="email" placeholder="Email" onChange={onChange} required />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password (min 6 chars)"
-          onChange={onChange}
-          required
-        />
+        <div className="auth-grid">
+          <section className="auth-feature-card">
+            <p className="hero-eyebrow">Personalized Learning Starts Here</p>
+            <h2>Create Your Account</h2>
+            <p>
+              Get question recommendations, weak-topic alerts, and analytics tailored for your
+              target exam.
+            </p>
+            <div className="chip-wrap">
+              <span className="chip">Adaptive Recommendations</span>
+              <span className="chip">Performance Tracking</span>
+            </div>
+          </section>
 
-        <select name="targetExam" value={form.targetExam} onChange={onChange}>
-          <option value="NEET">NEET</option>
-          <option value="JEE">JEE</option>
-          <option value="CET">CET</option>
-        </select>
+          <form className="auth-card auth-form-card" onSubmit={onSubmit}>
+            <h3>Register</h3>
+            <p>Set up your learning workspace in under a minute.</p>
 
-        {error && <div className="error-text">{error}</div>}
+            <input name="name" placeholder="Full Name" onChange={onChange} required />
+            <input name="email" type="email" placeholder="Email" onChange={onChange} required />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password (min 6 chars)"
+              onChange={onChange}
+              required
+            />
 
-        <button className="solid-btn" type="submit" disabled={busy}>
-          {busy ? 'Registering...' : 'Register'}
-        </button>
+            <select name="targetExam" value={form.targetExam} onChange={onChange}>
+              <option value="NEET">NEET</option>
+              <option value="JEE">JEE</option>
+              <option value="CET">CET</option>
+            </select>
 
-        <small>
-          Already have an account? <Link to="/login">Login</Link>
-        </small>
-      </form>
+            {error && <div className="error-text">{error}</div>}
+
+            <button className="solid-btn" type="submit" disabled={busy}>
+              {busy ? 'Registering...' : 'Register'}
+            </button>
+
+            <small>
+              Already have an account? <Link to="/login">Login</Link>
+            </small>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
