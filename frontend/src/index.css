@@ -556,10 +556,32 @@ select:focus {
 
 .landing-logo {
   color: #f8fafc;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.58rem;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 1.8rem;
+  height: 1.8rem;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.brand-text {
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   letter-spacing: 0.02em;
-  text-decoration: none;
+  color: #f8fafc;
+}
+
+.sidebar-brand .brand-mark {
+  width: 1.95rem;
+  height: 1.95rem;
 }
 
 .landing-nav {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import BrandLogo from '../components/BrandLogo';
 
 const RegisterPage = () => {
   const { register } = useAuth();
@@ -37,9 +38,7 @@ const RegisterPage = () => {
     <div className="auth-page">
       <div className="auth-shell">
         <header className="auth-brandbar">
-          <Link to="/" className="landing-logo">
-            TutorMind
-          </Link>
+          <BrandLogo className="landing-logo" to="/" />
         </header>
 
         <div className="auth-grid">

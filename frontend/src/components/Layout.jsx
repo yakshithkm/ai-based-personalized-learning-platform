@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import BrandLogo from './BrandLogo';
 
 const menuItems = [
   {
@@ -44,7 +45,7 @@ const Layout = ({ children }) => {
     <div className="app-shell">
       <aside className="sidebar">
         <div className="brand-wrap">
-          <h1 className="brand">TutorMind</h1>
+          <BrandLogo className="sidebar-brand" to="/" />
           <p className="exam-tag">{user?.targetExam} Prep</p>
         </div>
 

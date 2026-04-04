@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import BrandLogo from '../components/BrandLogo';
 
 const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -71,9 +72,7 @@ const HomePage = () => {
   return (
     <div className="landing-page">
       <header className="landing-topbar">
-        <Link className="landing-logo" to="/">
-          TutorMind
-        </Link>
+        <BrandLogo className="landing-logo" to="/" />
 
         <nav className="landing-nav">
           <a href="#">Product</a>
