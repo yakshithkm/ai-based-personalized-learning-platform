@@ -559,6 +559,7 @@ select:focus {
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+  animation: fadeInUp 0.45s ease both;
 }
 
 .landing-logo {
@@ -607,6 +608,12 @@ select:focus {
   font-size: 0.84rem;
   padding: 0.36rem 0.72rem;
   border-radius: 999px;
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+
+.landing-nav a:hover {
+  background: rgba(96, 165, 250, 0.15);
+  transform: translateY(-1px);
 }
 
 .landing-actions {
@@ -628,6 +635,7 @@ select:focus {
   overflow: hidden;
   border-radius: 0;
   background: linear-gradient(180deg, rgba(2, 6, 23, 0.32), rgba(2, 6, 23, 0.72));
+  animation: fadeInUp 0.6s ease both;
 }
 
 .hero-grid-lines {
@@ -660,14 +668,17 @@ select:focus {
 }
 
 .hero-content.centered h1 {
-  font-size: clamp(2.4rem, 6.5vw, 4.2rem);
+  font-size: clamp(2.8rem, 7vw, 5rem);
   color: #f3f4f6;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.05;
 }
 
 .hero-content.centered p {
-  color: #a5b4fc;
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: #a9b8ff;
+  font-size: clamp(1.02rem, 1.9vw, 1.25rem);
+  max-width: 840px;
+  margin: 0 auto;
 }
 
 .horizon-wrap {
@@ -708,10 +719,33 @@ select:focus {
   justify-content: center;
   gap: 0.7rem;
   flex-wrap: wrap;
+  margin-top: 0.45rem;
 }
 
 .hero-cta-row a {
   text-decoration: none;
+}
+
+.hero-cta-row .solid-btn,
+.hero-cta-row .outline-btn {
+  min-width: 160px;
+}
+
+.hero-cta-row .solid-btn:hover,
+.landing-actions .solid-btn:hover {
+  box-shadow: 0 0 0 1px rgba(147, 197, 253, 0.22), 0 16px 34px rgba(37, 99, 235, 0.45);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .auth-overlay {

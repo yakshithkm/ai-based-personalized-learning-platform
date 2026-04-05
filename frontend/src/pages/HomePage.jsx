@@ -41,6 +41,13 @@ const HomePage = () => {
     setError('');
   };
 
+  const scrollToSection = (id) => {
+    const node = document.getElementById(id);
+    if (node) {
+      node.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const onLoginSubmit = async (event) => {
     event.preventDefault();
     setBusy(true);
@@ -75,9 +82,10 @@ const HomePage = () => {
         <BrandLogo className="landing-logo" to="/" />
 
         <nav className="landing-nav">
-          <a href="#">Product</a>
-          <a href="#">Pricing</a>
-          <a href="#">Company</a>
+          <a href="#">Home</a>
+          <a href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Contact</a>
           <a href="#">Blog</a>
         </nav>
 
@@ -94,18 +102,21 @@ const HomePage = () => {
       <section className="landing-hero">
         <div className="hero-grid-lines" aria-hidden="true" />
 
-        <div className="hero-badge">New: Personalized AI recommendations are live</div>
+        {/* <div className="hero-badge">New: Personalized AI recommendations are live</div> */}
 
         <div className="hero-content centered">
-          <h1>Think better with TutorMind</h1>
-          <p>Never miss a concept, a mistake pattern, or your next high-value question set.</p>
+          <h1>Master Exams with Smart Practice</h1>
+          <p>
+            AI-powered learning that tracks your performance, detects weak topics, and
+            recommends the right questions at the right time.
+          </p>
 
           <div className="hero-cta-row">
             <button className="solid-btn" type="button" onClick={() => openAuth('register')}>
-              Start free trial
+              Start Practicing
             </button>
-            <button className="outline-btn" type="button" onClick={() => openAuth('login')}>
-              Login
+            <button className="outline-btn" type="button" onClick={() => scrollToSection('how-it-works')}>
+              View Demo
             </button>
           </div>
         </div>
