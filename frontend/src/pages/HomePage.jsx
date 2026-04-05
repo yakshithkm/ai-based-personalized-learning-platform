@@ -127,6 +127,52 @@ const HomePage = () => {
         </div>
       </section>
 
+      <section className="landing-section" id="features-section">
+        <h2>Built for NEET, JEE, and CET preparation</h2>
+        <p className="landing-section-subtext">
+          Every practice session is analyzed to improve exam-readiness with actionable guidance.
+        </p>
+        <div className="feature-grid">
+          <article className="feature-card">
+            <h3>Performance Tracking</h3>
+            <p>Track accuracy, time, attempts</p>
+          </article>
+          <article className="feature-card">
+            <h3>Weak Topic Detection</h3>
+            <p>Identify problem areas instantly</p>
+          </article>
+          <article className="feature-card">
+            <h3>Smart Recommendations</h3>
+            <p>Get targeted practice questions</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="landing-section" id="how-it-works">
+        <h2>How It Works</h2>
+        <div className="steps-grid">
+          <article className="step-card">
+            <span>Step 1</span>
+            <h3>Practice questions</h3>
+          </article>
+          <article className="step-card">
+            <span>Step 2</span>
+            <h3>System analyzes performance</h3>
+          </article>
+          <article className="step-card">
+            <span>Step 3</span>
+            <h3>Get personalized recommendations</h3>
+          </article>
+        </div>
+      </section>
+
+      <section className="landing-section cta-strip">
+        <h2>Start your smart preparation today</h2>
+        <button className="solid-btn" type="button" onClick={() => openAuth('register')}>
+          Get Started Free
+        </button>
+      </section>
+
       {isAuthOpen && (
         <section className="auth-overlay" onClick={closeAuth}>
           <div className="auth-modal" onClick={(event) => event.stopPropagation()}>
