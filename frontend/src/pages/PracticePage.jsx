@@ -119,7 +119,7 @@ const PracticePage = () => {
             <span className="progress-tag">{Math.round(progress)}% Complete</span>
           </div>
           <div className="progress-bar">
-            <span style={{ width: `${progress}%` }} />
+            <span className="progress-fill" style={{ width: `${progress}%` }} />
           </div>
 
           <p>{question.text}</p>
@@ -146,6 +146,9 @@ const PracticePage = () => {
           ) : (
             <div className={`feedback-box ${result.isCorrect ? 'feedback-correct' : 'feedback-wrong'}`}>
               <strong>{result.isCorrect ? 'Correct Answer' : 'Incorrect Answer'}</strong>
+              <p className="correct-answer-text">
+                Correct answer: {question.options[result.correctAnswerIndex]}
+              </p>
               <p>{result.explanation}</p>
               {currentIndex < questions.length - 1 && (
                 <button className="outline-btn" onClick={nextQuestion}>
