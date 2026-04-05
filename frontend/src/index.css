@@ -608,6 +608,13 @@ select:focus {
 
 .chart-panel {
   min-height: 370px;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.chart-caption {
+  color: #a8b5ea;
+  font-size: 0.9rem;
 }
 
 .error-text {

@@ -3,6 +3,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -55,12 +56,14 @@ const AnalyticsPage = () => {
 
       <section className="panel chart-panel">
         <h3>Subject-wise Accuracy (%)</h3>
+        <p className="chart-caption">Accuracy distribution by subject based on attempts.</p>
         <ResponsiveContainer width="100%" height={280}>
           <BarChart data={bySubject}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.25)" />
             <XAxis dataKey="subject" stroke="#94a3b8" tickLine={false} axisLine={false} />
             <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
             <Tooltip contentStyle={chartTooltipStyle} cursor={{ fill: 'rgba(96, 165, 250, 0.08)' }} />
+            <Legend wrapperStyle={{ color: '#cbd5e1' }} />
             <Bar dataKey="accuracy" fill="#60a5fa" radius={[10, 10, 0, 0]} isAnimationActive animationDuration={700} />
           </BarChart>
         </ResponsiveContainer>
@@ -68,12 +71,14 @@ const AnalyticsPage = () => {
 
       <section className="panel chart-panel">
         <h3>Recent Accuracy Trend</h3>
+        <p className="chart-caption">Point-wise correctness trend across recent attempts.</p>
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={trend}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.25)" />
             <XAxis dataKey="idx" stroke="#94a3b8" tickLine={false} axisLine={false} />
             <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
             <Tooltip contentStyle={chartTooltipStyle} cursor={{ stroke: 'rgba(96, 165, 250, 0.2)' }} />
+            <Legend wrapperStyle={{ color: '#cbd5e1' }} />
             <Line
               type="monotone"
               dataKey="accuracy"
@@ -90,12 +95,14 @@ const AnalyticsPage = () => {
 
       <section className="panel chart-panel">
         <h3>Recent Time Taken (sec)</h3>
+        <p className="chart-caption">Question solving speed trend over latest attempts.</p>
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={trend}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.25)" />
             <XAxis dataKey="idx" stroke="#94a3b8" tickLine={false} axisLine={false} />
             <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
             <Tooltip contentStyle={chartTooltipStyle} cursor={{ stroke: 'rgba(96, 165, 250, 0.2)' }} />
+            <Legend wrapperStyle={{ color: '#cbd5e1' }} />
             <Line
               type="monotone"
               dataKey="timeTakenSec"
