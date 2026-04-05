@@ -1,5 +1,11 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
+html,
+body {
+  width: 100%;
+  margin: 0;
+}
+
 :root {
   --bg: #0f172a;
   --bg-soft: #111827;
@@ -536,7 +542,8 @@ select:focus {
 
 .landing-page {
   min-height: 100vh;
-  padding: 0.2rem 1.1rem 2rem;
+  width: 100%;
+  padding: 0 0 2rem;
   background:
     radial-gradient(900px 440px at 50% -8%, rgba(99, 102, 241, 0.23), transparent),
     radial-gradient(1300px 600px at 50% 65%, rgba(76, 29, 149, 0.18), transparent),
@@ -544,9 +551,9 @@ select:focus {
 }
 
 .landing-topbar {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0.9rem 0.2rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.9rem 2rem;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -613,13 +620,13 @@ select:focus {
 }
 
 .landing-hero {
-  max-width: 1200px;
-  margin: 1.2rem auto 0;
-  padding: 4.5rem 1.2rem 1.6rem;
+  width: 100%;
+  margin: 0;
+  padding: 4rem 2rem 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 0;
   background: linear-gradient(180deg, rgba(2, 6, 23, 0.32), rgba(2, 6, 23, 0.72));
 }
 
@@ -775,6 +782,7 @@ select:focus {
   .landing-topbar {
     grid-template-columns: 1fr;
     justify-items: start;
+    padding: 0.85rem 1rem;
   }
 
   .landing-nav {
@@ -785,7 +793,7 @@ select:focus {
   }
 
   .landing-hero {
-    padding-top: 3rem;
+    padding: 3rem 1rem 1.5rem;
   }
 
   .horizon-wrap {
