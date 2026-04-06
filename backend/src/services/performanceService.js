@@ -1,50 +1,11 @@
-const Attempt = require('../models/Attempt');
 const Performance = require('../models/Performance');
+const { analyzePerformance } = require('./analysisService');
 
 const rebuildPerformanceForUser = async (userId) => {
-  const attempts = await Attempt.find({ user: userId }).lean();
+  const analysis = await analyzePerformance(userId);
 
-  const totalAttempts = attempts.length;
-  const totalCorrect = attempts.filter((a) => a.isCorrect).length;
-  const overallAccuracy = totalAttempts ? (totalCorrect / totalAttempts) * 100 : 0;
-  const averageTimeTakenSec = totalAttempts
-    ? attempts.reduce((sum, a) => sum + a.timeTakenSec, 0) / totalAttempts
-    : 0;
-
-  const topicMap = new Map();
-
-  attempts.forEach((attempt) => {
-    const key = `${attempt.subject}::${attempt.topic}`;
-    if (!topicMap.has(key)) {
-      topicMap.set(key, {
-        subject: attempt.subject,
-        topic: attempt.topic,
-        attempts: 0,
-        correct: 0,
-        totalTime: 0,
-      });
-    }
-
-    const item = topicMap.get(key);
-    item.attempts += 1;
-    item.correct += attempt.isCorrect ? 1 : 0;
-    item.totalTime += attempt.timeTakenSec;
-  });
-
-  const topicStats = Array.from(topicMap.values()).map((item) => ({
-    subject: item.subject,
-    topic: item.topic,
-    attempts: item.attempts,
-    correct: item.correct,
-    accuracy: item.attempts ? (item.correct / item.attempts) * 100 : 0,
-    avgTimeTakenSec: item.attempts ? item.totalTime / item.attempts : 0,
-  }));
-
-  const weakTopics = topicStats
-    .filter((topic) => topic.attempts >= 3 && topic.accuracy < 60)
-    .sort((a, b) => a.accuracy - b.accuracy)
-    .slice(0, 8)
-    .map((topic) => `${topic.subject} - ${topic.topic}`);
+  const totalAttempts = analysis.topicStats.reduce((sum, topic) => sum + topic.attempts, 0);
+  const totalCorrect = analysis.topicStats.reduce((sum, topic) => sum + topic.correct, 0);
 
   return Performance.findOneAndUpdate(
     { user: userId },
@@ -52,10 +13,16 @@ const rebuildPerformanceForUser = async (userId) => {
       user: userId,
       totalAttempts,
       totalCorrect,
-      overallAccuracy,
-      averageTimeTakenSec,
-      topicStats,
-      weakTopics,
+      overallAccuracy: analysis.avgAccuracy,
+      averageTimeTakenSec: analysis.avgTime,
+      weakTopics: analysis.weakTopics,
+      strongTopics: analysis.strongTopics,
+      weakTopicPriority: analysis.weakTopicPriority,
+      subjectStats: analysis.subjectStats,
+      topicStats: analysis.topicStats,
+      accuracyTrend: analysis.accuracyTrend,
+      timeAccuracyCorrelation: analysis.timeAccuracyCorrelation,
+      suggestedFocusTopic: analysis.suggestedFocusTopic,
     },
     { upsert: true, new: true, setDefaultsOnInsert: true }
   );
