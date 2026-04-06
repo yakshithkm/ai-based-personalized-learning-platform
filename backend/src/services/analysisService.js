@@ -1,14 +1,9 @@
 const Attempt = require('../models/Attempt');
+const { inferTopicDifficultyFromAttempts } = require('./adaptiveDifficultyService');
 
 const round = (value, digits = 2) => Number(value.toFixed(digits));
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-
-const difficultyRank = {
-  Easy: 0,
-  Medium: 1,
-  Hard: 2,
-};
 
 const calculateCorrelation = (pairs) => {
   if (!pairs.length) return 0;
@@ -43,23 +38,6 @@ const trendFromAttempts = (attempts) => {
   if (delta >= 5) return 'improving';
   if (delta <= -5) return 'declining';
   return 'stable';
-};
-
-const weightedTopicDifficulty = (topicAttempts) => {
-  const weighted = topicAttempts.reduce(
-    (acc, attempt, index) => {
-      const weight = index < 10 ? 2 : 1;
-      acc.total += weight;
-      acc.score += weight * (difficultyRank[attempt.difficulty] ?? 1);
-      return acc;
-    },
-    { total: 0, score: 0 }
-  );
-
-  const avgRank = weighted.total ? weighted.score / weighted.total : 1;
-  if (avgRank < 0.8) return 'Easy';
-  if (avgRank > 1.3) return 'Hard';
-  return 'Medium';
 };
 
 const analyzePerformance = async (userId) => {
@@ -151,7 +129,7 @@ const analyzePerformance = async (userId) => {
       accuracy: round(accuracy, 1),
       avgTimeTakenSec: round(avgTimeTakenSec, 2),
       focusScore,
-      currentDifficulty: weightedTopicDifficulty(topic.rawAttempts),
+      currentDifficulty: inferTopicDifficultyFromAttempts(topic.rawAttempts),
     };
   });
 

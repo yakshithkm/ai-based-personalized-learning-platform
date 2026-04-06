@@ -24,6 +24,11 @@ const attemptSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    difficulty: {
+      type: String,
+      enum: ['Easy', 'Medium', 'Hard'],
+      default: 'Medium',
+    },
     selectedAnswerIndex: {
       type: Number,
       required: true,
@@ -38,6 +43,16 @@ const attemptSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 1,
+    },
+    adaptiveDifficultyBefore: {
+      type: String,
+      enum: ['Easy', 'Medium', 'Hard'],
+      default: 'Medium',
+    },
+    adaptiveDifficultyAfter: {
+      type: String,
+      enum: ['Easy', 'Medium', 'Hard'],
+      default: 'Medium',
     },
   },
   { timestamps: true }
