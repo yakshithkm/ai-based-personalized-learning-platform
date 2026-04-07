@@ -39,17 +39,51 @@ const AnalyticsPage = () => {
   }, []);
 
   const bySubject = payload?.attemptsBySubject || [];
+  const weakTopicPriority = payload?.weakTopicPriority || [];
+  const focusSuggestion = payload?.suggestedFocusTopic || '';
+  const accuracyTrend = payload?.accuracyTrend || 'stable';
+  const timeAccuracyCorrelation = Number(payload?.timeAccuracyCorrelation || 0);
+
   const trend = (payload?.recentAttempts || []).map((entry, index) => ({
     idx: index + 1,
     accuracy: entry.isCorrect ? 100 : 0,
     timeTakenSec: entry.timeTakenSec,
   }));
 
+  const maxFocusScore = weakTopicPriority.length
+    ? Math.max(...weakTopicPriority.map((entry) => entry.focusScore || 0), 1)
+    : 1;
+
+  const trendLabel =
+    accuracyTrend === 'improving'
+      ? 'Improving'
+      : accuracyTrend === 'declining'
+        ? 'Declining'
+        : 'Stable';
+
   return (
     <div className="page-grid">
       <section className="panel">
         <h2>Analytics</h2>
         <p>Visualize accuracy and speed trends across your attempt history.</p>
+      </section>
+
+      <section className="panel stats-grid analytics-summary-grid">
+        <div className="metric-card metric-neutral">
+          <h4>Accuracy Trend</h4>
+          <strong>{trendLabel}</strong>
+          <p>Computed from your latest weighted attempts.</p>
+        </div>
+        <div className="metric-card metric-neutral">
+          <h4>Time vs Accuracy Correlation</h4>
+          <strong>{timeAccuracyCorrelation.toFixed(3)}</strong>
+          <p>Negative means faster solving aligns with better accuracy.</p>
+        </div>
+        <div className="metric-card metric-neutral">
+          <h4>Focus Recommendation</h4>
+          <strong className="focus-line">{focusSuggestion || 'Keep practicing'}</strong>
+          <p>Next best topic selected by adaptive engine.</p>
+        </div>
       </section>
 
       {error && <section className="panel error-text">{error}</section>}
@@ -115,6 +149,33 @@ const AnalyticsPage = () => {
             />
           </LineChart>
         </ResponsiveContainer>
+      </section>
+
+      <section className="panel">
+        <h3>Topic Focus Heatmap</h3>
+        <p className="chart-caption">Higher focus score means the topic needs earlier revision.</p>
+        <div className="heatmap-grid">
+          {weakTopicPriority.length ? (
+            weakTopicPriority.slice(0, 10).map((entry) => {
+              const focusScore = Number(entry.focusScore || 0);
+              const accuracyValue = Number(entry.accuracy || 0);
+              const width = Math.max(8, (focusScore / maxFocusScore) * 100);
+              return (
+                <article key={`${entry.subject}-${entry.topic}`} className="heatmap-row">
+                  <div className="heatmap-labels">
+                    <h4>{entry.subject} - {entry.topic}</h4>
+                    <small>Focus {focusScore.toFixed(1)} | Acc {accuracyValue.toFixed(1)}%</small>
+                  </div>
+                  <div className="heatmap-track">
+                    <span className="heatmap-fill" style={{ width: `${width}%` }} />
+                  </div>
+                </article>
+              );
+            })
+          ) : (
+            <p>No heatmap data yet. Solve more questions to unlock topic intensity insights.</p>
+          )}
+        </div>
       </section>
     </div>
   );

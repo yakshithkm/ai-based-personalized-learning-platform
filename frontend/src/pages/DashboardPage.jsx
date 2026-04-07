@@ -51,6 +51,9 @@ const DashboardPage = () => {
   const accuracy = perf?.overallAccuracy ?? 0;
   const accuracyTone = accuracy >= 75 ? 'good' : accuracy >= 50 ? 'mid' : 'bad';
   const isLoading = !analytics || !recommendationPayload;
+  const weakTopicPriority = analytics?.weakTopicPriority || perf?.weakTopicPriority || [];
+  const focusSuggestion = analytics?.suggestedFocusTopic || perf?.suggestedFocusTopic || '';
+  const difficultyPlan = recommendationPayload?.difficultyPlan || {};
 
   return (
     <div className="page-grid">
@@ -104,7 +107,46 @@ const DashboardPage = () => {
       </section>
 
       <section className="panel">
+        <h3>Weak Topic Priority</h3>
+        <p>{isLoading ? 'Calculating adaptive focus...' : focusSuggestion || 'Keep practicing to unlock adaptive focus suggestions.'}</p>
+        <div className="priority-list">
+          {isLoading ? (
+            <>
+              <div className="priority-item skeleton-block" />
+              <div className="priority-item skeleton-block" />
+            </>
+          ) : weakTopicPriority.length ? (
+            weakTopicPriority.slice(0, 5).map((entry) => {
+              const focusScore = Number(entry.focusScore || 0);
+              const accuracyValue = Number(entry.accuracy || 0);
+              const avgTime = Number(entry.avgTimeTakenSec || 0);
+
+              return (
+                <article key={`${entry.subject}-${entry.topic}`} className="priority-item">
+                  <div className="priority-head">
+                    <h4>{entry.subject} - {entry.topic}</h4>
+                    <span className="priority-score">Focus {focusScore.toFixed(1)}</span>
+                  </div>
+                  <div className="priority-metrics">
+                    <small>Accuracy: {accuracyValue.toFixed(1)}%</small>
+                    <small>Avg Time: {avgTime.toFixed(1)} sec</small>
+                  </div>
+                </article>
+              );
+            })
+          ) : (
+            <p>No priority topics yet. Attempt more questions for targeted guidance.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="panel">
         <h3>Recommended Questions</h3>
+        {!!Object.keys(difficultyPlan).length && (
+          <p className="recommendation-meta">
+            Adaptive mix: Medium {difficultyPlan.Medium || 0}, Easy {difficultyPlan.Easy || 0}, Hard {difficultyPlan.Hard || 0}
+          </p>
+        )}
         <div className="question-list">
           {isLoading && (
             <>

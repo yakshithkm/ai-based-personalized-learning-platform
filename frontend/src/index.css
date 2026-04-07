@@ -472,6 +472,52 @@ select:focus {
   gap: 0.78rem;
 }
 
+.priority-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.priority-item {
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.68);
+  border-radius: 12px;
+  padding: 0.8rem;
+  min-height: 78px;
+}
+
+.priority-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.priority-head h4 {
+  margin: 0;
+}
+
+.priority-score {
+  font-size: 0.78rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  background: rgba(30, 58, 138, 0.32);
+  color: #bfdbfe;
+}
+
+.priority-metrics {
+  margin-top: 0.52rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.priority-metrics small,
+.recommendation-meta {
+  color: #bfdbfe;
+}
+
 .question-item {
   border: 1px solid var(--border);
   background: rgba(15, 23, 42, 0.72);
@@ -596,6 +642,11 @@ select:focus {
   font-weight: 600;
 }
 
+.improvement-tip {
+  color: #c7d2fe;
+  font-size: 0.92rem;
+}
+
 .feedback-correct {
   background: rgba(34, 197, 94, 0.12);
   border-color: rgba(34, 197, 94, 0.4);
@@ -615,6 +666,58 @@ select:focus {
 .chart-caption {
   color: #a8b5ea;
   font-size: 0.9rem;
+}
+
+.analytics-summary-grid {
+  align-items: stretch;
+}
+
+.focus-line {
+  color: #c7d2fe;
+  font-size: 1.05rem;
+}
+
+.heatmap-grid {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.72rem;
+}
+
+.heatmap-row {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.72rem;
+  background: rgba(15, 23, 42, 0.68);
+}
+
+.heatmap-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.heatmap-labels h4 {
+  margin: 0;
+}
+
+.heatmap-labels small {
+  color: #cbd5e1;
+}
+
+.heatmap-track {
+  margin-top: 0.56rem;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.18);
+  overflow: hidden;
+}
+
+.heatmap-fill {
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #38bdf8, #3b82f6, #1d4ed8);
 }
 
 .error-text {
