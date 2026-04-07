@@ -146,10 +146,9 @@ const PracticePage = () => {
           ) : (
             <div className={`feedback-box ${result.isCorrect ? 'feedback-correct' : 'feedback-wrong'}`}>
               <strong>{result.isCorrect ? 'Correct Answer' : 'Incorrect Answer'}</strong>
-              <p className="correct-answer-text">
-                Correct answer: {question.options[result.correctAnswerIndex]}
-              </p>
+              <p className="correct-answer-text">Correct answer: {result.correctAnswer}</p>
               <p>{result.explanation}</p>
+              <p className="improvement-tip">Tip: {result.improvementTip}</p>
               {currentIndex < questions.length - 1 && (
                 <button className="outline-btn" onClick={nextQuestion}>
                   Next Question

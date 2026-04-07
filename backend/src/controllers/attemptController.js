@@ -3,6 +3,7 @@ const Question = require('../models/Question');
 const Performance = require('../models/Performance');
 const { rebuildPerformanceForUser } = require('../services/performanceService');
 const { evaluateAdaptiveDifficulty } = require('../services/adaptiveDifficultyService');
+const { buildImprovementTip } = require('../services/feedbackService');
 
 const submitAttempt = async (req, res, next) => {
   try {
@@ -47,13 +48,25 @@ const submitAttempt = async (req, res, next) => {
 
     const performance = await rebuildPerformanceForUser(req.user._id);
 
+    const correctAnswer = question.options[question.correctAnswerIndex];
+    const selectedAnswerText = question.options[Number(selectedAnswerIndex)] || '';
+    const improvementTip = buildImprovementTip({
+      isCorrect,
+      timeTakenSec,
+      topic: question.topic,
+      difficulty: adaptiveDifficultyAfter,
+      selectedAnswerText,
+    });
+
     return res.status(201).json({
       message: 'Attempt submitted',
       attempt,
       result: {
         isCorrect,
         correctAnswerIndex: question.correctAnswerIndex,
+        correctAnswer,
         explanation: question.explanation,
+        improvementTip,
       },
       adaptive: {
         topic: `${question.subject} - ${question.topic}`,
