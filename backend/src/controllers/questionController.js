@@ -1,18 +1,68 @@
 const Question = require('../models/Question');
 
+const DIFFICULTY_ORDER = ['Easy', 'Medium', 'Hard'];
+
+const getHarderDifficulty = (difficulty) => {
+  const index = DIFFICULTY_ORDER.indexOf(difficulty);
+  if (index === -1 || index >= DIFFICULTY_ORDER.length - 1) return 'Hard';
+  return DIFFICULTY_ORDER[index + 1];
+};
+
 const getQuestions = async (req, res, next) => {
   try {
-    const { subject, topic, examType, difficulty, limit = 10 } = req.query;
+    const {
+      subject,
+      topic,
+      examType,
+      difficulty,
+      limit = 10,
+      similarTo,
+      harderThan,
+      excludeQuestionId,
+    } = req.query;
     const filter = {};
+
+    filter.examType = examType || req.user?.targetExam;
+
+    let resolvedDifficulty = difficulty;
+
+    if (similarTo || harderThan) {
+      const baseQuestionId = similarTo || harderThan;
+      const baseQuestion = await Question.findById(baseQuestionId);
+
+      if (baseQuestion) {
+        filter.subject = baseQuestion.subject;
+        filter.topic = baseQuestion.topic;
+
+        if (similarTo && !resolvedDifficulty) {
+          resolvedDifficulty = baseQuestion.difficulty;
+        }
+
+        if (harderThan) {
+          resolvedDifficulty = getHarderDifficulty(baseQuestion.difficulty);
+        }
+      }
+    }
 
     if (subject) filter.subject = subject;
     if (topic) filter.topic = topic;
-    if (examType) filter.examType = examType;
-    if (difficulty) filter.difficulty = difficulty;
+    if (resolvedDifficulty) filter.difficulty = resolvedDifficulty;
 
-    const questions = await Question.find(filter)
+    if (excludeQuestionId) {
+      filter._id = { $ne: excludeQuestionId };
+    }
+
+    let questions = await Question.find(filter)
       .limit(Math.min(Number(limit), 50))
       .select('-correctAnswerIndex');
+
+    if (!questions.length && (similarTo || harderThan)) {
+      const fallbackFilter = { ...filter };
+      delete fallbackFilter.difficulty;
+      questions = await Question.find(fallbackFilter)
+        .limit(Math.min(Number(limit), 50))
+        .select('-correctAnswerIndex');
+    }
 
     return res.json({ count: questions.length, questions });
   } catch (error) {

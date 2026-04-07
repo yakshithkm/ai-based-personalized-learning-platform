@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 
 const StatIcon = ({ kind }) => {
@@ -26,6 +27,7 @@ const StatIcon = ({ kind }) => {
 };
 
 const DashboardPage = () => {
+  const navigate = useNavigate();
   const [analytics, setAnalytics] = useState(null);
   const [recommendationPayload, setRecommendationPayload] = useState(null);
   const [error, setError] = useState('');
@@ -54,12 +56,60 @@ const DashboardPage = () => {
   const weakTopicPriority = analytics?.weakTopicPriority || perf?.weakTopicPriority || [];
   const focusSuggestion = analytics?.suggestedFocusTopic || perf?.suggestedFocusTopic || '';
   const difficultyPlan = recommendationPayload?.difficultyPlan || {};
+  const focusToday = analytics?.focusToday || [];
+  const improvementInsight = analytics?.improvementInsight?.text || '';
+  const nextAction = analytics?.nextAction || null;
+  const frequentFailedTopics = analytics?.mistakeBank?.frequentFailedTopics || [];
+  const repeatedMistakes = analytics?.mistakeBank?.repeatedMistakes || [];
+
+  const nextActionQuery = useMemo(() => {
+    if (!nextAction?.query) return '';
+    const params = new URLSearchParams();
+    Object.entries(nextAction.query).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+    });
+    return params.toString();
+  }, [nextAction]);
+
+  const startNextAction = () => {
+    const baseRoute = nextAction?.route || '/practice';
+    const fullPath = nextActionQuery ? `${baseRoute}?${nextActionQuery}` : baseRoute;
+    navigate(fullPath);
+  };
 
   return (
     <div className="page-grid">
       <section className="panel hero-panel">
         <h2>Personalized Dashboard</h2>
         <p>Track your preparation velocity and focus where it matters most.</p>
+      </section>
+
+      <section className="panel action-grid">
+        <article className="action-card">
+          <h3>Focus Today</h3>
+          {focusToday.length ? (
+            <ul className="action-list">
+              {focusToday.map((entry) => (
+                <li key={`${entry.subject}-${entry.topic}`}>
+                  {entry.subject} - {entry.topic} (Focus {Number(entry.focusScore || 0).toFixed(1)})
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No weak-topic focus generated yet.</p>
+          )}
+        </article>
+        <article className="action-card">
+          <h3>Improvement Insight</h3>
+          <p>{isLoading ? 'Computing improvement insight...' : (improvementInsight || 'Attempt more questions to unlock insight.')}</p>
+        </article>
+        <article className="action-card">
+          <h3>Next Action</h3>
+          <p>{nextAction?.label || 'Start Recommended Practice Set'}</p>
+          <button className="solid-btn" onClick={startNextAction}>
+            Start Now
+          </button>
+        </article>
       </section>
 
       {error && <section className="panel error-text">{error}</section>}
@@ -137,6 +187,30 @@ const DashboardPage = () => {
           ) : (
             <p>No priority topics yet. Attempt more questions for targeted guidance.</p>
           )}
+        </div>
+      </section>
+
+      <section className="panel">
+        <h3>Mistake Bank Signals</h3>
+        <div className="mistake-grid">
+          <article className="priority-item">
+            <h4>Frequently Failed Topics</h4>
+            {(frequentFailedTopics || []).slice(0, 4).map((entry) => (
+              <p key={`${entry.subject}-${entry.topic}`}>
+                {entry.subject} - {entry.topic}: {entry.failures} mistakes
+              </p>
+            ))}
+            {!frequentFailedTopics.length && <p>No frequent failures yet.</p>}
+          </article>
+          <article className="priority-item">
+            <h4>Repeated Mistakes</h4>
+            {(repeatedMistakes || []).slice(0, 4).map((entry) => (
+              <p key={entry.questionId}>
+                {entry.subject} - {entry.topic}: {entry.failures} repeats
+              </p>
+            ))}
+            {!repeatedMistakes.length && <p>No repeated mistakes detected.</p>}
+          </article>
         </div>
       </section>
 

@@ -3,7 +3,12 @@ const Question = require('../models/Question');
 const Performance = require('../models/Performance');
 const { rebuildPerformanceForUser } = require('../services/performanceService');
 const { evaluateAdaptiveDifficulty } = require('../services/adaptiveDifficultyService');
-const { buildImprovementTip } = require('../services/feedbackService');
+const { buildImprovementTip, buildWhyGotWrong } = require('../services/feedbackService');
+const {
+  trackAttemptProgress,
+  getCommonMistakePattern,
+  getMistakeBankForUser,
+} = require('../services/progressTracker');
 
 const submitAttempt = async (req, res, next) => {
   try {
@@ -29,6 +34,7 @@ const submitAttempt = async (req, res, next) => {
     const adaptiveDifficultyBefore = topicEntry?.currentDifficulty || question.difficulty || 'Medium';
     const adaptiveDifficultyAfter = evaluateAdaptiveDifficulty({
       currentDifficulty: adaptiveDifficultyBefore,
+      topicAccuracy: topicEntry?.accuracy,
       isCorrect,
       timeTakenSec: Number(timeTakenSec),
     });
@@ -50,11 +56,33 @@ const submitAttempt = async (req, res, next) => {
 
     const correctAnswer = question.options[question.correctAnswerIndex];
     const selectedAnswerText = question.options[Number(selectedAnswerIndex)] || '';
+
+    await trackAttemptProgress({
+      userId: req.user._id,
+      question,
+      selectedAnswerIndex: Number(selectedAnswerIndex),
+      selectedAnswerText,
+      isCorrect,
+    });
+
+    const commonMistakePattern = await getCommonMistakePattern({
+      userId: req.user._id,
+      topic: question.topic,
+      selectedAnswerText,
+    });
+
     const improvementTip = buildImprovementTip({
       isCorrect,
       timeTakenSec,
       topic: question.topic,
       difficulty: adaptiveDifficultyAfter,
+      selectedAnswerText,
+    });
+
+    const whyGotWrong = buildWhyGotWrong({
+      isCorrect,
+      topic: question.topic,
+      commonMistakePattern,
       selectedAnswerText,
     });
 
@@ -67,6 +95,26 @@ const submitAttempt = async (req, res, next) => {
         correctAnswer,
         explanation: question.explanation,
         improvementTip,
+        whyGotWrong,
+        actions: {
+          retrySimilarQuestion: {
+            label: 'Retry Similar Question',
+            params: {
+              similarTo: String(question._id),
+              excludeQuestionId: String(question._id),
+              limit: 1,
+            },
+          },
+          moveToHarderQuestion: {
+            label: 'Move to Harder Question',
+            disabled: question.difficulty === 'Hard',
+            params: {
+              harderThan: String(question._id),
+              excludeQuestionId: String(question._id),
+              limit: 1,
+            },
+          },
+        },
       },
       adaptive: {
         topic: `${question.subject} - ${question.topic}`,
@@ -79,6 +127,15 @@ const submitAttempt = async (req, res, next) => {
         avgTimeTakenSec: performance?.averageTimeTakenSec || 0,
       },
     });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const getMyMistakeBank = async (req, res, next) => {
+  try {
+    const mistakeBank = await getMistakeBankForUser(req.user._id);
+    return res.json(mistakeBank);
   } catch (error) {
     return next(error);
   }
@@ -97,4 +154,4 @@ const getMyAttempts = async (req, res, next) => {
   }
 };
 
-module.exports = { submitAttempt, getMyAttempts };
+module.exports = { submitAttempt, getMyAttempts, getMyMistakeBank };

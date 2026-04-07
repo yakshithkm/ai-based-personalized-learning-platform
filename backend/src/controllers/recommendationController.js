@@ -24,6 +24,7 @@ const getRecommendations = async (req, res, next) => {
 
     return res.json({
       source: recommendationResult.source,
+      priorityOrder: recommendationResult.priorityOrder,
       weakTopics: recommendationResult.weakTopics,
       strongTopics: recommendationResult.strongTopics,
       recommendations: recommendationResult.recommendations,

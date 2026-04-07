@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import api from '../api/client';
 
 const PracticePage = () => {
+  const [searchParams] = useSearchParams();
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
@@ -11,6 +13,7 @@ const PracticePage = () => {
   const [result, setResult] = useState(null);
   const [startTime, setStartTime] = useState(Date.now());
   const [error, setError] = useState('');
+  const [recommendedMode, setRecommendedMode] = useState(false);
 
   useEffect(() => {
     const loadSubjects = async () => {
@@ -24,6 +27,35 @@ const PracticePage = () => {
     loadSubjects();
   }, []);
 
+  useEffect(() => {
+    const mode = searchParams.get('mode');
+    const requestedTopic = searchParams.get('topic');
+
+    if (requestedTopic && requestedTopic.includes(' - ')) {
+      const [subject, topic] = requestedTopic.split(' - ');
+      setSelectedSubject(subject);
+      setSelectedTopic(topic);
+    }
+
+    if (mode === 'recommended') {
+      setRecommendedMode(true);
+      const loadRecommended = async () => {
+        try {
+          const { data } = await api.get('/recommendations/me');
+          setQuestions(data.recommendations || []);
+          setCurrentIndex(0);
+          setResult(null);
+          setSelectedAnswer(null);
+          setStartTime(Date.now());
+        } catch (err) {
+          setError(err?.response?.data?.message || 'Failed to load recommended practice set');
+        }
+      };
+
+      loadRecommended();
+    }
+  }, [searchParams]);
+
   const topics = useMemo(() => {
     const entry = subjects.find((s) => s.subject === selectedSubject);
     return entry?.topics || [];
@@ -34,6 +66,7 @@ const PracticePage = () => {
     setResult(null);
     setSelectedAnswer(null);
     setCurrentIndex(0);
+    setRecommendedMode(false);
 
     try {
       const { data } = await api.get('/questions', {
@@ -77,11 +110,32 @@ const PracticePage = () => {
     setStartTime(Date.now());
   };
 
+  const loadAdaptiveActionQuestion = async (actionParams) => {
+    if (!actionParams) return;
+
+    try {
+      const { data } = await api.get('/questions', { params: actionParams });
+      const next = data.questions?.[0];
+      if (!next) {
+        setError('No adaptive follow-up question found for this action.');
+        return;
+      }
+
+      setQuestions([next]);
+      setCurrentIndex(0);
+      setResult(null);
+      setSelectedAnswer(null);
+      setStartTime(Date.now());
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Failed to load adaptive question');
+    }
+  };
+
   return (
     <div className="page-grid">
       <section className="panel">
         <h2>Practice Zone</h2>
-        <p>Choose a subject/topic and solve curated questions.</p>
+        <p>{recommendedMode ? 'Recommended adaptive set is active.' : 'Choose a subject/topic and solve curated questions.'}</p>
 
         <div className="filters-row">
           <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)}>
@@ -149,6 +203,24 @@ const PracticePage = () => {
               <p className="correct-answer-text">Correct answer: {result.correctAnswer}</p>
               <p>{result.explanation}</p>
               <p className="improvement-tip">Tip: {result.improvementTip}</p>
+              {!result.isCorrect && result.whyGotWrong && (
+                <p className="why-wrong-text">Why you got it wrong: {result.whyGotWrong}</p>
+              )}
+              <div className="feedback-actions">
+                <button
+                  className="outline-btn"
+                  onClick={() => loadAdaptiveActionQuestion(result.actions?.retrySimilarQuestion?.params)}
+                >
+                  Retry Similar Question
+                </button>
+                <button
+                  className="outline-btn"
+                  onClick={() => loadAdaptiveActionQuestion(result.actions?.moveToHarderQuestion?.params)}
+                  disabled={Boolean(result.actions?.moveToHarderQuestion?.disabled)}
+                >
+                  Move to Harder Question
+                </button>
+              </div>
               {currentIndex < questions.length - 1 && (
                 <button className="outline-btn" onClick={nextQuestion}>
                   Next Question

@@ -9,8 +9,21 @@ const rankToDifficulty = (rank) => DIFFICULTIES[Math.min(Math.max(rank, 0), 2)];
 
 const isFastAnswer = (timeTakenSec) => Number(timeTakenSec) <= 40;
 
-const evaluateAdaptiveDifficulty = ({ currentDifficulty, isCorrect, timeTakenSec }) => {
+const evaluateAdaptiveDifficulty = ({ currentDifficulty, topicAccuracy, isCorrect, timeTakenSec }) => {
   const currentRank = difficultyRank(currentDifficulty || 'Medium');
+
+  if (Number.isFinite(Number(topicAccuracy))) {
+    const normalizedAccuracy = Number(topicAccuracy);
+    if (normalizedAccuracy > 80) {
+      return rankToDifficulty(currentRank + 1);
+    }
+
+    if (normalizedAccuracy < 50) {
+      return rankToDifficulty(currentRank - 1);
+    }
+
+    return rankToDifficulty(currentRank);
+  }
 
   if (!isCorrect) {
     return rankToDifficulty(currentRank - 1);

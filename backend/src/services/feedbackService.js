@@ -14,6 +14,23 @@ const buildImprovementTip = ({ isCorrect, timeTakenSec, topic, difficulty, selec
   return `Revisit core concepts in ${topic} and start with easier questions before moving up.`;
 };
 
+const buildWhyGotWrong = ({ isCorrect, topic, commonMistakePattern, selectedAnswerText }) => {
+  if (isCorrect) {
+    return '';
+  }
+
+  if (commonMistakePattern) {
+    return commonMistakePattern;
+  }
+
+  if (selectedAnswerText) {
+    return `You selected "${selectedAnswerText}" for ${topic}. This usually happens when distractor options look conceptually similar.`;
+  }
+
+  return `This miss in ${topic} likely came from a concept confusion. Slow down and eliminate clearly wrong options before selecting.`;
+};
+
 module.exports = {
   buildImprovementTip,
+  buildWhyGotWrong,
 };
