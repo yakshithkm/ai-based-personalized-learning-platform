@@ -30,6 +30,15 @@ const menuItems = [
       </svg>
     ),
   },
+  {
+    to: '/admin-analytics',
+    label: 'Admin',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 1l9 4v6c0 5.5-3.8 10.7-9 12-5.2-1.3-9-6.5-9-12V5l9-4zm-1 12l6-6-1.4-1.4L11 10.2 8.8 8 7.4 9.4 11 13z" />
+      </svg>
+    ),
+  },
 ];
 
 const Layout = ({ children }) => {

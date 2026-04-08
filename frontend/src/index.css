@@ -454,6 +454,17 @@ select:focus {
   border-color: rgba(34, 197, 94, 0.45);
 }
 
+.funnel-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 0.65rem;
+}
+
+.funnel-grid .priority-item strong {
+  font-size: 1.4rem;
+}
+
 .action-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
@@ -1148,7 +1159,8 @@ select:focus {
 @media (max-width: 980px) {
   .action-grid,
   .transformation-grid,
-  .readiness-grid {
+  .readiness-grid,
+  .funnel-grid {
     grid-template-columns: 1fr;
   }
 }

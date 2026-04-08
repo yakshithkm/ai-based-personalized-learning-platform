@@ -1,6 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/client';
+import { trackProductEvent } from '../utils/productEvents';
+
+const makeSessionId = () => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
 
 const PracticePage = () => {
   const navigate = useNavigate();
@@ -19,6 +27,7 @@ const PracticePage = () => {
   const [sessionResults, setSessionResults] = useState([]);
   const [sessionMeta, setSessionMeta] = useState(null);
   const [xpPulse, setXpPulse] = useState(0);
+  const [sessionId, setSessionId] = useState('');
 
   useEffect(() => {
     const loadSubjects = async () => {
@@ -48,11 +57,18 @@ const PracticePage = () => {
       const loadRecommended = async () => {
         try {
           const { data } = await api.get('/recommendations/me');
+          const newSessionId = makeSessionId();
+          setSessionId(newSessionId);
           setQuestions(data.recommendations || []);
           setCurrentIndex(0);
           setResult(null);
           setSelectedAnswer(null);
           setStartTime(Date.now());
+          trackProductEvent('session_started', {
+            sessionId: newSessionId,
+            sessionMode: 'recommended',
+            totalQuestions: (data.recommendations || []).length,
+          });
         } catch (err) {
           setError(err?.response?.data?.message || 'Failed to load recommended practice set');
         }
@@ -67,6 +83,8 @@ const PracticePage = () => {
       const loadFocus = async () => {
         try {
           const { data } = await api.get('/recommendations/focus-session');
+          const newSessionId = makeSessionId();
+          setSessionId(newSessionId);
           setQuestions(data.questions || []);
           setSessionMeta(data);
           setSessionResults([]);
@@ -74,6 +92,16 @@ const PracticePage = () => {
           setResult(null);
           setSelectedAnswer(null);
           setStartTime(Date.now());
+          trackProductEvent('focus_session_started', {
+            sessionId: newSessionId,
+            sessionMode: 'focus',
+            totalQuestions: (data.questions || []).length,
+          });
+          trackProductEvent('session_started', {
+            sessionId: newSessionId,
+            sessionMode: 'focus',
+            totalQuestions: (data.questions || []).length,
+          });
         } catch (err) {
           setError(err?.response?.data?.message || 'Failed to load focus session');
         }
@@ -105,8 +133,17 @@ const PracticePage = () => {
           limit: 10,
         },
       });
+      const newSessionId = makeSessionId();
+      setSessionId(newSessionId);
       setQuestions(data.questions || []);
       setStartTime(Date.now());
+      trackProductEvent('session_started', {
+        sessionId: newSessionId,
+        sessionMode: 'manual',
+        totalQuestions: (data.questions || []).length,
+        subject: selectedSubject || null,
+        topic: selectedTopic || null,
+      });
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to load questions');
     }
@@ -125,6 +162,10 @@ const PracticePage = () => {
         questionId: question._id,
         selectedAnswerIndex: selectedAnswer,
         timeTakenSec,
+        sessionId,
+        sessionMode: focusMode ? 'focus' : recommendedMode ? 'recommended' : 'manual',
+        questionIndex: currentIndex + 1,
+        totalQuestions: questions.length,
       });
       setResult(data.result);
       setXpPulse(data.result?.xpEarned || 0);
@@ -195,9 +236,19 @@ const PracticePage = () => {
           weakAreas,
           improvementSuggestion,
           earnedXp,
+          sessionId,
           nextRecommendedSession: sessionMeta?.mix || null,
         },
       },
+    });
+
+    trackProductEvent('session_completed', {
+      sessionId,
+      sessionMode: focusMode ? 'focus' : recommendedMode ? 'recommended' : 'manual',
+      totalQuestions: total,
+      answeredQuestions: total,
+      accuracy: Number(accuracy.toFixed(1)),
+      earnedXp,
     });
   };
 

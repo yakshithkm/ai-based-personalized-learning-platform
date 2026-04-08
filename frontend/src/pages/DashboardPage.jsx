@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
+import { trackProductEvent } from '../utils/productEvents';
 
 const StatIcon = ({ kind }) => {
   if (kind === 'attempts') {
@@ -81,12 +82,23 @@ const DashboardPage = () => {
   }, [nextAction]);
 
   const startNextAction = () => {
+    trackProductEvent('next_action_clicked', {
+      cta: 'next_action',
+      source: 'dashboard',
+      reason: nextAction?.reason || 'unknown',
+      topic: nextAction?.query?.topic || null,
+    });
     const baseRoute = nextAction?.route || '/practice';
     const fullPath = nextActionQuery ? `${baseRoute}?${nextActionQuery}` : baseRoute;
     navigate(fullPath);
   };
 
   const startFocusSession = () => {
+    trackProductEvent('next_action_clicked', {
+      cta: 'focus_session',
+      source: 'dashboard',
+      reason: 'manual-focus-start',
+    });
     navigate('/practice?mode=focus');
   };
 

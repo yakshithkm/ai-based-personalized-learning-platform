@@ -15,6 +15,7 @@ const {
   getCommonMistakePattern,
   getMistakeBankForUser,
 } = require('../services/progressTracker');
+const { trackProductEvent } = require('../services/eventTrackingService');
 
 const pointsForAttempt = ({ isCorrect, timeTakenSec }) => {
   const base = isCorrect ? 12 : 5;
@@ -24,7 +25,15 @@ const pointsForAttempt = ({ isCorrect, timeTakenSec }) => {
 
 const submitAttempt = async (req, res, next) => {
   try {
-    const { questionId, selectedAnswerIndex, timeTakenSec } = req.body;
+    const {
+      questionId,
+      selectedAnswerIndex,
+      timeTakenSec,
+      sessionId,
+      questionIndex,
+      totalQuestions,
+      sessionMode,
+    } = req.body;
 
     if (!questionId || selectedAnswerIndex === undefined || !timeTakenSec) {
       res.status(400);
@@ -80,6 +89,22 @@ const submitAttempt = async (req, res, next) => {
       selectedAnswerIndex: Number(selectedAnswerIndex),
       selectedAnswerText,
       isCorrect,
+    });
+
+    await trackProductEvent({
+      userId: req.user._id,
+      eventType: 'question_answered',
+      metadata: {
+        sessionId: sessionId || null,
+        sessionMode: sessionMode || 'practice',
+        questionId: String(question._id),
+        questionIndex: Number(questionIndex || 0),
+        totalQuestions: Number(totalQuestions || 0),
+        topic: question.topic,
+        subtopic,
+        difficulty: question.difficulty,
+        correctness: Boolean(isCorrect),
+      },
     });
 
     const commonMistakePattern = await getCommonMistakePattern({

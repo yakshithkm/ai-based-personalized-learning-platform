@@ -1,5 +1,10 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
+const {
+  getUserLastEvent,
+  trackProductEvent,
+  dayKey,
+} = require('../services/eventTrackingService');
 
 const sanitizeUser = (user) => ({
   _id: user._id,
@@ -47,6 +52,19 @@ const loginUser = async (req, res, next) => {
     if (!user || !(await user.matchPassword(password))) {
       res.status(401);
       throw new Error('Invalid email or password');
+    }
+
+    const lastEvent = await getUserLastEvent(user._id);
+    if (lastEvent?.createdAt) {
+      const today = new Date();
+      const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+      if (dayKey(lastEvent.createdAt) === dayKey(yesterday)) {
+        await trackProductEvent({
+          userId: user._id,
+          eventType: 'returned_next_day',
+          metadata: { previousActiveDay: dayKey(yesterday) },
+        });
+      }
     }
 
     return res.json({

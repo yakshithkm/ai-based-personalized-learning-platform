@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
+import { trackProductEvent } from '../utils/productEvents';
 
 const SessionSummaryPage = () => {
   const navigate = useNavigate();
@@ -66,7 +67,17 @@ const SessionSummaryPage = () => {
       <section className="panel next-step-panel">
         <h3>Continue Smart Practice</h3>
         <div className="feedback-actions">
-          <button className="solid-btn" onClick={() => navigate('/practice?mode=recommended')}>
+          <button
+            className="solid-btn"
+            onClick={() => {
+              trackProductEvent('next_action_clicked', {
+                cta: 'continue_smart_practice',
+                source: 'session_summary',
+                sessionId: summary.sessionId || null,
+              });
+              navigate('/practice?mode=recommended');
+            }}
+          >
             Continue Smart Practice
           </button>
           <button className="outline-btn" onClick={() => navigate('/dashboard')}>
