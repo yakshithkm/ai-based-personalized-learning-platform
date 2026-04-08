@@ -8,11 +8,22 @@ const getRecommendations = async (req, res, next) => {
     if (!hasAttempts) {
       const starterQuestions = await Question.find({ examType: req.user.targetExam })
         .limit(10)
-        .select('-correctAnswerIndex');
+        .select('-correctAnswerIndex')
+        .lean();
+
+      const starterWithSignals = starterQuestions.map((question) => ({
+        ...question,
+        recommendationReason: 'cold-start',
+        aiSignals: {
+          labels: ['AI-selected question'],
+          why: 'Starter set generated to establish your baseline performance.',
+          adaptiveDifficultyApplied: false,
+        },
+      }));
       return res.json({
         source: 'cold-start',
         weakTopics: [],
-        recommendations: starterQuestions,
+        recommendations: starterWithSignals,
       });
     }
 

@@ -22,6 +22,54 @@ const deriveDifficulty = ({ accuracy, fallback = 'Medium' }) => {
 
 const getTopicKey = (subject, topic, subtopic = 'General') => `${subject}::${topic}::${subtopic}`;
 
+const reasonToAiSignals = (reason) => {
+  if (reason === 'spaced-repetition-due') {
+    return {
+      labels: ['AI-selected question', 'Based on your mistakes'],
+      why: 'This question is due for spaced repetition review.',
+      adaptiveDifficultyApplied: true,
+    };
+  }
+
+  if (reason === 'weak-topic') {
+    return {
+      labels: ['AI-selected question', 'Adaptive difficulty applied'],
+      why: 'Your recent accuracy in this topic is below target.',
+      adaptiveDifficultyApplied: true,
+    };
+  }
+
+  if (reason === 'recent-mistake') {
+    return {
+      labels: ['AI-selected question', 'Based on your mistakes'],
+      why: 'You made a recent mistake in this concept.',
+      adaptiveDifficultyApplied: true,
+    };
+  }
+
+  if (reason === 'new-topic') {
+    return {
+      labels: ['AI-selected question'],
+      why: 'This introduces an unpracticed topic for better coverage.',
+      adaptiveDifficultyApplied: false,
+    };
+  }
+
+  if (reason === 'slightly-harder-challenge') {
+    return {
+      labels: ['AI-selected question', 'Adaptive difficulty applied'],
+      why: 'You are ready for a harder challenge to push mastery.',
+      adaptiveDifficultyApplied: true,
+    };
+  }
+
+  return {
+    labels: ['AI-selected question'],
+    why: 'Selected to keep your session balanced.',
+    adaptiveDifficultyApplied: false,
+  };
+};
+
 const fetchQuestionBatch = async ({
   targetExam,
   subject,
@@ -129,9 +177,11 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
       const id = String(question._id);
       if (usedIds.has(id)) return;
       usedIds.add(id);
+      const aiSignals = reasonToAiSignals(reason);
       recommendations.push({
         ...question,
         recommendationReason: reason,
+        aiSignals,
       });
     });
   };
@@ -311,7 +361,11 @@ const getFocusSessionQuestions = async ({ userId, targetExam, total = 10 }) => {
 
   const questions = [...recommendationResult.recommendations];
   if (harderQuestion) {
-    questions.push({ ...harderQuestion, recommendationReason: 'slightly-harder-challenge' });
+    questions.push({
+      ...harderQuestion,
+      recommendationReason: 'slightly-harder-challenge',
+      aiSignals: reasonToAiSignals('slightly-harder-challenge'),
+    });
   }
 
   return {

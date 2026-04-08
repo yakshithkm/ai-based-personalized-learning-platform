@@ -2,6 +2,15 @@ const Attempt = require('../models/Attempt');
 const Mistake = require('../models/Mistake');
 const { rebuildPerformanceForUser } = require('./performanceService');
 const { getMistakeBankForUser } = require('./progressTracker');
+const {
+  computeExamReadiness,
+  inferReadinessStatus,
+  estimatePercentile,
+  rankAdvice,
+  buildTransformationSummary,
+  buildUrgencyAlerts,
+  buildNotifications,
+} = require('./productSignalsService');
 
 const round = (value, digits = 1) => Number(value.toFixed(digits));
 
@@ -111,6 +120,25 @@ const buildNextBestAction = ({ dueMistakeCount, focusToday, strongTopics, streak
   };
 };
 
+const pointsForAttempt = ({ isCorrect, timeTakenSec }) => {
+  const base = isCorrect ? 12 : 5;
+  const speedBonus = isCorrect && Number(timeTakenSec || 0) <= 35 ? 3 : 0;
+  return base + speedBonus;
+};
+
+const calculateXpSummary = (attempts = []) => {
+  const totalXp = attempts.reduce((sum, attempt) => sum + pointsForAttempt(attempt), 0);
+  const weeklyXp = attempts
+    .filter((attempt) => Date.now() - new Date(attempt.createdAt).getTime() <= 7 * 24 * 60 * 60 * 1000)
+    .reduce((sum, attempt) => sum + pointsForAttempt(attempt), 0);
+
+  return {
+    totalXp,
+    weeklyXp,
+    level: Math.floor(totalXp / 250) + 1,
+  };
+};
+
 const getAdaptiveAnalytics = async (userId) => {
   const now = new Date();
 
@@ -131,6 +159,7 @@ const getAdaptiveAnalytics = async (userId) => {
   const attemptsBySubject = performance?.subjectStats || [];
   const focusToday = (performance?.weakTopicPriority || []).slice(0, 2);
   const improvementInsight = buildImprovementInsight(allAttempts || []);
+  const transformation = buildTransformationSummary(allAttempts || []);
   const habit = {
     dailyGoal: performance?.dailyGoal || 10,
     todayCompleted: performance?.todayCompleted || 0,
@@ -139,6 +168,56 @@ const getAdaptiveAnalytics = async (userId) => {
     longestStreak: performance?.longestStreak || 0,
     streakDays: performance?.streakDays || [],
   };
+
+  const examReadiness = computeExamReadiness({
+    overallAccuracy: performance?.overallAccuracy || 0,
+    currentStreak: performance?.currentStreak || 0,
+    weeklyTrend: performance?.weeklyTrend || [],
+    topicStats: performance?.topicStats || [],
+  });
+
+  const urgency = buildUrgencyAlerts({
+    lastPracticeDate: performance?.lastPracticeDate,
+    weakTopicPriority: performance?.weakTopicPriority || [],
+    allAttempts,
+  });
+
+  const readiness = inferReadinessStatus({
+    examReadiness,
+    dueMistakeCount,
+    hoursInactive: urgency.hoursInactive,
+  });
+
+  const percentile = estimatePercentile({
+    readinessScore: examReadiness.score,
+    accuracy: performance?.overallAccuracy || 0,
+    consistency: examReadiness.breakdown.consistency,
+  });
+
+  const benchmark = {
+    percentile,
+    aheadOf: percentile,
+    estimated: true,
+    message: `You are ahead of ${percentile}% of students.`,
+    top10Advice: rankAdvice({
+      percentile,
+      weakTopicPriority: performance?.weakTopicPriority || [],
+    }),
+  };
+
+  const noWeakTopics = !(performance?.weakTopicPriority || []).length;
+  const noMistakes = dueMistakeCount === 0 && !(mistakeBank?.repeatedMistakes || []).length;
+
+  const notifications = buildNotifications({
+    habit,
+    dueMistakeCount,
+    urgency,
+    weakTopicPriority: performance?.weakTopicPriority || [],
+    noWeakTopics,
+    noMistakes,
+  });
+
+  const xp = calculateXpSummary(allAttempts || []);
 
   const preferredTopic = focusToday[0]
     ? `${focusToday[0].subject} - ${focusToday[0].topic}`
@@ -165,6 +244,21 @@ const getAdaptiveAnalytics = async (userId) => {
     habit,
     focusToday,
     improvementInsight,
+    transformation,
+    urgency,
+    readiness,
+    examReadiness,
+    benchmark,
+    notifications,
+    xp,
+    emptyStateGuidance: {
+      noWeakTopics,
+      noMistakes,
+      weakTopicMessage: noWeakTopics
+        ? 'No weak topics detected. Advance to harder level.'
+        : '',
+      mistakeMessage: noMistakes ? 'Strong consistency. No pending mistakes now.' : '',
+    },
     nextAction: {
       ...nextAction,
       dueMistakeCount,

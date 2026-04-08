@@ -60,6 +60,14 @@ const DashboardPage = () => {
   const improvementInsight = analytics?.improvementInsight?.text || '';
   const nextAction = analytics?.nextAction || null;
   const habit = analytics?.habit || { dailyGoal: 10, todayCompleted: 0, currentStreak: 0, remainingToday: 10 };
+  const urgency = analytics?.urgency || { alerts: [] };
+  const readiness = analytics?.readiness || { status: 'yellow', value: 50 };
+  const examReadiness = analytics?.examReadiness || { score: 0, breakdown: {} };
+  const benchmark = analytics?.benchmark || null;
+  const notifications = analytics?.notifications || [];
+  const transformation = analytics?.transformation || { cards: [], mostImproved: null };
+  const emptyStateGuidance = analytics?.emptyStateGuidance || { noWeakTopics: false, noMistakes: false };
+  const xp = analytics?.xp || { totalXp: 0, weeklyXp: 0, level: 1 };
   const frequentFailedTopics = analytics?.mistakeBank?.frequentFailedTopics || [];
   const repeatedMistakes = analytics?.mistakeBank?.repeatedMistakes || [];
 
@@ -91,6 +99,51 @@ const DashboardPage = () => {
           <span className="progress-tag">Daily Goal: {habit.todayCompleted}/{habit.dailyGoal}</span>
           <span className="progress-tag">Streak: {habit.currentStreak} day{habit.currentStreak === 1 ? '' : 's'}</span>
           <span className="progress-tag">Remaining Today: {habit.remainingToday}</span>
+          <span className="progress-tag">Level {xp.level} • {xp.totalXp} XP</span>
+        </div>
+      </section>
+
+      <section className="panel urgency-panel">
+        <div className="urgency-head">
+          <h3>Urgency & Readiness</h3>
+          <span className={`status-dot status-${readiness.status}`}>
+            {readiness.status.toUpperCase()}
+          </span>
+        </div>
+        <div className="urgency-alerts">
+          {(urgency.alerts || []).map((alert) => (
+            <article key={alert.code} className={`urgency-item urgency-${alert.level}`}>
+              <p>{alert.text}</p>
+            </article>
+          ))}
+          {!urgency.alerts?.length && <p>No critical alerts right now.</p>}
+        </div>
+        <div className="readiness-grid">
+          <article className="priority-item">
+            <h4>Exam Readiness Score</h4>
+            <strong className="readiness-score">{Number(examReadiness.score || 0).toFixed(1)} / 100</strong>
+            <small>Accuracy {Number(examReadiness?.breakdown?.accuracy || 0).toFixed(1)}%</small>
+            <small>Consistency {Number(examReadiness?.breakdown?.consistency || 0).toFixed(1)}%</small>
+            <small>Coverage {Number(examReadiness?.breakdown?.coverage || 0).toFixed(1)}%</small>
+          </article>
+          <article className="priority-item">
+            <h4>Benchmark (Estimated)</h4>
+            <p>{benchmark?.message || 'Benchmark will appear after more attempts.'}</p>
+            {benchmark?.top10Advice && <small>{benchmark.top10Advice}</small>}
+          </article>
+        </div>
+      </section>
+
+      <section className="panel">
+        <h3>Notification Center</h3>
+        <div className="notification-list">
+          {notifications.map((note) => (
+            <article key={note.type} className={`notification-item notification-${note.tone}`}>
+              <h4>{note.title}</h4>
+              <p>{note.text}</p>
+            </article>
+          ))}
+          {!notifications.length && <p>No reminders right now.</p>}
         </div>
       </section>
 
@@ -110,13 +163,15 @@ const DashboardPage = () => {
           {focusToday.length ? (
             <ul className="action-list">
               {focusToday.map((entry) => (
-                <li key={`${entry.subject}-${entry.topic}`}>
-                  {entry.subject} - {entry.topic} (Focus {Number(entry.focusScore || 0).toFixed(1)})
+                <li key={`${entry.subject}-${entry.topic}-${entry.subtopic || 'General'}`}>
+                  {entry.subject} - {entry.topic}
+                  {entry.subtopic && entry.subtopic !== 'General' ? ` (${entry.subtopic})` : ''}
+                  {' '} (Focus {Number(entry.focusScore || 0).toFixed(1)})
                 </li>
               ))}
             </ul>
           ) : (
-            <p>No weak-topic focus generated yet.</p>
+            <p>{emptyStateGuidance.noWeakTopics ? 'No weak topics. Advance to harder level.' : 'No weak-topic focus generated yet.'}</p>
           )}
         </article>
         <article className="action-card">
@@ -171,9 +226,28 @@ const DashboardPage = () => {
               </span>
             ))
           ) : (
-            <p>No weak topics yet. Keep practicing to generate insights.</p>
+            <p>{emptyStateGuidance.noWeakTopics ? 'No weak topics. You can advance to a harder adaptive level now.' : 'No weak topics yet. Keep practicing to generate insights.'}</p>
           )}
         </div>
+      </section>
+
+      <section className="panel">
+        <h3>Before vs Now</h3>
+        <div className="transformation-grid">
+          {(transformation.cards || []).map((card) => (
+            <article key={`${card.subject}-${card.topic}`} className="transformation-card">
+              <h4>{card.subject} - {card.topic}</h4>
+              <p>{card.beforeAccuracy}% → {card.nowAccuracy}%</p>
+              <small>{card.delta >= 0 ? `+${card.delta}` : card.delta}% change</small>
+            </article>
+          ))}
+          {!transformation.cards?.length && <p>Complete more sessions to unlock transformation cards.</p>}
+        </div>
+        {!!transformation.mostImproved && (
+          <p className="most-improved-line">
+            Most improved: {transformation.mostImproved.topic} ({transformation.mostImproved.beforeAccuracy}% → {transformation.mostImproved.nowAccuracy}%).
+          </p>
+        )}
       </section>
 
       <section className="panel">
@@ -192,9 +266,12 @@ const DashboardPage = () => {
               const avgTime = Number(entry.avgTimeTakenSec || 0);
 
               return (
-                <article key={`${entry.subject}-${entry.topic}`} className="priority-item">
+                <article key={`${entry.subject}-${entry.topic}-${entry.subtopic || 'General'}`} className="priority-item">
                   <div className="priority-head">
-                    <h4>{entry.subject} - {entry.topic}</h4>
+                    <h4>
+                      {entry.subject} - {entry.topic}
+                      {entry.subtopic && entry.subtopic !== 'General' ? ` (${entry.subtopic})` : ''}
+                    </h4>
                     <span className="priority-score">Focus {focusScore.toFixed(1)}</span>
                   </div>
                   <div className="priority-metrics">
@@ -216,8 +293,9 @@ const DashboardPage = () => {
           <article className="priority-item">
             <h4>Frequently Failed Topics</h4>
             {(frequentFailedTopics || []).slice(0, 4).map((entry) => (
-              <p key={`${entry.subject}-${entry.topic}`}>
-                {entry.subject} - {entry.topic}: {entry.failures} mistakes
+              <p key={`${entry.subject}-${entry.topic}-${entry.subtopic || 'General'}`}>
+                {entry.subject} - {entry.topic}
+                {entry.subtopic && entry.subtopic !== 'General' ? ` (${entry.subtopic})` : ''}: {entry.failures} mistakes
               </p>
             ))}
             {!frequentFailedTopics.length && <p>No frequent failures yet.</p>}
@@ -229,7 +307,9 @@ const DashboardPage = () => {
                 {entry.subject} - {entry.topic}: {entry.failures} repeats
               </p>
             ))}
-            {!repeatedMistakes.length && <p>No repeated mistakes detected.</p>}
+            {!repeatedMistakes.length && (
+              <p>{emptyStateGuidance.noMistakes ? 'Strong consistency. No repeated mistakes detected.' : 'No repeated mistakes detected.'}</p>
+            )}
           </article>
         </div>
       </section>

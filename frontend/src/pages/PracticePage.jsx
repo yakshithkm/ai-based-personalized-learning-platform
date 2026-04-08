@@ -18,6 +18,7 @@ const PracticePage = () => {
   const [focusMode, setFocusMode] = useState(false);
   const [sessionResults, setSessionResults] = useState([]);
   const [sessionMeta, setSessionMeta] = useState(null);
+  const [xpPulse, setXpPulse] = useState(0);
 
   useEffect(() => {
     const loadSubjects = async () => {
@@ -126,6 +127,7 @@ const PracticePage = () => {
         timeTakenSec,
       });
       setResult(data.result);
+      setXpPulse(data.result?.xpEarned || 0);
       setSessionResults((prev) => [
         ...prev,
         {
@@ -133,6 +135,7 @@ const PracticePage = () => {
           topic: `${question.subject} - ${question.topic}`,
           isCorrect: data.result.isCorrect,
           performanceLabel: data.result.performanceLabel,
+          xpEarned: data.result?.xpEarned || 0,
         },
       ]);
     } catch (err) {
@@ -181,6 +184,8 @@ const PracticePage = () => {
       ? `Focus on ${weakAreas[0]} first, then continue guided practice.`
       : 'You performed well. Increase difficulty in your strongest topic next.';
 
+    const earnedXp = sessionResults.reduce((sum, entry) => sum + Number(entry.xpEarned || 0), 0);
+
     navigate('/session-summary', {
       state: {
         summary: {
@@ -189,11 +194,18 @@ const PracticePage = () => {
           accuracy: Number(accuracy.toFixed(1)),
           weakAreas,
           improvementSuggestion,
+          earnedXp,
           nextRecommendedSession: sessionMeta?.mix || null,
         },
       },
     });
   };
+
+  const aiLabels = question?.aiSignals?.labels || (recommendedMode || focusMode ? ['AI-selected question'] : []);
+  const aiWhy = question?.aiSignals?.why ||
+    ((recommendedMode || focusMode)
+      ? 'Selected based on your recent performance and adaptive strategy.'
+      : 'Question loaded from your current filters.');
 
   return (
     <div className="page-grid">
@@ -248,6 +260,20 @@ const PracticePage = () => {
 
           <p>{question.text}</p>
 
+          {(recommendedMode || focusMode) && (
+            <div className="ai-meta-box">
+              <div className="chip-wrap">
+                {aiLabels.map((label) => (
+                  <span key={label} className="chip ai-chip">{label}</span>
+                ))}
+              </div>
+              <small>WHY: {aiWhy}</small>
+              {question?.aiSignals?.adaptiveDifficultyApplied && (
+                <small>Adaptive difficulty applied for this step.</small>
+              )}
+            </div>
+          )}
+
           <div className="option-list">
             {question.options.map((option, idx) => (
               <button
@@ -271,6 +297,7 @@ const PracticePage = () => {
             <div className={`feedback-box ${result.isCorrect ? 'feedback-correct' : 'feedback-wrong'}`}>
               <strong>{result.isCorrect ? 'Correct Answer' : 'Incorrect Answer'}</strong>
               <p className="correct-answer-text">Correct answer: {result.correctAnswer}</p>
+              {!!xpPulse && <p className="xp-pop">+{xpPulse} XP earned</p>}
               <p>{result.explanation}</p>
               <p className="improvement-tip">Tip: {result.improvementTip}</p>
               {result.performanceLabel && <p className="improvement-tip">Performance: {result.performanceLabel}</p>}

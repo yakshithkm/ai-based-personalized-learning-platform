@@ -16,6 +16,12 @@ const {
   getMistakeBankForUser,
 } = require('../services/progressTracker');
 
+const pointsForAttempt = ({ isCorrect, timeTakenSec }) => {
+  const base = isCorrect ? 12 : 5;
+  const speedBonus = isCorrect && Number(timeTakenSec || 0) <= 35 ? 3 : 0;
+  return base + speedBonus;
+};
+
 const submitAttempt = async (req, res, next) => {
   try {
     const { questionId, selectedAnswerIndex, timeTakenSec } = req.body;
@@ -116,6 +122,8 @@ const submitAttempt = async (req, res, next) => {
       performanceLabel,
     });
 
+    const xpEarned = pointsForAttempt({ isCorrect, timeTakenSec: Number(timeTakenSec) });
+
     return res.status(201).json({
       message: 'Attempt submitted',
       attempt,
@@ -129,6 +137,7 @@ const submitAttempt = async (req, res, next) => {
         performanceLabel,
         mistakeClassification,
         motivationMessage,
+        xpEarned,
         mistakePatternCount: commonMistakePattern.count,
         actions: {
           retrySimilarQuestion: {

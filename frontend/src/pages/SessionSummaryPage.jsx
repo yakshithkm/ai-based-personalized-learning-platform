@@ -24,6 +24,7 @@ const SessionSummaryPage = () => {
       <section className="panel hero-panel">
         <h2>Session Summary</h2>
         <p>Review your performance and continue with smart next steps.</p>
+        {!!summary.earnedXp && <p className="xp-pop summary-xp">Session reward: +{summary.earnedXp} XP</p>}
       </section>
 
       <section className="panel stats-grid">
