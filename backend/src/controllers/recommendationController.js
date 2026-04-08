@@ -8,7 +8,7 @@ const getRecommendations = async (req, res, next) => {
     if (!hasAttempts) {
       const starterQuestions = await Question.find({ examType: req.user.targetExam })
         .limit(10)
-        .select('-correctAnswerIndex')
+        .select('-correctAnswerIndex -correctAnswer')
         .lean();
 
       const starterWithSignals = starterQuestions.map((question) => ({

@@ -1,0 +1,902 @@
+[
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole and Mass",
+    "difficulty": "Easy",
+    "text": "How many molecules are present in 1 mole of a substance?",
+    "options": [
+      "6.022 × 10^23",
+      "3.01 × 10^23",
+      "1.0 × 10^22",
+      "9.11 × 10^31"
+    ],
+    "correctAnswer": "6.022 × 10^23",
+    "correctAnswerIndex": 0,
+    "explanation": "One mole contains Avogadro’s number of entities.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro Number",
+    "difficulty": "Medium",
+    "text": "How many moles are present in 44 g of CO2?",
+    "options": [
+      "0.5 mole",
+      "1 mole",
+      "2 mole",
+      "4 mole"
+    ],
+    "correctAnswer": "1 mole",
+    "correctAnswerIndex": 1,
+    "explanation": "Molar mass of CO2 is 44 g/mol.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole and Mass",
+    "difficulty": "Hard",
+    "text": "Molar mass of H2O is:",
+    "options": [
+      "16 g/mol",
+      "18 g/mol",
+      "20 g/mol",
+      "22 g/mol"
+    ],
+    "correctAnswer": "18 g/mol",
+    "correctAnswerIndex": 1,
+    "explanation": "2 + 16 = 18 g/mol.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro Number",
+    "difficulty": "Easy",
+    "text": "How many atoms are in 2 moles of helium?",
+    "options": [
+      "6.022 × 10^23",
+      "1.204 × 10^24",
+      "3.01 × 10^23",
+      "2.0 × 10^23"
+    ],
+    "correctAnswer": "1.204 × 10^24",
+    "correctAnswerIndex": 1,
+    "explanation": "Multiply Avogadro’s number by 2.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole and Mass",
+    "difficulty": "Medium",
+    "text": "Volume of 1 mole of ideal gas at STP is:",
+    "options": [
+      "11.2 L",
+      "22.4 L",
+      "44.8 L",
+      "1.0 L"
+    ],
+    "correctAnswer": "22.4 L",
+    "correctAnswerIndex": 1,
+    "explanation": "Molar volume at STP is 22.4 L.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro Number",
+    "difficulty": "Hard",
+    "text": "How many moles are in 11.2 L of ideal gas at STP?",
+    "options": [
+      "0.25 mole",
+      "0.5 mole",
+      "1 mole",
+      "2 mole"
+    ],
+    "correctAnswer": "0.5 mole",
+    "correctAnswerIndex": 1,
+    "explanation": "11.2 is half of 22.4.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole and Mass",
+    "difficulty": "Easy",
+    "text": "If 2 moles contain x particles, x equals:",
+    "options": [
+      "3.01 × 10^23",
+      "6.02 × 10^23",
+      "1.204 × 10^24",
+      "2.408 × 10^24"
+    ],
+    "correctAnswer": "1.204 × 10^24",
+    "correctAnswerIndex": 2,
+    "explanation": "2 × Avogadro’s number.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro Number",
+    "difficulty": "Medium",
+    "text": "How many molecules are in 0.5 mole of a substance?",
+    "options": [
+      "3.01 × 10^23",
+      "6.02 × 10^23",
+      "1.2 × 10^24",
+      "9.0 × 10^22"
+    ],
+    "correctAnswer": "3.01 × 10^23",
+    "correctAnswerIndex": 0,
+    "explanation": "Half of Avogadro’s number.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole and Mass",
+    "difficulty": "Hard",
+    "text": "Molar mass of NaCl is approximately:",
+    "options": [
+      "23 g/mol",
+      "35.5 g/mol",
+      "58.5 g/mol",
+      "60 g/mol"
+    ],
+    "correctAnswer": "58.5 g/mol",
+    "correctAnswerIndex": 2,
+    "explanation": "Na + Cl = 23 + 35.5.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro Number",
+    "difficulty": "Easy",
+    "text": "Mass of 1 mole of oxygen gas O2 is:",
+    "options": [
+      "16 g",
+      "24 g",
+      "32 g",
+      "44 g"
+    ],
+    "correctAnswer": "32 g",
+    "correctAnswerIndex": 2,
+    "explanation": "O2 has atomic mass 16 × 2.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Subatomic Particles",
+    "difficulty": "Medium",
+    "text": "Atomic number of Carbon is:",
+    "options": [
+      "4",
+      "6",
+      "8",
+      "12"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Carbon has 6 protons.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Hard",
+    "text": "Which particle has a positive charge?",
+    "options": [
+      "Electron",
+      "Neutron",
+      "Proton",
+      "Photon"
+    ],
+    "correctAnswer": "Proton",
+    "correctAnswerIndex": 2,
+    "explanation": "Protons are positively charged.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Subatomic Particles",
+    "difficulty": "Easy",
+    "text": "Electrons were discovered by:",
+    "options": [
+      "Rutherford",
+      "Thomson",
+      "Bohr",
+      "Mendel"
+    ],
+    "correctAnswer": "Thomson",
+    "correctAnswerIndex": 1,
+    "explanation": "J. J. Thomson discovered the electron.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Medium",
+    "text": "Maximum electrons in the first shell is:",
+    "options": [
+      "2",
+      "8",
+      "18",
+      "32"
+    ],
+    "correctAnswer": "2",
+    "correctAnswerIndex": 0,
+    "explanation": "First shell has only 2 electrons.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Subatomic Particles",
+    "difficulty": "Hard",
+    "text": "The mass number is the sum of:",
+    "options": [
+      "Protons and electrons",
+      "Protons and neutrons",
+      "Neutrons and electrons",
+      "Only protons"
+    ],
+    "correctAnswer": "Protons and neutrons",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass number equals protons + neutrons.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Easy",
+    "text": "The charge of an electron is:",
+    "options": [
+      "+1",
+      "0",
+      "-1",
+      "+2"
+    ],
+    "correctAnswer": "-1",
+    "correctAnswerIndex": 2,
+    "explanation": "Electron has negative charge.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Subatomic Particles",
+    "difficulty": "Medium",
+    "text": "Which of these is neutral?",
+    "options": [
+      "Proton",
+      "Electron",
+      "Neutron",
+      "Positron"
+    ],
+    "correctAnswer": "Neutron",
+    "correctAnswerIndex": 2,
+    "explanation": "Neutrons carry no charge.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Hard",
+    "text": "Bohr model explained:",
+    "options": [
+      "Particle spin",
+      "Hydrogen spectrum",
+      "Chemical bonding",
+      "Radioactivity"
+    ],
+    "correctAnswer": "Hydrogen spectrum",
+    "correctAnswerIndex": 1,
+    "explanation": "Bohr explained line spectrum of hydrogen.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Subatomic Particles",
+    "difficulty": "Easy",
+    "text": "The number of electrons in a neutral sodium atom is:",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "23"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Neutral atom has electrons equal to atomic number.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Medium",
+    "text": "Which shell is closest to the nucleus?",
+    "options": [
+      "K shell",
+      "L shell",
+      "M shell",
+      "N shell"
+    ],
+    "correctAnswer": "K shell",
+    "correctAnswerIndex": 0,
+    "explanation": "K shell is the first shell.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups",
+    "difficulty": "Easy",
+    "text": "The first element in the periodic table is:",
+    "options": [
+      "Helium",
+      "Hydrogen",
+      "Lithium",
+      "Oxygen"
+    ],
+    "correctAnswer": "Hydrogen",
+    "correctAnswerIndex": 1,
+    "explanation": "Hydrogen has atomic number 1.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods",
+    "difficulty": "Medium",
+    "text": "Group 18 elements are called:",
+    "options": [
+      "Alkali metals",
+      "Halogens",
+      "Noble gases",
+      "Transition metals"
+    ],
+    "correctAnswer": "Noble gases",
+    "correctAnswerIndex": 2,
+    "explanation": "They are chemically inert in general.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups",
+    "difficulty": "Hard",
+    "text": "Periodic table is arranged by increasing:",
+    "options": [
+      "Mass number",
+      "Atomic number",
+      "Valency",
+      "Density"
+    ],
+    "correctAnswer": "Atomic number",
+    "correctAnswerIndex": 1,
+    "explanation": "Modern periodic table follows atomic number.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods",
+    "difficulty": "Easy",
+    "text": "Which is an alkali metal?",
+    "options": [
+      "Sodium",
+      "Chlorine",
+      "Oxygen",
+      "Argon"
+    ],
+    "correctAnswer": "Sodium",
+    "correctAnswerIndex": 0,
+    "explanation": "Sodium belongs to group 1.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups",
+    "difficulty": "Medium",
+    "text": "Which of these has the highest electronegativity?",
+    "options": [
+      "Fluorine",
+      "Sodium",
+      "Potassium",
+      "Calcium"
+    ],
+    "correctAnswer": "Fluorine",
+    "correctAnswerIndex": 0,
+    "explanation": "Fluorine is most electronegative.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods",
+    "difficulty": "Hard",
+    "text": "Elements in the same group have similar:",
+    "options": [
+      "Atomic mass",
+      "Valency",
+      "Density",
+      "State only"
+    ],
+    "correctAnswer": "Valency",
+    "correctAnswerIndex": 1,
+    "explanation": "Same group generally have similar valence electrons.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups",
+    "difficulty": "Easy",
+    "text": "Which is a halogen?",
+    "options": [
+      "Neon",
+      "Fluorine",
+      "Magnesium",
+      "Iron"
+    ],
+    "correctAnswer": "Fluorine",
+    "correctAnswerIndex": 1,
+    "explanation": "Fluorine is group 17.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods",
+    "difficulty": "Medium",
+    "text": "The number of periods in the periodic table is:",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "7",
+    "correctAnswerIndex": 2,
+    "explanation": "There are 7 periods.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups",
+    "difficulty": "Hard",
+    "text": "What is the symbol of sodium?",
+    "options": [
+      "Na",
+      "So",
+      "Sd",
+      "Sn"
+    ],
+    "correctAnswer": "Na",
+    "correctAnswerIndex": 0,
+    "explanation": "Sodium symbol is Na.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods",
+    "difficulty": "Easy",
+    "text": "Which element is in group 2?",
+    "options": [
+      "Magnesium",
+      "Chlorine",
+      "Carbon",
+      "Neon"
+    ],
+    "correctAnswer": "Magnesium",
+    "correctAnswerIndex": 0,
+    "explanation": "Magnesium is an alkaline earth metal.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Bond Type",
+    "difficulty": "Hard",
+    "text": "Which bond involves complete transfer of electrons?",
+    "options": [
+      "Covalent",
+      "Ionic",
+      "Hydrogen",
+      "Metallic"
+    ],
+    "correctAnswer": "Ionic",
+    "correctAnswerIndex": 1,
+    "explanation": "Ionic bonding involves electron transfer.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Molecular Structure",
+    "difficulty": "Easy",
+    "text": "A bond formed by sharing electrons is:",
+    "options": [
+      "Ionic",
+      "Covalent",
+      "Coordinate only",
+      "Metallic"
+    ],
+    "correctAnswer": "Covalent",
+    "correctAnswerIndex": 1,
+    "explanation": "Covalent bonds involve sharing.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Bond Type",
+    "difficulty": "Medium",
+    "text": "The bond between Na and Cl in NaCl is:",
+    "options": [
+      "Ionic",
+      "Covalent",
+      "Hydrogen",
+      "Van der Waals"
+    ],
+    "correctAnswer": "Ionic",
+    "correctAnswerIndex": 0,
+    "explanation": "Sodium transfers electron to chlorine.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Molecular Structure",
+    "difficulty": "Hard",
+    "text": "Which molecule has a coordinate bond?",
+    "options": [
+      "NH4+",
+      "O2",
+      "H2",
+      "Cl2"
+    ],
+    "correctAnswer": "NH4+",
+    "correctAnswerIndex": 0,
+    "explanation": "Ammonium ion forms through coordinate donation.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Bond Type",
+    "difficulty": "Easy",
+    "text": "Hydrogen bonding is strongest in:",
+    "options": [
+      "H2S",
+      "H2O",
+      "HCl",
+      "CH4"
+    ],
+    "correctAnswer": "H2O",
+    "correctAnswerIndex": 1,
+    "explanation": "Water shows strong hydrogen bonding.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Molecular Structure",
+    "difficulty": "Medium",
+    "text": "Metallic bonding is found in:",
+    "options": [
+      "NaCl",
+      "Copper",
+      "CO2",
+      "NH3"
+    ],
+    "correctAnswer": "Copper",
+    "correctAnswerIndex": 1,
+    "explanation": "Metals exhibit metallic bonding.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Bond Type",
+    "difficulty": "Hard",
+    "text": "A covalent bond usually forms between:",
+    "options": [
+      "Metal and non-metal",
+      "Two non-metals",
+      "Two metals",
+      "Noble gases"
+    ],
+    "correctAnswer": "Two non-metals",
+    "correctAnswerIndex": 1,
+    "explanation": "Covalent bonding usually occurs between non-metals.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Molecular Structure",
+    "difficulty": "Easy",
+    "text": "What is the main reason atoms form bonds?",
+    "options": [
+      "To become unstable",
+      "To lower energy",
+      "To increase charge",
+      "To decrease mass"
+    ],
+    "correctAnswer": "To lower energy",
+    "correctAnswerIndex": 1,
+    "explanation": "Bond formation lowers potential energy.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Bond Type",
+    "difficulty": "Medium",
+    "text": "Which force holds positive and negative ions together?",
+    "options": [
+      "Magnetic force",
+      "Electrostatic attraction",
+      "Centrifugal force",
+      "Gravity"
+    ],
+    "correctAnswer": "Electrostatic attraction",
+    "correctAnswerIndex": 1,
+    "explanation": "Oppositely charged ions attract each other.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Molecular Structure",
+    "difficulty": "Hard",
+    "text": "Which is a non-polar covalent molecule?",
+    "options": [
+      "H2O",
+      "NH3",
+      "O2",
+      "HCl"
+    ],
+    "correctAnswer": "O2",
+    "correctAnswerIndex": 2,
+    "explanation": "Two identical atoms share electrons equally.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Chemical Equilibrium",
+    "difficulty": "Medium",
+    "text": "At equilibrium, the rates of forward and reverse reactions are:",
+    "options": [
+      "Unequal",
+      "Equal",
+      "Zero",
+      "Infinite"
+    ],
+    "correctAnswer": "Equal",
+    "correctAnswerIndex": 1,
+    "explanation": "Dynamic equilibrium means equal rates.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier Principle",
+    "difficulty": "Hard",
+    "text": "Equilibrium constant is denoted by:",
+    "options": [
+      "Kc",
+      "Ke",
+      "Kr",
+      "Kv"
+    ],
+    "correctAnswer": "Kc",
+    "correctAnswerIndex": 0,
+    "explanation": "Kc is commonly used for concentration equilibrium.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Chemical Equilibrium",
+    "difficulty": "Easy",
+    "text": "Le Chatelier’s principle predicts the system will:",
+    "options": [
+      "Oppose change",
+      "Amplify change",
+      "Ignore change",
+      "Stop reaction"
+    ],
+    "correctAnswer": "Oppose change",
+    "correctAnswerIndex": 0,
+    "explanation": "A system counteracts applied stress.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier Principle",
+    "difficulty": "Medium",
+    "text": "If product concentration increases, equilibrium shifts:",
+    "options": [
+      "Left",
+      "Right",
+      "No shift",
+      "Stops"
+    ],
+    "correctAnswer": "Left",
+    "correctAnswerIndex": 0,
+    "explanation": "System reduces added product.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Chemical Equilibrium",
+    "difficulty": "Hard",
+    "text": "A catalyst at equilibrium:",
+    "options": [
+      "Changes Kc",
+      "Shifts equilibrium",
+      "Speeds both directions equally",
+      "Stops reaction"
+    ],
+    "correctAnswer": "Speeds both directions equally",
+    "correctAnswerIndex": 2,
+    "explanation": "Catalyst lowers activation energy for both directions.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier Principle",
+    "difficulty": "Easy",
+    "text": "For endothermic forward reaction, increasing temperature shifts equilibrium:",
+    "options": [
+      "Left",
+      "Right",
+      "No shift",
+      "Depends only on pressure"
+    ],
+    "correctAnswer": "Right",
+    "correctAnswerIndex": 1,
+    "explanation": "Heat acts like a reactant.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Chemical Equilibrium",
+    "difficulty": "Medium",
+    "text": "For exothermic forward reaction, increasing temperature shifts equilibrium:",
+    "options": [
+      "Left",
+      "Right",
+      "No shift",
+      "Stops"
+    ],
+    "correctAnswer": "Left",
+    "correctAnswerIndex": 0,
+    "explanation": "System tries to absorb the extra heat.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier Principle",
+    "difficulty": "Hard",
+    "text": "A dynamic equilibrium exists in:",
+    "options": [
+      "Open system only",
+      "Closed system",
+      "Vacuum only",
+      "Solid state only"
+    ],
+    "correctAnswer": "Closed system",
+    "correctAnswerIndex": 1,
+    "explanation": "Equilibrium requires no net exchange with surroundings.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Chemical Equilibrium",
+    "difficulty": "Easy",
+    "text": "If pressure increases for a gaseous equilibrium, system shifts to:",
+    "options": [
+      "More moles of gas",
+      "Fewer moles of gas",
+      "No change",
+      "Solid products only"
+    ],
+    "correctAnswer": "Fewer moles of gas",
+    "correctAnswerIndex": 1,
+    "explanation": "Higher pressure favors fewer gas molecules.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier Principle",
+    "difficulty": "Medium",
+    "text": "Concentration of reactants at equilibrium is:",
+    "options": [
+      "Always zero",
+      "Constant",
+      "Always increasing",
+      "Always decreasing"
+    ],
+    "correctAnswer": "Constant",
+    "correctAnswerIndex": 1,
+    "explanation": "At equilibrium concentrations remain constant.",
+    "mistakeType": "calculation"
+  }
+]

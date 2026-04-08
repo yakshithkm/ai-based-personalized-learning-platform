@@ -31,6 +31,11 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    correctAnswer: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     options: {
       type: [String],
       validate: {
@@ -44,6 +49,12 @@ const questionSchema = new mongoose.Schema(
       required: true,
       min: 0,
       max: 3,
+    },
+    mistakeType: {
+      type: String,
+      enum: ['concept', 'calculation', 'trap'],
+      required: true,
+      default: 'concept',
     },
     explanation: {
       type: String,

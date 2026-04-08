@@ -1,0 +1,902 @@
+[
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Organelle",
+    "difficulty": "Easy",
+    "text": "Powerhouse of the cell is:",
+    "options": [
+      "Nucleus",
+      "Mitochondria",
+      "Golgi body",
+      "Ribosome"
+    ],
+    "correctAnswer": "Mitochondria",
+    "correctAnswerIndex": 1,
+    "explanation": "Mitochondria produce ATP.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Membrane",
+    "difficulty": "Medium",
+    "text": "The site of protein synthesis is:",
+    "options": [
+      "Ribosome",
+      "Lysosome",
+      "Vacuole",
+      "Nucleus"
+    ],
+    "correctAnswer": "Ribosome",
+    "correctAnswerIndex": 0,
+    "explanation": "Ribosomes synthesize proteins.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Organelle",
+    "difficulty": "Hard",
+    "text": "Cell membrane is mainly made of:",
+    "options": [
+      "Protein only",
+      "Phospholipid bilayer",
+      "Cellulose",
+      "Starch"
+    ],
+    "correctAnswer": "Phospholipid bilayer",
+    "correctAnswerIndex": 1,
+    "explanation": "Membrane structure follows the fluid mosaic model.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Membrane",
+    "difficulty": "Easy",
+    "text": "The control center of the cell is:",
+    "options": [
+      "Nucleus",
+      "Mitochondria",
+      "ER",
+      "Golgi body"
+    ],
+    "correctAnswer": "Nucleus",
+    "correctAnswerIndex": 0,
+    "explanation": "Nucleus contains genetic material.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Organelle",
+    "difficulty": "Medium",
+    "text": "Which organelle digests waste?",
+    "options": [
+      "Golgi body",
+      "Lysosome",
+      "Chloroplast",
+      "Ribosome"
+    ],
+    "correctAnswer": "Lysosome",
+    "correctAnswerIndex": 1,
+    "explanation": "Lysosomes contain digestive enzymes.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Membrane",
+    "difficulty": "Hard",
+    "text": "Plant cells have:",
+    "options": [
+      "Centrioles",
+      "Cell wall",
+      "No vacuole",
+      "No nucleus"
+    ],
+    "correctAnswer": "Cell wall",
+    "correctAnswerIndex": 1,
+    "explanation": "Plant cells have a cellulose cell wall.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Organelle",
+    "difficulty": "Easy",
+    "text": "Organelle responsible for photosynthesis is:",
+    "options": [
+      "Mitochondria",
+      "Chloroplast",
+      "Lysosome",
+      "Nucleus"
+    ],
+    "correctAnswer": "Chloroplast",
+    "correctAnswerIndex": 1,
+    "explanation": "Chloroplast contains chlorophyll.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Membrane",
+    "difficulty": "Medium",
+    "text": "The fluid inside the cell is:",
+    "options": [
+      "Cytoplasm",
+      "Plasma",
+      "Xylem",
+      "Sap"
+    ],
+    "correctAnswer": "Cytoplasm",
+    "correctAnswerIndex": 0,
+    "explanation": "Cytoplasm is the cell’s internal fluid matrix.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Organelle",
+    "difficulty": "Hard",
+    "text": "Which structure stores genetic material?",
+    "options": [
+      "Nucleus",
+      "Vacuole",
+      "Ribosome",
+      "Cell wall"
+    ],
+    "correctAnswer": "Nucleus",
+    "correctAnswerIndex": 0,
+    "explanation": "DNA is housed in the nucleus.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "subtopic": "Cell Membrane",
+    "difficulty": "Easy",
+    "text": "The basic structural unit of life is:",
+    "options": [
+      "Tissue",
+      "Organ",
+      "Cell",
+      "System"
+    ],
+    "correctAnswer": "Cell",
+    "correctAnswerIndex": 2,
+    "explanation": "Cells are the fundamental units of life.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Mendelian Inheritance",
+    "difficulty": "Medium",
+    "text": "Father of Genetics is:",
+    "options": [
+      "Darwin",
+      "Mendel",
+      "Lamarck",
+      "Watson"
+    ],
+    "correctAnswer": "Mendel",
+    "correctAnswerIndex": 1,
+    "explanation": "Gregor Mendel discovered inheritance laws.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Genetic Terms",
+    "difficulty": "Hard",
+    "text": "Genes are located on:",
+    "options": [
+      "Ribosomes",
+      "Chromosomes",
+      "Lysosomes",
+      "Centrioles"
+    ],
+    "correctAnswer": "Chromosomes",
+    "correctAnswerIndex": 1,
+    "explanation": "Genes are segments of DNA on chromosomes.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Mendelian Inheritance",
+    "difficulty": "Easy",
+    "text": "A dominant trait appears in:",
+    "options": [
+      "Only homozygous state",
+      "Heterozygous and homozygous dominant",
+      "Only recessive state",
+      "Neither state"
+    ],
+    "correctAnswer": "Heterozygous and homozygous dominant",
+    "correctAnswerIndex": 1,
+    "explanation": "Dominant alleles mask recessive alleles.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Genetic Terms",
+    "difficulty": "Medium",
+    "text": "The process of passing traits from parents to offspring is:",
+    "options": [
+      "Evolution",
+      "Inheritance",
+      "Mutation",
+      "Replication"
+    ],
+    "correctAnswer": "Inheritance",
+    "correctAnswerIndex": 1,
+    "explanation": "Inheritance transmits traits.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Mendelian Inheritance",
+    "difficulty": "Hard",
+    "text": "A genotype is:",
+    "options": [
+      "Physical appearance",
+      "Genetic makeup",
+      "Habit",
+      "Environment"
+    ],
+    "correctAnswer": "Genetic makeup",
+    "correctAnswerIndex": 1,
+    "explanation": "Genotype describes the allele combination.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Genetic Terms",
+    "difficulty": "Easy",
+    "text": "A phenotype is:",
+    "options": [
+      "Genetic code",
+      "Physical appearance",
+      "Chromosome number",
+      "Protein synthesis"
+    ],
+    "correctAnswer": "Physical appearance",
+    "correctAnswerIndex": 1,
+    "explanation": "Phenotype is the observable trait.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Mendelian Inheritance",
+    "difficulty": "Medium",
+    "text": "Offspring from TT × tt will be:",
+    "options": [
+      "All Tt",
+      "All tt",
+      "All TT",
+      "1:1 ratio"
+    ],
+    "correctAnswer": "All Tt",
+    "correctAnswerIndex": 0,
+    "explanation": "Each offspring gets one allele from each parent.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Genetic Terms",
+    "difficulty": "Hard",
+    "text": "Mutation means:",
+    "options": [
+      "Unchanged gene",
+      "Sudden change in DNA",
+      "Protein folding",
+      "Cell division"
+    ],
+    "correctAnswer": "Sudden change in DNA",
+    "correctAnswerIndex": 1,
+    "explanation": "Mutation is a change in genetic material.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Mendelian Inheritance",
+    "difficulty": "Easy",
+    "text": "Which scientist worked on pea plants?",
+    "options": [
+      "Mendel",
+      "Darwin",
+      "Miller",
+      "Morse"
+    ],
+    "correctAnswer": "Mendel",
+    "correctAnswerIndex": 0,
+    "explanation": "Mendel performed pea plant experiments.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "subtopic": "Genetic Terms",
+    "difficulty": "Medium",
+    "text": "Alleles are:",
+    "options": [
+      "Different forms of a gene",
+      "Different organs",
+      "Different proteins",
+      "Different cells"
+    ],
+    "correctAnswer": "Different forms of a gene",
+    "correctAnswerIndex": 0,
+    "explanation": "Alleles are alternate gene forms.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Circulatory System",
+    "difficulty": "Easy",
+    "text": "The normal human heart has how many chambers?",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "4",
+    "correctAnswerIndex": 2,
+    "explanation": "The heart has two atria and two ventricles.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Respiration and Excretion",
+    "difficulty": "Medium",
+    "text": "The oxygen-carrying pigment in blood is:",
+    "options": [
+      "Chlorophyll",
+      "Hemoglobin",
+      "Myoglobin",
+      "Keratin"
+    ],
+    "correctAnswer": "Hemoglobin",
+    "correctAnswerIndex": 1,
+    "explanation": "Hemoglobin carries oxygen in red blood cells.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Circulatory System",
+    "difficulty": "Hard",
+    "text": "The largest organ in the human body is:",
+    "options": [
+      "Heart",
+      "Brain",
+      "Skin",
+      "Liver"
+    ],
+    "correctAnswer": "Skin",
+    "correctAnswerIndex": 2,
+    "explanation": "Skin is the largest organ.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Respiration and Excretion",
+    "difficulty": "Easy",
+    "text": "Digestion of proteins begins in the:",
+    "options": [
+      "Mouth",
+      "Stomach",
+      "Small intestine",
+      "Large intestine"
+    ],
+    "correctAnswer": "Stomach",
+    "correctAnswerIndex": 1,
+    "explanation": "Pepsin in the stomach starts protein digestion.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Circulatory System",
+    "difficulty": "Medium",
+    "text": "The functional unit of kidney is:",
+    "options": [
+      "Nephron",
+      "Neuron",
+      "Alveolus",
+      "Villus"
+    ],
+    "correctAnswer": "Nephron",
+    "correctAnswerIndex": 0,
+    "explanation": "Nephrons filter blood.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Respiration and Excretion",
+    "difficulty": "Hard",
+    "text": "The main function of lungs is:",
+    "options": [
+      "Digestion",
+      "Exchange gases",
+      "Pump blood",
+      "Store bile"
+    ],
+    "correctAnswer": "Exchange gases",
+    "correctAnswerIndex": 1,
+    "explanation": "Lungs exchange oxygen and carbon dioxide.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Circulatory System",
+    "difficulty": "Easy",
+    "text": "The hormone that lowers blood glucose is:",
+    "options": [
+      "Adrenaline",
+      "Insulin",
+      "Thyroxine",
+      "Estrogen"
+    ],
+    "correctAnswer": "Insulin",
+    "correctAnswerIndex": 1,
+    "explanation": "Insulin reduces blood sugar levels.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Respiration and Excretion",
+    "difficulty": "Medium",
+    "text": "The valve between left atrium and left ventricle is:",
+    "options": [
+      "Tricuspid",
+      "Bicuspid",
+      "Semilunar",
+      "Mitral only"
+    ],
+    "correctAnswer": "Bicuspid",
+    "correctAnswerIndex": 1,
+    "explanation": "Also called mitral valve.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Circulatory System",
+    "difficulty": "Hard",
+    "text": "The normal resting pulse rate is approximately:",
+    "options": [
+      "20-30",
+      "40-50",
+      "60-100",
+      "120-140"
+    ],
+    "correctAnswer": "60-100",
+    "correctAnswerIndex": 2,
+    "explanation": "Adult resting pulse is around this range.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Human Physiology",
+    "subtopic": "Respiration and Excretion",
+    "difficulty": "Easy",
+    "text": "The process of taking in oxygen and giving out carbon dioxide is called:",
+    "options": [
+      "Respiration",
+      "Photosynthesis",
+      "Transpiration",
+      "Osmosis"
+    ],
+    "correctAnswer": "Respiration",
+    "correctAnswerIndex": 0,
+    "explanation": "Respiration involves gas exchange and energy release.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Food Chains",
+    "difficulty": "Hard",
+    "text": "The number of organisms in a food chain is usually:",
+    "options": [
+      "Always equal",
+      "Decreasing at higher levels",
+      "Increasing at higher levels",
+      "Irrelevant"
+    ],
+    "correctAnswer": "Decreasing at higher levels",
+    "correctAnswerIndex": 1,
+    "explanation": "Energy transfer limits higher trophic levels.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Ecosystem Cycles",
+    "difficulty": "Easy",
+    "text": "Green plants in an ecosystem are:",
+    "options": [
+      "Consumers",
+      "Producers",
+      "Decomposers",
+      "Parasites"
+    ],
+    "correctAnswer": "Producers",
+    "correctAnswerIndex": 1,
+    "explanation": "Plants make their own food.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Food Chains",
+    "difficulty": "Medium",
+    "text": "A food chain starts with:",
+    "options": [
+      "Consumers",
+      "Producers",
+      "Decomposers",
+      "Predators"
+    ],
+    "correctAnswer": "Producers",
+    "correctAnswerIndex": 1,
+    "explanation": "Energy enters through producers.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Ecosystem Cycles",
+    "difficulty": "Hard",
+    "text": "Which gas do plants absorb for photosynthesis?",
+    "options": [
+      "Oxygen",
+      "Nitrogen",
+      "Carbon dioxide",
+      "Hydrogen"
+    ],
+    "correctAnswer": "Carbon dioxide",
+    "correctAnswerIndex": 2,
+    "explanation": "Plants use CO2 in photosynthesis.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Food Chains",
+    "difficulty": "Easy",
+    "text": "The study of interactions of organisms and environment is:",
+    "options": [
+      "Genetics",
+      "Ecology",
+      "Anatomy",
+      "Physiology"
+    ],
+    "correctAnswer": "Ecology",
+    "correctAnswerIndex": 1,
+    "explanation": "Ecology studies organism-environment relations.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Ecosystem Cycles",
+    "difficulty": "Medium",
+    "text": "Decomposers are mainly:",
+    "options": [
+      "Birds",
+      "Fungi and bacteria",
+      "Herbivores",
+      "Insects only"
+    ],
+    "correctAnswer": "Fungi and bacteria",
+    "correctAnswerIndex": 1,
+    "explanation": "They break down dead matter.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Food Chains",
+    "difficulty": "Hard",
+    "text": "The 10% law is related to:",
+    "options": [
+      "Cell division",
+      "Energy transfer",
+      "Osmosis",
+      "Mutation"
+    ],
+    "correctAnswer": "Energy transfer",
+    "correctAnswerIndex": 1,
+    "explanation": "Only about 10% energy passes to the next trophic level.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Ecosystem Cycles",
+    "difficulty": "Easy",
+    "text": "Biodiversity refers to:",
+    "options": [
+      "Only plants",
+      "Variety of life forms",
+      "Only animals",
+      "Only microbes"
+    ],
+    "correctAnswer": "Variety of life forms",
+    "correctAnswerIndex": 1,
+    "explanation": "Biodiversity includes all living organisms.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Food Chains",
+    "difficulty": "Medium",
+    "text": "An example of a primary consumer is:",
+    "options": [
+      "Lion",
+      "Grasshopper",
+      "Fungus",
+      "Snake"
+    ],
+    "correctAnswer": "Grasshopper",
+    "correctAnswerIndex": 1,
+    "explanation": "Primary consumers eat producers.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Ecology",
+    "subtopic": "Ecosystem Cycles",
+    "difficulty": "Hard",
+    "text": "The water cycle is powered mainly by:",
+    "options": [
+      "Wind",
+      "Sun",
+      "Moon",
+      "Pressure"
+    ],
+    "correctAnswer": "Sun",
+    "correctAnswerIndex": 1,
+    "explanation": "Solar energy drives evaporation.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Transport",
+    "difficulty": "Easy",
+    "text": "Transport of water in plants occurs through:",
+    "options": [
+      "Phloem",
+      "Xylem",
+      "Cambium",
+      "Stomata"
+    ],
+    "correctAnswer": "Xylem",
+    "correctAnswerIndex": 1,
+    "explanation": "Xylem carries water and minerals.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Photosynthesis",
+    "difficulty": "Medium",
+    "text": "Loss of water vapor from leaves is:",
+    "options": [
+      "Respiration",
+      "Transpiration",
+      "Photosynthesis",
+      "Germination"
+    ],
+    "correctAnswer": "Transpiration",
+    "correctAnswerIndex": 1,
+    "explanation": "Transpiration occurs mainly through stomata.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Transport",
+    "difficulty": "Hard",
+    "text": "The green pigment in plants is:",
+    "options": [
+      "Hemoglobin",
+      "Chlorophyll",
+      "Keratin",
+      "Myosin"
+    ],
+    "correctAnswer": "Chlorophyll",
+    "correctAnswerIndex": 1,
+    "explanation": "Chlorophyll captures light energy.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Photosynthesis",
+    "difficulty": "Easy",
+    "text": "Opening and closing of stomata are controlled by:",
+    "options": [
+      "Guard cells",
+      "Root hairs",
+      "Xylem",
+      "Phloem"
+    ],
+    "correctAnswer": "Guard cells",
+    "correctAnswerIndex": 0,
+    "explanation": "Guard cells regulate stomatal aperture.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Transport",
+    "difficulty": "Medium",
+    "text": "Photosynthesis mainly occurs in:",
+    "options": [
+      "Roots",
+      "Leaves",
+      "Stem bark",
+      "Flowers"
+    ],
+    "correctAnswer": "Leaves",
+    "correctAnswerIndex": 1,
+    "explanation": "Leaves contain chloroplast-rich mesophyll cells.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Photosynthesis",
+    "difficulty": "Hard",
+    "text": "Mineral absorption in plants occurs mainly through:",
+    "options": [
+      "Leaves",
+      "Root hairs",
+      "Stomata",
+      "Seeds"
+    ],
+    "correctAnswer": "Root hairs",
+    "correctAnswerIndex": 1,
+    "explanation": "Root hairs absorb water and minerals.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Transport",
+    "difficulty": "Easy",
+    "text": "Food manufactured in leaves is transported by:",
+    "options": [
+      "Xylem",
+      "Phloem",
+      "Stomata",
+      "Cuticle"
+    ],
+    "correctAnswer": "Phloem",
+    "correctAnswerIndex": 1,
+    "explanation": "Phloem carries prepared food.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Photosynthesis",
+    "difficulty": "Medium",
+    "text": "The process by which seeds sprout is:",
+    "options": [
+      "Pollination",
+      "Germination",
+      "Fertilization",
+      "Transpiration"
+    ],
+    "correctAnswer": "Germination",
+    "correctAnswerIndex": 1,
+    "explanation": "Germination is sprouting of the seed.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Transport",
+    "difficulty": "Hard",
+    "text": "Plants absorb sunlight using:",
+    "options": [
+      "Ribosomes",
+      "Chlorophyll",
+      "Cell wall",
+      "Vacuole"
+    ],
+    "correctAnswer": "Chlorophyll",
+    "correctAnswerIndex": 1,
+    "explanation": "Chlorophyll absorbs light energy.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Plant Physiology",
+    "subtopic": "Photosynthesis",
+    "difficulty": "Easy",
+    "text": "The gas released during photosynthesis is:",
+    "options": [
+      "Carbon dioxide",
+      "Oxygen",
+      "Nitrogen",
+      "Hydrogen"
+    ],
+    "correctAnswer": "Oxygen",
+    "correctAnswerIndex": 1,
+    "explanation": "Oxygen is released as a byproduct.",
+    "mistakeType": "concept"
+  }
+]

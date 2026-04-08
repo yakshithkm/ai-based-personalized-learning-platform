@@ -96,13 +96,13 @@ const fetchQuestionBatch = async ({
 
   let pool = await Question.find({ ...baseQuery, difficulty })
     .limit(Math.max(limit * 4, 12))
-    .select('-correctAnswerIndex')
+    .select('-correctAnswerIndex -correctAnswer')
     .lean();
 
   if (!pool.length) {
     pool = await Question.find(baseQuery)
       .limit(Math.max(limit * 4, 12))
-      .select('-correctAnswerIndex')
+      .select('-correctAnswerIndex -correctAnswer')
       .lean();
   }
 
@@ -189,7 +189,7 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
   const dueMistakeQuestionIds = Array.from(new Set(dueMistakes.map((mistake) => String(mistake.question))));
   if (dueMistakeQuestionIds.length) {
     const dueQuestions = await Question.find({ _id: { $in: dueMistakeQuestionIds } })
-      .select('-correctAnswerIndex')
+      .select('-correctAnswerIndex -correctAnswer')
       .lean();
     pushQuestions(dueQuestions, 'spaced-repetition-due');
   }
@@ -286,7 +286,7 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
       _id: { $nin: Array.from(new Set([...usedIds, ...recentlySeenQuestionIds])) },
     })
       .limit(limit * 2)
-      .select('-correctAnswerIndex')
+      .select('-correctAnswerIndex -correctAnswer')
       .lean();
 
     pushQuestions(sampleItems(fallback, limit - recommendations.length), 'fallback');
@@ -345,7 +345,7 @@ const getFocusSessionQuestions = async ({ userId, targetExam, total = 10 }) => {
       difficulty: 'Hard',
       _id: { $nin: Array.from(usedIds) },
     })
-      .select('-correctAnswerIndex')
+      .select('-correctAnswerIndex -correctAnswer')
       .lean();
   }
 
@@ -355,7 +355,7 @@ const getFocusSessionQuestions = async ({ userId, targetExam, total = 10 }) => {
       difficulty: 'Hard',
       _id: { $nin: Array.from(usedIds) },
     })
-      .select('-correctAnswerIndex')
+      .select('-correctAnswerIndex -correctAnswer')
       .lean();
   }
 

@@ -59,14 +59,14 @@ const getQuestions = async (req, res, next) => {
 
     let questions = await Question.find(filter)
       .limit(Math.min(Number(limit), 50))
-      .select('-correctAnswerIndex');
+      .select('-correctAnswerIndex -correctAnswer');
 
     if (!questions.length && (similarTo || harderThan)) {
       const fallbackFilter = { ...filter };
       delete fallbackFilter.difficulty;
       questions = await Question.find(fallbackFilter)
         .limit(Math.min(Number(limit), 50))
-        .select('-correctAnswerIndex');
+        .select('-correctAnswerIndex -correctAnswer');
     }
 
     return res.json({ count: questions.length, questions });

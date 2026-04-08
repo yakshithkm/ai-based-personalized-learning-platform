@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "seed": "node src/data/seedQuestions.js",
+    "seed": "node seedQuestions.js",
+    "seed:questions": "node seedQuestions.js",
     "test": "cross-env NODE_ENV=test jest --runInBand"
   },
   "dependencies": {
