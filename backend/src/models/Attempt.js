@@ -24,6 +24,11 @@ const attemptSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    subtopic: {
+      type: String,
+      default: 'General',
+      trim: true,
+    },
     difficulty: {
       type: String,
       enum: ['Easy', 'Medium', 'Hard'],

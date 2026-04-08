@@ -40,6 +40,9 @@ const AnalyticsPage = () => {
 
   const bySubject = payload?.attemptsBySubject || [];
   const weakTopicPriority = payload?.weakTopicPriority || [];
+  const weeklyImprovement = payload?.weeklyImprovement || [];
+  const habit = payload?.habit || {};
+  const topicMastery = payload?.topicMastery || [];
   const focusSuggestion = payload?.suggestedFocusTopic || '';
   const accuracyTrend = payload?.accuracyTrend || 'stable';
   const timeAccuracyCorrelation = Number(payload?.timeAccuracyCorrelation || 0);
@@ -83,6 +86,47 @@ const AnalyticsPage = () => {
           <h4>Focus Recommendation</h4>
           <strong className="focus-line">{focusSuggestion || 'Keep practicing'}</strong>
           <p>Next best topic selected by adaptive engine.</p>
+        </div>
+        <div className="metric-card metric-neutral">
+          <h4>Current Streak</h4>
+          <strong>{habit.currentStreak || 0} days</strong>
+          <p>Daily goal: {habit.dailyGoal || 10}, today: {habit.todayCompleted || 0}</p>
+        </div>
+      </section>
+
+      <section className="panel chart-panel">
+        <h3>Weekly Improvement</h3>
+        <p className="chart-caption">Daily accuracy trend over the last 7 days.</p>
+        <ResponsiveContainer width="100%" height={280}>
+          <LineChart data={weeklyImprovement}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.25)" />
+            <XAxis dataKey="day" stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <YAxis stroke="#94a3b8" tickLine={false} axisLine={false} />
+            <Tooltip contentStyle={chartTooltipStyle} cursor={{ stroke: 'rgba(96, 165, 250, 0.2)' }} />
+            <Legend wrapperStyle={{ color: '#cbd5e1' }} />
+            <Line
+              type="monotone"
+              dataKey="accuracy"
+              stroke="#14b8a6"
+              strokeWidth={3}
+              dot={{ r: 4, fill: '#14b8a6' }}
+              activeDot={{ r: 6, fill: '#5eead4' }}
+              isAnimationActive
+              animationDuration={700}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </section>
+
+      <section className="panel">
+        <h3>Streak Visualization</h3>
+        <div className="streak-grid">
+          {(habit.streakDays || []).map((day) => (
+            <article key={day.day} className={`streak-cell ${day.practiced ? 'streak-on' : 'streak-off'}`}>
+              <strong>{day.day.slice(5)}</strong>
+              <small>{day.attempts} attempts</small>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -174,6 +218,31 @@ const AnalyticsPage = () => {
             })
           ) : (
             <p>No heatmap data yet. Solve more questions to unlock topic intensity insights.</p>
+          )}
+        </div>
+      </section>
+
+      <section className="panel">
+        <h3>Topic Mastery</h3>
+        <p className="chart-caption">Mastery combines accuracy and consistent practice volume.</p>
+        <div className="heatmap-grid">
+          {topicMastery.length ? (
+            topicMastery.slice(0, 10).map((entry) => {
+              const mastery = Number(entry.masteryScore || 0);
+              return (
+                <article key={`${entry.subject}-${entry.topic}-${entry.subtopic || 'General'}`} className="heatmap-row">
+                  <div className="heatmap-labels">
+                    <h4>{entry.subject} - {entry.topic}{entry.subtopic && entry.subtopic !== 'General' ? ` (${entry.subtopic})` : ''}</h4>
+                    <small>Mastery {mastery.toFixed(1)} | Acc {Number(entry.accuracy || 0).toFixed(1)}%</small>
+                  </div>
+                  <div className="heatmap-track">
+                    <span className="heatmap-fill" style={{ width: `${Math.max(8, mastery)}%` }} />
+                  </div>
+                </article>
+              );
+            })
+          ) : (
+            <p>No mastery data yet. Solve more questions to build your mastery profile.</p>
           )}
         </div>
       </section>

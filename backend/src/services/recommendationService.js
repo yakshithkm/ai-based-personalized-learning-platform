@@ -20,15 +20,31 @@ const deriveDifficulty = ({ accuracy, fallback = 'Medium' }) => {
   return fallback;
 };
 
-const getTopicKey = (subject, topic) => `${subject}::${topic}`;
+const getTopicKey = (subject, topic, subtopic = 'General') => `${subject}::${topic}::${subtopic}`;
 
-const fetchQuestionBatch = async ({ targetExam, subject, topic, difficulty, excludeIds, limit }) => {
+const fetchQuestionBatch = async ({
+  targetExam,
+  subject,
+  topic,
+  subtopic,
+  difficulty,
+  excludeIds,
+  limit,
+}) => {
   const baseQuery = {
     examType: targetExam,
     subject,
     topic,
     _id: { $nin: Array.from(excludeIds) },
   };
+
+  if (subtopic) {
+    baseQuery.$or = [
+      { subtopic },
+      { subtopic: { $exists: false } },
+      { subtopic: null },
+    ];
+  }
 
   let pool = await Question.find({ ...baseQuery, difficulty })
     .limit(Math.max(limit * 4, 12))
@@ -52,38 +68,50 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
     Attempt.find({ user: userId })
       .sort({ createdAt: -1 })
       .limit(250)
-      .select('question subject topic createdAt')
+      .select('question subject topic subtopic createdAt')
       .lean(),
     Mistake.find({ user: userId, resolved: false, nextReviewAt: { $lte: now } })
       .sort({ nextReviewAt: 1 })
       .limit(20)
-      .select('question subject topic difficulty nextReviewAt repetitionStage')
+      .select('question subject topic subtopic difficulty nextReviewAt repetitionStage')
       .lean(),
     Mistake.find({ user: userId })
       .sort({ createdAt: -1 })
       .limit(80)
-      .select('question subject topic difficulty createdAt')
+      .select('question subject topic subtopic difficulty createdAt')
       .lean(),
     Question.aggregate([
       { $match: { examType: targetExam } },
-      { $group: { _id: { subject: '$subject', topic: '$topic' } } },
+      {
+        $group: {
+          _id: {
+            subject: '$subject',
+            topic: '$topic',
+            subtopic: { $ifNull: ['$subtopic', '$topic'] },
+          },
+        },
+      },
       {
         $project: {
           _id: 0,
           subject: '$_id.subject',
           topic: '$_id.topic',
+          subtopic: '$_id.subtopic',
         },
       },
     ]),
   ]);
 
   const topicStatsMap = new Map(
-    (analysis.topicStats || []).map((row) => [getTopicKey(row.subject, row.topic), row])
+    (analysis.topicStats || []).map((row) => [
+      getTopicKey(row.subject, row.topic, row.subtopic || 'General'),
+      row,
+    ])
   );
   const lastPracticeByTopic = new Map();
   const recentlySeenQuestionIds = new Set();
   attempts.forEach((attempt, index) => {
-    const key = getTopicKey(attempt.subject, attempt.topic);
+    const key = getTopicKey(attempt.subject, attempt.topic, attempt.subtopic || 'General');
     if (!lastPracticeByTopic.has(key)) {
       lastPracticeByTopic.set(key, attempt.createdAt);
     }
@@ -122,32 +150,41 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
       return {
         subject: row.subject,
         topic: row.topic,
+        subtopic: row.subtopic || 'General',
         preferredDifficulty: deriveDifficulty({
           accuracy: row.accuracy,
-          fallback: topicStatsMap.get(key)?.currentDifficulty || 'Medium',
+          fallback:
+            topicStatsMap.get(
+              getTopicKey(row.subject, row.topic, row.subtopic || 'General')
+            )?.currentDifficulty || 'Medium',
         }),
-        score: Number(row.focusScore || 0) + daysSince(lastPracticeByTopic.get(key)) * 4,
+        score:
+          Number(row.focusScore || 0) +
+          daysSince(lastPracticeByTopic.get(getTopicKey(row.subject, row.topic, row.subtopic || 'General'))) * 4,
       };
     })
     .sort((a, b) => b.score - a.score);
 
   const recentMistakeMap = new Map();
   recentMistakes.forEach((mistake) => {
-    const key = getTopicKey(mistake.subject, mistake.topic);
+    const key = getTopicKey(mistake.subject, mistake.topic, mistake.subtopic || 'General');
     if (!recentMistakeMap.has(key)) {
       recentMistakeMap.set(key, mistake);
     }
   });
 
-  const weakSet = new Set(weakCandidates.map((entry) => getTopicKey(entry.subject, entry.topic)));
+  const weakSet = new Set(
+    weakCandidates.map((entry) => getTopicKey(entry.subject, entry.topic, entry.subtopic || 'General'))
+  );
   const recentMistakeCandidates = Array.from(recentMistakeMap.values())
-    .filter((entry) => !weakSet.has(getTopicKey(entry.subject, entry.topic)))
+    .filter((entry) => !weakSet.has(getTopicKey(entry.subject, entry.topic, entry.subtopic || 'General')))
     .map((entry) => {
-      const key = getTopicKey(entry.subject, entry.topic);
+      const key = getTopicKey(entry.subject, entry.topic, entry.subtopic || 'General');
       const stat = topicStatsMap.get(key);
       return {
         subject: entry.subject,
         topic: entry.topic,
+        subtopic: entry.subtopic || 'General',
         preferredDifficulty: deriveDifficulty({
           accuracy: stat?.accuracy,
           fallback: entry.difficulty || stat?.currentDifficulty || 'Medium',
@@ -157,13 +194,18 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
     })
     .sort((a, b) => b.score - a.score);
 
-  const practicedTopics = new Set((analysis.topicStats || []).map((row) => getTopicKey(row.subject, row.topic)));
+  const practicedTopics = new Set(
+    (analysis.topicStats || []).map((row) =>
+      getTopicKey(row.subject, row.topic, row.subtopic || 'General')
+    )
+  );
   const newTopicCandidates = allTopics
-    .filter((topic) => !practicedTopics.has(getTopicKey(topic.subject, topic.topic)))
+    .filter((topic) => !practicedTopics.has(getTopicKey(topic.subject, topic.topic, topic.subtopic || 'General')))
     .slice(0, 20)
     .map((topic) => ({
       subject: topic.subject,
       topic: topic.topic,
+      subtopic: topic.subtopic || 'General',
       preferredDifficulty: 'Medium',
       score: 1,
     }));
@@ -175,6 +217,7 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
         targetExam,
         subject: candidate.subject,
         topic: candidate.topic,
+        subtopic: candidate.subtopic,
         difficulty: candidate.preferredDifficulty,
         excludeIds: new Set([...usedIds, ...recentlySeenQuestionIds]),
         limit: Math.min(2, limit - recommendations.length),
@@ -226,6 +269,67 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
   };
 };
 
+const getFocusSessionQuestions = async ({ userId, targetExam, total = 10 }) => {
+  const sessionSize = Math.min(Math.max(total, 5), 10);
+
+  const recommendationResult = await getRecommendedQuestions({
+    userId,
+    targetExam,
+    limit: Math.max(sessionSize - 1, 5),
+  });
+
+  const usedIds = new Set(recommendationResult.recommendations.map((q) => String(q._id)));
+  const analysis = await analyzePerformance(userId);
+
+  const strongTopic = (analysis.topicStats || [])
+    .filter((row) => Number(row.accuracy || 0) >= 80)
+    .sort((a, b) => Number(b.accuracy || 0) - Number(a.accuracy || 0))[0];
+  let harderQuestion = null;
+
+  if (strongTopic) {
+    harderQuestion = await Question.findOne({
+      examType: targetExam,
+      subject: strongTopic.subject,
+      topic: strongTopic.topic,
+      ...(strongTopic.subtopic ? { subtopic: strongTopic.subtopic } : {}),
+      difficulty: 'Hard',
+      _id: { $nin: Array.from(usedIds) },
+    })
+      .select('-correctAnswerIndex')
+      .lean();
+  }
+
+  if (!harderQuestion) {
+    harderQuestion = await Question.findOne({
+      examType: targetExam,
+      difficulty: 'Hard',
+      _id: { $nin: Array.from(usedIds) },
+    })
+      .select('-correctAnswerIndex')
+      .lean();
+  }
+
+  const questions = [...recommendationResult.recommendations];
+  if (harderQuestion) {
+    questions.push({ ...harderQuestion, recommendationReason: 'slightly-harder-challenge' });
+  }
+
+  return {
+    source: 'focus-session-engine',
+    sessionType: 'focus',
+    totalQuestions: sessionSize,
+    questions: questions.slice(0, sessionSize),
+    mix: {
+      weakTopic: questions.filter((q) => q.recommendationReason === 'weak-topic').length,
+      mistakeBased: questions.filter(
+        (q) => q.recommendationReason === 'recent-mistake' || q.recommendationReason === 'spaced-repetition-due'
+      ).length,
+      harderChallenge: questions.some((q) => q.recommendationReason === 'slightly-harder-challenge') ? 1 : 0,
+    },
+  };
+};
+
 module.exports = {
   getRecommendedQuestions,
+  getFocusSessionQuestions,
 };

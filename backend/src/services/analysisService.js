@@ -40,6 +40,108 @@ const trendFromAttempts = (attempts) => {
   return 'stable';
 };
 
+const startOfDay = (date) => {
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  return d;
+};
+
+const dayKey = (date) => startOfDay(date).toISOString().slice(0, 10);
+
+const habitMetricsFromAttempts = (attempts, dailyGoal = 10) => {
+  if (!attempts.length) {
+    return {
+      dailyGoal,
+      todayCompleted: 0,
+      remainingToday: dailyGoal,
+      currentStreak: 0,
+      longestStreak: 0,
+      lastPracticeDate: null,
+      streakDays: [],
+    };
+  }
+
+  const byDay = new Map();
+  attempts.forEach((attempt) => {
+    const key = dayKey(attempt.createdAt);
+    byDay.set(key, (byDay.get(key) || 0) + 1);
+  });
+
+  const sortedDays = Array.from(byDay.keys()).sort();
+  const today = startOfDay(new Date());
+  const todayKey = dayKey(today);
+  const todayCompleted = byDay.get(todayKey) || 0;
+
+  let longestStreak = 0;
+  let rolling = 0;
+  for (let i = 0; i < sortedDays.length; i += 1) {
+    if (i === 0) {
+      rolling = 1;
+    } else {
+      const prev = new Date(sortedDays[i - 1]);
+      const cur = new Date(sortedDays[i]);
+      const diffDays = Math.round((cur.getTime() - prev.getTime()) / (24 * 60 * 60 * 1000));
+      rolling = diffDays === 1 ? rolling + 1 : 1;
+    }
+    longestStreak = Math.max(longestStreak, rolling);
+  }
+
+  let currentStreak = 0;
+  let cursor = new Date(today);
+  while (true) {
+    const key = dayKey(cursor);
+    if (!byDay.has(key)) break;
+    currentStreak += 1;
+    cursor = new Date(cursor.getTime() - 24 * 60 * 60 * 1000);
+  }
+
+  const streakDays = Array.from({ length: 7 }).map((_, index) => {
+    const d = new Date(today.getTime() - (6 - index) * 24 * 60 * 60 * 1000);
+    const key = dayKey(d);
+    return {
+      day: key,
+      practiced: byDay.has(key),
+      attempts: byDay.get(key) || 0,
+    };
+  });
+
+  return {
+    dailyGoal,
+    todayCompleted,
+    remainingToday: Math.max(dailyGoal - todayCompleted, 0),
+    currentStreak,
+    longestStreak,
+    lastPracticeDate: sortedDays.length ? new Date(sortedDays[sortedDays.length - 1]) : null,
+    streakDays,
+  };
+};
+
+const weeklyTrendFromAttempts = (attempts) => {
+  const today = startOfDay(new Date());
+  const dayAttempts = new Map();
+
+  attempts.forEach((attempt) => {
+    const key = dayKey(attempt.createdAt);
+    if (!dayAttempts.has(key)) {
+      dayAttempts.set(key, []);
+    }
+    dayAttempts.get(key).push(attempt);
+  });
+
+  return Array.from({ length: 7 }).map((_, idx) => {
+    const d = new Date(today.getTime() - (6 - idx) * 24 * 60 * 60 * 1000);
+    const key = dayKey(d);
+    const list = dayAttempts.get(key) || [];
+    const correct = list.filter((entry) => entry.isCorrect).length;
+    const accuracy = list.length ? (correct / list.length) * 100 : 0;
+    return {
+      day: key.slice(5),
+      attempts: list.length,
+      accuracy: round(accuracy, 1),
+    };
+  });
+};
+
 const analyzePerformance = async (userId) => {
   const attempts = await Attempt.find({ user: userId }).sort({ createdAt: -1 }).lean();
 
@@ -55,6 +157,14 @@ const analyzePerformance = async (userId) => {
       accuracyTrend: 'stable',
       timeAccuracyCorrelation: 0,
       suggestedFocusTopic: '',
+      topicMastery: [],
+      dailyGoal: 10,
+      todayCompleted: 0,
+      currentStreak: 0,
+      longestStreak: 0,
+      lastPracticeDate: null,
+      streakDays: [],
+      weeklyTrend: [],
     };
   }
 
@@ -71,11 +181,13 @@ const analyzePerformance = async (userId) => {
     weightedCorrect += attempt.isCorrect ? weight : 0;
     weightedTime += attempt.timeTakenSec * weight;
 
-    const topicKey = `${attempt.subject}::${attempt.topic}`;
+    const subtopic = attempt.subtopic || attempt.topic || 'General';
+    const topicKey = `${attempt.subject}::${attempt.topic}::${subtopic}`;
     if (!topicMap.has(topicKey)) {
       topicMap.set(topicKey, {
         subject: attempt.subject,
         topic: attempt.topic,
+        subtopic,
         attempts: 0,
         correct: 0,
         weightedAttempts: 0,
@@ -124,12 +236,14 @@ const analyzePerformance = async (userId) => {
     return {
       subject: topic.subject,
       topic: topic.topic,
+      subtopic: topic.subtopic,
       attempts: topic.attempts,
       correct: topic.correct,
       accuracy: round(accuracy, 1),
       avgTimeTakenSec: round(avgTimeTakenSec, 2),
       focusScore,
       currentDifficulty: inferTopicDifficultyFromAttempts(topic.rawAttempts),
+      masteryScore: round(clamp(accuracy * 0.75 + Math.min(topic.attempts * 4, 25), 0, 100), 1),
     };
   });
 
@@ -155,22 +269,43 @@ const analyzePerformance = async (userId) => {
     .sort((a, b) => b.focusScore - a.focusScore);
   const strongTopicRows = topicStats.filter((topic) => topic.accuracy > 80);
 
-  const weakTopics = weakTopicRows.map((topic) => `${topic.subject} - ${topic.topic}`);
-  const strongTopics = strongTopicRows.map((topic) => `${topic.subject} - ${topic.topic}`);
+  const weakTopics = weakTopicRows.map((topic) =>
+    topic.subtopic && topic.subtopic !== 'General'
+      ? `${topic.subject} - ${topic.topic} (${topic.subtopic})`
+      : `${topic.subject} - ${topic.topic}`
+  );
+  const strongTopics = strongTopicRows.map((topic) =>
+    topic.subtopic && topic.subtopic !== 'General'
+      ? `${topic.subject} - ${topic.topic} (${topic.subtopic})`
+      : `${topic.subject} - ${topic.topic}`
+  );
 
   const weakTopicPriority = weakTopicRows.map((topic) => ({
     subject: topic.subject,
     topic: topic.topic,
+      subtopic: topic.subtopic,
     accuracy: topic.accuracy,
     avgTimeTakenSec: topic.avgTimeTakenSec,
     focusScore: topic.focusScore,
   }));
 
   const suggestedFocusTopic = weakTopicPriority.length
-    ? `You should practice ${weakTopicPriority[0].topic} today`
+    ? `You should practice ${weakTopicPriority[0].subtopic && weakTopicPriority[0].subtopic !== 'General' ? `${weakTopicPriority[0].topic} (${weakTopicPriority[0].subtopic})` : weakTopicPriority[0].topic} today`
     : 'Keep practicing to unlock adaptive focus suggestions';
 
   const timeAccuracyCorrelation = calculateCorrelation(attempts.slice(0, 200));
+  const habit = habitMetricsFromAttempts(attempts, 10);
+  const topicMastery = topicStats
+    .map((topic) => ({
+      subject: topic.subject,
+      topic: topic.topic,
+      subtopic: topic.subtopic,
+      masteryScore: topic.masteryScore,
+      accuracy: topic.accuracy,
+      attempts: topic.attempts,
+    }))
+    .sort((a, b) => b.masteryScore - a.masteryScore);
+  const weeklyTrend = weeklyTrendFromAttempts(attempts.slice(0, 400));
 
   return {
     weakTopics,
@@ -183,6 +318,14 @@ const analyzePerformance = async (userId) => {
     accuracyTrend: trendFromAttempts(attempts),
     timeAccuracyCorrelation,
     suggestedFocusTopic,
+    topicMastery,
+    dailyGoal: habit.dailyGoal,
+    todayCompleted: habit.todayCompleted,
+    currentStreak: habit.currentStreak,
+    longestStreak: habit.longestStreak,
+    lastPracticeDate: habit.lastPracticeDate,
+    streakDays: habit.streakDays,
+    weeklyTrend,
   };
 };
 

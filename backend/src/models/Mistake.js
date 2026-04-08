@@ -25,6 +25,11 @@ const mistakeSchema = new mongoose.Schema(
       trim: true,
       index: true,
     },
+    subtopic: {
+      type: String,
+      default: 'General',
+      trim: true,
+    },
     difficulty: {
       type: String,
       enum: ['Easy', 'Medium', 'Hard'],

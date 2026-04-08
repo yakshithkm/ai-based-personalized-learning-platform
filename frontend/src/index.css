@@ -341,6 +341,18 @@ select:focus {
   padding: 1.35rem;
 }
 
+.habit-inline {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.next-step-panel {
+  border-color: rgba(96, 165, 250, 0.45);
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.16), var(--shadow);
+}
+
 .action-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
@@ -759,6 +771,35 @@ select:focus {
   gap: 0.7rem;
 }
 
+.streak-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(70px, 1fr));
+  gap: 0.55rem;
+}
+
+.streak-cell {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem;
+  display: grid;
+  gap: 0.22rem;
+  text-align: center;
+}
+
+.streak-cell small {
+  color: #cbd5e1;
+}
+
+.streak-on {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.45);
+}
+
+.streak-off {
+  background: rgba(148, 163, 184, 0.12);
+}
+
 .error-text {
   color: var(--danger);
 }
@@ -1087,7 +1128,8 @@ select:focus {
   .stats-grid,
   .filters-row,
   .action-grid,
-  .mistake-grid {
+  .mistake-grid,
+  .streak-grid {
     grid-template-columns: 1fr;
   }
 

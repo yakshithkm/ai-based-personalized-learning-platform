@@ -1,6 +1,6 @@
 const Attempt = require('../models/Attempt');
 const Question = require('../models/Question');
-const { getRecommendedQuestions } = require('../services/recommendationService');
+const { getRecommendedQuestions, getFocusSessionQuestions } = require('../services/recommendationService');
 
 const getRecommendations = async (req, res, next) => {
   try {
@@ -36,4 +36,18 @@ const getRecommendations = async (req, res, next) => {
   }
 };
 
-module.exports = { getRecommendations };
+const getFocusSession = async (req, res, next) => {
+  try {
+    const session = await getFocusSessionQuestions({
+      userId: req.user._id,
+      targetExam: req.user.targetExam,
+      total: Number(req.query.total || 10),
+    });
+
+    return res.json(session);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = { getRecommendations, getFocusSession };

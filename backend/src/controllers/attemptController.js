@@ -3,7 +3,13 @@ const Question = require('../models/Question');
 const Performance = require('../models/Performance');
 const { rebuildPerformanceForUser } = require('../services/performanceService');
 const { evaluateAdaptiveDifficulty } = require('../services/adaptiveDifficultyService');
-const { buildImprovementTip, buildWhyGotWrong } = require('../services/feedbackService');
+const {
+  buildImprovementTip,
+  buildWhyGotWrong,
+  getPerformanceLabel,
+  classifyMistake,
+  buildMotivationMessage,
+} = require('../services/feedbackService');
 const {
   trackAttemptProgress,
   getCommonMistakePattern,
@@ -28,8 +34,12 @@ const submitAttempt = async (req, res, next) => {
     const isCorrect = Number(selectedAnswerIndex) === question.correctAnswerIndex;
 
     const perfDoc = await Performance.findOne({ user: req.user._id }).select('topicStats');
+    const subtopic = question.subtopic || question.topic || 'General';
     const topicEntry = perfDoc?.topicStats?.find(
-      (row) => row.subject === question.subject && row.topic === question.topic
+      (row) =>
+        row.subject === question.subject &&
+        row.topic === question.topic &&
+        (row.subtopic || 'General') === subtopic
     );
     const adaptiveDifficultyBefore = topicEntry?.currentDifficulty || question.difficulty || 'Medium';
     const adaptiveDifficultyAfter = evaluateAdaptiveDifficulty({
@@ -44,6 +54,7 @@ const submitAttempt = async (req, res, next) => {
       question: question._id,
       subject: question.subject,
       topic: question.topic,
+      subtopic,
       difficulty: question.difficulty,
       selectedAnswerIndex,
       isCorrect,
@@ -68,6 +79,7 @@ const submitAttempt = async (req, res, next) => {
     const commonMistakePattern = await getCommonMistakePattern({
       userId: req.user._id,
       topic: question.topic,
+      subtopic,
       selectedAnswerText,
     });
 
@@ -82,8 +94,26 @@ const submitAttempt = async (req, res, next) => {
     const whyGotWrong = buildWhyGotWrong({
       isCorrect,
       topic: question.topic,
-      commonMistakePattern,
+      commonMistakePattern: commonMistakePattern.message,
       selectedAnswerText,
+    });
+
+    const performanceLabel = getPerformanceLabel({
+      topicAccuracy: topicEntry?.accuracy,
+    });
+
+    const mistakeClassification = classifyMistake({
+      isCorrect,
+      timeTakenSec,
+      selectedAnswerText,
+      repeatedMistakeCount: commonMistakePattern.count,
+    });
+
+    const motivationMessage = buildMotivationMessage({
+      isCorrect,
+      topic: question.topic,
+      repeatedMistakeCount: commonMistakePattern.count,
+      performanceLabel,
     });
 
     return res.status(201).json({
@@ -96,6 +126,10 @@ const submitAttempt = async (req, res, next) => {
         explanation: question.explanation,
         improvementTip,
         whyGotWrong,
+        performanceLabel,
+        mistakeClassification,
+        motivationMessage,
+        mistakePatternCount: commonMistakePattern.count,
         actions: {
           retrySimilarQuestion: {
             label: 'Retry Similar Question',
@@ -118,6 +152,7 @@ const submitAttempt = async (req, res, next) => {
       },
       adaptive: {
         topic: `${question.subject} - ${question.topic}`,
+        subtopic,
         previousDifficulty: adaptiveDifficultyBefore,
         nextDifficulty: adaptiveDifficultyAfter,
         currentStoredDifficulty: topicEntry?.currentDifficulty || adaptiveDifficultyAfter,

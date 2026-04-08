@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 import PracticePage from './pages/PracticePage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import SessionSummaryPage from './pages/SessionSummaryPage';
 
 const App = () => {
   return (
@@ -41,6 +42,17 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <AnalyticsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/session-summary"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <SessionSummaryPage />
             </Layout>
           </ProtectedRoute>
         }

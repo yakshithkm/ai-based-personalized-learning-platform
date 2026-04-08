@@ -59,6 +59,7 @@ const DashboardPage = () => {
   const focusToday = analytics?.focusToday || [];
   const improvementInsight = analytics?.improvementInsight?.text || '';
   const nextAction = analytics?.nextAction || null;
+  const habit = analytics?.habit || { dailyGoal: 10, todayCompleted: 0, currentStreak: 0, remainingToday: 10 };
   const frequentFailedTopics = analytics?.mistakeBank?.frequentFailedTopics || [];
   const repeatedMistakes = analytics?.mistakeBank?.repeatedMistakes || [];
 
@@ -77,11 +78,30 @@ const DashboardPage = () => {
     navigate(fullPath);
   };
 
+  const startFocusSession = () => {
+    navigate('/practice?mode=focus');
+  };
+
   return (
     <div className="page-grid">
       <section className="panel hero-panel">
         <h2>Personalized Dashboard</h2>
         <p>Track your preparation velocity and focus where it matters most.</p>
+        <div className="habit-inline">
+          <span className="progress-tag">Daily Goal: {habit.todayCompleted}/{habit.dailyGoal}</span>
+          <span className="progress-tag">Streak: {habit.currentStreak} day{habit.currentStreak === 1 ? '' : 's'}</span>
+          <span className="progress-tag">Remaining Today: {habit.remainingToday}</span>
+        </div>
+      </section>
+
+      <section className="panel next-step-panel">
+        <h3>{nextAction?.title || 'Your Next Step'}</h3>
+        <p>{nextAction?.label || 'Start Recommended Practice Set'}</p>
+        {!!nextAction?.dueMistakeCount && <p>{nextAction.dueMistakeCount} due mistake reviews pending.</p>}
+        <div className="feedback-actions">
+          <button className="solid-btn" onClick={startNextAction}>Start Now</button>
+          <button className="outline-btn" onClick={startFocusSession}>Start Focus Session</button>
+        </div>
       </section>
 
       <section className="panel action-grid">
@@ -105,7 +125,7 @@ const DashboardPage = () => {
         </article>
         <article className="action-card">
           <h3>Next Action</h3>
-          <p>{nextAction?.label || 'Start Recommended Practice Set'}</p>
+          <p>{nextAction?.reason || 'start-session'}</p>
           <button className="solid-btn" onClick={startNextAction}>
             Start Now
           </button>

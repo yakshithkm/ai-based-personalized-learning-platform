@@ -30,6 +30,7 @@ const trackAttemptProgress = async ({
       question: question._id,
       subject: question.subject,
       topic: question.topic,
+      subtopic: question.subtopic || question.topic || 'General',
       difficulty: question.difficulty,
       selectedAnswerIndex,
       selectedAnswerText,
@@ -83,32 +84,40 @@ const trackAttemptProgress = async ({
   );
 };
 
-const getCommonMistakePattern = async ({ userId, topic, selectedAnswerText }) => {
-  if (!selectedAnswerText) return '';
+const getCommonMistakePattern = async ({ userId, topic, subtopic, selectedAnswerText }) => {
+  if (!selectedAnswerText) {
+    return { message: '', count: 0 };
+  }
 
   const similarMistakeCount = await Mistake.countDocuments({
     user: userId,
     topic,
+    subtopic: subtopic || topic || 'General',
     selectedAnswerText,
   });
 
+  let message = '';
+
   if (similarMistakeCount >= 3) {
-    return `You often choose "${selectedAnswerText}" in ${topic}. Revisit the core rule and compare option traps before finalizing.`;
+    message = `You often choose "${selectedAnswerText}" in ${topic}. Revisit the core rule and compare option traps before finalizing.`;
+  } else if (similarMistakeCount === 2) {
+    message = `This option pattern has appeared before in ${topic}. Slow down and eliminate distractor choices first.`;
+  } else {
+    message = `This seems to be a concept gap in ${topic}. Focus on definition-level understanding before solving mixed problems.`;
   }
 
-  if (similarMistakeCount === 2) {
-    return `This option pattern has appeared before in ${topic}. Slow down and eliminate distractor choices first.`;
-  }
-
-  return `This seems to be a concept gap in ${topic}. Focus on definition-level understanding before solving mixed problems.`;
+  return {
+    message,
+    count: similarMistakeCount,
+  };
 };
 
 const getMistakeBankForUser = async (userId) => {
-  const [recentMistakes, repeatedMistakes, frequentFailedTopics, summary] = await Promise.all([
+  const [recentMistakes, repeatedMistakes, frequentFailedTopics, frequentFailedSubtopics, summary] = await Promise.all([
     Mistake.find({ user: userId })
       .sort({ createdAt: -1 })
       .limit(50)
-      .select('question subject topic difficulty repetitionStage nextReviewAt resolved retryCount improvedOnRetry createdAt'),
+      .select('question subject topic subtopic difficulty repetitionStage nextReviewAt resolved retryCount improvedOnRetry createdAt'),
     Mistake.aggregate([
       { $match: { user: userId } },
       {
@@ -149,6 +158,28 @@ const getMistakeBankForUser = async (userId) => {
       { $match: { user: userId } },
       {
         $group: {
+          _id: { subject: '$subject', topic: '$topic', subtopic: '$subtopic' },
+          failures: { $sum: 1 },
+          lastMistakeAt: { $max: '$createdAt' },
+        },
+      },
+      { $sort: { failures: -1, lastMistakeAt: -1 } },
+      { $limit: 12 },
+      {
+        $project: {
+          _id: 0,
+          subject: '$_id.subject',
+          topic: '$_id.topic',
+          subtopic: '$_id.subtopic',
+          failures: 1,
+          lastMistakeAt: 1,
+        },
+      },
+    ]),
+    Mistake.aggregate([
+      { $match: { user: userId } },
+      {
+        $group: {
           _id: null,
           total: { $sum: 1 },
           open: {
@@ -176,6 +207,7 @@ const getMistakeBankForUser = async (userId) => {
       lastMistakeAt: entry.lastMistakeAt,
     })),
     frequentFailedTopics,
+    frequentFailedSubtopics,
     summary: {
       totalMistakes: summary[0]?.total || 0,
       openMistakes: summary[0]?.open || 0,

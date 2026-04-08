@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/client';
 
 const PracticePage = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
@@ -14,6 +15,9 @@ const PracticePage = () => {
   const [startTime, setStartTime] = useState(Date.now());
   const [error, setError] = useState('');
   const [recommendedMode, setRecommendedMode] = useState(false);
+  const [focusMode, setFocusMode] = useState(false);
+  const [sessionResults, setSessionResults] = useState([]);
+  const [sessionMeta, setSessionMeta] = useState(null);
 
   useEffect(() => {
     const loadSubjects = async () => {
@@ -39,6 +43,7 @@ const PracticePage = () => {
 
     if (mode === 'recommended') {
       setRecommendedMode(true);
+      setFocusMode(false);
       const loadRecommended = async () => {
         try {
           const { data } = await api.get('/recommendations/me');
@@ -54,6 +59,27 @@ const PracticePage = () => {
 
       loadRecommended();
     }
+
+    if (mode === 'focus') {
+      setRecommendedMode(false);
+      setFocusMode(true);
+      const loadFocus = async () => {
+        try {
+          const { data } = await api.get('/recommendations/focus-session');
+          setQuestions(data.questions || []);
+          setSessionMeta(data);
+          setSessionResults([]);
+          setCurrentIndex(0);
+          setResult(null);
+          setSelectedAnswer(null);
+          setStartTime(Date.now());
+        } catch (err) {
+          setError(err?.response?.data?.message || 'Failed to load focus session');
+        }
+      };
+
+      loadFocus();
+    }
   }, [searchParams]);
 
   const topics = useMemo(() => {
@@ -67,6 +93,8 @@ const PracticePage = () => {
     setSelectedAnswer(null);
     setCurrentIndex(0);
     setRecommendedMode(false);
+    setFocusMode(false);
+    setSessionResults([]);
 
     try {
       const { data } = await api.get('/questions', {
@@ -98,6 +126,15 @@ const PracticePage = () => {
         timeTakenSec,
       });
       setResult(data.result);
+      setSessionResults((prev) => [
+        ...prev,
+        {
+          questionId: question._id,
+          topic: `${question.subject} - ${question.topic}`,
+          isCorrect: data.result.isCorrect,
+          performanceLabel: data.result.performanceLabel,
+        },
+      ]);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to submit attempt');
     }
@@ -131,11 +168,44 @@ const PracticePage = () => {
     }
   };
 
+  const openSessionSummary = () => {
+    const total = sessionResults.length;
+    const correct = sessionResults.filter((entry) => entry.isCorrect).length;
+    const accuracy = total ? (correct / total) * 100 : 0;
+
+    const weakAreas = Array.from(
+      new Set(sessionResults.filter((entry) => !entry.isCorrect).map((entry) => entry.topic))
+    ).slice(0, 4);
+
+    const improvementSuggestion = weakAreas.length
+      ? `Focus on ${weakAreas[0]} first, then continue guided practice.`
+      : 'You performed well. Increase difficulty in your strongest topic next.';
+
+    navigate('/session-summary', {
+      state: {
+        summary: {
+          total,
+          correct,
+          accuracy: Number(accuracy.toFixed(1)),
+          weakAreas,
+          improvementSuggestion,
+          nextRecommendedSession: sessionMeta?.mix || null,
+        },
+      },
+    });
+  };
+
   return (
     <div className="page-grid">
       <section className="panel">
         <h2>Practice Zone</h2>
-        <p>{recommendedMode ? 'Recommended adaptive set is active.' : 'Choose a subject/topic and solve curated questions.'}</p>
+        <p>
+          {focusMode
+            ? 'Focus session is active: weak topics + mistakes + one harder challenge.'
+            : recommendedMode
+              ? 'Recommended adaptive set is active.'
+              : 'Choose a subject/topic and solve curated questions.'}
+        </p>
 
         <div className="filters-row">
           <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)}>
@@ -203,6 +273,9 @@ const PracticePage = () => {
               <p className="correct-answer-text">Correct answer: {result.correctAnswer}</p>
               <p>{result.explanation}</p>
               <p className="improvement-tip">Tip: {result.improvementTip}</p>
+              {result.performanceLabel && <p className="improvement-tip">Performance: {result.performanceLabel}</p>}
+              {result.mistakeClassification && <p className="why-wrong-text">Mistake Type: {result.mistakeClassification}</p>}
+              {result.motivationMessage && <p className="improvement-tip">{result.motivationMessage}</p>}
               {!result.isCorrect && result.whyGotWrong && (
                 <p className="why-wrong-text">Why you got it wrong: {result.whyGotWrong}</p>
               )}
@@ -227,7 +300,10 @@ const PracticePage = () => {
                 </button>
               )}
               {currentIndex >= questions.length - 1 && (
-                <span className="progress-tag">Practice set completed</span>
+                <div className="feedback-actions">
+                  <span className="progress-tag">Practice set completed</span>
+                  <button className="solid-btn" onClick={openSessionSummary}>View Session Summary</button>
+                </div>
               )}
             </div>
           )}

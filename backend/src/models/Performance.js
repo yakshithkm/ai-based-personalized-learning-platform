@@ -4,11 +4,13 @@ const topicPerformanceSchema = new mongoose.Schema(
   {
     subject: { type: String, required: true },
     topic: { type: String, required: true },
+    subtopic: { type: String, default: 'General' },
     attempts: { type: Number, default: 0 },
     correct: { type: Number, default: 0 },
     accuracy: { type: Number, default: 0 },
     avgTimeTakenSec: { type: Number, default: 0 },
     focusScore: { type: Number, default: 0 },
+    masteryScore: { type: Number, default: 0 },
     currentDifficulty: {
       type: String,
       enum: ['Easy', 'Medium', 'Hard'],
@@ -32,6 +34,7 @@ const weakTopicPrioritySchema = new mongoose.Schema(
   {
     subject: { type: String, required: true },
     topic: { type: String, required: true },
+    subtopic: { type: String, default: 'General' },
     accuracy: { type: Number, default: 0 },
     avgTimeTakenSec: { type: Number, default: 0 },
     focusScore: { type: Number, default: 0 },
@@ -55,6 +58,25 @@ const performanceSchema = new mongoose.Schema(
     strongTopics: [{ type: String }],
     weakTopicPriority: [weakTopicPrioritySchema],
     subjectStats: [subjectPerformanceSchema],
+    dailyGoal: { type: Number, default: 10 },
+    currentStreak: { type: Number, default: 0 },
+    longestStreak: { type: Number, default: 0 },
+    todayCompleted: { type: Number, default: 0 },
+    lastPracticeDate: { type: Date, default: null },
+    streakDays: [
+      {
+        day: { type: String, required: true },
+        practiced: { type: Boolean, default: false },
+        attempts: { type: Number, default: 0 },
+      },
+    ],
+    weeklyTrend: [
+      {
+        day: { type: String, required: true },
+        attempts: { type: Number, default: 0 },
+        accuracy: { type: Number, default: 0 },
+      },
+    ],
     accuracyTrend: {
       type: String,
       enum: ['improving', 'declining', 'stable'],

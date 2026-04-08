@@ -13,6 +13,7 @@ const getQuestions = async (req, res, next) => {
     const {
       subject,
       topic,
+      subtopic,
       examType,
       difficulty,
       limit = 10,
@@ -33,6 +34,7 @@ const getQuestions = async (req, res, next) => {
       if (baseQuestion) {
         filter.subject = baseQuestion.subject;
         filter.topic = baseQuestion.topic;
+        filter.subtopic = baseQuestion.subtopic || baseQuestion.topic || 'General';
 
         if (similarTo && !resolvedDifficulty) {
           resolvedDifficulty = baseQuestion.difficulty;
@@ -46,6 +48,9 @@ const getQuestions = async (req, res, next) => {
 
     if (subject) filter.subject = subject;
     if (topic) filter.topic = topic;
+    if (subtopic) {
+      filter.$or = [{ subtopic }, { subtopic: { $exists: false } }, { subtopic: null }];
+    }
     if (resolvedDifficulty) filter.difficulty = resolvedDifficulty;
 
     if (excludeQuestionId) {
@@ -84,6 +89,7 @@ const getQuestionById = async (req, res, next) => {
         examType: question.examType,
         subject: question.subject,
         topic: question.topic,
+        subtopic: question.subtopic || question.topic || 'General',
         difficulty: question.difficulty,
         text: question.text,
         options: question.options,
@@ -101,6 +107,12 @@ const getSubjectsAndTopics = async (req, res, next) => {
         $group: {
           _id: '$subject',
           topics: { $addToSet: '$topic' },
+          subtopics: {
+            $addToSet: {
+              topic: '$topic',
+              subtopic: { $ifNull: ['$subtopic', '$topic'] },
+            },
+          },
         },
       },
       {
@@ -108,6 +120,7 @@ const getSubjectsAndTopics = async (req, res, next) => {
           _id: 0,
           subject: '$_id',
           topics: 1,
+          subtopics: 1,
         },
       },
       { $sort: { subject: 1 } },
