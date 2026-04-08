@@ -22,8 +22,9 @@ const getQuestions = async (req, res, next) => {
       excludeQuestionId,
     } = req.query;
     const filter = {};
+    const resolvedExamType = examType || req.user?.targetExam;
 
-    filter.examType = examType || req.user?.targetExam;
+    filter.examType = resolvedExamType;
 
     let resolvedDifficulty = difficulty;
 
@@ -69,6 +70,17 @@ const getQuestions = async (req, res, next) => {
         .select('-correctAnswerIndex -correctAnswer');
     }
 
+    // If no questions exist for the learner's target exam, gracefully fallback
+    // to any available exam type for the selected topic filter.
+    if (!questions.length && resolvedExamType) {
+      const crossExamFilter = { ...filter };
+      delete crossExamFilter.examType;
+
+      questions = await Question.find(crossExamFilter)
+        .limit(Math.min(Number(limit), 50))
+        .select('-correctAnswerIndex -correctAnswer');
+    }
+
     return res.json({ count: questions.length, questions });
   } catch (error) {
     return next(error);
@@ -102,7 +114,8 @@ const getQuestionById = async (req, res, next) => {
 
 const getSubjectsAndTopics = async (req, res, next) => {
   try {
-    const pipeline = [
+    const buildPipeline = (examFilter) => [
+      ...(examFilter ? [{ $match: examFilter }] : []),
       {
         $group: {
           _id: '$subject',
@@ -126,7 +139,13 @@ const getSubjectsAndTopics = async (req, res, next) => {
       { $sort: { subject: 1 } },
     ];
 
-    const data = await Question.aggregate(pipeline);
+    const examFilter = req.user?.targetExam ? { examType: req.user.targetExam } : null;
+    let data = await Question.aggregate(buildPipeline(examFilter));
+
+    if (!data.length && examFilter) {
+      data = await Question.aggregate(buildPipeline(null));
+    }
+
     return res.json({ subjects: data });
   } catch (error) {
     return next(error);
