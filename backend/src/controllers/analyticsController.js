@@ -1,5 +1,6 @@
 const { getAdaptiveAnalytics } = require('../services/analyticsService');
 const Question = require('../models/Question');
+const { EXAM_SUBJECT_MAP } = require('../config/examSubjectMap');
 const {
   trackProductEvent,
   getAdminBehaviorSummary,
@@ -107,4 +108,18 @@ const getQuestionStats = async (req, res, next) => {
   }
 };
 
-module.exports = { getMyAnalytics, trackEvent, getAdminSummary, getQuestionStats };
+const getExamSubjects = async (req, res, next) => {
+  try {
+    return res.json(EXAM_SUBJECT_MAP);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = {
+  getMyAnalytics,
+  trackEvent,
+  getAdminSummary,
+  getQuestionStats,
+  getExamSubjects,
+};

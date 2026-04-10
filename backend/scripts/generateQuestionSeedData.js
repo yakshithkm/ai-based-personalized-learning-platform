@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const { EXAM_SUBJECT_MAP } = require('../src/config/examSubjectMap');
 
 const outputDir = path.join(__dirname, '..', 'src', 'data', 'question-seeds');
 
@@ -17,7 +18,7 @@ const examCycleBySubject = {
   Physics: ['JEE', 'CET', 'NEET', 'JEE', 'CET'],
   Chemistry: ['NEET', 'CET', 'JEE', 'CET', 'NEET'],
   Mathematics: ['JEE', 'CET', 'JEE', 'CET', 'JEE'],
-  Biology: ['NEET'],
+  Biology: ['NEET', 'CET', 'NEET', 'CET', 'NEET'],
 };
 
 const topicMap = {
@@ -43,13 +44,26 @@ const topicMap = {
     { topic: 'Calculus', subtopics: ['Differentiation', 'Integration'] },
   ],
   Biology: [
-    { topic: 'Cell Structure', subtopics: ['Organelles', 'Membrane'] },
+    { topic: 'Cell Biology', subtopics: ['Organelles', 'Membrane'] },
     { topic: 'Genetics', subtopics: ['Mendelian', 'Inheritance'] },
     { topic: 'Human Physiology', subtopics: ['Circulatory', 'Respiratory'] },
     { topic: 'Ecology', subtopics: ['Ecosystems', 'Food Chains'] },
     { topic: 'Plant Physiology', subtopics: ['Transport', 'Photosynthesis'] },
   ],
 };
+
+Object.keys(topicMap).forEach((subject) => {
+  const requiredExams = Object.entries(EXAM_SUBJECT_MAP)
+    .filter(([, subjects]) => subjects.includes(subject))
+    .map(([exam]) => exam);
+
+  const cycle = examCycleBySubject[subject] || [];
+  requiredExams.forEach((exam) => {
+    if (!cycle.includes(exam)) {
+      throw new Error(`${subject} exam cycle must include ${exam}`);
+    }
+  });
+});
 
 const buildOptions = (base, correctOffset = 1) => {
   const values = [base - 1, base, base + 1, base + 2];

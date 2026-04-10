@@ -1,4 +1,9 @@
 const Question = require('../models/Question');
+const {
+  normalizeExamType,
+  getAllowedSubjectsForExam,
+  normalizeSubjectName,
+} = require('../config/examSubjectMap');
 
 const DIFFICULTY_ORDER = ['Easy', 'Medium', 'Hard'];
 
@@ -22,7 +27,9 @@ const getQuestions = async (req, res, next) => {
       excludeQuestionId,
     } = req.query;
     const filter = {};
-    const resolvedExamType = examType || req.user?.targetExam;
+    const resolvedExamType = normalizeExamType(examType || req.user?.targetExam);
+    const allowedSubjects = getAllowedSubjectsForExam(resolvedExamType);
+    const normalizedSubject = normalizeSubjectName(subject);
 
     filter.examType = resolvedExamType;
 
@@ -47,7 +54,23 @@ const getQuestions = async (req, res, next) => {
       }
     }
 
-    if (subject) filter.subject = subject;
+    if (subject) {
+      if (!normalizedSubject || !allowedSubjects.includes(normalizedSubject)) {
+        console.log(
+          '[QuestionFetchBlocked]',
+          JSON.stringify({
+            examType: resolvedExamType || 'UNKNOWN',
+            requestedSubject: subject,
+            allowedSubjects,
+          })
+        );
+        return res.json({ count: 0, questions: [] });
+      }
+      filter.subject = normalizedSubject;
+    } else if (!filter.subject) {
+      filter.subject = { $in: allowedSubjects };
+    }
+
     if (topic) filter.topic = topic;
     if (subtopic) {
       filter.$or = [{ subtopic }, { subtopic: { $exists: false } }, { subtopic: null }];
@@ -76,22 +99,14 @@ const getQuestions = async (req, res, next) => {
         .select('-correctAnswerIndex -correctAnswer');
     }
 
-    // If no questions exist for the learner's target exam, gracefully fallback
-    // to any available exam type for the selected topic filter.
-    if (!questions.length && resolvedExamType) {
-      const crossExamFilter = { ...filter };
-      delete crossExamFilter.examType;
-
-      questions = await Question.find(crossExamFilter)
-        .limit(resolvedLimit)
-        .select('-correctAnswerIndex -correctAnswer');
-    }
-
     console.log(
       '[QuestionFetch]',
       JSON.stringify({
         examType: resolvedExamType || 'ALL',
-        subject: subject || 'ALL',
+        allowedSubjects,
+        requestedSubject: subject || 'ALL',
+        normalizedSubject: normalizedSubject || null,
+        subjectApplied: subject ? normalizedSubject : 'ALL_ALLOWED',
         topic: topic || 'ALL',
         subtopic: subtopic || 'ALL',
         difficulty: resolvedDifficulty || 'ALL',
@@ -134,8 +149,16 @@ const getQuestionById = async (req, res, next) => {
 
 const getSubjectsAndTopics = async (req, res, next) => {
   try {
-    const buildPipeline = (examFilter) => [
-      ...(examFilter ? [{ $match: examFilter }] : []),
+    const resolvedExamType = normalizeExamType(req.user?.targetExam);
+    const allowedSubjects = getAllowedSubjectsForExam(resolvedExamType);
+
+    const pipeline = [
+      {
+        $match: {
+          examType: resolvedExamType,
+          subject: { $in: allowedSubjects },
+        },
+      },
       {
         $group: {
           _id: '$subject',
@@ -159,12 +182,26 @@ const getSubjectsAndTopics = async (req, res, next) => {
       { $sort: { subject: 1 } },
     ];
 
-    const examFilter = req.user?.targetExam ? { examType: req.user.targetExam } : null;
-    let data = await Question.aggregate(buildPipeline(examFilter));
+    const grouped = await Question.aggregate(pipeline);
+    const groupedMap = new Map(grouped.map((row) => [row.subject, row]));
 
-    if (!data.length && examFilter) {
-      data = await Question.aggregate(buildPipeline(null));
-    }
+    const data = allowedSubjects.map((subjectName) => {
+      const existing = groupedMap.get(subjectName);
+      if (existing) return existing;
+      return {
+        subject: subjectName,
+        topics: [],
+        subtopics: [],
+      };
+    });
+
+    console.log(
+      '[SubjectsTopics]',
+      JSON.stringify({
+        examType: resolvedExamType || 'UNKNOWN',
+        returnedSubjects: data.map((row) => row.subject),
+      })
+    );
 
     return res.json({ subjects: data });
   } catch (error) {

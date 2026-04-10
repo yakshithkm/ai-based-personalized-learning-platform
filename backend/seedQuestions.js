@@ -106,7 +106,7 @@ const validateSeedCoverage = (questions) => {
   const cetSubjects = new Set(
     questions.filter((q) => q.examType === 'CET').map((q) => q.subject)
   );
-  ['Physics', 'Chemistry', 'Mathematics'].forEach((subject) => {
+  ['Physics', 'Chemistry', 'Mathematics', 'Biology'].forEach((subject) => {
     if (!cetSubjects.has(subject)) {
       throw new Error(`Seed data must include ${subject} for CET`);
     }

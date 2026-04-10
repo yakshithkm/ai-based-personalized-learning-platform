@@ -38,7 +38,15 @@ const registerAndToken = async ({ name, email, targetExam }) => {
       targetExam: 'CET',
     });
 
-    const [neetSubjects, cetSubjects, neetBiologyQuestions, cetAllQuestions, adminStats] = await Promise.all([
+    const [
+      neetSubjects,
+      cetSubjects,
+      neetBiologyQuestions,
+      cetBiologyQuestions,
+      cetAllQuestions,
+      adminStats,
+      examSubjects,
+    ] = await Promise.all([
       request(app)
         .get('/api/questions/subjects-topics')
         .set('Authorization', `Bearer ${neetToken}`),
@@ -51,10 +59,17 @@ const registerAndToken = async ({ name, email, targetExam }) => {
         .set('Authorization', `Bearer ${neetToken}`),
       request(app)
         .get('/api/questions')
+        .query({ subject: 'Biology', limit: 15 })
+        .set('Authorization', `Bearer ${cetToken}`),
+      request(app)
+        .get('/api/questions')
         .query({ limit: 15 })
         .set('Authorization', `Bearer ${cetToken}`),
       request(app)
         .get('/api/admin/question-stats')
+        .set('Authorization', `Bearer ${neetToken}`),
+      request(app)
+        .get('/api/admin/exam-subjects')
         .set('Authorization', `Bearer ${neetToken}`),
     ]);
 
@@ -66,9 +81,12 @@ const registerAndToken = async ({ name, email, targetExam }) => {
           neetSubjectNames: (neetSubjects.body.subjects || []).map((row) => row.subject),
           cetSubjectNames: (cetSubjects.body.subjects || []).map((row) => row.subject),
           neetBiologyCount: neetBiologyQuestions.body.count,
+          cetBiologyCount: cetBiologyQuestions.body.count,
           cetBatchCount: cetAllQuestions.body.count,
           adminStatsStatus: adminStats.status,
           adminStats: adminStats.body,
+          examSubjectsStatus: examSubjects.status,
+          examSubjects: examSubjects.body,
         },
         null,
         2

@@ -2,10 +2,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Organelles: Select the correct biological statement. [Q1]",
+    "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q1]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -18,7 +18,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -54,7 +54,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -92,10 +92,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Membrane: Select the correct biological statement. [Q6]",
+    "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q6]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -108,7 +108,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -144,7 +144,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -182,10 +182,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Organelles: Select the correct biological statement. [Q11]",
+    "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q11]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -198,7 +198,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -234,7 +234,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -272,10 +272,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Membrane: Select the correct biological statement. [Q16]",
+    "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q16]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -288,7 +288,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -324,7 +324,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -362,10 +362,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Organelles: Select the correct biological statement. [Q21]",
+    "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q21]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -378,7 +378,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -414,7 +414,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -452,10 +452,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Membrane: Select the correct biological statement. [Q26]",
+    "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q26]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -468,7 +468,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -504,7 +504,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -542,10 +542,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Organelles: Select the correct biological statement. [Q31]",
+    "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q31]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -558,7 +558,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -594,7 +594,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -632,10 +632,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
-    "text": "(Easy) Cell Structure/Membrane: Select the correct biological statement. [Q36]",
+    "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q36]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -648,7 +648,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -684,7 +684,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -722,10 +722,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Organelles: Select the correct biological statement. [Q41]",
+    "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q41]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -738,7 +738,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -774,7 +774,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -812,10 +812,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Membrane: Select the correct biological statement. [Q46]",
+    "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q46]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -828,7 +828,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -864,7 +864,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -902,10 +902,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Organelles: Select the correct biological statement. [Q51]",
+    "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q51]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -918,7 +918,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -954,7 +954,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -992,10 +992,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Membrane: Select the correct biological statement. [Q56]",
+    "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q56]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1008,7 +1008,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -1044,7 +1044,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -1082,10 +1082,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Organelles: Select the correct biological statement. [Q61]",
+    "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q61]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1098,7 +1098,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -1134,7 +1134,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -1172,10 +1172,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Membrane: Select the correct biological statement. [Q66]",
+    "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q66]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1188,7 +1188,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -1224,7 +1224,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -1262,10 +1262,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Organelles: Select the correct biological statement. [Q71]",
+    "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q71]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1278,7 +1278,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -1314,7 +1314,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -1352,10 +1352,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
-    "text": "(Medium) Cell Structure/Membrane: Select the correct biological statement. [Q76]",
+    "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q76]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1368,7 +1368,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -1404,7 +1404,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -1442,10 +1442,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Hard",
-    "text": "(Hard) Cell Structure/Organelles: Select the correct biological statement. [Q81]",
+    "text": "(Hard) Cell Biology/Organelles: Select the correct biological statement. [Q81]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1458,7 +1458,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -1494,7 +1494,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -1532,10 +1532,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Hard",
-    "text": "(Hard) Cell Structure/Membrane: Select the correct biological statement. [Q86]",
+    "text": "(Hard) Cell Biology/Membrane: Select the correct biological statement. [Q86]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1548,7 +1548,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -1584,7 +1584,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
@@ -1622,10 +1622,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Hard",
-    "text": "(Hard) Cell Structure/Organelles: Select the correct biological statement. [Q91]",
+    "text": "(Hard) Cell Biology/Organelles: Select the correct biological statement. [Q91]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1638,7 +1638,7 @@
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Inheritance",
@@ -1674,7 +1674,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Food Chains",
@@ -1712,10 +1712,10 @@
   {
     "examType": "NEET",
     "subject": "Biology",
-    "topic": "Cell Structure",
+    "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Hard",
-    "text": "(Hard) Cell Structure/Membrane: Select the correct biological statement. [Q96]",
+    "text": "(Hard) Cell Biology/Membrane: Select the correct biological statement. [Q96]",
     "options": [
       "Ribosomes store DNA",
       "Mitochondria are linked to ATP production",
@@ -1728,7 +1728,7 @@
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Genetics",
     "subtopic": "Mendelian",
@@ -1764,7 +1764,7 @@
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Biology",
     "topic": "Ecology",
     "subtopic": "Ecosystems",
