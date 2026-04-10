@@ -8,6 +8,7 @@ const questionRoutes = require('./routes/questionRoutes');
 const attemptRoutes = require('./routes/attemptRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 const recommendationRoutes = require('./routes/recommendationRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
 
 const app = express();
@@ -31,6 +32,7 @@ app.use('/api/questions', questionRoutes);
 app.use('/api/attempts', attemptRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/recommendations', recommendationRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

@@ -16,7 +16,7 @@ const getQuestions = async (req, res, next) => {
       subtopic,
       examType,
       difficulty,
-      limit = 10,
+      limit = 15,
       similarTo,
       harderThan,
       excludeQuestionId,
@@ -58,15 +58,21 @@ const getQuestions = async (req, res, next) => {
       filter._id = { $ne: excludeQuestionId };
     }
 
+    const requestedLimit = Number(limit) || 15;
+    const isAdaptiveSingle = Boolean(similarTo || harderThan);
+    const resolvedLimit = isAdaptiveSingle
+      ? Math.min(Math.max(requestedLimit, 1), 50)
+      : Math.min(Math.max(requestedLimit, 10), 20);
+
     let questions = await Question.find(filter)
-      .limit(Math.min(Number(limit), 50))
+      .limit(resolvedLimit)
       .select('-correctAnswerIndex -correctAnswer');
 
     if (!questions.length && (similarTo || harderThan)) {
       const fallbackFilter = { ...filter };
       delete fallbackFilter.difficulty;
       questions = await Question.find(fallbackFilter)
-        .limit(Math.min(Number(limit), 50))
+        .limit(resolvedLimit)
         .select('-correctAnswerIndex -correctAnswer');
     }
 
@@ -77,9 +83,23 @@ const getQuestions = async (req, res, next) => {
       delete crossExamFilter.examType;
 
       questions = await Question.find(crossExamFilter)
-        .limit(Math.min(Number(limit), 50))
+        .limit(resolvedLimit)
         .select('-correctAnswerIndex -correctAnswer');
     }
+
+    console.log(
+      '[QuestionFetch]',
+      JSON.stringify({
+        examType: resolvedExamType || 'ALL',
+        subject: subject || 'ALL',
+        topic: topic || 'ALL',
+        subtopic: subtopic || 'ALL',
+        difficulty: resolvedDifficulty || 'ALL',
+        requestedLimit,
+        appliedLimit: resolvedLimit,
+        fetchedCount: questions.length,
+      })
+    );
 
     return res.json({ count: questions.length, questions });
   } catch (error) {

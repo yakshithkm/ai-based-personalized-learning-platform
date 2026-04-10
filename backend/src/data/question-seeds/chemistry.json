@@ -3,900 +3,1800 @@
     "examType": "NEET",
     "subject": "Chemistry",
     "topic": "Mole Concept",
-    "subtopic": "Mole and Mass",
+    "subtopic": "Mole-Mass",
     "difficulty": "Easy",
-    "text": "How many molecules are present in 1 mole of a substance?",
+    "text": "(Easy) Mole Concept/Mole-Mass: If 1 mol has molar mass 10 g/mol, total mass is? [Q1]",
     "options": [
-      "6.022 × 10^23",
-      "3.01 × 10^23",
-      "1.0 × 10^22",
-      "9.11 × 10^31"
-    ],
-    "correctAnswer": "6.022 × 10^23",
-    "correctAnswerIndex": 0,
-    "explanation": "One mole contains Avogadro’s number of entities.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Avogadro Number",
-    "difficulty": "Medium",
-    "text": "How many moles are present in 44 g of CO2?",
-    "options": [
-      "0.5 mole",
-      "1 mole",
-      "2 mole",
-      "4 mole"
-    ],
-    "correctAnswer": "1 mole",
-    "correctAnswerIndex": 1,
-    "explanation": "Molar mass of CO2 is 44 g/mol.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Mole and Mass",
-    "difficulty": "Hard",
-    "text": "Molar mass of H2O is:",
-    "options": [
-      "16 g/mol",
-      "18 g/mol",
-      "20 g/mol",
-      "22 g/mol"
-    ],
-    "correctAnswer": "18 g/mol",
-    "correctAnswerIndex": 1,
-    "explanation": "2 + 16 = 18 g/mol.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Avogadro Number",
-    "difficulty": "Easy",
-    "text": "How many atoms are in 2 moles of helium?",
-    "options": [
-      "6.022 × 10^23",
-      "1.204 × 10^24",
-      "3.01 × 10^23",
-      "2.0 × 10^23"
-    ],
-    "correctAnswer": "1.204 × 10^24",
-    "correctAnswerIndex": 1,
-    "explanation": "Multiply Avogadro’s number by 2.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Mole and Mass",
-    "difficulty": "Medium",
-    "text": "Volume of 1 mole of ideal gas at STP is:",
-    "options": [
-      "11.2 L",
-      "22.4 L",
-      "44.8 L",
-      "1.0 L"
-    ],
-    "correctAnswer": "22.4 L",
-    "correctAnswerIndex": 1,
-    "explanation": "Molar volume at STP is 22.4 L.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Avogadro Number",
-    "difficulty": "Hard",
-    "text": "How many moles are in 11.2 L of ideal gas at STP?",
-    "options": [
-      "0.25 mole",
-      "0.5 mole",
-      "1 mole",
-      "2 mole"
-    ],
-    "correctAnswer": "0.5 mole",
-    "correctAnswerIndex": 1,
-    "explanation": "11.2 is half of 22.4.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Mole and Mass",
-    "difficulty": "Easy",
-    "text": "If 2 moles contain x particles, x equals:",
-    "options": [
-      "3.01 × 10^23",
-      "6.02 × 10^23",
-      "1.204 × 10^24",
-      "2.408 × 10^24"
-    ],
-    "correctAnswer": "1.204 × 10^24",
-    "correctAnswerIndex": 2,
-    "explanation": "2 × Avogadro’s number.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Avogadro Number",
-    "difficulty": "Medium",
-    "text": "How many molecules are in 0.5 mole of a substance?",
-    "options": [
-      "3.01 × 10^23",
-      "6.02 × 10^23",
-      "1.2 × 10^24",
-      "9.0 × 10^22"
-    ],
-    "correctAnswer": "3.01 × 10^23",
-    "correctAnswerIndex": 0,
-    "explanation": "Half of Avogadro’s number.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Mole and Mass",
-    "difficulty": "Hard",
-    "text": "Molar mass of NaCl is approximately:",
-    "options": [
-      "23 g/mol",
-      "35.5 g/mol",
-      "58.5 g/mol",
-      "60 g/mol"
-    ],
-    "correctAnswer": "58.5 g/mol",
-    "correctAnswerIndex": 2,
-    "explanation": "Na + Cl = 23 + 35.5.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Mole Concept",
-    "subtopic": "Avogadro Number",
-    "difficulty": "Easy",
-    "text": "Mass of 1 mole of oxygen gas O2 is:",
-    "options": [
-      "16 g",
-      "24 g",
-      "32 g",
-      "44 g"
-    ],
-    "correctAnswer": "32 g",
-    "correctAnswerIndex": 2,
-    "explanation": "O2 has atomic mass 16 × 2.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Subatomic Particles",
-    "difficulty": "Medium",
-    "text": "Atomic number of Carbon is:",
-    "options": [
-      "4",
-      "6",
-      "8",
+      "9",
+      "10",
+      "11",
       "12"
     ],
-    "correctAnswer": "6",
+    "correctAnswer": "10",
     "correctAnswerIndex": 1,
-    "explanation": "Carbon has 6 protons.",
+    "explanation": "Mass = moles x molar mass = 1 x 10 = 10 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Easy",
+    "text": "(Easy) Atomic Structure/Quantum Numbers: If 2 mol has molar mass 11 g/mol, total mass is? [Q2]",
+    "options": [
+      "21",
+      "22",
+      "23",
+      "24"
+    ],
+    "correctAnswer": "22",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 11 = 22 g.",
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "JEE",
     "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Bohr Model",
-    "difficulty": "Hard",
-    "text": "Which particle has a positive charge?",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Groups Trends: If 3 mol has molar mass 12 g/mol, total mass is? [Q3]",
     "options": [
-      "Electron",
-      "Neutron",
-      "Proton",
-      "Photon"
+      "35",
+      "36",
+      "37",
+      "38"
     ],
-    "correctAnswer": "Proton",
-    "correctAnswerIndex": 2,
-    "explanation": "Protons are positively charged.",
+    "correctAnswer": "36",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 12 = 36 g.",
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Subatomic Particles",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
     "difficulty": "Easy",
-    "text": "Electrons were discovered by:",
+    "text": "(Easy) Chemical Bonding/VSEPR: If 4 mol has molar mass 13 g/mol, total mass is? [Q4]",
     "options": [
-      "Rutherford",
-      "Thomson",
-      "Bohr",
-      "Mendel"
+      "51",
+      "52",
+      "53",
+      "54"
     ],
-    "correctAnswer": "Thomson",
+    "correctAnswer": "52",
     "correctAnswerIndex": 1,
-    "explanation": "J. J. Thomson discovered the electron.",
+    "explanation": "Mass = moles x molar mass = 4 x 13 = 52 g.",
     "mistakeType": "concept"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Bohr Model",
-    "difficulty": "Medium",
-    "text": "Maximum electrons in the first shell is:",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Easy",
+    "text": "(Easy) Equilibrium/Kc Kp: If 5 mol has molar mass 14 g/mol, total mass is? [Q5]",
     "options": [
-      "2",
-      "8",
-      "18",
-      "32"
+      "69",
+      "70",
+      "71",
+      "72"
     ],
-    "correctAnswer": "2",
-    "correctAnswerIndex": 0,
-    "explanation": "First shell has only 2 electrons.",
+    "correctAnswer": "70",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 14 = 70 g.",
     "mistakeType": "calculation"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Subatomic Particles",
-    "difficulty": "Hard",
-    "text": "The mass number is the sum of:",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Easy",
+    "text": "(Easy) Mole Concept/Avogadro: If 6 mol has molar mass 15 g/mol, total mass is? [Q6]",
     "options": [
-      "Protons and electrons",
-      "Protons and neutrons",
-      "Neutrons and electrons",
-      "Only protons"
+      "89",
+      "90",
+      "91",
+      "92"
     ],
-    "correctAnswer": "Protons and neutrons",
+    "correctAnswer": "90",
     "correctAnswerIndex": 1,
-    "explanation": "Mass number equals protons + neutrons.",
+    "explanation": "Mass = moles x molar mass = 6 x 15 = 90 g.",
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Chemistry",
     "topic": "Atomic Structure",
     "subtopic": "Bohr Model",
     "difficulty": "Easy",
-    "text": "The charge of an electron is:",
+    "text": "(Easy) Atomic Structure/Bohr Model: If 7 mol has molar mass 16 g/mol, total mass is? [Q7]",
     "options": [
-      "+1",
-      "0",
-      "-1",
-      "+2"
+      "111",
+      "112",
+      "113",
+      "114"
     ],
-    "correctAnswer": "-1",
-    "correctAnswerIndex": 2,
-    "explanation": "Electron has negative charge.",
+    "correctAnswer": "112",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 16 = 112 g.",
     "mistakeType": "concept"
   },
   {
-    "examType": "NEET",
+    "examType": "JEE",
     "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Subatomic Particles",
-    "difficulty": "Medium",
-    "text": "Which of these is neutral?",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Periods Trends: If 8 mol has molar mass 17 g/mol, total mass is? [Q8]",
     "options": [
-      "Proton",
-      "Electron",
-      "Neutron",
-      "Positron"
+      "135",
+      "136",
+      "137",
+      "138"
     ],
-    "correctAnswer": "Neutron",
-    "correctAnswerIndex": 2,
-    "explanation": "Neutrons carry no charge.",
+    "correctAnswer": "136",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 17 = 136 g.",
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Bohr Model",
-    "difficulty": "Hard",
-    "text": "Bohr model explained:",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Easy",
+    "text": "(Easy) Chemical Bonding/Ionic Covalent: If 9 mol has molar mass 10 g/mol, total mass is? [Q9]",
     "options": [
-      "Particle spin",
-      "Hydrogen spectrum",
-      "Chemical bonding",
-      "Radioactivity"
+      "89",
+      "90",
+      "91",
+      "92"
     ],
-    "correctAnswer": "Hydrogen spectrum",
+    "correctAnswer": "90",
     "correctAnswerIndex": 1,
-    "explanation": "Bohr explained line spectrum of hydrogen.",
+    "explanation": "Mass = moles x molar mass = 9 x 10 = 90 g.",
     "mistakeType": "trap"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
-    "topic": "Atomic Structure",
-    "subtopic": "Subatomic Particles",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier",
     "difficulty": "Easy",
-    "text": "The number of electrons in a neutral sodium atom is:",
+    "text": "(Easy) Equilibrium/Le Chatelier: If 1 mol has molar mass 11 g/mol, total mass is? [Q10]",
     "options": [
       "10",
       "11",
       "12",
-      "23"
+      "13"
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Neutral atom has electrons equal to atomic number.",
+    "explanation": "Mass = moles x molar mass = 1 x 11 = 11 g.",
     "mistakeType": "concept"
   },
   {
     "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Easy",
+    "text": "(Easy) Mole Concept/Mole-Mass: If 2 mol has molar mass 12 g/mol, total mass is? [Q11]",
+    "options": [
+      "23",
+      "24",
+      "25",
+      "26"
+    ],
+    "correctAnswer": "24",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 12 = 24 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Easy",
+    "text": "(Easy) Atomic Structure/Quantum Numbers: If 3 mol has molar mass 13 g/mol, total mass is? [Q12]",
+    "options": [
+      "38",
+      "39",
+      "40",
+      "41"
+    ],
+    "correctAnswer": "39",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 13 = 39 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Groups Trends: If 4 mol has molar mass 14 g/mol, total mass is? [Q13]",
+    "options": [
+      "55",
+      "56",
+      "57",
+      "58"
+    ],
+    "correctAnswer": "56",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 14 = 56 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Easy",
+    "text": "(Easy) Chemical Bonding/VSEPR: If 5 mol has molar mass 15 g/mol, total mass is? [Q14]",
+    "options": [
+      "74",
+      "75",
+      "76",
+      "77"
+    ],
+    "correctAnswer": "75",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 15 = 75 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Easy",
+    "text": "(Easy) Equilibrium/Kc Kp: If 6 mol has molar mass 16 g/mol, total mass is? [Q15]",
+    "options": [
+      "95",
+      "96",
+      "97",
+      "98"
+    ],
+    "correctAnswer": "96",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 16 = 96 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Easy",
+    "text": "(Easy) Mole Concept/Avogadro: If 7 mol has molar mass 17 g/mol, total mass is? [Q16]",
+    "options": [
+      "118",
+      "119",
+      "120",
+      "121"
+    ],
+    "correctAnswer": "119",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 17 = 119 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Easy",
+    "text": "(Easy) Atomic Structure/Bohr Model: If 8 mol has molar mass 10 g/mol, total mass is? [Q17]",
+    "options": [
+      "79",
+      "80",
+      "81",
+      "82"
+    ],
+    "correctAnswer": "80",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 10 = 80 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Periods Trends: If 9 mol has molar mass 11 g/mol, total mass is? [Q18]",
+    "options": [
+      "98",
+      "99",
+      "100",
+      "101"
+    ],
+    "correctAnswer": "99",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 11 = 99 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Easy",
+    "text": "(Easy) Chemical Bonding/Ionic Covalent: If 1 mol has molar mass 12 g/mol, total mass is? [Q19]",
+    "options": [
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    "correctAnswer": "12",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 12 = 12 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier",
+    "difficulty": "Easy",
+    "text": "(Easy) Equilibrium/Le Chatelier: If 2 mol has molar mass 13 g/mol, total mass is? [Q20]",
+    "options": [
+      "25",
+      "26",
+      "27",
+      "28"
+    ],
+    "correctAnswer": "26",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 13 = 26 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Easy",
+    "text": "(Easy) Mole Concept/Mole-Mass: If 3 mol has molar mass 14 g/mol, total mass is? [Q21]",
+    "options": [
+      "41",
+      "42",
+      "43",
+      "44"
+    ],
+    "correctAnswer": "42",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 14 = 42 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Easy",
+    "text": "(Easy) Atomic Structure/Quantum Numbers: If 4 mol has molar mass 15 g/mol, total mass is? [Q22]",
+    "options": [
+      "59",
+      "60",
+      "61",
+      "62"
+    ],
+    "correctAnswer": "60",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 15 = 60 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Groups Trends: If 5 mol has molar mass 16 g/mol, total mass is? [Q23]",
+    "options": [
+      "79",
+      "80",
+      "81",
+      "82"
+    ],
+    "correctAnswer": "80",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 16 = 80 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Easy",
+    "text": "(Easy) Chemical Bonding/VSEPR: If 6 mol has molar mass 17 g/mol, total mass is? [Q24]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 17 = 102 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Easy",
+    "text": "(Easy) Equilibrium/Kc Kp: If 7 mol has molar mass 10 g/mol, total mass is? [Q25]",
+    "options": [
+      "69",
+      "70",
+      "71",
+      "72"
+    ],
+    "correctAnswer": "70",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 10 = 70 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Easy",
+    "text": "(Easy) Mole Concept/Avogadro: If 8 mol has molar mass 11 g/mol, total mass is? [Q26]",
+    "options": [
+      "87",
+      "88",
+      "89",
+      "90"
+    ],
+    "correctAnswer": "88",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 11 = 88 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Easy",
+    "text": "(Easy) Atomic Structure/Bohr Model: If 9 mol has molar mass 12 g/mol, total mass is? [Q27]",
+    "options": [
+      "107",
+      "108",
+      "109",
+      "110"
+    ],
+    "correctAnswer": "108",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 12 = 108 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Periods Trends: If 1 mol has molar mass 13 g/mol, total mass is? [Q28]",
+    "options": [
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "correctAnswer": "13",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 13 = 13 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Easy",
+    "text": "(Easy) Chemical Bonding/Ionic Covalent: If 2 mol has molar mass 14 g/mol, total mass is? [Q29]",
+    "options": [
+      "27",
+      "28",
+      "29",
+      "30"
+    ],
+    "correctAnswer": "28",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 14 = 28 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier",
+    "difficulty": "Easy",
+    "text": "(Easy) Equilibrium/Le Chatelier: If 3 mol has molar mass 15 g/mol, total mass is? [Q30]",
+    "options": [
+      "44",
+      "45",
+      "46",
+      "47"
+    ],
+    "correctAnswer": "45",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 15 = 45 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Easy",
+    "text": "(Easy) Mole Concept/Mole-Mass: If 4 mol has molar mass 16 g/mol, total mass is? [Q31]",
+    "options": [
+      "63",
+      "64",
+      "65",
+      "66"
+    ],
+    "correctAnswer": "64",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 16 = 64 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Easy",
+    "text": "(Easy) Atomic Structure/Quantum Numbers: If 5 mol has molar mass 17 g/mol, total mass is? [Q32]",
+    "options": [
+      "84",
+      "85",
+      "86",
+      "87"
+    ],
+    "correctAnswer": "85",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 17 = 85 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Groups Trends: If 6 mol has molar mass 10 g/mol, total mass is? [Q33]",
+    "options": [
+      "59",
+      "60",
+      "61",
+      "62"
+    ],
+    "correctAnswer": "60",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 10 = 60 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Easy",
+    "text": "(Easy) Chemical Bonding/VSEPR: If 7 mol has molar mass 11 g/mol, total mass is? [Q34]",
+    "options": [
+      "76",
+      "77",
+      "78",
+      "79"
+    ],
+    "correctAnswer": "77",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 11 = 77 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Easy",
+    "text": "(Easy) Equilibrium/Kc Kp: If 8 mol has molar mass 12 g/mol, total mass is? [Q35]",
+    "options": [
+      "95",
+      "96",
+      "97",
+      "98"
+    ],
+    "correctAnswer": "96",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 12 = 96 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Easy",
+    "text": "(Easy) Mole Concept/Avogadro: If 9 mol has molar mass 13 g/mol, total mass is? [Q36]",
+    "options": [
+      "116",
+      "117",
+      "118",
+      "119"
+    ],
+    "correctAnswer": "117",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 13 = 117 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Easy",
+    "text": "(Easy) Atomic Structure/Bohr Model: If 1 mol has molar mass 14 g/mol, total mass is? [Q37]",
+    "options": [
+      "13",
+      "14",
+      "15",
+      "16"
+    ],
+    "correctAnswer": "14",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 14 = 14 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Easy",
+    "text": "(Easy) Periodic Table/Periods Trends: If 2 mol has molar mass 15 g/mol, total mass is? [Q38]",
+    "options": [
+      "29",
+      "30",
+      "31",
+      "32"
+    ],
+    "correctAnswer": "30",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 15 = 30 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Easy",
+    "text": "(Easy) Chemical Bonding/Ionic Covalent: If 3 mol has molar mass 16 g/mol, total mass is? [Q39]",
+    "options": [
+      "47",
+      "48",
+      "49",
+      "50"
+    ],
+    "correctAnswer": "48",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 16 = 48 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier",
+    "difficulty": "Easy",
+    "text": "(Easy) Equilibrium/Le Chatelier: If 4 mol has molar mass 17 g/mol, total mass is? [Q40]",
+    "options": [
+      "67",
+      "68",
+      "69",
+      "70"
+    ],
+    "correctAnswer": "68",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 17 = 68 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Medium",
+    "text": "(Medium) Mole Concept/Mole-Mass: If 5 mol has molar mass 10 g/mol, total mass is? [Q41]",
+    "options": [
+      "49",
+      "50",
+      "51",
+      "52"
+    ],
+    "correctAnswer": "50",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 10 = 50 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Medium",
+    "text": "(Medium) Atomic Structure/Quantum Numbers: If 6 mol has molar mass 11 g/mol, total mass is? [Q42]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 11 = 66 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Medium",
+    "text": "(Medium) Periodic Table/Groups Trends: If 7 mol has molar mass 12 g/mol, total mass is? [Q43]",
+    "options": [
+      "83",
+      "84",
+      "85",
+      "86"
+    ],
+    "correctAnswer": "84",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 12 = 84 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Medium",
+    "text": "(Medium) Chemical Bonding/VSEPR: If 8 mol has molar mass 13 g/mol, total mass is? [Q44]",
+    "options": [
+      "103",
+      "104",
+      "105",
+      "106"
+    ],
+    "correctAnswer": "104",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 13 = 104 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Medium",
+    "text": "(Medium) Equilibrium/Kc Kp: If 9 mol has molar mass 14 g/mol, total mass is? [Q45]",
+    "options": [
+      "125",
+      "126",
+      "127",
+      "128"
+    ],
+    "correctAnswer": "126",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 14 = 126 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Medium",
+    "text": "(Medium) Mole Concept/Avogadro: If 1 mol has molar mass 15 g/mol, total mass is? [Q46]",
+    "options": [
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "correctAnswer": "15",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 15 = 15 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
     "subject": "Chemistry",
     "topic": "Atomic Structure",
     "subtopic": "Bohr Model",
     "difficulty": "Medium",
-    "text": "Which shell is closest to the nucleus?",
+    "text": "(Medium) Atomic Structure/Bohr Model: If 2 mol has molar mass 16 g/mol, total mass is? [Q47]",
     "options": [
-      "K shell",
-      "L shell",
-      "M shell",
-      "N shell"
+      "31",
+      "32",
+      "33",
+      "34"
     ],
-    "correctAnswer": "K shell",
-    "correctAnswerIndex": 0,
-    "explanation": "K shell is the first shell.",
+    "correctAnswer": "32",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 16 = 32 g.",
     "mistakeType": "calculation"
   },
   {
-    "examType": "NEET",
+    "examType": "JEE",
     "subject": "Chemistry",
     "topic": "Periodic Table",
-    "subtopic": "Groups",
-    "difficulty": "Easy",
-    "text": "The first element in the periodic table is:",
-    "options": [
-      "Helium",
-      "Hydrogen",
-      "Lithium",
-      "Oxygen"
-    ],
-    "correctAnswer": "Hydrogen",
-    "correctAnswerIndex": 1,
-    "explanation": "Hydrogen has atomic number 1.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Periods",
+    "subtopic": "Periods Trends",
     "difficulty": "Medium",
-    "text": "Group 18 elements are called:",
+    "text": "(Medium) Periodic Table/Periods Trends: If 3 mol has molar mass 17 g/mol, total mass is? [Q48]",
     "options": [
-      "Alkali metals",
-      "Halogens",
-      "Noble gases",
-      "Transition metals"
+      "50",
+      "51",
+      "52",
+      "53"
     ],
-    "correctAnswer": "Noble gases",
-    "correctAnswerIndex": 2,
-    "explanation": "They are chemically inert in general.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Groups",
-    "difficulty": "Hard",
-    "text": "Periodic table is arranged by increasing:",
-    "options": [
-      "Mass number",
-      "Atomic number",
-      "Valency",
-      "Density"
-    ],
-    "correctAnswer": "Atomic number",
+    "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Modern periodic table follows atomic number.",
+    "explanation": "Mass = moles x molar mass = 3 x 17 = 51 g.",
     "mistakeType": "trap"
   },
   {
-    "examType": "NEET",
+    "examType": "CET",
     "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Periods",
-    "difficulty": "Easy",
-    "text": "Which is an alkali metal?",
-    "options": [
-      "Sodium",
-      "Chlorine",
-      "Oxygen",
-      "Argon"
-    ],
-    "correctAnswer": "Sodium",
-    "correctAnswerIndex": 0,
-    "explanation": "Sodium belongs to group 1.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Groups",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
     "difficulty": "Medium",
-    "text": "Which of these has the highest electronegativity?",
+    "text": "(Medium) Chemical Bonding/Ionic Covalent: If 4 mol has molar mass 10 g/mol, total mass is? [Q49]",
     "options": [
-      "Fluorine",
-      "Sodium",
-      "Potassium",
-      "Calcium"
+      "39",
+      "40",
+      "41",
+      "42"
     ],
-    "correctAnswer": "Fluorine",
-    "correctAnswerIndex": 0,
-    "explanation": "Fluorine is most electronegative.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Periods",
-    "difficulty": "Hard",
-    "text": "Elements in the same group have similar:",
-    "options": [
-      "Atomic mass",
-      "Valency",
-      "Density",
-      "State only"
-    ],
-    "correctAnswer": "Valency",
+    "correctAnswer": "40",
     "correctAnswerIndex": 1,
-    "explanation": "Same group generally have similar valence electrons.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Groups",
-    "difficulty": "Easy",
-    "text": "Which is a halogen?",
-    "options": [
-      "Neon",
-      "Fluorine",
-      "Magnesium",
-      "Iron"
-    ],
-    "correctAnswer": "Fluorine",
-    "correctAnswerIndex": 1,
-    "explanation": "Fluorine is group 17.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Periods",
-    "difficulty": "Medium",
-    "text": "The number of periods in the periodic table is:",
-    "options": [
-      "5",
-      "6",
-      "7",
-      "8"
-    ],
-    "correctAnswer": "7",
-    "correctAnswerIndex": 2,
-    "explanation": "There are 7 periods.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Groups",
-    "difficulty": "Hard",
-    "text": "What is the symbol of sodium?",
-    "options": [
-      "Na",
-      "So",
-      "Sd",
-      "Sn"
-    ],
-    "correctAnswer": "Na",
-    "correctAnswerIndex": 0,
-    "explanation": "Sodium symbol is Na.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Periodic Table",
-    "subtopic": "Periods",
-    "difficulty": "Easy",
-    "text": "Which element is in group 2?",
-    "options": [
-      "Magnesium",
-      "Chlorine",
-      "Carbon",
-      "Neon"
-    ],
-    "correctAnswer": "Magnesium",
-    "correctAnswerIndex": 0,
-    "explanation": "Magnesium is an alkaline earth metal.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Bond Type",
-    "difficulty": "Hard",
-    "text": "Which bond involves complete transfer of electrons?",
-    "options": [
-      "Covalent",
-      "Ionic",
-      "Hydrogen",
-      "Metallic"
-    ],
-    "correctAnswer": "Ionic",
-    "correctAnswerIndex": 1,
-    "explanation": "Ionic bonding involves electron transfer.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Molecular Structure",
-    "difficulty": "Easy",
-    "text": "A bond formed by sharing electrons is:",
-    "options": [
-      "Ionic",
-      "Covalent",
-      "Coordinate only",
-      "Metallic"
-    ],
-    "correctAnswer": "Covalent",
-    "correctAnswerIndex": 1,
-    "explanation": "Covalent bonds involve sharing.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Bond Type",
-    "difficulty": "Medium",
-    "text": "The bond between Na and Cl in NaCl is:",
-    "options": [
-      "Ionic",
-      "Covalent",
-      "Hydrogen",
-      "Van der Waals"
-    ],
-    "correctAnswer": "Ionic",
-    "correctAnswerIndex": 0,
-    "explanation": "Sodium transfers electron to chlorine.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Molecular Structure",
-    "difficulty": "Hard",
-    "text": "Which molecule has a coordinate bond?",
-    "options": [
-      "NH4+",
-      "O2",
-      "H2",
-      "Cl2"
-    ],
-    "correctAnswer": "NH4+",
-    "correctAnswerIndex": 0,
-    "explanation": "Ammonium ion forms through coordinate donation.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Bond Type",
-    "difficulty": "Easy",
-    "text": "Hydrogen bonding is strongest in:",
-    "options": [
-      "H2S",
-      "H2O",
-      "HCl",
-      "CH4"
-    ],
-    "correctAnswer": "H2O",
-    "correctAnswerIndex": 1,
-    "explanation": "Water shows strong hydrogen bonding.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Molecular Structure",
-    "difficulty": "Medium",
-    "text": "Metallic bonding is found in:",
-    "options": [
-      "NaCl",
-      "Copper",
-      "CO2",
-      "NH3"
-    ],
-    "correctAnswer": "Copper",
-    "correctAnswerIndex": 1,
-    "explanation": "Metals exhibit metallic bonding.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Bond Type",
-    "difficulty": "Hard",
-    "text": "A covalent bond usually forms between:",
-    "options": [
-      "Metal and non-metal",
-      "Two non-metals",
-      "Two metals",
-      "Noble gases"
-    ],
-    "correctAnswer": "Two non-metals",
-    "correctAnswerIndex": 1,
-    "explanation": "Covalent bonding usually occurs between non-metals.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Molecular Structure",
-    "difficulty": "Easy",
-    "text": "What is the main reason atoms form bonds?",
-    "options": [
-      "To become unstable",
-      "To lower energy",
-      "To increase charge",
-      "To decrease mass"
-    ],
-    "correctAnswer": "To lower energy",
-    "correctAnswerIndex": 1,
-    "explanation": "Bond formation lowers potential energy.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Bond Type",
-    "difficulty": "Medium",
-    "text": "Which force holds positive and negative ions together?",
-    "options": [
-      "Magnetic force",
-      "Electrostatic attraction",
-      "Centrifugal force",
-      "Gravity"
-    ],
-    "correctAnswer": "Electrostatic attraction",
-    "correctAnswerIndex": 1,
-    "explanation": "Oppositely charged ions attract each other.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Chemical Bonding",
-    "subtopic": "Molecular Structure",
-    "difficulty": "Hard",
-    "text": "Which is a non-polar covalent molecule?",
-    "options": [
-      "H2O",
-      "NH3",
-      "O2",
-      "HCl"
-    ],
-    "correctAnswer": "O2",
-    "correctAnswerIndex": 2,
-    "explanation": "Two identical atoms share electrons equally.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Equilibrium",
-    "subtopic": "Chemical Equilibrium",
-    "difficulty": "Medium",
-    "text": "At equilibrium, the rates of forward and reverse reactions are:",
-    "options": [
-      "Unequal",
-      "Equal",
-      "Zero",
-      "Infinite"
-    ],
-    "correctAnswer": "Equal",
-    "correctAnswerIndex": 1,
-    "explanation": "Dynamic equilibrium means equal rates.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Equilibrium",
-    "subtopic": "Le Chatelier Principle",
-    "difficulty": "Hard",
-    "text": "Equilibrium constant is denoted by:",
-    "options": [
-      "Kc",
-      "Ke",
-      "Kr",
-      "Kv"
-    ],
-    "correctAnswer": "Kc",
-    "correctAnswerIndex": 0,
-    "explanation": "Kc is commonly used for concentration equilibrium.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "NEET",
-    "subject": "Chemistry",
-    "topic": "Equilibrium",
-    "subtopic": "Chemical Equilibrium",
-    "difficulty": "Easy",
-    "text": "Le Chatelier’s principle predicts the system will:",
-    "options": [
-      "Oppose change",
-      "Amplify change",
-      "Ignore change",
-      "Stop reaction"
-    ],
-    "correctAnswer": "Oppose change",
-    "correctAnswerIndex": 0,
-    "explanation": "A system counteracts applied stress.",
+    "explanation": "Mass = moles x molar mass = 4 x 10 = 40 g.",
     "mistakeType": "concept"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
     "topic": "Equilibrium",
-    "subtopic": "Le Chatelier Principle",
+    "subtopic": "Le Chatelier",
     "difficulty": "Medium",
-    "text": "If product concentration increases, equilibrium shifts:",
+    "text": "(Medium) Equilibrium/Le Chatelier: If 5 mol has molar mass 11 g/mol, total mass is? [Q50]",
     "options": [
-      "Left",
-      "Right",
-      "No shift",
-      "Stops"
+      "54",
+      "55",
+      "56",
+      "57"
     ],
-    "correctAnswer": "Left",
-    "correctAnswerIndex": 0,
-    "explanation": "System reduces added product.",
+    "correctAnswer": "55",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 11 = 55 g.",
     "mistakeType": "calculation"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
-    "topic": "Equilibrium",
-    "subtopic": "Chemical Equilibrium",
-    "difficulty": "Hard",
-    "text": "A catalyst at equilibrium:",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Medium",
+    "text": "(Medium) Mole Concept/Mole-Mass: If 6 mol has molar mass 12 g/mol, total mass is? [Q51]",
     "options": [
-      "Changes Kc",
-      "Shifts equilibrium",
-      "Speeds both directions equally",
-      "Stops reaction"
+      "71",
+      "72",
+      "73",
+      "74"
     ],
-    "correctAnswer": "Speeds both directions equally",
-    "correctAnswerIndex": 2,
-    "explanation": "Catalyst lowers activation energy for both directions.",
+    "correctAnswer": "72",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 12 = 72 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Medium",
+    "text": "(Medium) Atomic Structure/Quantum Numbers: If 7 mol has molar mass 13 g/mol, total mass is? [Q52]",
+    "options": [
+      "90",
+      "91",
+      "92",
+      "93"
+    ],
+    "correctAnswer": "91",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 13 = 91 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Medium",
+    "text": "(Medium) Periodic Table/Groups Trends: If 8 mol has molar mass 14 g/mol, total mass is? [Q53]",
+    "options": [
+      "111",
+      "112",
+      "113",
+      "114"
+    ],
+    "correctAnswer": "112",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 14 = 112 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Medium",
+    "text": "(Medium) Chemical Bonding/VSEPR: If 9 mol has molar mass 15 g/mol, total mass is? [Q54]",
+    "options": [
+      "134",
+      "135",
+      "136",
+      "137"
+    ],
+    "correctAnswer": "135",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 15 = 135 g.",
     "mistakeType": "trap"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
     "topic": "Equilibrium",
-    "subtopic": "Le Chatelier Principle",
-    "difficulty": "Easy",
-    "text": "For endothermic forward reaction, increasing temperature shifts equilibrium:",
+    "subtopic": "Kc Kp",
+    "difficulty": "Medium",
+    "text": "(Medium) Equilibrium/Kc Kp: If 1 mol has molar mass 16 g/mol, total mass is? [Q55]",
     "options": [
-      "Left",
-      "Right",
-      "No shift",
-      "Depends only on pressure"
+      "15",
+      "16",
+      "17",
+      "18"
     ],
-    "correctAnswer": "Right",
+    "correctAnswer": "16",
     "correctAnswerIndex": 1,
-    "explanation": "Heat acts like a reactant.",
+    "explanation": "Mass = moles x molar mass = 1 x 16 = 16 g.",
     "mistakeType": "concept"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
-    "topic": "Equilibrium",
-    "subtopic": "Chemical Equilibrium",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
     "difficulty": "Medium",
-    "text": "For exothermic forward reaction, increasing temperature shifts equilibrium:",
+    "text": "(Medium) Mole Concept/Avogadro: If 2 mol has molar mass 17 g/mol, total mass is? [Q56]",
     "options": [
-      "Left",
-      "Right",
-      "No shift",
-      "Stops"
+      "33",
+      "34",
+      "35",
+      "36"
     ],
-    "correctAnswer": "Left",
-    "correctAnswerIndex": 0,
-    "explanation": "System tries to absorb the extra heat.",
+    "correctAnswer": "34",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 17 = 34 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Medium",
+    "text": "(Medium) Atomic Structure/Bohr Model: If 3 mol has molar mass 10 g/mol, total mass is? [Q57]",
+    "options": [
+      "29",
+      "30",
+      "31",
+      "32"
+    ],
+    "correctAnswer": "30",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 10 = 30 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Medium",
+    "text": "(Medium) Periodic Table/Periods Trends: If 4 mol has molar mass 11 g/mol, total mass is? [Q58]",
+    "options": [
+      "43",
+      "44",
+      "45",
+      "46"
+    ],
+    "correctAnswer": "44",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 11 = 44 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Medium",
+    "text": "(Medium) Chemical Bonding/Ionic Covalent: If 5 mol has molar mass 12 g/mol, total mass is? [Q59]",
+    "options": [
+      "59",
+      "60",
+      "61",
+      "62"
+    ],
+    "correctAnswer": "60",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 12 = 60 g.",
     "mistakeType": "calculation"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
     "topic": "Equilibrium",
-    "subtopic": "Le Chatelier Principle",
-    "difficulty": "Hard",
-    "text": "A dynamic equilibrium exists in:",
+    "subtopic": "Le Chatelier",
+    "difficulty": "Medium",
+    "text": "(Medium) Equilibrium/Le Chatelier: If 6 mol has molar mass 13 g/mol, total mass is? [Q60]",
     "options": [
-      "Open system only",
-      "Closed system",
-      "Vacuum only",
-      "Solid state only"
+      "77",
+      "78",
+      "79",
+      "80"
     ],
-    "correctAnswer": "Closed system",
+    "correctAnswer": "78",
     "correctAnswerIndex": 1,
-    "explanation": "Equilibrium requires no net exchange with surroundings.",
+    "explanation": "Mass = moles x molar mass = 6 x 13 = 78 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Medium",
+    "text": "(Medium) Mole Concept/Mole-Mass: If 7 mol has molar mass 14 g/mol, total mass is? [Q61]",
+    "options": [
+      "97",
+      "98",
+      "99",
+      "100"
+    ],
+    "correctAnswer": "98",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 14 = 98 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Medium",
+    "text": "(Medium) Atomic Structure/Quantum Numbers: If 8 mol has molar mass 15 g/mol, total mass is? [Q62]",
+    "options": [
+      "119",
+      "120",
+      "121",
+      "122"
+    ],
+    "correctAnswer": "120",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 15 = 120 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Medium",
+    "text": "(Medium) Periodic Table/Groups Trends: If 9 mol has molar mass 16 g/mol, total mass is? [Q63]",
+    "options": [
+      "143",
+      "144",
+      "145",
+      "146"
+    ],
+    "correctAnswer": "144",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 16 = 144 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Medium",
+    "text": "(Medium) Chemical Bonding/VSEPR: If 1 mol has molar mass 17 g/mol, total mass is? [Q64]",
+    "options": [
+      "16",
+      "17",
+      "18",
+      "19"
+    ],
+    "correctAnswer": "17",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 17 = 17 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Medium",
+    "text": "(Medium) Equilibrium/Kc Kp: If 2 mol has molar mass 10 g/mol, total mass is? [Q65]",
+    "options": [
+      "19",
+      "20",
+      "21",
+      "22"
+    ],
+    "correctAnswer": "20",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 10 = 20 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Medium",
+    "text": "(Medium) Mole Concept/Avogadro: If 3 mol has molar mass 11 g/mol, total mass is? [Q66]",
+    "options": [
+      "32",
+      "33",
+      "34",
+      "35"
+    ],
+    "correctAnswer": "33",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 11 = 33 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Medium",
+    "text": "(Medium) Atomic Structure/Bohr Model: If 4 mol has molar mass 12 g/mol, total mass is? [Q67]",
+    "options": [
+      "47",
+      "48",
+      "49",
+      "50"
+    ],
+    "correctAnswer": "48",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 12 = 48 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Medium",
+    "text": "(Medium) Periodic Table/Periods Trends: If 5 mol has molar mass 13 g/mol, total mass is? [Q68]",
+    "options": [
+      "64",
+      "65",
+      "66",
+      "67"
+    ],
+    "correctAnswer": "65",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 13 = 65 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Medium",
+    "text": "(Medium) Chemical Bonding/Ionic Covalent: If 6 mol has molar mass 14 g/mol, total mass is? [Q69]",
+    "options": [
+      "83",
+      "84",
+      "85",
+      "86"
+    ],
+    "correctAnswer": "84",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 14 = 84 g.",
     "mistakeType": "trap"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
     "topic": "Equilibrium",
-    "subtopic": "Chemical Equilibrium",
-    "difficulty": "Easy",
-    "text": "If pressure increases for a gaseous equilibrium, system shifts to:",
+    "subtopic": "Le Chatelier",
+    "difficulty": "Medium",
+    "text": "(Medium) Equilibrium/Le Chatelier: If 7 mol has molar mass 15 g/mol, total mass is? [Q70]",
     "options": [
-      "More moles of gas",
-      "Fewer moles of gas",
-      "No change",
-      "Solid products only"
+      "104",
+      "105",
+      "106",
+      "107"
     ],
-    "correctAnswer": "Fewer moles of gas",
+    "correctAnswer": "105",
     "correctAnswerIndex": 1,
-    "explanation": "Higher pressure favors fewer gas molecules.",
+    "explanation": "Mass = moles x molar mass = 7 x 15 = 105 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Medium",
+    "text": "(Medium) Mole Concept/Mole-Mass: If 8 mol has molar mass 16 g/mol, total mass is? [Q71]",
+    "options": [
+      "127",
+      "128",
+      "129",
+      "130"
+    ],
+    "correctAnswer": "128",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 16 = 128 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Medium",
+    "text": "(Medium) Atomic Structure/Quantum Numbers: If 9 mol has molar mass 17 g/mol, total mass is? [Q72]",
+    "options": [
+      "152",
+      "153",
+      "154",
+      "155"
+    ],
+    "correctAnswer": "153",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 17 = 153 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Medium",
+    "text": "(Medium) Periodic Table/Groups Trends: If 1 mol has molar mass 10 g/mol, total mass is? [Q73]",
+    "options": [
+      "9",
+      "10",
+      "11",
+      "12"
+    ],
+    "correctAnswer": "10",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 10 = 10 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Medium",
+    "text": "(Medium) Chemical Bonding/VSEPR: If 2 mol has molar mass 11 g/mol, total mass is? [Q74]",
+    "options": [
+      "21",
+      "22",
+      "23",
+      "24"
+    ],
+    "correctAnswer": "22",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 11 = 22 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Medium",
+    "text": "(Medium) Equilibrium/Kc Kp: If 3 mol has molar mass 12 g/mol, total mass is? [Q75]",
+    "options": [
+      "35",
+      "36",
+      "37",
+      "38"
+    ],
+    "correctAnswer": "36",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 12 = 36 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Medium",
+    "text": "(Medium) Mole Concept/Avogadro: If 4 mol has molar mass 13 g/mol, total mass is? [Q76]",
+    "options": [
+      "51",
+      "52",
+      "53",
+      "54"
+    ],
+    "correctAnswer": "52",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 13 = 52 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Medium",
+    "text": "(Medium) Atomic Structure/Bohr Model: If 5 mol has molar mass 14 g/mol, total mass is? [Q77]",
+    "options": [
+      "69",
+      "70",
+      "71",
+      "72"
+    ],
+    "correctAnswer": "70",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 14 = 70 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Medium",
+    "text": "(Medium) Periodic Table/Periods Trends: If 6 mol has molar mass 15 g/mol, total mass is? [Q78]",
+    "options": [
+      "89",
+      "90",
+      "91",
+      "92"
+    ],
+    "correctAnswer": "90",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 15 = 90 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Medium",
+    "text": "(Medium) Chemical Bonding/Ionic Covalent: If 7 mol has molar mass 16 g/mol, total mass is? [Q79]",
+    "options": [
+      "111",
+      "112",
+      "113",
+      "114"
+    ],
+    "correctAnswer": "112",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 16 = 112 g.",
     "mistakeType": "concept"
   },
   {
     "examType": "NEET",
     "subject": "Chemistry",
     "topic": "Equilibrium",
-    "subtopic": "Le Chatelier Principle",
+    "subtopic": "Le Chatelier",
     "difficulty": "Medium",
-    "text": "Concentration of reactants at equilibrium is:",
+    "text": "(Medium) Equilibrium/Le Chatelier: If 8 mol has molar mass 17 g/mol, total mass is? [Q80]",
     "options": [
-      "Always zero",
-      "Constant",
-      "Always increasing",
-      "Always decreasing"
+      "135",
+      "136",
+      "137",
+      "138"
     ],
-    "correctAnswer": "Constant",
+    "correctAnswer": "136",
     "correctAnswerIndex": 1,
-    "explanation": "At equilibrium concentrations remain constant.",
+    "explanation": "Mass = moles x molar mass = 8 x 17 = 136 g.",
     "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Hard",
+    "text": "(Hard) Mole Concept/Mole-Mass: If 9 mol has molar mass 10 g/mol, total mass is? [Q81]",
+    "options": [
+      "89",
+      "90",
+      "91",
+      "92"
+    ],
+    "correctAnswer": "90",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 10 = 90 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Hard",
+    "text": "(Hard) Atomic Structure/Quantum Numbers: If 1 mol has molar mass 11 g/mol, total mass is? [Q82]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 11 = 11 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Hard",
+    "text": "(Hard) Periodic Table/Groups Trends: If 2 mol has molar mass 12 g/mol, total mass is? [Q83]",
+    "options": [
+      "23",
+      "24",
+      "25",
+      "26"
+    ],
+    "correctAnswer": "24",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 12 = 24 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Hard",
+    "text": "(Hard) Chemical Bonding/VSEPR: If 3 mol has molar mass 13 g/mol, total mass is? [Q84]",
+    "options": [
+      "38",
+      "39",
+      "40",
+      "41"
+    ],
+    "correctAnswer": "39",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 13 = 39 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Hard",
+    "text": "(Hard) Equilibrium/Kc Kp: If 4 mol has molar mass 14 g/mol, total mass is? [Q85]",
+    "options": [
+      "55",
+      "56",
+      "57",
+      "58"
+    ],
+    "correctAnswer": "56",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 14 = 56 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Hard",
+    "text": "(Hard) Mole Concept/Avogadro: If 5 mol has molar mass 15 g/mol, total mass is? [Q86]",
+    "options": [
+      "74",
+      "75",
+      "76",
+      "77"
+    ],
+    "correctAnswer": "75",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 15 = 75 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Hard",
+    "text": "(Hard) Atomic Structure/Bohr Model: If 6 mol has molar mass 16 g/mol, total mass is? [Q87]",
+    "options": [
+      "95",
+      "96",
+      "97",
+      "98"
+    ],
+    "correctAnswer": "96",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 16 = 96 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Hard",
+    "text": "(Hard) Periodic Table/Periods Trends: If 7 mol has molar mass 17 g/mol, total mass is? [Q88]",
+    "options": [
+      "118",
+      "119",
+      "120",
+      "121"
+    ],
+    "correctAnswer": "119",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 17 = 119 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Hard",
+    "text": "(Hard) Chemical Bonding/Ionic Covalent: If 8 mol has molar mass 10 g/mol, total mass is? [Q89]",
+    "options": [
+      "79",
+      "80",
+      "81",
+      "82"
+    ],
+    "correctAnswer": "80",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 10 = 80 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier",
+    "difficulty": "Hard",
+    "text": "(Hard) Equilibrium/Le Chatelier: If 9 mol has molar mass 11 g/mol, total mass is? [Q90]",
+    "options": [
+      "98",
+      "99",
+      "100",
+      "101"
+    ],
+    "correctAnswer": "99",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 11 = 99 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Mole-Mass",
+    "difficulty": "Hard",
+    "text": "(Hard) Mole Concept/Mole-Mass: If 1 mol has molar mass 12 g/mol, total mass is? [Q91]",
+    "options": [
+      "11",
+      "12",
+      "13",
+      "14"
+    ],
+    "correctAnswer": "12",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 12 = 12 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Quantum Numbers",
+    "difficulty": "Hard",
+    "text": "(Hard) Atomic Structure/Quantum Numbers: If 2 mol has molar mass 13 g/mol, total mass is? [Q92]",
+    "options": [
+      "25",
+      "26",
+      "27",
+      "28"
+    ],
+    "correctAnswer": "26",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 13 = 26 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Groups Trends",
+    "difficulty": "Hard",
+    "text": "(Hard) Periodic Table/Groups Trends: If 3 mol has molar mass 14 g/mol, total mass is? [Q93]",
+    "options": [
+      "41",
+      "42",
+      "43",
+      "44"
+    ],
+    "correctAnswer": "42",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 3 x 14 = 42 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "VSEPR",
+    "difficulty": "Hard",
+    "text": "(Hard) Chemical Bonding/VSEPR: If 4 mol has molar mass 15 g/mol, total mass is? [Q94]",
+    "options": [
+      "59",
+      "60",
+      "61",
+      "62"
+    ],
+    "correctAnswer": "60",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 15 = 60 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Kc Kp",
+    "difficulty": "Hard",
+    "text": "(Hard) Equilibrium/Kc Kp: If 5 mol has molar mass 16 g/mol, total mass is? [Q95]",
+    "options": [
+      "79",
+      "80",
+      "81",
+      "82"
+    ],
+    "correctAnswer": "80",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 5 x 16 = 80 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "subtopic": "Avogadro",
+    "difficulty": "Hard",
+    "text": "(Hard) Mole Concept/Avogadro: If 6 mol has molar mass 17 g/mol, total mass is? [Q96]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 6 x 17 = 102 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Atomic Structure",
+    "subtopic": "Bohr Model",
+    "difficulty": "Hard",
+    "text": "(Hard) Atomic Structure/Bohr Model: If 7 mol has molar mass 10 g/mol, total mass is? [Q97]",
+    "options": [
+      "69",
+      "70",
+      "71",
+      "72"
+    ],
+    "correctAnswer": "70",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 7 x 10 = 70 g.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "subtopic": "Periods Trends",
+    "difficulty": "Hard",
+    "text": "(Hard) Periodic Table/Periods Trends: If 8 mol has molar mass 11 g/mol, total mass is? [Q98]",
+    "options": [
+      "87",
+      "88",
+      "89",
+      "90"
+    ],
+    "correctAnswer": "88",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 8 x 11 = 88 g.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "subtopic": "Ionic Covalent",
+    "difficulty": "Hard",
+    "text": "(Hard) Chemical Bonding/Ionic Covalent: If 9 mol has molar mass 12 g/mol, total mass is? [Q99]",
+    "options": [
+      "107",
+      "108",
+      "109",
+      "110"
+    ],
+    "correctAnswer": "108",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 9 x 12 = 108 g.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Equilibrium",
+    "subtopic": "Le Chatelier",
+    "difficulty": "Hard",
+    "text": "(Hard) Equilibrium/Le Chatelier: If 1 mol has molar mass 13 g/mol, total mass is? [Q100]",
+    "options": [
+      "12",
+      "13",
+      "14",
+      "15"
+    ],
+    "correctAnswer": "13",
+    "correctAnswerIndex": 1,
+    "explanation": "Mass = moles x molar mass = 1 x 13 = 13 g.",
+    "mistakeType": "concept"
   }
 ]

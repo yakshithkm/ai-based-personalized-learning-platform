@@ -5,862 +5,430 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Easy",
-    "text": "Solve 2x + 3 = 11.",
+    "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q1]",
     "options": [
-      "x = 3",
-      "x = 4",
-      "x = 5",
-      "x = 6"
-    ],
-    "correctAnswer": "x = 4",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 3 and divide by 2 to get x = 4.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Expression Simplification",
-    "difficulty": "Medium",
-    "text": "Solve 3x + 4 = 19.",
-    "options": [
-      "x = 4",
-      "x = 5",
-      "x = 6",
-      "x = 7"
-    ],
-    "correctAnswer": "x = 5",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 4 and divide by 3 to get x = 5.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Linear Equations",
-    "difficulty": "Hard",
-    "text": "Solve 4x + 5 = 25.",
-    "options": [
-      "x = 4",
-      "x = 5",
-      "x = 6",
-      "x = 7"
-    ],
-    "correctAnswer": "x = 5",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 5 and divide by 4 to get x = 5.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Expression Simplification",
-    "difficulty": "Easy",
-    "text": "Solve 5x + 7 = 32.",
-    "options": [
-      "x = 4",
-      "x = 5",
-      "x = 6",
-      "x = 7"
-    ],
-    "correctAnswer": "x = 5",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 7 and divide by 5 to get x = 5.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Linear Equations",
-    "difficulty": "Medium",
-    "text": "Solve 6x + 9 = 45.",
-    "options": [
-      "x = 5",
-      "x = 6",
-      "x = 7",
-      "x = 8"
-    ],
-    "correctAnswer": "x = 6",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 9 and divide by 6 to get x = 6.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Expression Simplification",
-    "difficulty": "Hard",
-    "text": "Solve 7x + 8 = 36.",
-    "options": [
-      "x = 3",
-      "x = 4",
-      "x = 5",
-      "x = 6"
-    ],
-    "correctAnswer": "x = 4",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 8 and divide by 7 to get x = 4.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Linear Equations",
-    "difficulty": "Easy",
-    "text": "Solve 8x + 11 = 59.",
-    "options": [
-      "x = 5",
-      "x = 6",
-      "x = 7",
-      "x = 8"
-    ],
-    "correctAnswer": "x = 6",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 11 and divide by 8 to get x = 6.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Expression Simplification",
-    "difficulty": "Medium",
-    "text": "Solve 9x + 6 = 33.",
-    "options": [
-      "x = 2",
-      "x = 3",
-      "x = 4",
-      "x = 5"
-    ],
-    "correctAnswer": "x = 3",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 6 and divide by 9 to get x = 3.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Linear Equations",
-    "difficulty": "Hard",
-    "text": "Solve 10x + 13 = 73.",
-    "options": [
-      "x = 5",
-      "x = 6",
-      "x = 7",
-      "x = 8"
-    ],
-    "correctAnswer": "x = 6",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 13 and divide by 10 to get x = 6.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Algebra",
-    "subtopic": "Expression Simplification",
-    "difficulty": "Easy",
-    "text": "Solve 11x + 12 = 56.",
-    "options": [
-      "x = 3",
-      "x = 4",
-      "x = 5",
-      "x = 6"
-    ],
-    "correctAnswer": "x = 4",
-    "correctAnswerIndex": 1,
-    "explanation": "Subtract 12 and divide by 11 to get x = 4.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Roots",
-    "difficulty": "Medium",
-    "text": "If the roots of x^2 - 5x + 4 = 0 are required, what are they?",
-    "options": [
-      "1 and 4",
-      "2 and 5",
-      "0 and 6",
-      "3 and 3"
-    ],
-    "correctAnswer": "1 and 4",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 1)(x - 4) = 0.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Factorization",
-    "difficulty": "Hard",
-    "text": "If the roots of x^2 - 7x + 10 = 0 are required, what are they?",
-    "options": [
-      "2 and 5",
-      "3 and 6",
-      "1 and 7",
-      "4 and 4"
-    ],
-    "correctAnswer": "2 and 5",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 2)(x - 5) = 0.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Roots",
-    "difficulty": "Easy",
-    "text": "If the roots of x^2 - 9x + 18 = 0 are required, what are they?",
-    "options": [
-      "3 and 6",
-      "4 and 7",
-      "2 and 8",
-      "5 and 5"
-    ],
-    "correctAnswer": "3 and 6",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 3)(x - 6) = 0.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Factorization",
-    "difficulty": "Medium",
-    "text": "If the roots of x^2 - 9x + 14 = 0 are required, what are they?",
-    "options": [
-      "2 and 7",
-      "3 and 8",
-      "1 and 9",
-      "4 and 6"
-    ],
-    "correctAnswer": "2 and 7",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 2)(x - 7) = 0.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Roots",
-    "difficulty": "Hard",
-    "text": "If the roots of x^2 - 9x + 8 = 0 are required, what are they?",
-    "options": [
-      "1 and 8",
-      "2 and 9",
-      "0 and 10",
-      "3 and 7"
-    ],
-    "correctAnswer": "1 and 8",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 1)(x - 8) = 0.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Factorization",
-    "difficulty": "Easy",
-    "text": "If the roots of x^2 - 9x + 20 = 0 are required, what are they?",
-    "options": [
-      "4 and 5",
-      "5 and 6",
-      "3 and 7",
-      "6 and 4"
-    ],
-    "correctAnswer": "4 and 5",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 4)(x - 5) = 0.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Roots",
-    "difficulty": "Medium",
-    "text": "If the roots of x^2 - 11x + 24 = 0 are required, what are they?",
-    "options": [
-      "3 and 8",
-      "4 and 9",
-      "2 and 10",
-      "5 and 7"
-    ],
-    "correctAnswer": "3 and 8",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 3)(x - 8) = 0.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Factorization",
-    "difficulty": "Hard",
-    "text": "If the roots of x^2 - 11x + 18 = 0 are required, what are they?",
-    "options": [
-      "2 and 9",
-      "3 and 10",
-      "1 and 11",
-      "4 and 8"
-    ],
-    "correctAnswer": "2 and 9",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 2)(x - 9) = 0.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Roots",
-    "difficulty": "Easy",
-    "text": "If the roots of x^2 - 11x + 30 = 0 are required, what are they?",
-    "options": [
-      "5 and 6",
-      "6 and 7",
-      "4 and 8",
-      "7 and 5"
-    ],
-    "correctAnswer": "5 and 6",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 5)(x - 6) = 0.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Quadratic Equations",
-    "subtopic": "Factorization",
-    "difficulty": "Medium",
-    "text": "If the roots of x^2 - 11x + 28 = 0 are required, what are they?",
-    "options": [
-      "4 and 7",
-      "5 and 8",
-      "3 and 9",
-      "6 and 6"
-    ],
-    "correctAnswer": "4 and 7",
-    "correctAnswerIndex": 0,
-    "explanation": "The equation factors as (x - 4)(x - 7) = 0.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Basic Probability",
-    "difficulty": "Hard",
-    "text": "What is the probability of getting a head in one fair coin toss?",
-    "options": [
-      "1/4",
-      "1/2",
-      "2/3",
-      "1"
-    ],
-    "correctAnswer": "1/2",
-    "correctAnswerIndex": 1,
-    "explanation": "A fair coin has two equally likely outcomes.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Counting Outcomes",
-    "difficulty": "Easy",
-    "text": "What is the probability of drawing an ace from a standard deck of 52 cards?",
-    "options": [
-      "1/4",
-      "1/13",
-      "1/52",
-      "4/13"
-    ],
-    "correctAnswer": "1/13",
-    "correctAnswerIndex": 1,
-    "explanation": "There are 4 aces in 52 cards.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Basic Probability",
-    "difficulty": "Medium",
-    "text": "What is the probability of rolling a 6 on a fair die?",
-    "options": [
-      "1/2",
-      "1/3",
-      "1/6",
-      "1/12"
-    ],
-    "correctAnswer": "1/6",
-    "correctAnswerIndex": 2,
-    "explanation": "One favorable outcome out of six total.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Counting Outcomes",
-    "difficulty": "Hard",
-    "text": "What is the probability of getting an even number on a die?",
-    "options": [
-      "1/6",
-      "1/3",
-      "1/2",
-      "2/3"
-    ],
-    "correctAnswer": "1/2",
-    "correctAnswerIndex": 2,
-    "explanation": "Three even outcomes out of six.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Basic Probability",
-    "difficulty": "Easy",
-    "text": "What is the probability of getting two heads in two coin tosses?",
-    "options": [
-      "1/2",
-      "1/4",
-      "1/8",
-      "3/4"
-    ],
-    "correctAnswer": "1/4",
-    "correctAnswerIndex": 1,
-    "explanation": "The outcomes HH, HT, TH, TT are equally likely.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Counting Outcomes",
-    "difficulty": "Medium",
-    "text": "What is the probability of drawing a king from a standard deck?",
-    "options": [
-      "1/4",
-      "1/13",
-      "4/13",
-      "1/52"
-    ],
-    "correctAnswer": "1/13",
-    "correctAnswerIndex": 1,
-    "explanation": "There are 4 kings among 52 cards.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Basic Probability",
-    "difficulty": "Hard",
-    "text": "What is the probability of getting a number greater than 4 on a die?",
-    "options": [
-      "1/2",
-      "1/3",
-      "2/3",
-      "1/6"
-    ],
-    "correctAnswer": "1/3",
-    "correctAnswerIndex": 1,
-    "explanation": "Possible outcomes are 5 and 6.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Counting Outcomes",
-    "difficulty": "Easy",
-    "text": "What is the probability of selecting a red ball from 3 red and 2 blue balls?",
-    "options": [
-      "2/5",
-      "3/5",
-      "1/2",
-      "4/5"
-    ],
-    "correctAnswer": "3/5",
-    "correctAnswerIndex": 1,
-    "explanation": "Three favorable outcomes out of five total.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Basic Probability",
-    "difficulty": "Medium",
-    "text": "What is the probability of getting tails in one fair coin toss?",
-    "options": [
-      "1/2",
-      "1/3",
-      "1/4",
-      "1"
-    ],
-    "correctAnswer": "1/2",
-    "correctAnswerIndex": 0,
-    "explanation": "Heads and tails are equally likely.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Probability",
-    "subtopic": "Counting Outcomes",
-    "difficulty": "Hard",
-    "text": "What is the probability of drawing a spade from a standard deck?",
-    "options": [
-      "1/2",
-      "1/13",
-      "1/4",
-      "4/13"
-    ],
-    "correctAnswer": "1/4",
-    "correctAnswerIndex": 2,
-    "explanation": "There are 13 spades in 52 cards.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Trigonometric Values",
-    "difficulty": "Easy",
-    "text": "What is sin 30°?",
-    "options": [
-      "1/2",
-      "1",
-      "0",
-      "√3/2"
-    ],
-    "correctAnswer": "1/2",
-    "correctAnswerIndex": 0,
-    "explanation": "Sine of 30 degrees is 1/2.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Identities",
-    "difficulty": "Medium",
-    "text": "What is cos 60°?",
-    "options": [
-      "1/2",
-      "0",
-      "1",
-      "√3/2"
-    ],
-    "correctAnswer": "1/2",
-    "correctAnswerIndex": 0,
-    "explanation": "Cosine of 60 degrees is 1/2.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Trigonometric Values",
-    "difficulty": "Hard",
-    "text": "What is tan 45°?",
-    "options": [
-      "0",
-      "1",
-      "√3",
-      "1/√3"
-    ],
-    "correctAnswer": "1",
-    "correctAnswerIndex": 1,
-    "explanation": "Tan 45 degrees equals 1.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Identities",
-    "difficulty": "Easy",
-    "text": "What is sin^2 θ + cos^2 θ?",
-    "options": [
-      "0",
-      "1",
       "2",
-      "Depends on θ"
+      "3",
+      "4",
+      "5"
     ],
-    "correctAnswer": "1",
+    "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "This is the fundamental trigonometric identity.",
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "concept"
   },
   {
-    "examType": "JEE",
+    "examType": "CET",
     "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Trigonometric Values",
-    "difficulty": "Medium",
-    "text": "What is cos 0°?",
-    "options": [
-      "0",
-      "1/2",
-      "1",
-      "√3/2"
-    ],
-    "correctAnswer": "1",
-    "correctAnswerIndex": 2,
-    "explanation": "Cosine of 0 degrees is 1.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Identities",
-    "difficulty": "Hard",
-    "text": "What is sin 90°?",
-    "options": [
-      "0",
-      "1/2",
-      "1",
-      "√3/2"
-    ],
-    "correctAnswer": "1",
-    "correctAnswerIndex": 2,
-    "explanation": "Sine of 90 degrees is 1.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Trigonometric Values",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
     "difficulty": "Easy",
-    "text": "What is tan 30°?",
-    "options": [
-      "1/√3",
-      "√3",
-      "1",
-      "1/2"
-    ],
-    "correctAnswer": "1/√3",
-    "correctAnswerIndex": 0,
-    "explanation": "Tan 30 degrees equals 1/√3.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Identities",
-    "difficulty": "Medium",
-    "text": "What is cos 45°?",
-    "options": [
-      "1/2",
-      "1",
-      "√2/2",
-      "√3/2"
-    ],
-    "correctAnswer": "√2/2",
-    "correctAnswerIndex": 2,
-    "explanation": "Cosine of 45 degrees is √2/2.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Trigonometric Values",
-    "difficulty": "Hard",
-    "text": "What is sec 0°?",
-    "options": [
-      "0",
-      "1",
-      "2",
-      "undefined"
-    ],
-    "correctAnswer": "1",
-    "correctAnswerIndex": 1,
-    "explanation": "Secant is 1/cos, so sec 0° = 1.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Trigonometry",
-    "subtopic": "Identities",
-    "difficulty": "Easy",
-    "text": "What is cot 45°?",
-    "options": [
-      "0",
-      "1",
-      "√3",
-      "1/√3"
-    ],
-    "correctAnswer": "1",
-    "correctAnswerIndex": 1,
-    "explanation": "Cotangent of 45 degrees is 1.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Calculus",
-    "subtopic": "Differentiation",
-    "difficulty": "Medium",
-    "text": "Find the derivative of x^2.",
-    "options": [
-      "x",
-      "2x",
-      "x^3",
-      "2"
-    ],
-    "correctAnswer": "2x",
-    "correctAnswerIndex": 1,
-    "explanation": "Power rule gives d/dx(x^2) = 2x.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Calculus",
-    "subtopic": "Integration",
-    "difficulty": "Hard",
-    "text": "Find the derivative of 3x^2.",
-    "options": [
-      "3x",
-      "6x",
-      "x^2",
-      "9x"
-    ],
-    "correctAnswer": "6x",
-    "correctAnswerIndex": 1,
-    "explanation": "Differentiate 3x^2 to get 6x.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Calculus",
-    "subtopic": "Differentiation",
-    "difficulty": "Easy",
-    "text": "What is the integral of 2x dx?",
-    "options": [
-      "x^2 + C",
-      "2x^2 + C",
-      "x + C",
-      "2 + C"
-    ],
-    "correctAnswer": "x^2 + C",
-    "correctAnswerIndex": 0,
-    "explanation": "Integral of 2x is x^2 + C.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Calculus",
-    "subtopic": "Integration",
-    "difficulty": "Medium",
-    "text": "Find the derivative of x^3.",
-    "options": [
-      "3x",
-      "x^2",
-      "3x^2",
-      "x^3"
-    ],
-    "correctAnswer": "3x^2",
-    "correctAnswerIndex": 2,
-    "explanation": "Power rule gives 3x^2.",
-    "mistakeType": "calculation"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Calculus",
-    "subtopic": "Differentiation",
-    "difficulty": "Hard",
-    "text": "What is the derivative of a constant 7?",
-    "options": [
-      "7",
-      "1",
-      "0",
-      "x"
-    ],
-    "correctAnswer": "0",
-    "correctAnswerIndex": 2,
-    "explanation": "Derivative of a constant is zero.",
-    "mistakeType": "trap"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Calculus",
-    "subtopic": "Integration",
-    "difficulty": "Easy",
-    "text": "What is the integral of 4 dx?",
-    "options": [
-      "4x + C",
-      "x^4 + C",
-      "4 + C",
-      "x + C"
-    ],
-    "correctAnswer": "4x + C",
-    "correctAnswerIndex": 0,
-    "explanation": "Integral of a constant 4 is 4x + C.",
-    "mistakeType": "concept"
-  },
-  {
-    "examType": "JEE",
-    "subject": "Mathematics",
-    "topic": "Calculus",
-    "subtopic": "Differentiation",
-    "difficulty": "Medium",
-    "text": "Find d/dx of 5x.",
+    "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q2]",
     "options": [
       "5",
-      "x^5",
-      "25",
-      "0"
+      "6",
+      "7",
+      "8"
     ],
-    "correctAnswer": "5",
-    "correctAnswerIndex": 0,
-    "explanation": "Derivative of 5x is 5.",
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q3]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q4]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Easy",
+    "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q5]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Easy",
+    "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q6]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Easy",
+    "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q7]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q8]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q9]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "trap"
   },
   {
     "examType": "JEE",
     "subject": "Mathematics",
     "topic": "Calculus",
     "subtopic": "Integration",
-    "difficulty": "Hard",
-    "text": "What is d/dx of x^4?",
+    "difficulty": "Easy",
+    "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q10]",
     "options": [
-      "4x^3",
-      "x^3",
-      "4x",
-      "x^4"
+      "101",
+      "102",
+      "103",
+      "104"
     ],
-    "correctAnswer": "4x^3",
-    "correctAnswerIndex": 0,
-    "explanation": "Power rule gives 4x^3.",
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Easy",
+    "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q11]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Easy",
+    "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q12]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q13]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q14]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Easy",
+    "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q15]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Easy",
+    "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q16]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Easy",
+    "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q17]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q18]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q19]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Easy",
+    "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q20]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Easy",
+    "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q21]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Easy",
+    "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q22]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q23]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q24]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "trap"
   },
   {
@@ -869,16 +437,448 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Easy",
-    "text": "What is the integral of x^2 dx?",
+    "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q25]",
     "options": [
-      "x^3/3 + C",
-      "x^2/2 + C",
-      "2x + C",
-      "3x + C"
+      "26",
+      "27",
+      "28",
+      "29"
     ],
-    "correctAnswer": "x^3/3 + C",
-    "correctAnswerIndex": 0,
-    "explanation": "Use the reverse power rule.",
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Easy",
+    "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q26]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Easy",
+    "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q27]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q28]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q29]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Easy",
+    "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q30]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Easy",
+    "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q31]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Easy",
+    "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q32]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q33]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q34]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Easy",
+    "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q35]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Easy",
+    "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q36]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Easy",
+    "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q37]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Easy",
+    "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q38]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Easy",
+    "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q39]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Easy",
+    "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q40]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q41]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q42]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q43]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q44]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Medium",
+    "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q45]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q46]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q47]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q48]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q49]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "concept"
   },
   {
@@ -887,16 +887,916 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Medium",
-    "text": "What is d/dx of 2x^3?",
+    "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q50]",
     "options": [
-      "2x^2",
-      "6x^2",
-      "3x^2",
-      "x^3"
+      "101",
+      "102",
+      "103",
+      "104"
     ],
-    "correctAnswer": "6x^2",
+    "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Differentiate using the power rule.",
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q51]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q52]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q53]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q54]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Medium",
+    "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q55]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q56]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q57]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q58]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q59]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Medium",
+    "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q60]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q61]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q62]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q63]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q64]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Medium",
+    "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q65]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q66]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q67]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q68]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q69]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Medium",
+    "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q70]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q71]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q72]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q73]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q74]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Medium",
+    "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q75]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Medium",
+    "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q76]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Medium",
+    "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q77]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Medium",
+    "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q78]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Medium",
+    "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q79]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Medium",
+    "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q80]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Hard",
+    "text": "(Hard) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q81]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Hard",
+    "text": "(Hard) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q82]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Hard",
+    "text": "(Hard) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q83]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Hard",
+    "text": "(Hard) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q84]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Hard",
+    "text": "(Hard) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q85]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Hard",
+    "text": "(Hard) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q86]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Hard",
+    "text": "(Hard) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q87]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Hard",
+    "text": "(Hard) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q88]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Hard",
+    "text": "(Hard) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q89]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Hard",
+    "text": "(Hard) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q90]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Linear Equations",
+    "difficulty": "Hard",
+    "text": "(Hard) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q91]",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctAnswer": "3",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Discriminant",
+    "difficulty": "Hard",
+    "text": "(Hard) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q92]",
+    "options": [
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "correctAnswer": "6",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Basic Probability",
+    "difficulty": "Hard",
+    "text": "(Hard) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q93]",
+    "options": [
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "correctAnswer": "11",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Heights Distance",
+    "difficulty": "Hard",
+    "text": "(Hard) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q94]",
+    "options": [
+      "17",
+      "18",
+      "19",
+      "20"
+    ],
+    "correctAnswer": "18",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Differentiation",
+    "difficulty": "Hard",
+    "text": "(Hard) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q95]",
+    "options": [
+      "26",
+      "27",
+      "28",
+      "29"
+    ],
+    "correctAnswer": "27",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Algebra",
+    "subtopic": "Expressions",
+    "difficulty": "Hard",
+    "text": "(Hard) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q96]",
+    "options": [
+      "37",
+      "38",
+      "39",
+      "40"
+    ],
+    "correctAnswer": "38",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "subtopic": "Roots",
+    "difficulty": "Hard",
+    "text": "(Hard) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q97]",
+    "options": [
+      "50",
+      "51",
+      "52",
+      "53"
+    ],
+    "correctAnswer": "51",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
+    "mistakeType": "concept"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "subtopic": "Events",
+    "difficulty": "Hard",
+    "text": "(Hard) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q98]",
+    "options": [
+      "65",
+      "66",
+      "67",
+      "68"
+    ],
+    "correctAnswer": "66",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
+    "mistakeType": "calculation"
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "subtopic": "Identities",
+    "difficulty": "Hard",
+    "text": "(Hard) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q99]",
+    "options": [
+      "82",
+      "83",
+      "84",
+      "85"
+    ],
+    "correctAnswer": "83",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
+    "mistakeType": "trap"
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Calculus",
+    "subtopic": "Integration",
+    "difficulty": "Hard",
+    "text": "(Hard) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q100]",
+    "options": [
+      "101",
+      "102",
+      "103",
+      "104"
+    ],
+    "correctAnswer": "102",
+    "correctAnswerIndex": 1,
+    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
+    "mistakeType": "concept"
   }
 ]

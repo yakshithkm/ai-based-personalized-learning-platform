@@ -30,15 +30,31 @@ files.forEach((file) => {
   );
   const topicSet = [...new Set(data.map((question) => question.topic))];
   const difficultySet = [...new Set(data.map((question) => question.difficulty))];
+  const difficultyBreakdown = data.reduce(
+    (acc, question) => {
+      acc[question.difficulty] = (acc[question.difficulty] || 0) + 1;
+      return acc;
+    },
+    { Easy: 0, Medium: 0, Hard: 0 }
+  );
   const badAnswer = data.filter(
     (question) => question.options?.[question.correctAnswerIndex] !== question.correctAnswer
   );
 
   console.log(
-    `${file}: count=${data.length}, topics=${topicSet.length}, difficulties=${difficultySet.join(',')}, missing=${missing.length}, badAnswer=${badAnswer.length}`
+    `${file}: count=${data.length}, topics=${topicSet.length}, difficulties=${difficultySet.join(',')}, easy=${difficultyBreakdown.Easy}, medium=${difficultyBreakdown.Medium}, hard=${difficultyBreakdown.Hard}, missing=${missing.length}, badAnswer=${badAnswer.length}`
   );
 
-  if (data.length < 50 || missing.length || badAnswer.length || topicSet.length < 3 || difficultySet.length < 3) {
+  if (
+    data.length < 100 ||
+    missing.length ||
+    badAnswer.length ||
+    topicSet.length < 3 ||
+    difficultySet.length < 3 ||
+    difficultyBreakdown.Easy < 40 ||
+    difficultyBreakdown.Medium < 40 ||
+    difficultyBreakdown.Hard < 20
+  ) {
     hasFailure = true;
   }
 });

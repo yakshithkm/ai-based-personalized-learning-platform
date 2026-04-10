@@ -130,7 +130,7 @@ const PracticePage = () => {
         params: {
           subject: selectedSubject || undefined,
           topic: selectedTopic || undefined,
-          limit: 10,
+          limit: 15,
         },
       });
       const newSessionId = makeSessionId();

@@ -8,6 +8,7 @@ const Question = require('./src/models/Question');
 
 const seedDir = path.join(__dirname, 'src', 'data', 'question-seeds');
 const requiredFields = ['examType', 'subject', 'topic', 'subtopic', 'difficulty', 'text', 'options', 'correctAnswer', 'explanation', 'mistakeType'];
+const shouldReset = process.argv.includes('--reset');
 
 const signatureFor = (question) => [
   question.examType,
@@ -64,6 +65,54 @@ const loadQuestionsFromFile = (filePath) => {
   return questions;
 };
 
+const validateSeedCoverage = (questions) => {
+  const bySubject = questions.reduce((acc, question) => {
+    acc[question.subject] = (acc[question.subject] || 0) + 1;
+    return acc;
+  }, {});
+
+  ['Physics', 'Chemistry', 'Mathematics', 'Biology'].forEach((subject) => {
+    if ((bySubject[subject] || 0) < 100) {
+      throw new Error(`Seed data must include at least 100 questions for ${subject}`);
+    }
+  });
+
+  const bySubjectDifficulty = questions.reduce((acc, question) => {
+    if (!acc[question.subject]) {
+      acc[question.subject] = { Easy: 0, Medium: 0, Hard: 0 };
+    }
+    acc[question.subject][question.difficulty] += 1;
+    return acc;
+  }, {});
+
+  Object.entries(bySubjectDifficulty).forEach(([subject, rows]) => {
+    const total = rows.Easy + rows.Medium + rows.Hard;
+    const easyPct = rows.Easy / total;
+    const mediumPct = rows.Medium / total;
+    const hardPct = rows.Hard / total;
+
+    if (easyPct < 0.39 || mediumPct < 0.39 || hardPct < 0.19) {
+      throw new Error(
+        `Difficulty distribution for ${subject} is invalid (Easy=${rows.Easy}, Medium=${rows.Medium}, Hard=${rows.Hard})`
+      );
+    }
+  });
+
+  const hasNeetBiology = questions.some((q) => q.examType === 'NEET' && q.subject === 'Biology');
+  if (!hasNeetBiology) {
+    throw new Error('Seed data must include Biology for NEET');
+  }
+
+  const cetSubjects = new Set(
+    questions.filter((q) => q.examType === 'CET').map((q) => q.subject)
+  );
+  ['Physics', 'Chemistry', 'Mathematics'].forEach((subject) => {
+    if (!cetSubjects.has(subject)) {
+      throw new Error(`Seed data must include ${subject} for CET`);
+    }
+  });
+};
+
 const seedQuestions = async () => {
   try {
     await connectDB();
@@ -82,6 +131,13 @@ const seedQuestions = async () => {
     }
 
     const incomingQuestions = seedFiles.flatMap((file) => loadQuestionsFromFile(path.join(seedDir, file)));
+    validateSeedCoverage(incomingQuestions);
+
+    if (shouldReset) {
+      await Question.deleteMany({});
+      console.log('Existing questions cleared (--reset).');
+    }
+
     const existingQuestions = await Question.find({})
       .select('examType subject topic subtopic difficulty text')
       .lean();
@@ -102,12 +158,30 @@ const seedQuestions = async () => {
 
     if (!uniqueIncoming.length) {
       console.log('No new questions to seed.');
+      const total = await Question.countDocuments({});
+      console.log(`Current question count: ${total}`);
       await mongoose.disconnect();
       return;
     }
 
     await Question.insertMany(uniqueIncoming, { ordered: false });
+
+    const [total, bySubject, byTopic] = await Promise.all([
+      Question.countDocuments({}),
+      Question.aggregate([
+        { $group: { _id: { examType: '$examType', subject: '$subject' }, count: { $sum: 1 } } },
+        { $sort: { '_id.examType': 1, '_id.subject': 1 } },
+      ]),
+      Question.aggregate([
+        { $group: { _id: { subject: '$subject', topic: '$topic' }, count: { $sum: 1 } } },
+        { $sort: { '_id.subject': 1, '_id.topic': 1 } },
+      ]),
+    ]);
+
     console.log(`Inserted ${uniqueIncoming.length} questions from ${seedFiles.length} files.`);
+    console.log(`Total questions in DB: ${total}`);
+    console.log('Counts by exam+subject:', JSON.stringify(bySubject));
+    console.log('Counts by subject+topic:', JSON.stringify(byTopic));
     await mongoose.disconnect();
   } catch (error) {
     console.error('Seeding failed:', error.message);
