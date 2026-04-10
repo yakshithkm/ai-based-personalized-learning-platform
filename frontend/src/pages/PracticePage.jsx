@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/client';
 import { trackProductEvent } from '../utils/productEvents';
+import { useAuth } from '../context/AuthContext';
 
 const makeSessionId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -12,6 +13,7 @@ const makeSessionId = () => {
 
 const PracticePage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
@@ -32,14 +34,21 @@ const PracticePage = () => {
   useEffect(() => {
     const loadSubjects = async () => {
       try {
-        const { data } = await api.get('/questions/subjects-topics');
+        const exam = (user?.targetExam || user?.exam || '').trim().toUpperCase();
+        console.log('Exam sent to API:', exam || 'UNKNOWN');
+
+        const { data } = await api.get('/questions/subjects-topics', {
+          params: {
+            exam: exam || undefined,
+          },
+        });
         setSubjects(data.subjects || []);
       } catch (err) {
         setError(err?.response?.data?.message || 'Failed to load subjects/topics');
       }
     };
     loadSubjects();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const mode = searchParams.get('mode');
@@ -126,8 +135,12 @@ const PracticePage = () => {
     setSessionResults([]);
 
     try {
+      const exam = (user?.targetExam || user?.exam || '').trim().toUpperCase();
+      console.log('Exam sent to API:', exam || 'UNKNOWN');
+
       const { data } = await api.get('/questions', {
         params: {
+          exam: exam || undefined,
           subject: selectedSubject || undefined,
           topic: selectedTopic || undefined,
           limit: 15,

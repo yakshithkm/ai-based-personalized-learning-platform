@@ -13,6 +13,20 @@ const getHarderDifficulty = (difficulty) => {
   return DIFFICULTY_ORDER[index + 1];
 };
 
+const resolveExamFromRequest = (req) => {
+  const examFromUser = req.user?.targetExam || req.user?.exam || '';
+  const examFromRequest = req.query?.exam || req.query?.examType || '';
+  const resolved = normalizeExamType(examFromUser || examFromRequest || '');
+
+  console.log('[ExamResolve]', JSON.stringify({
+    examFromUser: examFromUser,
+    examFromRequest: examFromRequest,
+    resolvedExam: resolved || null,
+  }));
+
+  return resolved;
+};
+
 const getQuestions = async (req, res, next) => {
   try {
     const {
@@ -20,6 +34,7 @@ const getQuestions = async (req, res, next) => {
       topic,
       subtopic,
       examType,
+      exam,
       difficulty,
       limit = 15,
       similarTo,
@@ -27,11 +42,13 @@ const getQuestions = async (req, res, next) => {
       excludeQuestionId,
     } = req.query;
     const filter = {};
-    const resolvedExamType = normalizeExamType(examType || req.user?.targetExam);
+    const resolvedExamType = normalizeExamType(examType || exam || resolveExamFromRequest(req));
     const allowedSubjects = getAllowedSubjectsForExam(resolvedExamType);
     const normalizedSubject = normalizeSubjectName(subject);
 
-    filter.examType = resolvedExamType;
+    if (resolvedExamType) {
+      filter.examType = resolvedExamType;
+    }
 
     let resolvedDifficulty = difficulty;
 
@@ -149,13 +166,13 @@ const getQuestionById = async (req, res, next) => {
 
 const getSubjectsAndTopics = async (req, res, next) => {
   try {
-    const resolvedExamType = normalizeExamType(req.user?.targetExam);
+    const resolvedExamType = resolveExamFromRequest(req);
     const allowedSubjects = getAllowedSubjectsForExam(resolvedExamType);
 
     const pipeline = [
       {
         $match: {
-          examType: resolvedExamType,
+          ...(resolvedExamType ? { examType: resolvedExamType } : {}),
           subject: { $in: allowedSubjects },
         },
       },
@@ -198,6 +215,8 @@ const getSubjectsAndTopics = async (req, res, next) => {
     console.log(
       '[SubjectsTopics]',
       JSON.stringify({
+        examFromUser: req.user?.targetExam || req.user?.exam || null,
+        examFromRequest: req.query?.exam || req.query?.examType || null,
         examType: resolvedExamType || 'UNKNOWN',
         returnedSubjects: data.map((row) => row.subject),
       })

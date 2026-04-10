@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
+const { normalizeExamType } = require('../config/examSubjectMap');
 const {
   getUserLastEvent,
   trackProductEvent,
@@ -15,7 +16,14 @@ const sanitizeUser = (user) => ({
 
 const registerUser = async (req, res, next) => {
   try {
-    const { name, email, password, targetExam } = req.body;
+    const { name, email, password, targetExam, exam } = req.body;
+    const normalizedExam = normalizeExamType(targetExam || exam || '');
+
+    console.log('[AuthRegisterExam]', JSON.stringify({
+      examFromTargetExam: targetExam,
+      examFromExam: exam,
+      normalizedExam,
+    }));
 
     if (!name || !email || !password) {
       res.status(400);
@@ -28,7 +36,12 @@ const registerUser = async (req, res, next) => {
       throw new Error('User already exists with this email');
     }
 
-    const user = await User.create({ name, email, password, targetExam });
+    const user = await User.create({
+      name,
+      email,
+      password,
+      targetExam: normalizedExam || 'JEE',
+    });
 
     return res.status(201).json({
       user: sanitizeUser(user),
@@ -54,6 +67,18 @@ const loginUser = async (req, res, next) => {
       throw new Error('Invalid email or password');
     }
 
+    const normalizedExam = normalizeExamType(user.targetExam || user.exam || '');
+    console.log('[AuthLoginExam]', JSON.stringify({
+      targetExam: user.targetExam,
+      legacyExam: user.exam || null,
+      normalizedExam,
+    }));
+
+    if (normalizedExam && user.targetExam !== normalizedExam) {
+      user.targetExam = normalizedExam;
+      await user.save();
+    }
+
     const lastEvent = await getUserLastEvent(user._id);
     if (lastEvent?.createdAt) {
       const today = new Date();
@@ -77,6 +102,11 @@ const loginUser = async (req, res, next) => {
 };
 
 const getProfile = async (req, res) => {
+  console.log('[AuthProfileExam]', JSON.stringify({
+    targetExam: req.user?.targetExam,
+    legacyExam: req.user?.exam || null,
+    normalizedExam: normalizeExamType(req.user?.targetExam || req.user?.exam || ''),
+  }));
   res.json({ user: req.user });
 };
 
