@@ -1,5 +1,8 @@
 const Attempt = require('../models/Attempt');
-const { inferTopicDifficultyFromAttempts } = require('./adaptiveDifficultyService');
+const {
+  inferTopicDifficultyFromAttempts,
+  computeDifficultyScore,
+} = require('./adaptiveDifficultyService');
 
 const round = (value, digits = 2) => Number(value.toFixed(digits));
 
@@ -153,7 +156,9 @@ const analyzePerformance = async (userId) => {
       avgTime: 0,
       subjectStats: [],
       topicStats: [],
+      conceptStats: [],
       weakTopicPriority: [],
+      weakConceptPriority: [],
       accuracyTrend: 'stable',
       timeAccuracyCorrelation: 0,
       suggestedFocusTopic: '',
@@ -169,6 +174,7 @@ const analyzePerformance = async (userId) => {
   }
 
   const topicMap = new Map();
+  const conceptMap = new Map();
   const subjectMap = new Map();
 
   let weightedAttempts = 0;
@@ -204,6 +210,43 @@ const analyzePerformance = async (userId) => {
     topicRef.weightedCorrect += attempt.isCorrect ? weight : 0;
     topicRef.weightedTime += attempt.timeTakenSec * weight;
     topicRef.rawAttempts.push(attempt);
+
+    const concept = attempt.conceptTested || `${attempt.topic} Core Concept`;
+    const conceptKey = `${attempt.subject}::${attempt.topic}::${concept}`;
+    if (!conceptMap.has(conceptKey)) {
+      conceptMap.set(conceptKey, {
+        subject: attempt.subject,
+        topic: attempt.topic,
+        concept,
+        attempts: 0,
+        correct: 0,
+        weightedAttempts: 0,
+        weightedCorrect: 0,
+        weightedTime: 0,
+        slowCorrectCount: 0,
+        mistakeCount: 0,
+        streak: 0,
+      });
+    }
+
+    const conceptRef = conceptMap.get(conceptKey);
+    conceptRef.attempts += 1;
+    conceptRef.correct += attempt.isCorrect ? 1 : 0;
+    conceptRef.weightedAttempts += weight;
+    conceptRef.weightedCorrect += attempt.isCorrect ? weight : 0;
+    conceptRef.weightedTime += attempt.timeTakenSec * weight;
+
+    const expected = Number(attempt.expectedSolvingTimeSec || 60);
+    if (attempt.isCorrect && Number(attempt.timeTakenSec || 0) > expected * 1.25) {
+      conceptRef.slowCorrectCount += 1;
+    }
+
+    if (!attempt.isCorrect) {
+      conceptRef.mistakeCount += 1;
+      conceptRef.streak = 0;
+    } else {
+      conceptRef.streak += 1;
+    }
 
     if (!subjectMap.has(attempt.subject)) {
       subjectMap.set(attempt.subject, {
@@ -247,6 +290,43 @@ const analyzePerformance = async (userId) => {
     };
   });
 
+  const conceptStats = Array.from(conceptMap.values()).map((entry) => {
+    const accuracy = entry.weightedAttempts
+      ? (entry.weightedCorrect / entry.weightedAttempts) * 100
+      : 0;
+    const avgTimeTakenSec = entry.weightedAttempts
+      ? entry.weightedTime / entry.weightedAttempts
+      : 0;
+    const slowCorrectRate = entry.attempts
+      ? (entry.slowCorrectCount / entry.attempts) * 100
+      : 0;
+    const mistakeFrequency = entry.attempts
+      ? (entry.mistakeCount / entry.attempts) * 100
+      : 0;
+
+    const adaptiveDifficultyScore = computeDifficultyScore({
+      topicAccuracy: accuracy,
+      timeTakenSec: avgTimeTakenSec,
+      expectedTimeSec: 60,
+      recentStreak: entry.streak,
+      mistakeFrequency: mistakeFrequency / 10,
+    });
+
+    return {
+      subject: entry.subject,
+      topic: entry.topic,
+      concept: entry.concept,
+      attempts: entry.attempts,
+      correct: entry.correct,
+      accuracy: round(accuracy, 1),
+      avgTimeTakenSec: round(avgTimeTakenSec, 2),
+      mistakeFrequency: round(mistakeFrequency, 1),
+      slowCorrectRate: round(slowCorrectRate, 1),
+      masteryScore: round(clamp(accuracy * 0.7 + Math.min(entry.attempts * 3, 30), 0, 100), 1),
+      adaptiveDifficultyScore: round(adaptiveDifficultyScore, 1),
+    };
+  });
+
   const subjectStats = Array.from(subjectMap.values())
     .map((subject) => ({
       subject: subject.subject,
@@ -265,9 +345,9 @@ const analyzePerformance = async (userId) => {
     .sort((a, b) => b.attempts - a.attempts);
 
   const weakTopicRows = topicStats
-    .filter((topic) => topic.accuracy < 60)
+    .filter((topic) => topic.attempts >= 1 && topic.accuracy < 60)
     .sort((a, b) => b.focusScore - a.focusScore);
-  const strongTopicRows = topicStats.filter((topic) => topic.accuracy > 80);
+  const strongTopicRows = topicStats.filter((topic) => topic.attempts >= 2 && topic.accuracy > 80);
 
   const weakTopics = weakTopicRows.map((topic) =>
     topic.subtopic && topic.subtopic !== 'General'
@@ -283,13 +363,34 @@ const analyzePerformance = async (userId) => {
   const weakTopicPriority = weakTopicRows.map((topic) => ({
     subject: topic.subject,
     topic: topic.topic,
-      subtopic: topic.subtopic,
+    subtopic: topic.subtopic,
     accuracy: topic.accuracy,
     avgTimeTakenSec: topic.avgTimeTakenSec,
     focusScore: topic.focusScore,
   }));
 
-  const suggestedFocusTopic = weakTopicPriority.length
+  const weakConceptPriority = conceptStats
+    .filter((row) => row.accuracy < 70 || row.slowCorrectRate > 30 || row.mistakeFrequency > 35)
+    .map((row) => ({
+      subject: row.subject,
+      topic: row.topic,
+      concept: row.concept,
+      accuracy: row.accuracy,
+      avgTimeTakenSec: row.avgTimeTakenSec,
+      mistakeFrequency: row.mistakeFrequency,
+      slowCorrectRate: row.slowCorrectRate,
+      priorityScore: round(
+        (100 - row.accuracy) * 0.45 +
+          row.mistakeFrequency * 0.35 +
+          row.slowCorrectRate * 0.2,
+        1
+      ),
+    }))
+    .sort((a, b) => b.priorityScore - a.priorityScore);
+
+  const suggestedFocusTopic = attempts.length < 5
+    ? 'Need more attempts before giving strong focus advice. Keep practicing mixed topics.'
+    : weakTopicPriority.length
     ? `You should practice ${weakTopicPriority[0].subtopic && weakTopicPriority[0].subtopic !== 'General' ? `${weakTopicPriority[0].topic} (${weakTopicPriority[0].subtopic})` : weakTopicPriority[0].topic} today`
     : 'Keep practicing to unlock adaptive focus suggestions';
 
@@ -314,7 +415,9 @@ const analyzePerformance = async (userId) => {
     avgTime: round(weightedTime / Math.max(weightedAttempts, 1), 2),
     subjectStats,
     topicStats,
+    conceptStats,
     weakTopicPriority,
+    weakConceptPriority,
     accuracyTrend: trendFromAttempts(attempts),
     timeAccuracyCorrelation,
     suggestedFocusTopic,

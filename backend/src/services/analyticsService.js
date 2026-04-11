@@ -157,7 +157,10 @@ const getAdaptiveAnalytics = async (userId) => {
   ]);
 
   const attemptsBySubject = performance?.subjectStats || [];
+  const totalAttempts = (allAttempts || []).length;
+  const lowDataMode = totalAttempts < 5;
   const focusToday = (performance?.weakTopicPriority || []).slice(0, 2);
+  const focusConcepts = (performance?.weakConceptPriority || []).slice(0, 3);
   const improvementInsight = buildImprovementInsight(allAttempts || []);
   const transformation = buildTransformationSummary(allAttempts || []);
   const habit = {
@@ -182,28 +185,41 @@ const getAdaptiveAnalytics = async (userId) => {
     allAttempts,
   });
 
-  const readiness = inferReadinessStatus({
+  const readiness = lowDataMode
+    ? {
+      value: Math.round(examReadiness.score || 0),
+      status: 'insufficient-data',
+    }
+    : inferReadinessStatus({
     examReadiness,
     dueMistakeCount,
     hoursInactive: urgency.hoursInactive,
   });
 
-  const percentile = estimatePercentile({
+  const percentile = lowDataMode ? null : estimatePercentile({
     readinessScore: examReadiness.score,
     accuracy: performance?.overallAccuracy || 0,
     consistency: examReadiness.breakdown.consistency,
   });
 
-  const benchmark = {
-    percentile,
-    aheadOf: percentile,
-    estimated: true,
-    message: `You are ahead of ${percentile}% of students.`,
-    top10Advice: rankAdvice({
+  const benchmark = lowDataMode
+    ? {
+      percentile: null,
+      aheadOf: null,
+      estimated: false,
+      message: 'Early profile: insufficient data to estimate your standing. Complete a few more attempts for reliable benchmarking.',
+      top10Advice: 'Build a data baseline first: complete 5-10 mixed attempts before ranking advice is shown.',
+    }
+    : {
       percentile,
-      weakTopicPriority: performance?.weakTopicPriority || [],
-    }),
-  };
+      aheadOf: percentile,
+      estimated: true,
+      message: `You are ahead of ${percentile}% of students.`,
+      top10Advice: rankAdvice({
+        percentile,
+        weakTopicPriority: performance?.weakTopicPriority || [],
+      }),
+    };
 
   const noWeakTopics = !(performance?.weakTopicPriority || []).length;
   const noMistakes = dueMistakeCount === 0 && !(mistakeBank?.repeatedMistakes || []).length;
@@ -241,8 +257,11 @@ const getAdaptiveAnalytics = async (userId) => {
     topicHeatmap: performance?.topicStats || [],
     topicMastery: performance?.topicStats || [],
     weeklyImprovement: performance?.weeklyTrend || [],
+    conceptMastery: performance?.conceptStats || [],
+    weakConceptPriority: performance?.weakConceptPriority || [],
     habit,
     focusToday,
+    focusConcepts,
     improvementInsight,
     transformation,
     urgency,
@@ -254,6 +273,10 @@ const getAdaptiveAnalytics = async (userId) => {
     emptyStateGuidance: {
       noWeakTopics,
       noMistakes,
+      lowDataMode,
+      uncertaintyMessage: lowDataMode
+        ? 'We need more data before making strong claims about your strengths.'
+        : '',
       weakTopicMessage: noWeakTopics
         ? 'No weak topics detected. Advance to harder level.'
         : '',

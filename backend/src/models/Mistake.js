@@ -30,10 +30,40 @@ const mistakeSchema = new mongoose.Schema(
       default: 'General',
       trim: true,
     },
+    conceptTested: {
+      type: String,
+      default: 'General Concept',
+      trim: true,
+      index: true,
+    },
     difficulty: {
       type: String,
       enum: ['Easy', 'Medium', 'Hard'],
       required: true,
+    },
+    mistakeType: {
+      type: String,
+      enum: ['Concept Error', 'Calculation Error', 'Careless Mistake'],
+      default: 'Concept Error',
+    },
+    timeTakenSec: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    expectedTimeSec: {
+      type: Number,
+      default: 60,
+      min: 15,
+      max: 300,
+    },
+    timeDeltaSec: {
+      type: Number,
+      default: 0,
+    },
+    isSlowCorrect: {
+      type: Boolean,
+      default: false,
     },
     selectedAnswerIndex: {
       type: Number,
@@ -89,5 +119,6 @@ const mistakeSchema = new mongoose.Schema(
 
 mistakeSchema.index({ user: 1, question: 1, resolved: 1 });
 mistakeSchema.index({ user: 1, topic: 1, createdAt: -1 });
+mistakeSchema.index({ user: 1, conceptTested: 1, createdAt: -1 });
 
 module.exports = mongoose.model('Mistake', mistakeSchema);

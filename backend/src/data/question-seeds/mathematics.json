@@ -5,6 +5,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 1).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q1]",
     "options": [
       "2",
@@ -14,7 +19,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "concept"
   },
   {
@@ -23,6 +27,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 2).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q2]",
     "options": [
       "5",
@@ -32,7 +41,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "calculation"
   },
   {
@@ -41,6 +49,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 3).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q3]",
     "options": [
       "10",
@@ -50,7 +63,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "trap"
   },
   {
@@ -59,6 +71,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 4).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q4]",
     "options": [
       "17",
@@ -68,7 +85,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "concept"
   },
   {
@@ -77,6 +93,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 5).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q5]",
     "options": [
       "26",
@@ -86,7 +107,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "calculation"
   },
   {
@@ -95,6 +115,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 6).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q6]",
     "options": [
       "37",
@@ -104,7 +129,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "trap"
   },
   {
@@ -113,6 +137,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 7).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q7]",
     "options": [
       "50",
@@ -122,7 +151,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "concept"
   },
   {
@@ -131,6 +159,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 8).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q8]",
     "options": [
       "65",
@@ -140,7 +173,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "calculation"
   },
   {
@@ -149,6 +181,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 9).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q9]",
     "options": [
       "82",
@@ -158,7 +195,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "trap"
   },
   {
@@ -167,6 +203,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 10).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q10]",
     "options": [
       "101",
@@ -176,7 +217,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "concept"
   },
   {
@@ -185,6 +225,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 11).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q11]",
     "options": [
       "2",
@@ -194,7 +239,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "calculation"
   },
   {
@@ -203,6 +247,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 12).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q12]",
     "options": [
       "5",
@@ -212,7 +261,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "trap"
   },
   {
@@ -221,6 +269,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 13).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q13]",
     "options": [
       "10",
@@ -230,7 +283,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "concept"
   },
   {
@@ -239,6 +291,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 14).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q14]",
     "options": [
       "17",
@@ -248,7 +305,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "calculation"
   },
   {
@@ -257,6 +313,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 15).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q15]",
     "options": [
       "26",
@@ -266,7 +327,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "trap"
   },
   {
@@ -275,6 +335,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 16).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q16]",
     "options": [
       "37",
@@ -284,7 +349,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "concept"
   },
   {
@@ -293,6 +357,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 17).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q17]",
     "options": [
       "50",
@@ -302,7 +371,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "calculation"
   },
   {
@@ -311,6 +379,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 18).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q18]",
     "options": [
       "65",
@@ -320,7 +393,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "trap"
   },
   {
@@ -329,6 +401,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 19).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q19]",
     "options": [
       "82",
@@ -338,7 +415,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "concept"
   },
   {
@@ -347,6 +423,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 20).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q20]",
     "options": [
       "101",
@@ -356,7 +437,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "calculation"
   },
   {
@@ -365,6 +445,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 21).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q21]",
     "options": [
       "2",
@@ -374,7 +459,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "trap"
   },
   {
@@ -383,6 +467,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 22).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q22]",
     "options": [
       "5",
@@ -392,7 +481,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "concept"
   },
   {
@@ -401,6 +489,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 23).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q23]",
     "options": [
       "10",
@@ -410,7 +503,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "calculation"
   },
   {
@@ -419,6 +511,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 24).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q24]",
     "options": [
       "17",
@@ -428,7 +525,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "trap"
   },
   {
@@ -437,6 +533,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 25).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q25]",
     "options": [
       "26",
@@ -446,7 +547,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "concept"
   },
   {
@@ -455,6 +555,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 26).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q26]",
     "options": [
       "37",
@@ -464,7 +569,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "calculation"
   },
   {
@@ -473,6 +577,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 27).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q27]",
     "options": [
       "50",
@@ -482,7 +591,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "trap"
   },
   {
@@ -491,6 +599,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 28).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q28]",
     "options": [
       "65",
@@ -500,7 +613,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "concept"
   },
   {
@@ -509,6 +621,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 29).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q29]",
     "options": [
       "82",
@@ -518,7 +635,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "calculation"
   },
   {
@@ -527,6 +643,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 30).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q30]",
     "options": [
       "101",
@@ -536,7 +657,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "trap"
   },
   {
@@ -545,6 +665,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 31).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q31]",
     "options": [
       "2",
@@ -554,7 +679,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "concept"
   },
   {
@@ -563,6 +687,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 32).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q32]",
     "options": [
       "5",
@@ -572,7 +701,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "calculation"
   },
   {
@@ -581,6 +709,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 33).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q33]",
     "options": [
       "10",
@@ -590,7 +723,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "trap"
   },
   {
@@ -599,6 +731,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 34).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q34]",
     "options": [
       "17",
@@ -608,7 +745,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "concept"
   },
   {
@@ -617,6 +753,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 35).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q35]",
     "options": [
       "26",
@@ -626,7 +767,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "calculation"
   },
   {
@@ -635,6 +775,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Easy",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 36).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q36]",
     "options": [
       "37",
@@ -644,7 +789,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "trap"
   },
   {
@@ -653,6 +797,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Easy",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 37).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q37]",
     "options": [
       "50",
@@ -662,7 +811,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "concept"
   },
   {
@@ -671,6 +819,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Easy",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 38).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q38]",
     "options": [
       "65",
@@ -680,7 +833,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "calculation"
   },
   {
@@ -689,6 +841,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Easy",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 39).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q39]",
     "options": [
       "82",
@@ -698,7 +855,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "trap"
   },
   {
@@ -707,6 +863,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Easy",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 40).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q40]",
     "options": [
       "101",
@@ -716,7 +877,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "concept"
   },
   {
@@ -725,6 +885,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 41).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q41]",
     "options": [
       "2",
@@ -734,7 +899,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "calculation"
   },
   {
@@ -743,6 +907,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 42).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q42]",
     "options": [
       "5",
@@ -752,7 +921,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "trap"
   },
   {
@@ -761,6 +929,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 43).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q43]",
     "options": [
       "10",
@@ -770,7 +943,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "concept"
   },
   {
@@ -779,6 +951,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 44).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q44]",
     "options": [
       "17",
@@ -788,7 +965,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "calculation"
   },
   {
@@ -797,6 +973,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 45).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q45]",
     "options": [
       "26",
@@ -806,7 +987,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "trap"
   },
   {
@@ -815,6 +995,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 46).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q46]",
     "options": [
       "37",
@@ -824,7 +1009,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "concept"
   },
   {
@@ -833,6 +1017,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 47).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q47]",
     "options": [
       "50",
@@ -842,7 +1031,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "calculation"
   },
   {
@@ -851,6 +1039,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 48).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q48]",
     "options": [
       "65",
@@ -860,7 +1053,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "trap"
   },
   {
@@ -869,6 +1061,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 49).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q49]",
     "options": [
       "82",
@@ -878,7 +1075,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "concept"
   },
   {
@@ -887,6 +1083,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 50).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q50]",
     "options": [
       "101",
@@ -896,7 +1097,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "calculation"
   },
   {
@@ -905,6 +1105,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 51).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q51]",
     "options": [
       "2",
@@ -914,7 +1119,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "trap"
   },
   {
@@ -923,6 +1127,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 52).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q52]",
     "options": [
       "5",
@@ -932,7 +1141,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "concept"
   },
   {
@@ -941,6 +1149,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 53).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q53]",
     "options": [
       "10",
@@ -950,7 +1163,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "calculation"
   },
   {
@@ -959,6 +1171,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 54).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q54]",
     "options": [
       "17",
@@ -968,7 +1185,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "trap"
   },
   {
@@ -977,6 +1193,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 55).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q55]",
     "options": [
       "26",
@@ -986,7 +1207,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "concept"
   },
   {
@@ -995,6 +1215,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 56).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q56]",
     "options": [
       "37",
@@ -1004,7 +1229,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "calculation"
   },
   {
@@ -1013,6 +1237,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 57).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q57]",
     "options": [
       "50",
@@ -1022,7 +1251,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "trap"
   },
   {
@@ -1031,6 +1259,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 58).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q58]",
     "options": [
       "65",
@@ -1040,7 +1273,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "concept"
   },
   {
@@ -1049,6 +1281,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 59).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q59]",
     "options": [
       "82",
@@ -1058,7 +1295,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "calculation"
   },
   {
@@ -1067,6 +1303,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 60).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q60]",
     "options": [
       "101",
@@ -1076,7 +1317,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "trap"
   },
   {
@@ -1085,6 +1325,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 61).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q61]",
     "options": [
       "2",
@@ -1094,7 +1339,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "concept"
   },
   {
@@ -1103,6 +1347,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 62).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q62]",
     "options": [
       "5",
@@ -1112,7 +1361,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "calculation"
   },
   {
@@ -1121,6 +1369,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 63).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q63]",
     "options": [
       "10",
@@ -1130,7 +1383,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "trap"
   },
   {
@@ -1139,6 +1391,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 64).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q64]",
     "options": [
       "17",
@@ -1148,7 +1405,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "concept"
   },
   {
@@ -1157,6 +1413,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 65).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q65]",
     "options": [
       "26",
@@ -1166,7 +1427,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "calculation"
   },
   {
@@ -1175,6 +1435,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 66).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q66]",
     "options": [
       "37",
@@ -1184,7 +1449,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "trap"
   },
   {
@@ -1193,6 +1457,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 67).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q67]",
     "options": [
       "50",
@@ -1202,7 +1471,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "concept"
   },
   {
@@ -1211,6 +1479,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 68).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q68]",
     "options": [
       "65",
@@ -1220,7 +1493,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "calculation"
   },
   {
@@ -1229,6 +1501,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 69).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q69]",
     "options": [
       "82",
@@ -1238,7 +1515,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "trap"
   },
   {
@@ -1247,6 +1523,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 70).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q70]",
     "options": [
       "101",
@@ -1256,7 +1537,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "concept"
   },
   {
@@ -1265,6 +1545,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students confuse key definitions in Algebra - Linear Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 71).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q71]",
     "options": [
       "2",
@@ -1274,7 +1559,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "calculation"
   },
   {
@@ -1283,6 +1567,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Discriminant, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 72).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q72]",
     "options": [
       "5",
@@ -1292,7 +1581,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "trap"
   },
   {
@@ -1301,6 +1589,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students confuse key definitions in Probability - Basic Probability, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 73).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q73]",
     "options": [
       "10",
@@ -1310,7 +1603,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "concept"
   },
   {
@@ -1319,6 +1611,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Heights Distance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 74).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q74]",
     "options": [
       "17",
@@ -1328,7 +1625,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "calculation"
   },
   {
@@ -1337,6 +1633,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students confuse key definitions in Calculus - Differentiation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 75).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q75]",
     "options": [
       "26",
@@ -1346,7 +1647,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "trap"
   },
   {
@@ -1355,6 +1655,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Medium",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students confuse key definitions in Algebra - Expressions, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 76).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q76]",
     "options": [
       "37",
@@ -1364,7 +1669,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "concept"
   },
   {
@@ -1373,6 +1677,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Medium",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students confuse key definitions in Quadratic Equations - Roots, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 77).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q77]",
     "options": [
       "50",
@@ -1382,7 +1691,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "calculation"
   },
   {
@@ -1391,6 +1699,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Medium",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students confuse key definitions in Probability - Events, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 78).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q78]",
     "options": [
       "65",
@@ -1400,7 +1713,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "trap"
   },
   {
@@ -1409,6 +1721,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Medium",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students confuse key definitions in Trigonometry - Identities, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 79).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q79]",
     "options": [
       "82",
@@ -1418,7 +1735,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "concept"
   },
   {
@@ -1427,6 +1743,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Medium",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students confuse key definitions in Calculus - Integration, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 80).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q80]",
     "options": [
       "101",
@@ -1436,7 +1757,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "calculation"
   },
   {
@@ -1445,6 +1765,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Hard",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students skip the core condition in Algebra - Linear Equations and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 81).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q81]",
     "options": [
       "2",
@@ -1454,7 +1779,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "trap"
   },
   {
@@ -1463,6 +1787,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Hard",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students skip the core condition in Quadratic Equations - Discriminant and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 82).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q82]",
     "options": [
       "5",
@@ -1472,7 +1801,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "concept"
   },
   {
@@ -1481,6 +1809,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Hard",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students skip the core condition in Probability - Basic Probability and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 83).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q83]",
     "options": [
       "10",
@@ -1490,7 +1823,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "calculation"
   },
   {
@@ -1499,6 +1831,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Hard",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students skip the core condition in Trigonometry - Heights Distance and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 84).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q84]",
     "options": [
       "17",
@@ -1508,7 +1845,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "trap"
   },
   {
@@ -1517,6 +1853,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Hard",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students skip the core condition in Calculus - Differentiation and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 85).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q85]",
     "options": [
       "26",
@@ -1526,7 +1867,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "concept"
   },
   {
@@ -1535,6 +1875,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Hard",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students skip the core condition in Algebra - Expressions and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 86).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q86]",
     "options": [
       "37",
@@ -1544,7 +1889,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "calculation"
   },
   {
@@ -1553,6 +1897,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Hard",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students skip the core condition in Quadratic Equations - Roots and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 87).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q87]",
     "options": [
       "50",
@@ -1562,7 +1911,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "trap"
   },
   {
@@ -1571,6 +1919,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Hard",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students skip the core condition in Probability - Events and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 88).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q88]",
     "options": [
       "65",
@@ -1580,7 +1933,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "concept"
   },
   {
@@ -1589,6 +1941,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Hard",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students skip the core condition in Trigonometry - Identities and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 89).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q89]",
     "options": [
       "82",
@@ -1598,7 +1955,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "calculation"
   },
   {
@@ -1607,6 +1963,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Hard",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students skip the core condition in Calculus - Integration and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 90).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q90]",
     "options": [
       "101",
@@ -1616,7 +1977,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "trap"
   },
   {
@@ -1625,6 +1985,11 @@
     "topic": "Algebra",
     "subtopic": "Linear Equations",
     "difficulty": "Hard",
+    "conceptTested": "Algebra - Linear Equations",
+    "commonMistake": "Students skip the core condition in Algebra - Linear Equations and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 91).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Linear Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Algebra/Linear Equations: Evaluate x^2 + 2 for x = 1. [Q91]",
     "options": [
       "2",
@@ -1634,7 +1999,6 @@
     ],
     "correctAnswer": "3",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 1. So x^2 + 2 = 1 + 2 = 3.",
     "mistakeType": "concept"
   },
   {
@@ -1643,6 +2007,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Discriminant",
     "difficulty": "Hard",
+    "conceptTested": "Quadratic Equations - Discriminant",
+    "commonMistake": "Students skip the core condition in Quadratic Equations - Discriminant and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 92).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Discriminant). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Quadratic Equations/Discriminant: Evaluate x^2 + 2 for x = 2. [Q92]",
     "options": [
       "5",
@@ -1652,7 +2021,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 2. So x^2 + 2 = 4 + 2 = 6.",
     "mistakeType": "calculation"
   },
   {
@@ -1661,6 +2029,11 @@
     "topic": "Probability",
     "subtopic": "Basic Probability",
     "difficulty": "Hard",
+    "conceptTested": "Probability - Basic Probability",
+    "commonMistake": "Students skip the core condition in Probability - Basic Probability and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 93).",
+    "explanation": "Step 1: Identify the core concept (Probability - Basic Probability). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Probability/Basic Probability: Evaluate x^2 + 2 for x = 3. [Q93]",
     "options": [
       "10",
@@ -1670,7 +2043,6 @@
     ],
     "correctAnswer": "11",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 3. So x^2 + 2 = 9 + 2 = 11.",
     "mistakeType": "trap"
   },
   {
@@ -1679,6 +2051,11 @@
     "topic": "Trigonometry",
     "subtopic": "Heights Distance",
     "difficulty": "Hard",
+    "conceptTested": "Trigonometry - Heights Distance",
+    "commonMistake": "Students skip the core condition in Trigonometry - Heights Distance and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 94).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Heights Distance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Trigonometry/Heights Distance: Evaluate x^2 + 2 for x = 4. [Q94]",
     "options": [
       "17",
@@ -1688,7 +2065,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 4. So x^2 + 2 = 16 + 2 = 18.",
     "mistakeType": "concept"
   },
   {
@@ -1697,6 +2073,11 @@
     "topic": "Calculus",
     "subtopic": "Differentiation",
     "difficulty": "Hard",
+    "conceptTested": "Calculus - Differentiation",
+    "commonMistake": "Students skip the core condition in Calculus - Differentiation and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 95).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Differentiation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Calculus/Differentiation: Evaluate x^2 + 2 for x = 5. [Q95]",
     "options": [
       "26",
@@ -1706,7 +2087,6 @@
     ],
     "correctAnswer": "27",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 5. So x^2 + 2 = 25 + 2 = 27.",
     "mistakeType": "calculation"
   },
   {
@@ -1715,6 +2095,11 @@
     "topic": "Algebra",
     "subtopic": "Expressions",
     "difficulty": "Hard",
+    "conceptTested": "Algebra - Expressions",
+    "commonMistake": "Students skip the core condition in Algebra - Expressions and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 96).",
+    "explanation": "Step 1: Identify the core concept (Algebra - Expressions). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Algebra/Expressions: Evaluate x^2 + 2 for x = 6. [Q96]",
     "options": [
       "37",
@@ -1724,7 +2109,6 @@
     ],
     "correctAnswer": "38",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 6. So x^2 + 2 = 36 + 2 = 38.",
     "mistakeType": "trap"
   },
   {
@@ -1733,6 +2117,11 @@
     "topic": "Quadratic Equations",
     "subtopic": "Roots",
     "difficulty": "Hard",
+    "conceptTested": "Quadratic Equations - Roots",
+    "commonMistake": "Students skip the core condition in Quadratic Equations - Roots and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 97).",
+    "explanation": "Step 1: Identify the core concept (Quadratic Equations - Roots). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Quadratic Equations/Roots: Evaluate x^2 + 2 for x = 7. [Q97]",
     "options": [
       "50",
@@ -1742,7 +2131,6 @@
     ],
     "correctAnswer": "51",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 7. So x^2 + 2 = 49 + 2 = 51.",
     "mistakeType": "concept"
   },
   {
@@ -1751,6 +2139,11 @@
     "topic": "Probability",
     "subtopic": "Events",
     "difficulty": "Hard",
+    "conceptTested": "Probability - Events",
+    "commonMistake": "Students skip the core condition in Probability - Events and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 98).",
+    "explanation": "Step 1: Identify the core concept (Probability - Events). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Probability/Events: Evaluate x^2 + 2 for x = 8. [Q98]",
     "options": [
       "65",
@@ -1760,7 +2153,6 @@
     ],
     "correctAnswer": "66",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 8. So x^2 + 2 = 64 + 2 = 66.",
     "mistakeType": "calculation"
   },
   {
@@ -1769,6 +2161,11 @@
     "topic": "Trigonometry",
     "subtopic": "Identities",
     "difficulty": "Hard",
+    "conceptTested": "Trigonometry - Identities",
+    "commonMistake": "Students skip the core condition in Trigonometry - Identities and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 99).",
+    "explanation": "Step 1: Identify the core concept (Trigonometry - Identities). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Trigonometry/Identities: Evaluate x^2 + 2 for x = 9. [Q99]",
     "options": [
       "82",
@@ -1778,7 +2175,6 @@
     ],
     "correctAnswer": "83",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 9. So x^2 + 2 = 81 + 2 = 83.",
     "mistakeType": "trap"
   },
   {
@@ -1787,6 +2183,11 @@
     "topic": "Calculus",
     "subtopic": "Integration",
     "difficulty": "Hard",
+    "conceptTested": "Calculus - Integration",
+    "commonMistake": "Students skip the core condition in Calculus - Integration and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 100).",
+    "explanation": "Step 1: Identify the core concept (Calculus - Integration). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Calculus/Integration: Evaluate x^2 + 2 for x = 10. [Q100]",
     "options": [
       "101",
@@ -1796,7 +2197,6 @@
     ],
     "correctAnswer": "102",
     "correctAnswerIndex": 1,
-    "explanation": "Substitute x = 10. So x^2 + 2 = 100 + 2 = 102.",
     "mistakeType": "concept"
   }
 ]

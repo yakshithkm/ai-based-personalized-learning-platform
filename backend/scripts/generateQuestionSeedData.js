@@ -52,6 +52,31 @@ const topicMap = {
   ],
 };
 
+const buildQualityMeta = ({ topic, subtopic, difficulty, index }) => {
+  const conceptTested = `${topic} - ${subtopic}`;
+  const solvingTimeEstimate = difficulty === 'Easy' ? 45 : difficulty === 'Medium' ? 70 : 95;
+  const commonMistake = difficulty === 'Hard'
+    ? `Students skip the core condition in ${conceptTested} and jump to shortcuts too early.`
+    : `Students confuse key definitions in ${conceptTested}, especially under time pressure.`;
+  const difficultyReason = difficulty === 'Easy'
+    ? `Direct formula/application question with one-step reasoning (seed item ${index + 1}).`
+    : difficulty === 'Medium'
+      ? `Requires multi-step reasoning and careful elimination (seed item ${index + 1}).`
+      : `Combines concept interpretation with trap options and speed pressure (seed item ${index + 1}).`;
+
+  return {
+    conceptTested,
+    commonMistake,
+    solvingTimeEstimate,
+    difficultyReason,
+    explanation:
+      `Step 1: Identify the core concept (${conceptTested}). ` +
+      'Step 2: Apply the governing rule carefully. ' +
+      'Step 3: Eliminate distractors by verifying unit/logic consistency. ' +
+      'Step 4: Confirm final answer against the problem statement.',
+  };
+};
+
 Object.keys(topicMap).forEach((subject) => {
   const requiredExams = Object.entries(EXAM_SUBJECT_MAP)
     .filter(([, subjects]) => subjects.includes(subject))
@@ -85,11 +110,11 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: If acceleration is ${a} m/s^2 for ${t} s from rest, final velocity is? [Q${index + 1}]`,
       options: built.options,
       correctAnswer: built.options[built.correctAnswerIndex],
       correctAnswerIndex: built.correctAnswerIndex,
-      explanation: `Use v = u + at. With u = 0, v = ${a} x ${t} = ${result}.`,
       mistakeType: mistakeTypes[index % mistakeTypes.length],
     };
   },
@@ -104,11 +129,11 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: If ${n} mol has molar mass ${molar} g/mol, total mass is? [Q${index + 1}]`,
       options: built.options,
       correctAnswer: built.options[built.correctAnswerIndex],
       correctAnswerIndex: built.correctAnswerIndex,
-      explanation: `Mass = moles x molar mass = ${n} x ${molar} = ${result} g.`,
       mistakeType: mistakeTypes[index % mistakeTypes.length],
     };
   },
@@ -122,11 +147,11 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: Evaluate x^2 + 2 for x = ${x}. [Q${index + 1}]`,
       options: built.options,
       correctAnswer: built.options[built.correctAnswerIndex],
       correctAnswerIndex: built.correctAnswerIndex,
-      explanation: `Substitute x = ${x}. So x^2 + 2 = ${x * x} + 2 = ${value}.`,
       mistakeType: mistakeTypes[index % mistakeTypes.length],
     };
   },
@@ -153,11 +178,11 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: Select the correct biological statement. [Q${index + 1}]`,
       options,
       correctAnswer: answer,
       correctAnswerIndex: 1,
-      explanation: `${answer}.`,
       mistakeType: mistakeTypes[index % mistakeTypes.length],
     };
   },

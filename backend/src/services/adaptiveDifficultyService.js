@@ -9,28 +9,66 @@ const rankToDifficulty = (rank) => DIFFICULTIES[Math.min(Math.max(rank, 0), 2)];
 
 const isFastAnswer = (timeTakenSec) => Number(timeTakenSec) <= 40;
 
-const evaluateAdaptiveDifficulty = ({ currentDifficulty, topicAccuracy, isCorrect, timeTakenSec }) => {
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const computeDifficultyScore = ({
+  topicAccuracy,
+  timeTakenSec,
+  expectedTimeSec,
+  recentStreak,
+  mistakeFrequency,
+}) => {
+  const accuracyScore = clamp(Number(topicAccuracy || 0), 0, 100);
+
+  const expected = Math.max(Number(expectedTimeSec || 60), 15);
+  const actual = Math.max(Number(timeTakenSec || expected), 1);
+  const timeRatio = expected / actual;
+  const timeScore = clamp(timeRatio * 100, 0, 100);
+
+  const streakScore = clamp(50 + Number(recentStreak || 0) * 10, 0, 100);
+  const mistakePenaltyScore = clamp(100 - Number(mistakeFrequency || 0) * 12, 0, 100);
+
+  return clamp(
+    accuracyScore * 0.45 +
+      timeScore * 0.25 +
+      streakScore * 0.15 +
+      mistakePenaltyScore * 0.15,
+    0,
+    100
+  );
+};
+
+const evaluateAdaptiveDifficulty = ({
+  currentDifficulty,
+  topicAccuracy,
+  isCorrect,
+  timeTakenSec,
+  expectedTimeSec = 60,
+  recentStreak = 0,
+  mistakeFrequency = 0,
+}) => {
   const currentRank = difficultyRank(currentDifficulty || 'Medium');
 
-  if (Number.isFinite(Number(topicAccuracy))) {
-    const normalizedAccuracy = Number(topicAccuracy);
-    if (normalizedAccuracy > 80) {
-      return rankToDifficulty(currentRank + 1);
-    }
+  const score = computeDifficultyScore({
+    topicAccuracy,
+    timeTakenSec,
+    expectedTimeSec,
+    recentStreak,
+    mistakeFrequency,
+  });
 
-    if (normalizedAccuracy < 50) {
-      return rankToDifficulty(currentRank - 1);
-    }
-
+  // Prevent random jumps: max one step adjustment per attempt.
+  if (!isCorrect) {
+    if (score < 45) return rankToDifficulty(currentRank - 1);
     return rankToDifficulty(currentRank);
   }
 
-  if (!isCorrect) {
-    return rankToDifficulty(currentRank - 1);
+  if (score >= 72) {
+    return rankToDifficulty(currentRank + 1);
   }
 
-  if (isFastAnswer(timeTakenSec)) {
-    return rankToDifficulty(currentRank + 1);
+  if (score <= 40) {
+    return rankToDifficulty(currentRank - 1);
   }
 
   return rankToDifficulty(currentRank);
@@ -49,6 +87,7 @@ const inferTopicDifficultyFromAttempts = (attempts = []) => {
       currentDifficulty: current,
       isCorrect: Boolean(attempt.isCorrect),
       timeTakenSec: Number(attempt.timeTakenSec || 0),
+      expectedTimeSec: Number(attempt.expectedSolvingTimeSec || 60),
     });
   });
 
@@ -59,4 +98,5 @@ module.exports = {
   evaluateAdaptiveDifficulty,
   inferTopicDifficultyFromAttempts,
   isFastAnswer,
+  computeDifficultyScore,
 };

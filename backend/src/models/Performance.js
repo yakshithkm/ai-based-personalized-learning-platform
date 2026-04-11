@@ -42,6 +42,37 @@ const weakTopicPrioritySchema = new mongoose.Schema(
   { _id: false }
 );
 
+const conceptPerformanceSchema = new mongoose.Schema(
+  {
+    subject: { type: String, required: true },
+    topic: { type: String, required: true },
+    concept: { type: String, required: true },
+    attempts: { type: Number, default: 0 },
+    correct: { type: Number, default: 0 },
+    accuracy: { type: Number, default: 0 },
+    avgTimeTakenSec: { type: Number, default: 0 },
+    mistakeFrequency: { type: Number, default: 0 },
+    slowCorrectRate: { type: Number, default: 0 },
+    masteryScore: { type: Number, default: 0 },
+    adaptiveDifficultyScore: { type: Number, default: 50 },
+  },
+  { _id: false }
+);
+
+const weakConceptPrioritySchema = new mongoose.Schema(
+  {
+    subject: { type: String, required: true },
+    topic: { type: String, required: true },
+    concept: { type: String, required: true },
+    accuracy: { type: Number, default: 0 },
+    avgTimeTakenSec: { type: Number, default: 0 },
+    mistakeFrequency: { type: Number, default: 0 },
+    slowCorrectRate: { type: Number, default: 0 },
+    priorityScore: { type: Number, default: 0 },
+  },
+  { _id: false }
+);
+
 const performanceSchema = new mongoose.Schema(
   {
     user: {
@@ -85,6 +116,8 @@ const performanceSchema = new mongoose.Schema(
     timeAccuracyCorrelation: { type: Number, default: 0 },
     suggestedFocusTopic: { type: String, default: '' },
     topicStats: [topicPerformanceSchema],
+    conceptStats: [conceptPerformanceSchema],
+    weakConceptPriority: [weakConceptPrioritySchema],
   },
   { timestamps: true }
 );

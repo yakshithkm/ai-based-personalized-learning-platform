@@ -8,6 +8,10 @@ const required = [
   'topic',
   'subtopic',
   'difficulty',
+  'conceptTested',
+  'commonMistake',
+  'solvingTimeEstimate',
+  'difficultyReason',
   'text',
   'options',
   'correctAnswer',
@@ -40,15 +44,19 @@ files.forEach((file) => {
   const badAnswer = data.filter(
     (question) => question.options?.[question.correctAnswerIndex] !== question.correctAnswer
   );
+  const badTimeEstimate = data.filter(
+    (question) => typeof question.solvingTimeEstimate !== 'number' || question.solvingTimeEstimate <= 0
+  );
 
   console.log(
-    `${file}: count=${data.length}, topics=${topicSet.length}, difficulties=${difficultySet.join(',')}, easy=${difficultyBreakdown.Easy}, medium=${difficultyBreakdown.Medium}, hard=${difficultyBreakdown.Hard}, missing=${missing.length}, badAnswer=${badAnswer.length}`
+    `${file}: count=${data.length}, topics=${topicSet.length}, difficulties=${difficultySet.join(',')}, easy=${difficultyBreakdown.Easy}, medium=${difficultyBreakdown.Medium}, hard=${difficultyBreakdown.Hard}, missing=${missing.length}, badAnswer=${badAnswer.length}, badTimeEstimate=${badTimeEstimate.length}`
   );
 
   if (
     data.length < 100 ||
     missing.length ||
     badAnswer.length ||
+    badTimeEstimate.length ||
     topicSet.length < 3 ||
     difficultySet.length < 3 ||
     difficultyBreakdown.Easy < 40 ||

@@ -31,6 +31,15 @@ const menuItems = [
     ),
   },
   {
+    to: '/exam-simulation',
+    label: 'Exam Sim',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 3h14l4 4v14H4V3zm2 2v14h14V8h-4V5H6zm2 6h8v2H8v-2zm0 4h8v2H8v-2zm0-8h5v2H8V7z" />
+      </svg>
+    ),
+  },
+  {
     to: '/admin-analytics',
     label: 'Admin',
     icon: (

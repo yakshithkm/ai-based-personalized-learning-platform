@@ -5,6 +5,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 1).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Motion Equations: If acceleration is 2 m/s^2 for 3 s from rest, final velocity is? [Q1]",
     "options": [
       "5",
@@ -14,7 +19,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 3 = 6.",
     "mistakeType": "concept"
   },
   {
@@ -23,6 +27,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 2).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Friction: If acceleration is 3 m/s^2 for 4 s from rest, final velocity is? [Q2]",
     "options": [
       "11",
@@ -32,7 +41,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 4 = 12.",
     "mistakeType": "calculation"
   },
   {
@@ -41,6 +49,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 3).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Ohm Law: If acceleration is 4 m/s^2 for 5 s from rest, final velocity is? [Q3]",
     "options": [
       "19",
@@ -50,7 +63,6 @@
     ],
     "correctAnswer": "20",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 5 = 20.",
     "mistakeType": "trap"
   },
   {
@@ -59,6 +71,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 4).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/Heat Transfer: If acceleration is 5 m/s^2 for 6 s from rest, final velocity is? [Q4]",
     "options": [
       "29",
@@ -68,7 +85,6 @@
     ],
     "correctAnswer": "30",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 6 = 30.",
     "mistakeType": "concept"
   },
   {
@@ -77,6 +93,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 5).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Wave Equation: If acceleration is 6 m/s^2 for 7 s from rest, final velocity is? [Q5]",
     "options": [
       "41",
@@ -86,7 +107,6 @@
     ],
     "correctAnswer": "42",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 7 = 42.",
     "mistakeType": "calculation"
   },
   {
@@ -95,6 +115,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 6).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Graph Analysis: If acceleration is 7 m/s^2 for 3 s from rest, final velocity is? [Q6]",
     "options": [
       "20",
@@ -104,7 +129,6 @@
     ],
     "correctAnswer": "21",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 3 = 21.",
     "mistakeType": "trap"
   },
   {
@@ -113,6 +137,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 7).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Newton Laws: If acceleration is 8 m/s^2 for 4 s from rest, final velocity is? [Q7]",
     "options": [
       "31",
@@ -122,7 +151,6 @@
     ],
     "correctAnswer": "32",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 4 = 32.",
     "mistakeType": "concept"
   },
   {
@@ -131,6 +159,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 8).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Series Parallel: If acceleration is 2 m/s^2 for 5 s from rest, final velocity is? [Q8]",
     "options": [
       "9",
@@ -140,7 +173,6 @@
     ],
     "correctAnswer": "10",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 5 = 10.",
     "mistakeType": "calculation"
   },
   {
@@ -149,6 +181,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 9).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/First Law: If acceleration is 3 m/s^2 for 6 s from rest, final velocity is? [Q9]",
     "options": [
       "17",
@@ -158,7 +195,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 6 = 18.",
     "mistakeType": "trap"
   },
   {
@@ -167,6 +203,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 10).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Sound: If acceleration is 4 m/s^2 for 7 s from rest, final velocity is? [Q10]",
     "options": [
       "27",
@@ -176,7 +217,6 @@
     ],
     "correctAnswer": "28",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 7 = 28.",
     "mistakeType": "concept"
   },
   {
@@ -185,6 +225,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 11).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Motion Equations: If acceleration is 5 m/s^2 for 3 s from rest, final velocity is? [Q11]",
     "options": [
       "14",
@@ -194,7 +239,6 @@
     ],
     "correctAnswer": "15",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 3 = 15.",
     "mistakeType": "calculation"
   },
   {
@@ -203,6 +247,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 12).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Friction: If acceleration is 6 m/s^2 for 4 s from rest, final velocity is? [Q12]",
     "options": [
       "23",
@@ -212,7 +261,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 4 = 24.",
     "mistakeType": "trap"
   },
   {
@@ -221,6 +269,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 13).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Ohm Law: If acceleration is 7 m/s^2 for 5 s from rest, final velocity is? [Q13]",
     "options": [
       "34",
@@ -230,7 +283,6 @@
     ],
     "correctAnswer": "35",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 5 = 35.",
     "mistakeType": "concept"
   },
   {
@@ -239,6 +291,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 14).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/Heat Transfer: If acceleration is 8 m/s^2 for 6 s from rest, final velocity is? [Q14]",
     "options": [
       "47",
@@ -248,7 +305,6 @@
     ],
     "correctAnswer": "48",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 6 = 48.",
     "mistakeType": "calculation"
   },
   {
@@ -257,6 +313,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 15).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Wave Equation: If acceleration is 2 m/s^2 for 7 s from rest, final velocity is? [Q15]",
     "options": [
       "13",
@@ -266,7 +327,6 @@
     ],
     "correctAnswer": "14",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 7 = 14.",
     "mistakeType": "trap"
   },
   {
@@ -275,6 +335,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 16).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Graph Analysis: If acceleration is 3 m/s^2 for 3 s from rest, final velocity is? [Q16]",
     "options": [
       "8",
@@ -284,7 +349,6 @@
     ],
     "correctAnswer": "9",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 3 = 9.",
     "mistakeType": "concept"
   },
   {
@@ -293,6 +357,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 17).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Newton Laws: If acceleration is 4 m/s^2 for 4 s from rest, final velocity is? [Q17]",
     "options": [
       "15",
@@ -302,7 +371,6 @@
     ],
     "correctAnswer": "16",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 4 = 16.",
     "mistakeType": "calculation"
   },
   {
@@ -311,6 +379,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 18).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Series Parallel: If acceleration is 5 m/s^2 for 5 s from rest, final velocity is? [Q18]",
     "options": [
       "24",
@@ -320,7 +393,6 @@
     ],
     "correctAnswer": "25",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 5 = 25.",
     "mistakeType": "trap"
   },
   {
@@ -329,6 +401,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 19).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/First Law: If acceleration is 6 m/s^2 for 6 s from rest, final velocity is? [Q19]",
     "options": [
       "35",
@@ -338,7 +415,6 @@
     ],
     "correctAnswer": "36",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 6 = 36.",
     "mistakeType": "concept"
   },
   {
@@ -347,6 +423,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 20).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Sound: If acceleration is 7 m/s^2 for 7 s from rest, final velocity is? [Q20]",
     "options": [
       "48",
@@ -356,7 +437,6 @@
     ],
     "correctAnswer": "49",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 7 = 49.",
     "mistakeType": "calculation"
   },
   {
@@ -365,6 +445,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 21).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Motion Equations: If acceleration is 8 m/s^2 for 3 s from rest, final velocity is? [Q21]",
     "options": [
       "23",
@@ -374,7 +459,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 3 = 24.",
     "mistakeType": "trap"
   },
   {
@@ -383,6 +467,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 22).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Friction: If acceleration is 2 m/s^2 for 4 s from rest, final velocity is? [Q22]",
     "options": [
       "7",
@@ -392,7 +481,6 @@
     ],
     "correctAnswer": "8",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 4 = 8.",
     "mistakeType": "concept"
   },
   {
@@ -401,6 +489,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 23).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Ohm Law: If acceleration is 3 m/s^2 for 5 s from rest, final velocity is? [Q23]",
     "options": [
       "14",
@@ -410,7 +503,6 @@
     ],
     "correctAnswer": "15",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 5 = 15.",
     "mistakeType": "calculation"
   },
   {
@@ -419,6 +511,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 24).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/Heat Transfer: If acceleration is 4 m/s^2 for 6 s from rest, final velocity is? [Q24]",
     "options": [
       "23",
@@ -428,7 +525,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 6 = 24.",
     "mistakeType": "trap"
   },
   {
@@ -437,6 +533,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 25).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Wave Equation: If acceleration is 5 m/s^2 for 7 s from rest, final velocity is? [Q25]",
     "options": [
       "34",
@@ -446,7 +547,6 @@
     ],
     "correctAnswer": "35",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 7 = 35.",
     "mistakeType": "concept"
   },
   {
@@ -455,6 +555,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 26).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Graph Analysis: If acceleration is 6 m/s^2 for 3 s from rest, final velocity is? [Q26]",
     "options": [
       "17",
@@ -464,7 +569,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 3 = 18.",
     "mistakeType": "calculation"
   },
   {
@@ -473,6 +577,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 27).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Newton Laws: If acceleration is 7 m/s^2 for 4 s from rest, final velocity is? [Q27]",
     "options": [
       "27",
@@ -482,7 +591,6 @@
     ],
     "correctAnswer": "28",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 4 = 28.",
     "mistakeType": "trap"
   },
   {
@@ -491,6 +599,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 28).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Series Parallel: If acceleration is 8 m/s^2 for 5 s from rest, final velocity is? [Q28]",
     "options": [
       "39",
@@ -500,7 +613,6 @@
     ],
     "correctAnswer": "40",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 5 = 40.",
     "mistakeType": "concept"
   },
   {
@@ -509,6 +621,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 29).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/First Law: If acceleration is 2 m/s^2 for 6 s from rest, final velocity is? [Q29]",
     "options": [
       "11",
@@ -518,7 +635,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 6 = 12.",
     "mistakeType": "calculation"
   },
   {
@@ -527,6 +643,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 30).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Sound: If acceleration is 3 m/s^2 for 7 s from rest, final velocity is? [Q30]",
     "options": [
       "20",
@@ -536,7 +657,6 @@
     ],
     "correctAnswer": "21",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 7 = 21.",
     "mistakeType": "trap"
   },
   {
@@ -545,6 +665,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 31).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Motion Equations: If acceleration is 4 m/s^2 for 3 s from rest, final velocity is? [Q31]",
     "options": [
       "11",
@@ -554,7 +679,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 3 = 12.",
     "mistakeType": "concept"
   },
   {
@@ -563,6 +687,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 32).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Friction: If acceleration is 5 m/s^2 for 4 s from rest, final velocity is? [Q32]",
     "options": [
       "19",
@@ -572,7 +701,6 @@
     ],
     "correctAnswer": "20",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 4 = 20.",
     "mistakeType": "calculation"
   },
   {
@@ -581,6 +709,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 33).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Ohm Law: If acceleration is 6 m/s^2 for 5 s from rest, final velocity is? [Q33]",
     "options": [
       "29",
@@ -590,7 +723,6 @@
     ],
     "correctAnswer": "30",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 5 = 30.",
     "mistakeType": "trap"
   },
   {
@@ -599,6 +731,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 34).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/Heat Transfer: If acceleration is 7 m/s^2 for 6 s from rest, final velocity is? [Q34]",
     "options": [
       "41",
@@ -608,7 +745,6 @@
     ],
     "correctAnswer": "42",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 6 = 42.",
     "mistakeType": "concept"
   },
   {
@@ -617,6 +753,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 35).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Wave Equation: If acceleration is 8 m/s^2 for 7 s from rest, final velocity is? [Q35]",
     "options": [
       "55",
@@ -626,7 +767,6 @@
     ],
     "correctAnswer": "56",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 7 = 56.",
     "mistakeType": "calculation"
   },
   {
@@ -635,6 +775,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Easy",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 36).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Kinematics/Graph Analysis: If acceleration is 2 m/s^2 for 3 s from rest, final velocity is? [Q36]",
     "options": [
       "5",
@@ -644,7 +789,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 3 = 6.",
     "mistakeType": "trap"
   },
   {
@@ -653,6 +797,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Easy",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 37).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Dynamics/Newton Laws: If acceleration is 3 m/s^2 for 4 s from rest, final velocity is? [Q37]",
     "options": [
       "11",
@@ -662,7 +811,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 4 = 12.",
     "mistakeType": "concept"
   },
   {
@@ -671,6 +819,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Easy",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 38).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Current Electricity/Series Parallel: If acceleration is 4 m/s^2 for 5 s from rest, final velocity is? [Q38]",
     "options": [
       "19",
@@ -680,7 +833,6 @@
     ],
     "correctAnswer": "20",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 5 = 20.",
     "mistakeType": "calculation"
   },
   {
@@ -689,6 +841,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Easy",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 39).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Thermodynamics/First Law: If acceleration is 5 m/s^2 for 6 s from rest, final velocity is? [Q39]",
     "options": [
       "29",
@@ -698,7 +855,6 @@
     ],
     "correctAnswer": "30",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 6 = 30.",
     "mistakeType": "trap"
   },
   {
@@ -707,6 +863,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Easy",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 40).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Waves/Sound: If acceleration is 6 m/s^2 for 7 s from rest, final velocity is? [Q40]",
     "options": [
       "41",
@@ -716,7 +877,6 @@
     ],
     "correctAnswer": "42",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 7 = 42.",
     "mistakeType": "concept"
   },
   {
@@ -725,6 +885,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 41).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Motion Equations: If acceleration is 7 m/s^2 for 3 s from rest, final velocity is? [Q41]",
     "options": [
       "20",
@@ -734,7 +899,6 @@
     ],
     "correctAnswer": "21",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 3 = 21.",
     "mistakeType": "calculation"
   },
   {
@@ -743,6 +907,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 42).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Friction: If acceleration is 8 m/s^2 for 4 s from rest, final velocity is? [Q42]",
     "options": [
       "31",
@@ -752,7 +921,6 @@
     ],
     "correctAnswer": "32",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 4 = 32.",
     "mistakeType": "trap"
   },
   {
@@ -761,6 +929,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 43).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Ohm Law: If acceleration is 2 m/s^2 for 5 s from rest, final velocity is? [Q43]",
     "options": [
       "9",
@@ -770,7 +943,6 @@
     ],
     "correctAnswer": "10",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 5 = 10.",
     "mistakeType": "concept"
   },
   {
@@ -779,6 +951,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 44).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/Heat Transfer: If acceleration is 3 m/s^2 for 6 s from rest, final velocity is? [Q44]",
     "options": [
       "17",
@@ -788,7 +965,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 6 = 18.",
     "mistakeType": "calculation"
   },
   {
@@ -797,6 +973,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 45).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Wave Equation: If acceleration is 4 m/s^2 for 7 s from rest, final velocity is? [Q45]",
     "options": [
       "27",
@@ -806,7 +987,6 @@
     ],
     "correctAnswer": "28",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 7 = 28.",
     "mistakeType": "trap"
   },
   {
@@ -815,6 +995,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 46).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Graph Analysis: If acceleration is 5 m/s^2 for 3 s from rest, final velocity is? [Q46]",
     "options": [
       "14",
@@ -824,7 +1009,6 @@
     ],
     "correctAnswer": "15",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 3 = 15.",
     "mistakeType": "concept"
   },
   {
@@ -833,6 +1017,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 47).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Newton Laws: If acceleration is 6 m/s^2 for 4 s from rest, final velocity is? [Q47]",
     "options": [
       "23",
@@ -842,7 +1031,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 4 = 24.",
     "mistakeType": "calculation"
   },
   {
@@ -851,6 +1039,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 48).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Series Parallel: If acceleration is 7 m/s^2 for 5 s from rest, final velocity is? [Q48]",
     "options": [
       "34",
@@ -860,7 +1053,6 @@
     ],
     "correctAnswer": "35",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 5 = 35.",
     "mistakeType": "trap"
   },
   {
@@ -869,6 +1061,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 49).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/First Law: If acceleration is 8 m/s^2 for 6 s from rest, final velocity is? [Q49]",
     "options": [
       "47",
@@ -878,7 +1075,6 @@
     ],
     "correctAnswer": "48",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 6 = 48.",
     "mistakeType": "concept"
   },
   {
@@ -887,6 +1083,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 50).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Sound: If acceleration is 2 m/s^2 for 7 s from rest, final velocity is? [Q50]",
     "options": [
       "13",
@@ -896,7 +1097,6 @@
     ],
     "correctAnswer": "14",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 7 = 14.",
     "mistakeType": "calculation"
   },
   {
@@ -905,6 +1105,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 51).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Motion Equations: If acceleration is 3 m/s^2 for 3 s from rest, final velocity is? [Q51]",
     "options": [
       "8",
@@ -914,7 +1119,6 @@
     ],
     "correctAnswer": "9",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 3 = 9.",
     "mistakeType": "trap"
   },
   {
@@ -923,6 +1127,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 52).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Friction: If acceleration is 4 m/s^2 for 4 s from rest, final velocity is? [Q52]",
     "options": [
       "15",
@@ -932,7 +1141,6 @@
     ],
     "correctAnswer": "16",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 4 = 16.",
     "mistakeType": "concept"
   },
   {
@@ -941,6 +1149,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 53).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Ohm Law: If acceleration is 5 m/s^2 for 5 s from rest, final velocity is? [Q53]",
     "options": [
       "24",
@@ -950,7 +1163,6 @@
     ],
     "correctAnswer": "25",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 5 = 25.",
     "mistakeType": "calculation"
   },
   {
@@ -959,6 +1171,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 54).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/Heat Transfer: If acceleration is 6 m/s^2 for 6 s from rest, final velocity is? [Q54]",
     "options": [
       "35",
@@ -968,7 +1185,6 @@
     ],
     "correctAnswer": "36",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 6 = 36.",
     "mistakeType": "trap"
   },
   {
@@ -977,6 +1193,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 55).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Wave Equation: If acceleration is 7 m/s^2 for 7 s from rest, final velocity is? [Q55]",
     "options": [
       "48",
@@ -986,7 +1207,6 @@
     ],
     "correctAnswer": "49",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 7 = 49.",
     "mistakeType": "concept"
   },
   {
@@ -995,6 +1215,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 56).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Graph Analysis: If acceleration is 8 m/s^2 for 3 s from rest, final velocity is? [Q56]",
     "options": [
       "23",
@@ -1004,7 +1229,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 3 = 24.",
     "mistakeType": "calculation"
   },
   {
@@ -1013,6 +1237,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 57).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Newton Laws: If acceleration is 2 m/s^2 for 4 s from rest, final velocity is? [Q57]",
     "options": [
       "7",
@@ -1022,7 +1251,6 @@
     ],
     "correctAnswer": "8",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 4 = 8.",
     "mistakeType": "trap"
   },
   {
@@ -1031,6 +1259,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 58).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Series Parallel: If acceleration is 3 m/s^2 for 5 s from rest, final velocity is? [Q58]",
     "options": [
       "14",
@@ -1040,7 +1273,6 @@
     ],
     "correctAnswer": "15",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 5 = 15.",
     "mistakeType": "concept"
   },
   {
@@ -1049,6 +1281,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 59).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/First Law: If acceleration is 4 m/s^2 for 6 s from rest, final velocity is? [Q59]",
     "options": [
       "23",
@@ -1058,7 +1295,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 6 = 24.",
     "mistakeType": "calculation"
   },
   {
@@ -1067,6 +1303,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 60).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Sound: If acceleration is 5 m/s^2 for 7 s from rest, final velocity is? [Q60]",
     "options": [
       "34",
@@ -1076,7 +1317,6 @@
     ],
     "correctAnswer": "35",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 7 = 35.",
     "mistakeType": "trap"
   },
   {
@@ -1085,6 +1325,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 61).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Motion Equations: If acceleration is 6 m/s^2 for 3 s from rest, final velocity is? [Q61]",
     "options": [
       "17",
@@ -1094,7 +1339,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 3 = 18.",
     "mistakeType": "concept"
   },
   {
@@ -1103,6 +1347,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 62).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Friction: If acceleration is 7 m/s^2 for 4 s from rest, final velocity is? [Q62]",
     "options": [
       "27",
@@ -1112,7 +1361,6 @@
     ],
     "correctAnswer": "28",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 4 = 28.",
     "mistakeType": "calculation"
   },
   {
@@ -1121,6 +1369,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 63).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Ohm Law: If acceleration is 8 m/s^2 for 5 s from rest, final velocity is? [Q63]",
     "options": [
       "39",
@@ -1130,7 +1383,6 @@
     ],
     "correctAnswer": "40",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 5 = 40.",
     "mistakeType": "trap"
   },
   {
@@ -1139,6 +1391,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 64).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/Heat Transfer: If acceleration is 2 m/s^2 for 6 s from rest, final velocity is? [Q64]",
     "options": [
       "11",
@@ -1148,7 +1405,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 6 = 12.",
     "mistakeType": "concept"
   },
   {
@@ -1157,6 +1413,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 65).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Wave Equation: If acceleration is 3 m/s^2 for 7 s from rest, final velocity is? [Q65]",
     "options": [
       "20",
@@ -1166,7 +1427,6 @@
     ],
     "correctAnswer": "21",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 7 = 21.",
     "mistakeType": "calculation"
   },
   {
@@ -1175,6 +1435,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 66).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Graph Analysis: If acceleration is 4 m/s^2 for 3 s from rest, final velocity is? [Q66]",
     "options": [
       "11",
@@ -1184,7 +1449,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 3 = 12.",
     "mistakeType": "trap"
   },
   {
@@ -1193,6 +1457,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 67).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Newton Laws: If acceleration is 5 m/s^2 for 4 s from rest, final velocity is? [Q67]",
     "options": [
       "19",
@@ -1202,7 +1471,6 @@
     ],
     "correctAnswer": "20",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 4 = 20.",
     "mistakeType": "concept"
   },
   {
@@ -1211,6 +1479,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 68).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Series Parallel: If acceleration is 6 m/s^2 for 5 s from rest, final velocity is? [Q68]",
     "options": [
       "29",
@@ -1220,7 +1493,6 @@
     ],
     "correctAnswer": "30",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 5 = 30.",
     "mistakeType": "calculation"
   },
   {
@@ -1229,6 +1501,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 69).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/First Law: If acceleration is 7 m/s^2 for 6 s from rest, final velocity is? [Q69]",
     "options": [
       "41",
@@ -1238,7 +1515,6 @@
     ],
     "correctAnswer": "42",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 6 = 42.",
     "mistakeType": "trap"
   },
   {
@@ -1247,6 +1523,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 70).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Sound: If acceleration is 8 m/s^2 for 7 s from rest, final velocity is? [Q70]",
     "options": [
       "55",
@@ -1256,7 +1537,6 @@
     ],
     "correctAnswer": "56",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 7 = 56.",
     "mistakeType": "concept"
   },
   {
@@ -1265,6 +1545,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students confuse key definitions in Kinematics - Motion Equations, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 71).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Motion Equations: If acceleration is 2 m/s^2 for 3 s from rest, final velocity is? [Q71]",
     "options": [
       "5",
@@ -1274,7 +1559,6 @@
     ],
     "correctAnswer": "6",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 3 = 6.",
     "mistakeType": "calculation"
   },
   {
@@ -1283,6 +1567,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students confuse key definitions in Dynamics - Friction, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 72).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Friction: If acceleration is 3 m/s^2 for 4 s from rest, final velocity is? [Q72]",
     "options": [
       "11",
@@ -1292,7 +1581,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 4 = 12.",
     "mistakeType": "trap"
   },
   {
@@ -1301,6 +1589,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Ohm Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 73).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Ohm Law: If acceleration is 4 m/s^2 for 5 s from rest, final velocity is? [Q73]",
     "options": [
       "19",
@@ -1310,7 +1603,6 @@
     ],
     "correctAnswer": "20",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 5 = 20.",
     "mistakeType": "concept"
   },
   {
@@ -1319,6 +1611,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - Heat Transfer, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 74).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/Heat Transfer: If acceleration is 5 m/s^2 for 6 s from rest, final velocity is? [Q74]",
     "options": [
       "29",
@@ -1328,7 +1625,6 @@
     ],
     "correctAnswer": "30",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 6 = 30.",
     "mistakeType": "calculation"
   },
   {
@@ -1337,6 +1633,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students confuse key definitions in Waves - Wave Equation, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 75).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Wave Equation: If acceleration is 6 m/s^2 for 7 s from rest, final velocity is? [Q75]",
     "options": [
       "41",
@@ -1346,7 +1647,6 @@
     ],
     "correctAnswer": "42",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 7 = 42.",
     "mistakeType": "trap"
   },
   {
@@ -1355,6 +1655,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Medium",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students confuse key definitions in Kinematics - Graph Analysis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 76).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Kinematics/Graph Analysis: If acceleration is 7 m/s^2 for 3 s from rest, final velocity is? [Q76]",
     "options": [
       "20",
@@ -1364,7 +1669,6 @@
     ],
     "correctAnswer": "21",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 3 = 21.",
     "mistakeType": "concept"
   },
   {
@@ -1373,6 +1677,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Medium",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students confuse key definitions in Dynamics - Newton Laws, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 77).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Dynamics/Newton Laws: If acceleration is 8 m/s^2 for 4 s from rest, final velocity is? [Q77]",
     "options": [
       "31",
@@ -1382,7 +1691,6 @@
     ],
     "correctAnswer": "32",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 4 = 32.",
     "mistakeType": "calculation"
   },
   {
@@ -1391,6 +1699,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Medium",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students confuse key definitions in Current Electricity - Series Parallel, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 78).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Current Electricity/Series Parallel: If acceleration is 2 m/s^2 for 5 s from rest, final velocity is? [Q78]",
     "options": [
       "9",
@@ -1400,7 +1713,6 @@
     ],
     "correctAnswer": "10",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 5 = 10.",
     "mistakeType": "trap"
   },
   {
@@ -1409,6 +1721,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Medium",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students confuse key definitions in Thermodynamics - First Law, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 79).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Thermodynamics/First Law: If acceleration is 3 m/s^2 for 6 s from rest, final velocity is? [Q79]",
     "options": [
       "17",
@@ -1418,7 +1735,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 6 = 18.",
     "mistakeType": "concept"
   },
   {
@@ -1427,6 +1743,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Medium",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students confuse key definitions in Waves - Sound, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 80).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Waves/Sound: If acceleration is 4 m/s^2 for 7 s from rest, final velocity is? [Q80]",
     "options": [
       "27",
@@ -1436,7 +1757,6 @@
     ],
     "correctAnswer": "28",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 7 = 28.",
     "mistakeType": "calculation"
   },
   {
@@ -1445,6 +1765,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Hard",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students skip the core condition in Kinematics - Motion Equations and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 81).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Kinematics/Motion Equations: If acceleration is 5 m/s^2 for 3 s from rest, final velocity is? [Q81]",
     "options": [
       "14",
@@ -1454,7 +1779,6 @@
     ],
     "correctAnswer": "15",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 3 = 15.",
     "mistakeType": "trap"
   },
   {
@@ -1463,6 +1787,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Hard",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students skip the core condition in Dynamics - Friction and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 82).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Dynamics/Friction: If acceleration is 6 m/s^2 for 4 s from rest, final velocity is? [Q82]",
     "options": [
       "23",
@@ -1472,7 +1801,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 4 = 24.",
     "mistakeType": "concept"
   },
   {
@@ -1481,6 +1809,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Hard",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students skip the core condition in Current Electricity - Ohm Law and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 83).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Current Electricity/Ohm Law: If acceleration is 7 m/s^2 for 5 s from rest, final velocity is? [Q83]",
     "options": [
       "34",
@@ -1490,7 +1823,6 @@
     ],
     "correctAnswer": "35",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 5 = 35.",
     "mistakeType": "calculation"
   },
   {
@@ -1499,6 +1831,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Hard",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students skip the core condition in Thermodynamics - Heat Transfer and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 84).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Thermodynamics/Heat Transfer: If acceleration is 8 m/s^2 for 6 s from rest, final velocity is? [Q84]",
     "options": [
       "47",
@@ -1508,7 +1845,6 @@
     ],
     "correctAnswer": "48",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 6 = 48.",
     "mistakeType": "trap"
   },
   {
@@ -1517,6 +1853,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Hard",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students skip the core condition in Waves - Wave Equation and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 85).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Waves/Wave Equation: If acceleration is 2 m/s^2 for 7 s from rest, final velocity is? [Q85]",
     "options": [
       "13",
@@ -1526,7 +1867,6 @@
     ],
     "correctAnswer": "14",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 7 = 14.",
     "mistakeType": "concept"
   },
   {
@@ -1535,6 +1875,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Hard",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students skip the core condition in Kinematics - Graph Analysis and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 86).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Kinematics/Graph Analysis: If acceleration is 3 m/s^2 for 3 s from rest, final velocity is? [Q86]",
     "options": [
       "8",
@@ -1544,7 +1889,6 @@
     ],
     "correctAnswer": "9",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 3 = 9.",
     "mistakeType": "calculation"
   },
   {
@@ -1553,6 +1897,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Hard",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students skip the core condition in Dynamics - Newton Laws and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 87).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Dynamics/Newton Laws: If acceleration is 4 m/s^2 for 4 s from rest, final velocity is? [Q87]",
     "options": [
       "15",
@@ -1562,7 +1911,6 @@
     ],
     "correctAnswer": "16",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 4 = 16.",
     "mistakeType": "trap"
   },
   {
@@ -1571,6 +1919,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Hard",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students skip the core condition in Current Electricity - Series Parallel and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 88).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Current Electricity/Series Parallel: If acceleration is 5 m/s^2 for 5 s from rest, final velocity is? [Q88]",
     "options": [
       "24",
@@ -1580,7 +1933,6 @@
     ],
     "correctAnswer": "25",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 5 = 25.",
     "mistakeType": "concept"
   },
   {
@@ -1589,6 +1941,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Hard",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students skip the core condition in Thermodynamics - First Law and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 89).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Thermodynamics/First Law: If acceleration is 6 m/s^2 for 6 s from rest, final velocity is? [Q89]",
     "options": [
       "35",
@@ -1598,7 +1955,6 @@
     ],
     "correctAnswer": "36",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 6 = 36.",
     "mistakeType": "calculation"
   },
   {
@@ -1607,6 +1963,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Hard",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students skip the core condition in Waves - Sound and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 90).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Waves/Sound: If acceleration is 7 m/s^2 for 7 s from rest, final velocity is? [Q90]",
     "options": [
       "48",
@@ -1616,7 +1977,6 @@
     ],
     "correctAnswer": "49",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 7 = 49.",
     "mistakeType": "trap"
   },
   {
@@ -1625,6 +1985,11 @@
     "topic": "Kinematics",
     "subtopic": "Motion Equations",
     "difficulty": "Hard",
+    "conceptTested": "Kinematics - Motion Equations",
+    "commonMistake": "Students skip the core condition in Kinematics - Motion Equations and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 91).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Motion Equations). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Kinematics/Motion Equations: If acceleration is 8 m/s^2 for 3 s from rest, final velocity is? [Q91]",
     "options": [
       "23",
@@ -1634,7 +1999,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 3 = 24.",
     "mistakeType": "concept"
   },
   {
@@ -1643,6 +2007,11 @@
     "topic": "Dynamics",
     "subtopic": "Friction",
     "difficulty": "Hard",
+    "conceptTested": "Dynamics - Friction",
+    "commonMistake": "Students skip the core condition in Dynamics - Friction and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 92).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Friction). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Dynamics/Friction: If acceleration is 2 m/s^2 for 4 s from rest, final velocity is? [Q92]",
     "options": [
       "7",
@@ -1652,7 +2021,6 @@
     ],
     "correctAnswer": "8",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 4 = 8.",
     "mistakeType": "calculation"
   },
   {
@@ -1661,6 +2029,11 @@
     "topic": "Current Electricity",
     "subtopic": "Ohm Law",
     "difficulty": "Hard",
+    "conceptTested": "Current Electricity - Ohm Law",
+    "commonMistake": "Students skip the core condition in Current Electricity - Ohm Law and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 93).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Ohm Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Current Electricity/Ohm Law: If acceleration is 3 m/s^2 for 5 s from rest, final velocity is? [Q93]",
     "options": [
       "14",
@@ -1670,7 +2043,6 @@
     ],
     "correctAnswer": "15",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 5 = 15.",
     "mistakeType": "trap"
   },
   {
@@ -1679,6 +2051,11 @@
     "topic": "Thermodynamics",
     "subtopic": "Heat Transfer",
     "difficulty": "Hard",
+    "conceptTested": "Thermodynamics - Heat Transfer",
+    "commonMistake": "Students skip the core condition in Thermodynamics - Heat Transfer and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 94).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - Heat Transfer). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Thermodynamics/Heat Transfer: If acceleration is 4 m/s^2 for 6 s from rest, final velocity is? [Q94]",
     "options": [
       "23",
@@ -1688,7 +2065,6 @@
     ],
     "correctAnswer": "24",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 4 x 6 = 24.",
     "mistakeType": "concept"
   },
   {
@@ -1697,6 +2073,11 @@
     "topic": "Waves",
     "subtopic": "Wave Equation",
     "difficulty": "Hard",
+    "conceptTested": "Waves - Wave Equation",
+    "commonMistake": "Students skip the core condition in Waves - Wave Equation and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 95).",
+    "explanation": "Step 1: Identify the core concept (Waves - Wave Equation). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Waves/Wave Equation: If acceleration is 5 m/s^2 for 7 s from rest, final velocity is? [Q95]",
     "options": [
       "34",
@@ -1706,7 +2087,6 @@
     ],
     "correctAnswer": "35",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 5 x 7 = 35.",
     "mistakeType": "calculation"
   },
   {
@@ -1715,6 +2095,11 @@
     "topic": "Kinematics",
     "subtopic": "Graph Analysis",
     "difficulty": "Hard",
+    "conceptTested": "Kinematics - Graph Analysis",
+    "commonMistake": "Students skip the core condition in Kinematics - Graph Analysis and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 96).",
+    "explanation": "Step 1: Identify the core concept (Kinematics - Graph Analysis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Kinematics/Graph Analysis: If acceleration is 6 m/s^2 for 3 s from rest, final velocity is? [Q96]",
     "options": [
       "17",
@@ -1724,7 +2109,6 @@
     ],
     "correctAnswer": "18",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 6 x 3 = 18.",
     "mistakeType": "trap"
   },
   {
@@ -1733,6 +2117,11 @@
     "topic": "Dynamics",
     "subtopic": "Newton Laws",
     "difficulty": "Hard",
+    "conceptTested": "Dynamics - Newton Laws",
+    "commonMistake": "Students skip the core condition in Dynamics - Newton Laws and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 97).",
+    "explanation": "Step 1: Identify the core concept (Dynamics - Newton Laws). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Dynamics/Newton Laws: If acceleration is 7 m/s^2 for 4 s from rest, final velocity is? [Q97]",
     "options": [
       "27",
@@ -1742,7 +2131,6 @@
     ],
     "correctAnswer": "28",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 7 x 4 = 28.",
     "mistakeType": "concept"
   },
   {
@@ -1751,6 +2139,11 @@
     "topic": "Current Electricity",
     "subtopic": "Series Parallel",
     "difficulty": "Hard",
+    "conceptTested": "Current Electricity - Series Parallel",
+    "commonMistake": "Students skip the core condition in Current Electricity - Series Parallel and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 98).",
+    "explanation": "Step 1: Identify the core concept (Current Electricity - Series Parallel). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Current Electricity/Series Parallel: If acceleration is 8 m/s^2 for 5 s from rest, final velocity is? [Q98]",
     "options": [
       "39",
@@ -1760,7 +2153,6 @@
     ],
     "correctAnswer": "40",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 8 x 5 = 40.",
     "mistakeType": "calculation"
   },
   {
@@ -1769,6 +2161,11 @@
     "topic": "Thermodynamics",
     "subtopic": "First Law",
     "difficulty": "Hard",
+    "conceptTested": "Thermodynamics - First Law",
+    "commonMistake": "Students skip the core condition in Thermodynamics - First Law and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 99).",
+    "explanation": "Step 1: Identify the core concept (Thermodynamics - First Law). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Thermodynamics/First Law: If acceleration is 2 m/s^2 for 6 s from rest, final velocity is? [Q99]",
     "options": [
       "11",
@@ -1778,7 +2175,6 @@
     ],
     "correctAnswer": "12",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 2 x 6 = 12.",
     "mistakeType": "trap"
   },
   {
@@ -1787,6 +2183,11 @@
     "topic": "Waves",
     "subtopic": "Sound",
     "difficulty": "Hard",
+    "conceptTested": "Waves - Sound",
+    "commonMistake": "Students skip the core condition in Waves - Sound and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 100).",
+    "explanation": "Step 1: Identify the core concept (Waves - Sound). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Waves/Sound: If acceleration is 3 m/s^2 for 7 s from rest, final velocity is? [Q100]",
     "options": [
       "20",
@@ -1796,7 +2197,6 @@
     ],
     "correctAnswer": "21",
     "correctAnswerIndex": 1,
-    "explanation": "Use v = u + at. With u = 0, v = 3 x 7 = 21.",
     "mistakeType": "concept"
   }
 ]

@@ -5,6 +5,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 1).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q1]",
     "options": [
       "Ribosomes store DNA",
@@ -14,7 +19,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "concept"
   },
   {
@@ -23,6 +27,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 2).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Inheritance: Select the correct biological statement. [Q2]",
     "options": [
       "Ribosomes store DNA",
@@ -32,7 +41,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "calculation"
   },
   {
@@ -41,6 +49,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 3).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Circulatory: Select the correct biological statement. [Q3]",
     "options": [
       "Ribosomes store DNA",
@@ -50,7 +63,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "trap"
   },
   {
@@ -59,6 +71,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 4).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Food Chains: Select the correct biological statement. [Q4]",
     "options": [
       "Ribosomes store DNA",
@@ -68,7 +85,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "concept"
   },
   {
@@ -77,6 +93,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 5).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Transport: Select the correct biological statement. [Q5]",
     "options": [
       "Ribosomes store DNA",
@@ -86,7 +107,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "calculation"
   },
   {
@@ -95,6 +115,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 6).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q6]",
     "options": [
       "Ribosomes store DNA",
@@ -104,7 +129,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "trap"
   },
   {
@@ -113,6 +137,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 7).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Mendelian: Select the correct biological statement. [Q7]",
     "options": [
       "Ribosomes store DNA",
@@ -122,7 +151,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "concept"
   },
   {
@@ -131,6 +159,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 8).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Respiratory: Select the correct biological statement. [Q8]",
     "options": [
       "Ribosomes store DNA",
@@ -140,7 +173,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "calculation"
   },
   {
@@ -149,6 +181,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 9).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Ecosystems: Select the correct biological statement. [Q9]",
     "options": [
       "Ribosomes store DNA",
@@ -158,7 +195,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "trap"
   },
   {
@@ -167,6 +203,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 10).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q10]",
     "options": [
       "Ribosomes store DNA",
@@ -176,7 +217,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "concept"
   },
   {
@@ -185,6 +225,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 11).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q11]",
     "options": [
       "Ribosomes store DNA",
@@ -194,7 +239,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "calculation"
   },
   {
@@ -203,6 +247,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 12).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Inheritance: Select the correct biological statement. [Q12]",
     "options": [
       "Ribosomes store DNA",
@@ -212,7 +261,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "trap"
   },
   {
@@ -221,6 +269,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 13).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Circulatory: Select the correct biological statement. [Q13]",
     "options": [
       "Ribosomes store DNA",
@@ -230,7 +283,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "concept"
   },
   {
@@ -239,6 +291,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 14).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Food Chains: Select the correct biological statement. [Q14]",
     "options": [
       "Ribosomes store DNA",
@@ -248,7 +305,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "calculation"
   },
   {
@@ -257,6 +313,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 15).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Transport: Select the correct biological statement. [Q15]",
     "options": [
       "Ribosomes store DNA",
@@ -266,7 +327,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "trap"
   },
   {
@@ -275,6 +335,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 16).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q16]",
     "options": [
       "Ribosomes store DNA",
@@ -284,7 +349,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "concept"
   },
   {
@@ -293,6 +357,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 17).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Mendelian: Select the correct biological statement. [Q17]",
     "options": [
       "Ribosomes store DNA",
@@ -302,7 +371,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "calculation"
   },
   {
@@ -311,6 +379,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 18).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Respiratory: Select the correct biological statement. [Q18]",
     "options": [
       "Ribosomes store DNA",
@@ -320,7 +393,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "trap"
   },
   {
@@ -329,6 +401,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 19).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Ecosystems: Select the correct biological statement. [Q19]",
     "options": [
       "Ribosomes store DNA",
@@ -338,7 +415,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "concept"
   },
   {
@@ -347,6 +423,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 20).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q20]",
     "options": [
       "Ribosomes store DNA",
@@ -356,7 +437,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "calculation"
   },
   {
@@ -365,6 +445,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 21).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q21]",
     "options": [
       "Ribosomes store DNA",
@@ -374,7 +459,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "trap"
   },
   {
@@ -383,6 +467,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 22).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Inheritance: Select the correct biological statement. [Q22]",
     "options": [
       "Ribosomes store DNA",
@@ -392,7 +481,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "concept"
   },
   {
@@ -401,6 +489,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 23).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Circulatory: Select the correct biological statement. [Q23]",
     "options": [
       "Ribosomes store DNA",
@@ -410,7 +503,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "calculation"
   },
   {
@@ -419,6 +511,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 24).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Food Chains: Select the correct biological statement. [Q24]",
     "options": [
       "Ribosomes store DNA",
@@ -428,7 +525,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "trap"
   },
   {
@@ -437,6 +533,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 25).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Transport: Select the correct biological statement. [Q25]",
     "options": [
       "Ribosomes store DNA",
@@ -446,7 +547,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "concept"
   },
   {
@@ -455,6 +555,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 26).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q26]",
     "options": [
       "Ribosomes store DNA",
@@ -464,7 +569,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "calculation"
   },
   {
@@ -473,6 +577,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 27).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Mendelian: Select the correct biological statement. [Q27]",
     "options": [
       "Ribosomes store DNA",
@@ -482,7 +591,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "trap"
   },
   {
@@ -491,6 +599,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 28).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Respiratory: Select the correct biological statement. [Q28]",
     "options": [
       "Ribosomes store DNA",
@@ -500,7 +613,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "concept"
   },
   {
@@ -509,6 +621,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 29).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Ecosystems: Select the correct biological statement. [Q29]",
     "options": [
       "Ribosomes store DNA",
@@ -518,7 +635,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "calculation"
   },
   {
@@ -527,6 +643,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 30).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q30]",
     "options": [
       "Ribosomes store DNA",
@@ -536,7 +657,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "trap"
   },
   {
@@ -545,6 +665,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 31).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Organelles: Select the correct biological statement. [Q31]",
     "options": [
       "Ribosomes store DNA",
@@ -554,7 +679,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "concept"
   },
   {
@@ -563,6 +687,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 32).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Inheritance: Select the correct biological statement. [Q32]",
     "options": [
       "Ribosomes store DNA",
@@ -572,7 +701,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "calculation"
   },
   {
@@ -581,6 +709,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 33).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Circulatory: Select the correct biological statement. [Q33]",
     "options": [
       "Ribosomes store DNA",
@@ -590,7 +723,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "trap"
   },
   {
@@ -599,6 +731,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 34).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Food Chains: Select the correct biological statement. [Q34]",
     "options": [
       "Ribosomes store DNA",
@@ -608,7 +745,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "concept"
   },
   {
@@ -617,6 +753,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 35).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Transport: Select the correct biological statement. [Q35]",
     "options": [
       "Ribosomes store DNA",
@@ -626,7 +767,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "calculation"
   },
   {
@@ -635,6 +775,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Easy",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 36).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Cell Biology/Membrane: Select the correct biological statement. [Q36]",
     "options": [
       "Ribosomes store DNA",
@@ -644,7 +789,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "trap"
   },
   {
@@ -653,6 +797,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Easy",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 37).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Genetics/Mendelian: Select the correct biological statement. [Q37]",
     "options": [
       "Ribosomes store DNA",
@@ -662,7 +811,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "concept"
   },
   {
@@ -671,6 +819,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Easy",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 38).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Human Physiology/Respiratory: Select the correct biological statement. [Q38]",
     "options": [
       "Ribosomes store DNA",
@@ -680,7 +833,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "calculation"
   },
   {
@@ -689,6 +841,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Easy",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 39).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Ecology/Ecosystems: Select the correct biological statement. [Q39]",
     "options": [
       "Ribosomes store DNA",
@@ -698,7 +855,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "trap"
   },
   {
@@ -707,6 +863,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Easy",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 45,
+    "difficultyReason": "Direct formula/application question with one-step reasoning (seed item 40).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Easy) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q40]",
     "options": [
       "Ribosomes store DNA",
@@ -716,7 +877,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "concept"
   },
   {
@@ -725,6 +885,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 41).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q41]",
     "options": [
       "Ribosomes store DNA",
@@ -734,7 +899,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "calculation"
   },
   {
@@ -743,6 +907,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 42).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Inheritance: Select the correct biological statement. [Q42]",
     "options": [
       "Ribosomes store DNA",
@@ -752,7 +921,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "trap"
   },
   {
@@ -761,6 +929,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 43).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Circulatory: Select the correct biological statement. [Q43]",
     "options": [
       "Ribosomes store DNA",
@@ -770,7 +943,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "concept"
   },
   {
@@ -779,6 +951,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 44).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Food Chains: Select the correct biological statement. [Q44]",
     "options": [
       "Ribosomes store DNA",
@@ -788,7 +965,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "calculation"
   },
   {
@@ -797,6 +973,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 45).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Transport: Select the correct biological statement. [Q45]",
     "options": [
       "Ribosomes store DNA",
@@ -806,7 +987,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "trap"
   },
   {
@@ -815,6 +995,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 46).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q46]",
     "options": [
       "Ribosomes store DNA",
@@ -824,7 +1009,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "concept"
   },
   {
@@ -833,6 +1017,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 47).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Mendelian: Select the correct biological statement. [Q47]",
     "options": [
       "Ribosomes store DNA",
@@ -842,7 +1031,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "calculation"
   },
   {
@@ -851,6 +1039,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 48).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Respiratory: Select the correct biological statement. [Q48]",
     "options": [
       "Ribosomes store DNA",
@@ -860,7 +1053,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "trap"
   },
   {
@@ -869,6 +1061,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 49).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Ecosystems: Select the correct biological statement. [Q49]",
     "options": [
       "Ribosomes store DNA",
@@ -878,7 +1075,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "concept"
   },
   {
@@ -887,6 +1083,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 50).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q50]",
     "options": [
       "Ribosomes store DNA",
@@ -896,7 +1097,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "calculation"
   },
   {
@@ -905,6 +1105,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 51).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q51]",
     "options": [
       "Ribosomes store DNA",
@@ -914,7 +1119,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "trap"
   },
   {
@@ -923,6 +1127,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 52).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Inheritance: Select the correct biological statement. [Q52]",
     "options": [
       "Ribosomes store DNA",
@@ -932,7 +1141,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "concept"
   },
   {
@@ -941,6 +1149,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 53).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Circulatory: Select the correct biological statement. [Q53]",
     "options": [
       "Ribosomes store DNA",
@@ -950,7 +1163,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "calculation"
   },
   {
@@ -959,6 +1171,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 54).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Food Chains: Select the correct biological statement. [Q54]",
     "options": [
       "Ribosomes store DNA",
@@ -968,7 +1185,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "trap"
   },
   {
@@ -977,6 +1193,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 55).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Transport: Select the correct biological statement. [Q55]",
     "options": [
       "Ribosomes store DNA",
@@ -986,7 +1207,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "concept"
   },
   {
@@ -995,6 +1215,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 56).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q56]",
     "options": [
       "Ribosomes store DNA",
@@ -1004,7 +1229,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "calculation"
   },
   {
@@ -1013,6 +1237,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 57).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Mendelian: Select the correct biological statement. [Q57]",
     "options": [
       "Ribosomes store DNA",
@@ -1022,7 +1251,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "trap"
   },
   {
@@ -1031,6 +1259,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 58).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Respiratory: Select the correct biological statement. [Q58]",
     "options": [
       "Ribosomes store DNA",
@@ -1040,7 +1273,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "concept"
   },
   {
@@ -1049,6 +1281,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 59).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Ecosystems: Select the correct biological statement. [Q59]",
     "options": [
       "Ribosomes store DNA",
@@ -1058,7 +1295,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "calculation"
   },
   {
@@ -1067,6 +1303,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 60).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q60]",
     "options": [
       "Ribosomes store DNA",
@@ -1076,7 +1317,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "trap"
   },
   {
@@ -1085,6 +1325,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 61).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q61]",
     "options": [
       "Ribosomes store DNA",
@@ -1094,7 +1339,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "concept"
   },
   {
@@ -1103,6 +1347,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 62).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Inheritance: Select the correct biological statement. [Q62]",
     "options": [
       "Ribosomes store DNA",
@@ -1112,7 +1361,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "calculation"
   },
   {
@@ -1121,6 +1369,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 63).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Circulatory: Select the correct biological statement. [Q63]",
     "options": [
       "Ribosomes store DNA",
@@ -1130,7 +1383,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "trap"
   },
   {
@@ -1139,6 +1391,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 64).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Food Chains: Select the correct biological statement. [Q64]",
     "options": [
       "Ribosomes store DNA",
@@ -1148,7 +1405,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "concept"
   },
   {
@@ -1157,6 +1413,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 65).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Transport: Select the correct biological statement. [Q65]",
     "options": [
       "Ribosomes store DNA",
@@ -1166,7 +1427,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "calculation"
   },
   {
@@ -1175,6 +1435,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 66).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q66]",
     "options": [
       "Ribosomes store DNA",
@@ -1184,7 +1449,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "trap"
   },
   {
@@ -1193,6 +1457,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 67).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Mendelian: Select the correct biological statement. [Q67]",
     "options": [
       "Ribosomes store DNA",
@@ -1202,7 +1471,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "concept"
   },
   {
@@ -1211,6 +1479,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 68).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Respiratory: Select the correct biological statement. [Q68]",
     "options": [
       "Ribosomes store DNA",
@@ -1220,7 +1493,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "calculation"
   },
   {
@@ -1229,6 +1501,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 69).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Ecosystems: Select the correct biological statement. [Q69]",
     "options": [
       "Ribosomes store DNA",
@@ -1238,7 +1515,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "trap"
   },
   {
@@ -1247,6 +1523,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 70).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q70]",
     "options": [
       "Ribosomes store DNA",
@@ -1256,7 +1537,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "concept"
   },
   {
@@ -1265,6 +1545,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Organelles, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 71).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Organelles: Select the correct biological statement. [Q71]",
     "options": [
       "Ribosomes store DNA",
@@ -1274,7 +1559,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "calculation"
   },
   {
@@ -1283,6 +1567,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students confuse key definitions in Genetics - Inheritance, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 72).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Inheritance: Select the correct biological statement. [Q72]",
     "options": [
       "Ribosomes store DNA",
@@ -1292,7 +1581,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "trap"
   },
   {
@@ -1301,6 +1589,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Circulatory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 73).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Circulatory: Select the correct biological statement. [Q73]",
     "options": [
       "Ribosomes store DNA",
@@ -1310,7 +1603,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "concept"
   },
   {
@@ -1319,6 +1611,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students confuse key definitions in Ecology - Food Chains, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 74).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Food Chains: Select the correct biological statement. [Q74]",
     "options": [
       "Ribosomes store DNA",
@@ -1328,7 +1625,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "calculation"
   },
   {
@@ -1337,6 +1633,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Transport, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 75).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Transport: Select the correct biological statement. [Q75]",
     "options": [
       "Ribosomes store DNA",
@@ -1346,7 +1647,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "trap"
   },
   {
@@ -1355,6 +1655,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Medium",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students confuse key definitions in Cell Biology - Membrane, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 76).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Cell Biology/Membrane: Select the correct biological statement. [Q76]",
     "options": [
       "Ribosomes store DNA",
@@ -1364,7 +1669,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "concept"
   },
   {
@@ -1373,6 +1677,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Medium",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students confuse key definitions in Genetics - Mendelian, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 77).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Genetics/Mendelian: Select the correct biological statement. [Q77]",
     "options": [
       "Ribosomes store DNA",
@@ -1382,7 +1691,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "calculation"
   },
   {
@@ -1391,6 +1699,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Medium",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students confuse key definitions in Human Physiology - Respiratory, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 78).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Human Physiology/Respiratory: Select the correct biological statement. [Q78]",
     "options": [
       "Ribosomes store DNA",
@@ -1400,7 +1713,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "trap"
   },
   {
@@ -1409,6 +1721,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Medium",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students confuse key definitions in Ecology - Ecosystems, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 79).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Ecology/Ecosystems: Select the correct biological statement. [Q79]",
     "options": [
       "Ribosomes store DNA",
@@ -1418,7 +1735,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "concept"
   },
   {
@@ -1427,6 +1743,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Medium",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students confuse key definitions in Plant Physiology - Photosynthesis, especially under time pressure.",
+    "solvingTimeEstimate": 70,
+    "difficultyReason": "Requires multi-step reasoning and careful elimination (seed item 80).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Medium) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q80]",
     "options": [
       "Ribosomes store DNA",
@@ -1436,7 +1757,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "calculation"
   },
   {
@@ -1445,6 +1765,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Hard",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students skip the core condition in Cell Biology - Organelles and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 81).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Cell Biology/Organelles: Select the correct biological statement. [Q81]",
     "options": [
       "Ribosomes store DNA",
@@ -1454,7 +1779,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "trap"
   },
   {
@@ -1463,6 +1787,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Hard",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students skip the core condition in Genetics - Inheritance and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 82).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Genetics/Inheritance: Select the correct biological statement. [Q82]",
     "options": [
       "Ribosomes store DNA",
@@ -1472,7 +1801,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "concept"
   },
   {
@@ -1481,6 +1809,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Hard",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students skip the core condition in Human Physiology - Circulatory and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 83).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Human Physiology/Circulatory: Select the correct biological statement. [Q83]",
     "options": [
       "Ribosomes store DNA",
@@ -1490,7 +1823,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "calculation"
   },
   {
@@ -1499,6 +1831,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Hard",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students skip the core condition in Ecology - Food Chains and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 84).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Ecology/Food Chains: Select the correct biological statement. [Q84]",
     "options": [
       "Ribosomes store DNA",
@@ -1508,7 +1845,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "trap"
   },
   {
@@ -1517,6 +1853,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Hard",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students skip the core condition in Plant Physiology - Transport and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 85).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Plant Physiology/Transport: Select the correct biological statement. [Q85]",
     "options": [
       "Ribosomes store DNA",
@@ -1526,7 +1867,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "concept"
   },
   {
@@ -1535,6 +1875,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Hard",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students skip the core condition in Cell Biology - Membrane and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 86).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Cell Biology/Membrane: Select the correct biological statement. [Q86]",
     "options": [
       "Ribosomes store DNA",
@@ -1544,7 +1889,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "calculation"
   },
   {
@@ -1553,6 +1897,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Hard",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students skip the core condition in Genetics - Mendelian and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 87).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Genetics/Mendelian: Select the correct biological statement. [Q87]",
     "options": [
       "Ribosomes store DNA",
@@ -1562,7 +1911,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "trap"
   },
   {
@@ -1571,6 +1919,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Hard",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students skip the core condition in Human Physiology - Respiratory and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 88).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Human Physiology/Respiratory: Select the correct biological statement. [Q88]",
     "options": [
       "Ribosomes store DNA",
@@ -1580,7 +1933,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "concept"
   },
   {
@@ -1589,6 +1941,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Hard",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students skip the core condition in Ecology - Ecosystems and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 89).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Ecology/Ecosystems: Select the correct biological statement. [Q89]",
     "options": [
       "Ribosomes store DNA",
@@ -1598,7 +1955,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "calculation"
   },
   {
@@ -1607,6 +1963,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Hard",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students skip the core condition in Plant Physiology - Photosynthesis and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 90).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q90]",
     "options": [
       "Ribosomes store DNA",
@@ -1616,7 +1977,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "trap"
   },
   {
@@ -1625,6 +1985,11 @@
     "topic": "Cell Biology",
     "subtopic": "Organelles",
     "difficulty": "Hard",
+    "conceptTested": "Cell Biology - Organelles",
+    "commonMistake": "Students skip the core condition in Cell Biology - Organelles and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 91).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Organelles). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Cell Biology/Organelles: Select the correct biological statement. [Q91]",
     "options": [
       "Ribosomes store DNA",
@@ -1634,7 +1999,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "concept"
   },
   {
@@ -1643,6 +2007,11 @@
     "topic": "Genetics",
     "subtopic": "Inheritance",
     "difficulty": "Hard",
+    "conceptTested": "Genetics - Inheritance",
+    "commonMistake": "Students skip the core condition in Genetics - Inheritance and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 92).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Inheritance). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Genetics/Inheritance: Select the correct biological statement. [Q92]",
     "options": [
       "Ribosomes store DNA",
@@ -1652,7 +2021,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "calculation"
   },
   {
@@ -1661,6 +2029,11 @@
     "topic": "Human Physiology",
     "subtopic": "Circulatory",
     "difficulty": "Hard",
+    "conceptTested": "Human Physiology - Circulatory",
+    "commonMistake": "Students skip the core condition in Human Physiology - Circulatory and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 93).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Circulatory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Human Physiology/Circulatory: Select the correct biological statement. [Q93]",
     "options": [
       "Ribosomes store DNA",
@@ -1670,7 +2043,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "trap"
   },
   {
@@ -1679,6 +2051,11 @@
     "topic": "Ecology",
     "subtopic": "Food Chains",
     "difficulty": "Hard",
+    "conceptTested": "Ecology - Food Chains",
+    "commonMistake": "Students skip the core condition in Ecology - Food Chains and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 94).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Food Chains). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Ecology/Food Chains: Select the correct biological statement. [Q94]",
     "options": [
       "Ribosomes store DNA",
@@ -1688,7 +2065,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "concept"
   },
   {
@@ -1697,6 +2073,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Transport",
     "difficulty": "Hard",
+    "conceptTested": "Plant Physiology - Transport",
+    "commonMistake": "Students skip the core condition in Plant Physiology - Transport and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 95).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Transport). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Plant Physiology/Transport: Select the correct biological statement. [Q95]",
     "options": [
       "Ribosomes store DNA",
@@ -1706,7 +2087,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "calculation"
   },
   {
@@ -1715,6 +2095,11 @@
     "topic": "Cell Biology",
     "subtopic": "Membrane",
     "difficulty": "Hard",
+    "conceptTested": "Cell Biology - Membrane",
+    "commonMistake": "Students skip the core condition in Cell Biology - Membrane and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 96).",
+    "explanation": "Step 1: Identify the core concept (Cell Biology - Membrane). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Cell Biology/Membrane: Select the correct biological statement. [Q96]",
     "options": [
       "Ribosomes store DNA",
@@ -1724,7 +2109,6 @@
     ],
     "correctAnswer": "Mitochondria are linked to ATP production",
     "correctAnswerIndex": 1,
-    "explanation": "Mitochondria are linked to ATP production.",
     "mistakeType": "trap"
   },
   {
@@ -1733,6 +2117,11 @@
     "topic": "Genetics",
     "subtopic": "Mendelian",
     "difficulty": "Hard",
+    "conceptTested": "Genetics - Mendelian",
+    "commonMistake": "Students skip the core condition in Genetics - Mendelian and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 97).",
+    "explanation": "Step 1: Identify the core concept (Genetics - Mendelian). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Genetics/Mendelian: Select the correct biological statement. [Q97]",
     "options": [
       "Ribosomes store DNA",
@@ -1742,7 +2131,6 @@
     ],
     "correctAnswer": "Genes are units of heredity",
     "correctAnswerIndex": 1,
-    "explanation": "Genes are units of heredity.",
     "mistakeType": "concept"
   },
   {
@@ -1751,6 +2139,11 @@
     "topic": "Human Physiology",
     "subtopic": "Respiratory",
     "difficulty": "Hard",
+    "conceptTested": "Human Physiology - Respiratory",
+    "commonMistake": "Students skip the core condition in Human Physiology - Respiratory and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 98).",
+    "explanation": "Step 1: Identify the core concept (Human Physiology - Respiratory). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Human Physiology/Respiratory: Select the correct biological statement. [Q98]",
     "options": [
       "Ribosomes store DNA",
@@ -1760,7 +2153,6 @@
     ],
     "correctAnswer": "Nephrons are kidney filtration units",
     "correctAnswerIndex": 1,
-    "explanation": "Nephrons are kidney filtration units.",
     "mistakeType": "calculation"
   },
   {
@@ -1769,6 +2161,11 @@
     "topic": "Ecology",
     "subtopic": "Ecosystems",
     "difficulty": "Hard",
+    "conceptTested": "Ecology - Ecosystems",
+    "commonMistake": "Students skip the core condition in Ecology - Ecosystems and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 99).",
+    "explanation": "Step 1: Identify the core concept (Ecology - Ecosystems). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Ecology/Ecosystems: Select the correct biological statement. [Q99]",
     "options": [
       "Ribosomes store DNA",
@@ -1778,7 +2175,6 @@
     ],
     "correctAnswer": "Producers form the first trophic level",
     "correctAnswerIndex": 1,
-    "explanation": "Producers form the first trophic level.",
     "mistakeType": "trap"
   },
   {
@@ -1787,6 +2183,11 @@
     "topic": "Plant Physiology",
     "subtopic": "Photosynthesis",
     "difficulty": "Hard",
+    "conceptTested": "Plant Physiology - Photosynthesis",
+    "commonMistake": "Students skip the core condition in Plant Physiology - Photosynthesis and jump to shortcuts too early.",
+    "solvingTimeEstimate": 95,
+    "difficultyReason": "Combines concept interpretation with trap options and speed pressure (seed item 100).",
+    "explanation": "Step 1: Identify the core concept (Plant Physiology - Photosynthesis). Step 2: Apply the governing rule carefully. Step 3: Eliminate distractors by verifying unit/logic consistency. Step 4: Confirm final answer against the problem statement.",
     "text": "(Hard) Plant Physiology/Photosynthesis: Select the correct biological statement. [Q100]",
     "options": [
       "Ribosomes store DNA",
@@ -1796,7 +2197,6 @@
     ],
     "correctAnswer": "Xylem transports water in plants",
     "correctAnswerIndex": 1,
-    "explanation": "Xylem transports water in plants.",
     "mistakeType": "concept"
   }
 ]

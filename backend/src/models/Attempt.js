@@ -29,6 +29,12 @@ const attemptSchema = new mongoose.Schema(
       default: 'General',
       trim: true,
     },
+    conceptTested: {
+      type: String,
+      default: 'General Concept',
+      trim: true,
+      index: true,
+    },
     difficulty: {
       type: String,
       enum: ['Easy', 'Medium', 'Hard'],
@@ -48,6 +54,17 @@ const attemptSchema = new mongoose.Schema(
       type: Number,
       required: true,
       min: 1,
+    },
+    expectedSolvingTimeSec: {
+      type: Number,
+      default: 60,
+      min: 15,
+      max: 300,
+    },
+    responsePace: {
+      type: String,
+      enum: ['fast', 'on-time', 'slow'],
+      default: 'on-time',
     },
     adaptiveDifficultyBefore: {
       type: String,

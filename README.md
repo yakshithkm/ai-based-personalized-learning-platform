@@ -15,6 +15,9 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 5. Weak topic detection
 6. Personalized recommendations
 7. Analytics dashboard with chart visualizations
+8. Exam Simulation System (full-length + section-wise mock tests)
+9. Real exam scoring (+4/-1/0), percentile estimate, and rank range
+10. Post-test intelligence analysis with adaptive follow-up plan
 
 ## Project Structure
 - frontend: React UI (dark responsive theme)
@@ -65,6 +68,10 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 - GET /api/attempts/me
 - GET /api/analytics/me
 - GET /api/recommendations/me
+- POST /api/exams/sessions
+- GET /api/exams/sessions/:sessionId
+- PATCH /api/exams/sessions/:sessionId/answer
+- POST /api/exams/sessions/:sessionId/submit
 
 ## Automated Testing
 - Backend integration tests use Jest + Supertest + mongodb-memory-server.

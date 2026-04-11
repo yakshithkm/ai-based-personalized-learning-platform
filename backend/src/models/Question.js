@@ -32,6 +32,27 @@ const questionSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    conceptTested: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    commonMistake: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    solvingTimeEstimate: {
+      type: Number,
+      required: true,
+      min: 15,
+      max: 300,
+    },
+    difficultyReason: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     correctAnswer: {
       type: String,
       required: true,

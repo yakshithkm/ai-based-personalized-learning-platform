@@ -15,8 +15,16 @@ const trackAttemptProgress = async ({
   selectedAnswerIndex,
   selectedAnswerText,
   isCorrect,
+  mistakeType,
+  timeTakenSec,
+  expectedTimeSec,
 }) => {
   const now = new Date();
+  const conceptTested = question.conceptTested || `${question.topic} Core Concept`;
+  const expected = Math.max(Number(expectedTimeSec || question.solvingTimeEstimate || 60), 15);
+  const taken = Math.max(Number(timeTakenSec || 0), 0);
+  const timeDeltaSec = Math.round(taken - expected);
+  const isSlowCorrect = Boolean(isCorrect && taken > expected * 1.25);
 
   const openMistakes = await Mistake.find({
     user: userId,
@@ -31,9 +39,15 @@ const trackAttemptProgress = async ({
       subject: question.subject,
       topic: question.topic,
       subtopic: question.subtopic || question.topic || 'General',
+      conceptTested,
       difficulty: question.difficulty,
+      mistakeType: mistakeType || 'Concept Error',
       selectedAnswerIndex,
       selectedAnswerText,
+      timeTakenSec: taken,
+      expectedTimeSec: expected,
+      timeDeltaSec,
+      isSlowCorrect: false,
       repetitionStage: 0,
       nextReviewAt: getNextReviewAt(0, now),
       retryCount: 0,
@@ -49,6 +63,11 @@ const trackAttemptProgress = async ({
           mistake.retryCount += 1;
           mistake.lastReviewedAt = now;
           mistake.lastAttemptCorrect = false;
+          mistake.mistakeType = mistakeType || mistake.mistakeType || 'Concept Error';
+          mistake.timeTakenSec = taken;
+          mistake.expectedTimeSec = expected;
+          mistake.timeDeltaSec = timeDeltaSec;
+          mistake.isSlowCorrect = false;
           mistake.nextReviewAt = getNextReviewAt(0, now);
           return mistake.save();
         })
@@ -68,6 +87,10 @@ const trackAttemptProgress = async ({
       mistake.lastReviewedAt = now;
       mistake.lastAttemptCorrect = true;
       mistake.improvedOnRetry = true;
+      mistake.timeTakenSec = taken;
+      mistake.expectedTimeSec = expected;
+      mistake.timeDeltaSec = timeDeltaSec;
+      mistake.isSlowCorrect = isSlowCorrect;
 
       if (mistake.repetitionStage >= 2) {
         mistake.resolved = true;
@@ -112,12 +135,36 @@ const getCommonMistakePattern = async ({ userId, topic, subtopic, selectedAnswer
   };
 };
 
+const getConceptMistakeSignal = async ({ userId, conceptTested }) => {
+  if (!conceptTested) {
+    return { repeatedCount: 0, slowCorrectCount: 0 };
+  }
+
+  const [repeatedCount, slowCorrectCount] = await Promise.all([
+    Mistake.countDocuments({
+      user: userId,
+      conceptTested,
+      resolved: false,
+    }),
+    Mistake.countDocuments({
+      user: userId,
+      conceptTested,
+      isSlowCorrect: true,
+    }),
+  ]);
+
+  return {
+    repeatedCount,
+    slowCorrectCount,
+  };
+};
+
 const getMistakeBankForUser = async (userId) => {
-  const [recentMistakes, repeatedMistakes, frequentFailedTopics, frequentFailedSubtopics, summary] = await Promise.all([
+  const [recentMistakes, repeatedMistakes, frequentFailedTopics, frequentFailedSubtopics, frequentFailedConcepts, summary] = await Promise.all([
     Mistake.find({ user: userId })
       .sort({ createdAt: -1 })
       .limit(50)
-      .select('question subject topic subtopic difficulty repetitionStage nextReviewAt resolved retryCount improvedOnRetry createdAt'),
+      .select('question subject topic subtopic conceptTested difficulty mistakeType timeTakenSec expectedTimeSec timeDeltaSec isSlowCorrect repetitionStage nextReviewAt resolved retryCount improvedOnRetry createdAt'),
     Mistake.aggregate([
       { $match: { user: userId } },
       {
@@ -150,6 +197,34 @@ const getMistakeBankForUser = async (userId) => {
           subject: '$_id.subject',
           topic: '$_id.topic',
           failures: 1,
+          lastMistakeAt: 1,
+        },
+      },
+    ]),
+    Mistake.aggregate([
+      { $match: { user: userId } },
+      {
+        $group: {
+          _id: { subject: '$subject', topic: '$topic', conceptTested: '$conceptTested' },
+          failures: { $sum: 1 },
+          slowCorrect: {
+            $sum: {
+              $cond: [{ $eq: ['$isSlowCorrect', true] }, 1, 0],
+            },
+          },
+          lastMistakeAt: { $max: '$createdAt' },
+        },
+      },
+      { $sort: { failures: -1, slowCorrect: -1, lastMistakeAt: -1 } },
+      { $limit: 12 },
+      {
+        $project: {
+          _id: 0,
+          subject: '$_id.subject',
+          topic: '$_id.topic',
+          conceptTested: '$_id.conceptTested',
+          failures: 1,
+          slowCorrect: 1,
           lastMistakeAt: 1,
         },
       },
@@ -208,6 +283,7 @@ const getMistakeBankForUser = async (userId) => {
     })),
     frequentFailedTopics,
     frequentFailedSubtopics,
+    frequentFailedConcepts,
     summary: {
       totalMistakes: summary[0]?.total || 0,
       openMistakes: summary[0]?.open || 0,
@@ -222,5 +298,6 @@ module.exports = {
   getNextReviewAt,
   trackAttemptProgress,
   getCommonMistakePattern,
+  getConceptMistakeSignal,
   getMistakeBankForUser,
 };
