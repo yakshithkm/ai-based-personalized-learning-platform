@@ -99,6 +99,11 @@ describe('Exam simulation system', () => {
     expect(startRes.body.blueprintDiagnostics).toBeDefined();
     expect(startRes.body.blueprintDiagnostics.subjectTargets.Biology).toBe(90);
     expect(startRes.body.blueprintDiagnostics.pyqCount).toBeGreaterThan(0);
+    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeGreaterThanOrEqual(40);
+    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeLessThanOrEqual(60);
+    expect(startRes.body.blueprintDiagnostics.hardValidationChecks.subjectMatch).toBe(true);
+    expect(startRes.body.blueprintDiagnostics.hardValidationChecks.topicSpreadOk).toBe(true);
+    expect(startRes.body.blueprintDiagnostics.hardValidationChecks.pyqRangeOk).toBe(true);
     console.log('BLUEPRINT_DISTRIBUTION_LOG', {
       targets: startRes.body.blueprintDiagnostics.subjectTargets,
       selectedCounts: startRes.body.blueprintDiagnostics.selectedSubjectCounts,
@@ -233,5 +238,7 @@ describe('Exam simulation system', () => {
     expect(startRes.body.strictNavigation).toBe(false);
     expect(startRes.body.behavior.hintsEnabled).toBe(false);
     expect(startRes.body.blueprintDiagnostics.subjectTargets.Physics).toBe(45);
+    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeGreaterThanOrEqual(20);
+    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeLessThanOrEqual(40);
   });
 });

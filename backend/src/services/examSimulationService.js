@@ -280,6 +280,81 @@ const summarizeBlueprintDiagnostics = ({ distribution, selectedQuestions }) => {
   };
 };
 
+const enforcePyqRange = ({ selected, allCandidates, count, pyqShareRange }) => {
+  if (!pyqShareRange) return selected;
+
+  const minPyq = Math.ceil(count * Number(pyqShareRange.min || 0));
+  const maxPyq = Math.floor(count * Number(pyqShareRange.max || 1));
+
+  const selectedById = new Map(selected.map((question) => [String(question._id), question]));
+  const selectedPyq = selected.filter((question) => question.yearTag === 'Previous Year');
+  const selectedNonPyq = selected.filter((question) => question.yearTag !== 'Previous Year');
+
+  if (selectedPyq.length < minPyq) {
+    const availablePyq = allCandidates
+      .filter((question) => question.yearTag === 'Previous Year')
+      .filter((question) => !selectedById.has(String(question._id)));
+
+    let need = minPyq - selectedPyq.length;
+    while (need > 0 && availablePyq.length && selectedNonPyq.length) {
+      const inQuestion = availablePyq.shift();
+      const outQuestion = selectedNonPyq.shift();
+      selectedById.delete(String(outQuestion._id));
+      selectedById.set(String(inQuestion._id), inQuestion);
+      need -= 1;
+    }
+  }
+
+  const afterFirstPass = Array.from(selectedById.values());
+  const pyqAfterFirst = afterFirstPass.filter((question) => question.yearTag === 'Previous Year');
+  if (pyqAfterFirst.length > maxPyq) {
+    const pyqPool = [...pyqAfterFirst];
+    const nonPyqPool = allCandidates
+      .filter((question) => question.yearTag !== 'Previous Year')
+      .filter((question) => !selectedById.has(String(question._id)));
+
+    let reduce = pyqAfterFirst.length - maxPyq;
+    while (reduce > 0 && pyqPool.length && nonPyqPool.length) {
+      const outQuestion = pyqPool.shift();
+      const inQuestion = nonPyqPool.shift();
+      selectedById.delete(String(outQuestion._id));
+      selectedById.set(String(inQuestion._id), inQuestion);
+      reduce -= 1;
+    }
+  }
+
+  return Array.from(selectedById.values()).slice(0, count);
+};
+
+const validateBlueprintHard = ({ distribution, selectedQuestions, examType }) => {
+  const examConfig = getExamConfig(examType);
+  const diagnostics = summarizeBlueprintDiagnostics({ distribution, selectedQuestions });
+
+  const subjectMatch = Object.entries(distribution).every(
+    ([subject, target]) => Number(diagnostics.selectedSubjectCounts[subject] || 0) === Number(target)
+  );
+
+  const topicSpreadOk = Object.entries(diagnostics.topicCoverageBySubject || {}).every(([, rows]) => {
+    const highest = (rows || [])[0];
+    if (!highest) return true;
+    return Number(highest.actualSharePct || 0) / 100 <= Number(examConfig.topicSkewMaxShare || 0.55);
+  });
+
+  const pyqShare = Number(diagnostics.pyqSharePct || 0) / 100;
+  const pyqRange = examConfig.pyqShareRange || { min: 0, max: 1 };
+  const pyqRangeOk = pyqShare >= pyqRange.min && pyqShare <= pyqRange.max;
+
+  return {
+    ok: subjectMatch && topicSpreadOk && pyqRangeOk,
+    diagnostics,
+    checks: {
+      subjectMatch,
+      topicSpreadOk,
+      pyqRangeOk,
+    },
+  };
+};
+
 const buildDistributionForSession = ({ mode, examType, sectionSubject }) => {
   if (mode === 'full-length') {
     const config = MOCK_BLUEPRINTS[examType];
@@ -429,44 +504,73 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
   const recentQuestionIds = new Set(recentAttempts.map((entry) => String(entry.question)));
 
   const subjectAccuracy = await getSubjectAccuracyMap(user._id);
-  const selectedQuestions = [];
+  const examConfig = getExamConfig(resolvedExam);
+  const maxAttempts = 5;
+  let shuffledSessionQuestions = [];
+  let blueprintDiagnostics = null;
+  let hardValidation = null;
 
-  for (const [subject, count] of Object.entries(distribution)) {
-    const poolLimit = Math.max(count * CANDIDATE_POOL_MULTIPLIER, 120);
-    const accuracy = Number(subjectAccuracy.get(subject) || 60);
-    const weights = getDifficultyWeights(accuracy);
-    const levelWeights = getDifficultyLevelWeights(accuracy);
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    const selectedQuestions = [];
 
-    const pool = await Question.find({
-      examType: resolvedExam,
-      subject,
-    })
-      .limit(poolLimit)
-      .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
-      .lean();
+    for (const [subject, count] of Object.entries(distribution)) {
+      const poolLimit = Math.max(count * CANDIDATE_POOL_MULTIPLIER, 120);
+      const accuracy = Number(subjectAccuracy.get(subject) || 60);
+      const weights = getDifficultyWeights(accuracy);
+      const levelWeights = getDifficultyLevelWeights(accuracy);
 
-    if (pool.length < count) {
-      throw new Error(
-        `Insufficient ${subject} questions for ${resolvedExam} ${mode} test. Required ${count}, found ${pool.length}.`
-      );
+      const pool = await Question.find({
+        examType: resolvedExam,
+        subject,
+      })
+        .limit(poolLimit)
+        .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
+        .lean();
+
+      if (pool.length < count) {
+        throw new Error(
+          `Insufficient ${subject} questions for ${resolvedExam} ${mode} test. Required ${count}, found ${pool.length}.`
+        );
+      }
+
+      const picked = pickQuestionsForSubject({
+        questions: shuffle(pool),
+        count,
+        weights,
+        levelWeights,
+        recentQuestionIds,
+      });
+
+      const pyqAdjusted = enforcePyqRange({
+        selected: picked,
+        allCandidates: pool,
+        count,
+        pyqShareRange: examConfig.pyqShareRange,
+      });
+
+      selectedQuestions.push(...pyqAdjusted);
     }
 
-    const picked = pickQuestionsForSubject({
-      questions: shuffle(pool),
-      count,
-      weights,
-      levelWeights,
-      recentQuestionIds,
+    shuffledSessionQuestions = shuffle(selectedQuestions).slice(0, questionCount);
+    hardValidation = validateBlueprintHard({
+      distribution,
+      selectedQuestions: shuffledSessionQuestions,
+      examType: resolvedExam,
     });
 
-    selectedQuestions.push(...picked);
+    if (hardValidation.ok) {
+      blueprintDiagnostics = {
+        ...hardValidation.diagnostics,
+        hardValidationChecks: hardValidation.checks,
+        generationAttempts: attempt,
+      };
+      break;
+    }
   }
 
-  const shuffledSessionQuestions = shuffle(selectedQuestions).slice(0, questionCount);
-  const blueprintDiagnostics = summarizeBlueprintDiagnostics({
-    distribution,
-    selectedQuestions: shuffledSessionQuestions,
-  });
+  if (!blueprintDiagnostics) {
+    throw new Error('Unable to generate exam with valid blueprint and PYQ spread. Please retry.');
+  }
 
   const session = await ExamSession.create({
     user: user._id,
