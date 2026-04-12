@@ -341,6 +341,238 @@ select:focus {
   padding: 1.35rem;
 }
 
+.mentor-hero-panel {
+  background:
+    radial-gradient(800px 240px at 10% 0%, rgba(96, 165, 250, 0.18), transparent),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.88));
+}
+
+.eyebrow-label {
+  color: #93c5fd;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.mentor-glow-panel {
+  border-color: rgba(96, 165, 250, 0.38);
+  box-shadow:
+    0 0 0 1px rgba(96, 165, 250, 0.14),
+    0 18px 42px rgba(2, 6, 23, 0.5),
+    inset 0 0 24px rgba(59, 130, 246, 0.08);
+}
+
+.mentor-card-head,
+.readiness-head,
+.panel-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.mentor-say-stack {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.mentor-say-line {
+  border-left: 3px solid rgba(96, 165, 250, 0.45);
+  padding: 0.7rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.mentor-say-line p,
+.mentor-summary-text {
+  color: #e2e8f0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.mentor-highlight {
+  color: #93c5fd;
+  font-weight: 700;
+}
+
+.mentor-mini-notes {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.mentor-mini-notes p {
+  color: #cbd5e1;
+}
+
+.status-pill {
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.dominant-cta-panel {
+  border-color: rgba(96, 165, 250, 0.62);
+  background:
+    radial-gradient(420px 180px at 20% 0%, rgba(96, 165, 250, 0.16), transparent),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(2, 6, 23, 0.9));
+}
+
+.cta-title {
+  margin-top: 0.25rem;
+  font-size: 1.28rem;
+  font-weight: 700;
+  color: #eff6ff;
+}
+
+.cta-subtext {
+  margin-top: 0.3rem;
+  max-width: 56ch;
+}
+
+.primary-cta-btn {
+  min-width: 220px;
+  font-size: 1rem;
+  box-shadow: 0 16px 28px rgba(37, 99, 235, 0.42);
+}
+
+.dominant-actions {
+  margin-top: 0.85rem;
+}
+
+.insight-breakdown-panel,
+.readiness-panel,
+.mentor-support-panel {
+  animation: rise 0.55s ease both;
+}
+
+.insight-mini-grid {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.insight-mini-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  background: rgba(15, 23, 42, 0.62);
+}
+
+.insight-mini-card p + p {
+  margin-top: 0.35rem;
+}
+
+.subtle-label {
+  color: #93c5fd;
+  font-size: 0.84rem;
+}
+
+.readiness-panel {
+  border-color: rgba(34, 197, 94, 0.18);
+}
+
+.readiness-score {
+  font-size: 2rem;
+  color: #93c5fd;
+}
+
+.readiness-meter {
+  margin: 0.8rem 0 0.55rem;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.16);
+  overflow: hidden;
+}
+
+.readiness-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #22c55e, #60a5fa);
+  box-shadow: 0 0 18px rgba(96, 165, 250, 0.3);
+  transition: width 0.35s ease;
+}
+
+.readiness-metrics {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.65rem;
+  color: #cbd5e1;
+}
+
+.support-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.support-grid article {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.status-good {
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.5);
+  background: rgba(34, 197, 94, 0.16);
+}
+
+.status-mid {
+  color: #fde68a;
+  border-color: rgba(245, 158, 11, 0.45);
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.status-bad {
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.45);
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.mentor-summary-text {
+  margin-top: 0.35rem;
+}
+
+.mentor-card,
+.dominant-cta-panel,
+.readiness-panel,
+.mentor-support-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.mentor-card::after,
+.dominant-cta-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: translateX(-100%);
+  animation: mentorSweep 6s ease infinite;
+  pointer-events: none;
+}
+
+@keyframes mentorSweep {
+  0%,
+  55% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .habit-inline {
   margin-top: 0.75rem;
   display: flex;

@@ -234,9 +234,39 @@ const PracticePage = () => {
       new Set(sessionResults.filter((entry) => !entry.isCorrect).map((entry) => entry.topic))
     ).slice(0, 4);
 
+    const strengths = Array.from(
+      new Set(sessionResults.filter((entry) => entry.isCorrect).map((entry) => entry.topic))
+    ).slice(0, 2);
+
+    const keyPattern = weakAreas.length
+      ? `You are repeating the same mistake pattern in ${weakAreas[0]}. Practicing more without fixing the concept will not help.`
+      : 'Your execution is controlled right now. Keep the same process and raise the difficulty.';
+
+    const mentorFeedback = accuracy >= 75
+      ? `You are improving, and the results are becoming more dependable. Keep the method, but do not relax your error checks.`
+      : weakAreas.length
+        ? `Your performance is inconsistent — the issue is not effort, it is execution in ${weakAreas[0]}.`
+        : 'The session is stable, but stable is not enough. Turn this into repeatable accuracy.';
+
+    const scoreInterpretation = accuracy >= 75
+      ? 'Improving'
+      : accuracy >= 50
+        ? 'Not ready yet, but the trend can be repaired quickly.'
+        : 'Not ready — the current method is not converting into marks.';
+
+    const nextAction = weakAreas.length
+      ? {
+          label: 'Retry Mistake Questions',
+          route: '/practice?mode=recommended',
+        }
+      : {
+          label: 'Take Full Mock Test',
+          route: '/exam-simulation',
+        };
+
     const improvementSuggestion = weakAreas.length
-      ? `Focus on ${weakAreas[0]} first, then continue guided practice.`
-      : 'You performed well. Increase difficulty in your strongest topic next.';
+      ? `Fix ${weakAreas[0]} first. More volume will not help until the concept is corrected.`
+      : 'Your result is stable. Raise pressure with a full mock or harder set next.';
 
     const earnedXp = sessionResults.reduce((sum, entry) => sum + Number(entry.xpEarned || 0), 0);
 
@@ -247,10 +277,15 @@ const PracticePage = () => {
           correct,
           accuracy: Number(accuracy.toFixed(1)),
           weakAreas,
+          strengths,
+          keyPattern,
+          mentorFeedback,
+          scoreInterpretation,
           improvementSuggestion,
           earnedXp,
           sessionId,
           nextRecommendedSession: sessionMeta?.mix || null,
+          nextAction,
         },
       },
     });
