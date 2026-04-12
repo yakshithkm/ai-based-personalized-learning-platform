@@ -692,7 +692,7 @@ const computePercentileAndRank = ({ examType, score, maxScore }) => {
   };
 };
 
-const buildScoreInterpretation = ({ scoreSummary, postTestAnalysis }) => {
+const buildScoreInterpretation = ({ scoreSummary, postTestAnalysis, blueprintDiagnostics, attempted, questionCount }) => {
   const percentile = Number(scoreSummary.percentileEstimate || 0);
   let scoreBand = 'average';
   let message = 'This score is around average for current exam trends.';
@@ -707,12 +707,34 @@ const buildScoreInterpretation = ({ scoreSummary, postTestAnalysis }) => {
 
   const strongest = postTestAnalysis.strongSubjects?.[0]?.subject || 'N/A';
   const weakest = postTestAnalysis.weakSubjects?.[0]?.subject || 'N/A';
+  const attemptedRatio = Number(attempted || 0) / Math.max(Number(questionCount || 1), 1);
+  const pyqShare = Number(blueprintDiagnostics?.pyqSharePct || 0);
+
+  let confidenceLevel = 'medium';
+  if (attemptedRatio >= 0.6 && Number.isFinite(pyqShare)) {
+    confidenceLevel = 'high';
+  } else if (attemptedRatio < 0.35) {
+    confidenceLevel = 'low';
+  }
+
+  const whyThisRank =
+    `Rank is estimated from percentile ${percentile.toFixed(2)} and ${scoreSummary.totalCandidates} simulated candidates ` +
+    `using rank = totalCandidates * (1 - percentile/100).`;
+
+  const howScoreCompares =
+    `Raw score ${scoreSummary.rawScore} is normalized to ${scoreSummary.normalizedScore} after adjusting for ` +
+    `difficulty mix and subject-accuracy spread.`;
 
   return {
     scoreBand,
     message,
     rankMessage: `Likely rank range: ${scoreSummary.rankRange.low} - ${scoreSummary.rankRange.high}`,
     strengthWeaknessMessage: `You are currently stronger in ${strongest} and weaker in ${weakest}.`,
+    whyThisRank,
+    howScoreCompares,
+    confidenceLevel,
+    confidenceReason:
+      'This estimate is based on your accuracy, attempted-question coverage, and simulated exam distribution.',
   };
 };
 
@@ -988,18 +1010,20 @@ const submitExamSession = async ({ userId, sessionId }) => {
     scoreSummary,
   });
 
+  const normalizedScoreSummary = {
+    ...scoreSummary,
+    ...computeScoreNormalization({
+      rawScore: scoreSummary.totalScore,
+      maxScore: scoreSummary.maxScore,
+      blueprintDiagnostics: session.blueprintDiagnostics || null,
+      subjectBreakdown: analysis.subjectBreakdown,
+    }),
+  };
+
   const resultSummary = {
     sessionId: String(session._id),
     submittedAt: new Date(),
-    scoreSummary: {
-      ...scoreSummary,
-      ...computeScoreNormalization({
-        rawScore: scoreSummary.totalScore,
-        maxScore: scoreSummary.maxScore,
-        blueprintDiagnostics: session.blueprintDiagnostics || null,
-        subjectBreakdown: analysis.subjectBreakdown,
-      }),
-    },
+    scoreSummary: normalizedScoreSummary,
     postTestAnalysis: {
       strongSubjects: analysis.strongSubjects,
       weakSubjects: analysis.weakSubjects,
@@ -1009,11 +1033,14 @@ const submitExamSession = async ({ userId, sessionId }) => {
       improvementProjection: analysis.improvementProjection,
     },
     scoreInterpretation: buildScoreInterpretation({
-      scoreSummary,
+      scoreSummary: normalizedScoreSummary,
       postTestAnalysis: {
         strongSubjects: analysis.strongSubjects,
         weakSubjects: analysis.weakSubjects,
       },
+      blueprintDiagnostics: session.blueprintDiagnostics || null,
+      attempted: analysis.attempted,
+      questionCount: session.questionCount,
     }),
     blueprintDiagnostics: session.blueprintDiagnostics || null,
     adaptiveFollowUp: analysis.adaptiveFollowUp,

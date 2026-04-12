@@ -1054,6 +1054,38 @@ select:focus {
   margin-top: 0.4rem;
 }
 
+.exam-mode-note {
+  margin-top: 0.3rem;
+  color: #cbd5e1;
+  font-size: 0.88rem;
+}
+
+.exam-question-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.exam-tag-chip {
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  background: rgba(30, 58, 138, 0.24);
+  color: #dbeafe;
+  font-size: 0.76rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+}
+
+.exam-tag-chip.pyq {
+  border-color: rgba(34, 197, 94, 0.55);
+  background: rgba(22, 101, 52, 0.32);
+}
+
+.exam-tag-chip.mock {
+  border-color: rgba(148, 163, 184, 0.45);
+  background: rgba(30, 41, 59, 0.35);
+}
+
 .exam-action-row {
   display: flex;
   flex-wrap: wrap;
@@ -1117,6 +1149,19 @@ select:focus {
   display: grid;
   gap: 0.75rem;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.exam-interpretation-box {
+  margin-top: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.exam-interpretation-box p {
+  color: #cbd5e1;
+  margin-top: 0.35rem;
 }
 
 .landing-page {

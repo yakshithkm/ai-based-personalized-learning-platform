@@ -188,6 +188,9 @@ describe('Exam simulation system', () => {
     expect(submitRes.body.postTestAnalysis.improvementProjection.message).toMatch(/score can improve by/i);
     expect(submitRes.body.scoreInterpretation.scoreBand).toBeDefined();
     expect(submitRes.body.scoreInterpretation.rankMessage).toMatch(/Likely rank range/i);
+    expect(submitRes.body.scoreInterpretation.whyThisRank).toMatch(/rank = totalCandidates/i);
+    expect(submitRes.body.scoreInterpretation.howScoreCompares).toMatch(/normalized/i);
+    expect(['low', 'medium', 'high']).toContain(submitRes.body.scoreInterpretation.confidenceLevel);
     expect(submitRes.body.blueprintDiagnostics).toBeDefined();
     expect(submitRes.body.blueprintDiagnostics.pyqSharePct).toBeGreaterThan(0);
     console.log('MOCK_BREAKDOWN_LOG', {

@@ -176,6 +176,9 @@ const ExamSimulationPage = () => {
     ? 'Strict navigation enabled: only current question can be answered in sequence.'
     : 'Flexible navigation enabled: use the palette to jump between questions.';
 
+  const modeExplanation = session?.behavior?.modeExplanation ||
+    'Exam mode mirrors real test pressure. Practice mode is better for hints and on-the-spot explanations.';
+
   return (
     <div className="page-grid">
       <section className="panel">
@@ -238,6 +241,7 @@ const ExamSimulationPage = () => {
                 {session.mode === 'full-length' ? 'Full-Length Mock Test' : `${session.sectionSubject} Section Test`}
               </h3>
               <p>{behaviorText}</p>
+              <p className="exam-mode-note">{modeExplanation}</p>
             </div>
             <div className={`exam-timer ${timeLeftSec < 300 ? 'danger' : ''}`}>
               <span>Time Left</span>
@@ -254,6 +258,13 @@ const ExamSimulationPage = () => {
 
             <div className="exam-question-card">
               <h3>{currentQuestion?.subject} • {currentQuestion?.topic}</h3>
+              <div className="exam-question-tags">
+                <span className={`exam-tag-chip ${currentQuestion?.isPreviousYear ? 'pyq' : 'mock'}`}>
+                  {currentQuestion?.isPreviousYear ? 'PYQ Priority' : currentQuestion?.yearTag || 'Mock'}
+                </span>
+                <span className="exam-tag-chip">{currentQuestion?.difficultyLevel || currentQuestion?.difficulty}</span>
+                <span className="exam-tag-chip">{currentQuestion?.weightage || 'Medium'} Weightage</span>
+              </div>
               <p className="exam-question-text">{currentQuestion?.text}</p>
 
               <div className="option-list">
@@ -321,6 +332,39 @@ const ExamSimulationPage = () => {
                 {result.scoreSummary.rankRange.low} - {result.scoreSummary.rankRange.high}
               </strong>
             </div>
+          </div>
+
+          <div className="exam-interpretation-box">
+            <h4>Score Interpretation</h4>
+            <p>{result.scoreInterpretation?.message}</p>
+            <p>{result.scoreInterpretation?.rankMessage}</p>
+            <p>{result.scoreInterpretation?.strengthWeaknessMessage}</p>
+            <p>{result.scoreInterpretation?.whyThisRank}</p>
+            <p>{result.scoreInterpretation?.howScoreCompares}</p>
+            <p>
+              Confidence: {result.scoreInterpretation?.confidenceLevel || 'medium'}
+              {' '}({result.scoreInterpretation?.confidenceReason})
+            </p>
+          </div>
+
+          <div className="exam-interpretation-box">
+            <h4>Blueprint Credibility</h4>
+            <p>
+              PYQ share: {result.blueprintDiagnostics?.pyqSharePct ?? 0}%
+              {' '}({result.blueprintDiagnostics?.pyqCount ?? 0} questions)
+            </p>
+            <p>
+              Question mix: PYQ {result.blueprintDiagnostics?.pyqSharePct ?? 0}%,
+              {' '}Conceptual {result.blueprintDiagnostics?.yearTagMix?.Conceptual || 0} / {result.scoreSummary?.maxScore ? Math.round((result.blueprintDiagnostics?.yearTagMix?.Conceptual || 0) * 100 / (result.scoreSummary.maxScore / 4)) : 0}%
+            </p>
+            <p>
+              Subject share: {Object.entries(result.blueprintDiagnostics?.subjectSharePct || {})
+                .map(([subject, share]) => `${subject} ${share}%`)
+                .join(' | ')}
+            </p>
+            <p>
+              Simulated rank based on {result.scoreSummary?.totalCandidates || 0} candidates.
+            </p>
           </div>
 
           <div className="exam-result-split">
