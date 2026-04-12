@@ -13,6 +13,307 @@ const {
 } = require('./productSignalsService');
 
 const round = (value, digits = 1) => Number(value.toFixed(digits));
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const average = (list = []) => {
+  if (!list.length) return 0;
+  return list.reduce((sum, value) => sum + Number(value || 0), 0) / list.length;
+};
+
+const stdDev = (list = []) => {
+  if (!list.length) return 0;
+  const mean = average(list);
+  const variance = average(list.map((value) => (Number(value || 0) - mean) ** 2));
+  return Math.sqrt(variance);
+};
+
+const accuracyPct = (attempts = []) => {
+  if (!attempts.length) return 0;
+  return (attempts.filter((entry) => entry.isCorrect).length / attempts.length) * 100;
+};
+
+const splitByWindow = (attempts = [], now = Date.now(), days = 7) => {
+  const recentStart = now - days * DAY_MS;
+  const previousStart = now - 2 * days * DAY_MS;
+
+  const recent = attempts.filter((entry) => new Date(entry.createdAt).getTime() >= recentStart);
+  const previous = attempts.filter((entry) => {
+    const ts = new Date(entry.createdAt).getTime();
+    return ts >= previousStart && ts < recentStart;
+  });
+
+  return { recent, previous };
+};
+
+const computeWeeklySubjectDeltas = (attempts = [], now = Date.now()) => {
+  const subjects = ['Physics', 'Chemistry', 'Mathematics', 'Biology'];
+  return subjects
+    .map((subject) => {
+      const subjectAttempts = attempts.filter((entry) => entry.subject === subject);
+      const { recent, previous } = splitByWindow(subjectAttempts, now, 7);
+      const recentAcc = accuracyPct(recent);
+      const previousAcc = accuracyPct(previous);
+      const delta = recentAcc - previousAcc;
+      const stableStrong = recentAcc >= 70 && previousAcc >= 70 && recent.length >= 4;
+      return {
+        subject,
+        recentAcc,
+        previousAcc,
+        delta,
+        stableStrong,
+        recentCount: recent.length,
+      };
+    })
+    .filter((row) => row.recentCount > 0 || row.previousAcc > 0);
+};
+
+const buildWeeklyPerformanceReport = (attempts = [], now = Date.now()) => {
+  const deltas = computeWeeklySubjectDeltas(attempts, now);
+  const strongestRise = [...deltas].sort((a, b) => b.delta - a.delta)[0];
+  const steepestDrop = [...deltas].sort((a, b) => a.delta - b.delta)[0];
+  const strongStable = deltas.filter((row) => row.stableStrong).map((row) => row.subject);
+
+  const highlights = [];
+
+  if (strongestRise && strongestRise.delta >= 2) {
+    highlights.push(`You improved ${round(strongestRise.delta, 0)}% in ${strongestRise.subject} this week.`);
+  }
+
+  if (steepestDrop && steepestDrop.delta <= -2) {
+    highlights.push(`Your ${steepestDrop.subject} accuracy dropped by ${Math.abs(round(steepestDrop.delta, 0))}% this week.`);
+  }
+
+  if (strongStable.length) {
+    highlights.push(`You are consistently strong in ${strongStable.join(' and ')}.`);
+  }
+
+  if (!highlights.length) {
+    highlights.push('Your weekly trend is stable. Keep your current rhythm and increase one weak-topic drill daily.');
+  }
+
+  return {
+    summary: highlights,
+    subjectDeltas: deltas.map((row) => ({
+      subject: row.subject,
+      previousAccuracy: round(row.previousAcc),
+      currentAccuracy: round(row.recentAcc),
+      delta: round(row.delta),
+    })),
+  };
+};
+
+const buildStudyStrategyRecommendation = (attempts = [], now = Date.now()) => {
+  const last14 = attempts.filter((entry) => new Date(entry.createdAt).getTime() >= now - 14 * DAY_MS);
+  const bySubject = last14.reduce((acc, entry) => {
+    if (!acc[entry.subject]) {
+      acc[entry.subject] = { subject: entry.subject, total: 0, correct: 0, wrong: 0, avgTimeSec: 0 };
+    }
+    const ref = acc[entry.subject];
+    ref.total += 1;
+    if (entry.isCorrect) ref.correct += 1;
+    else ref.wrong += 1;
+    ref.avgTimeSec += Number(entry.timeTakenSec || 0);
+    return acc;
+  }, {});
+
+  const rows = Object.values(bySubject).map((row) => {
+    const acc = row.total ? (row.correct / row.total) * 100 : 0;
+    const avgTimeSec = row.total ? row.avgTimeSec / row.total : 0;
+    const weight = clamp((100 - acc) + row.wrong * 1.5 + (avgTimeSec > 80 ? 8 : 0), 5, 160);
+    return {
+      subject: row.subject,
+      accuracy: acc,
+      total: row.total,
+      wrong: row.wrong,
+      avgTimeSec,
+      weight,
+    };
+  });
+
+  const sorted = rows.sort((a, b) => b.weight - a.weight);
+  const totalWeight = Math.max(sorted.reduce((sum, row) => sum + row.weight, 0), 1);
+
+  const timeAllocation = sorted.map((row) => ({
+    subject: row.subject,
+    percent: Math.max(10, round((row.weight / totalWeight) * 100, 0)),
+    reason:
+      row.accuracy < 55
+        ? 'accuracy needs repair'
+        : row.avgTimeSec > 85
+          ? 'speed and decision control needed'
+          : 'maintain momentum with moderate revision',
+  }));
+
+  const capped = timeAllocation
+    .sort((a, b) => b.percent - a.percent)
+    .map((entry, index) => ({
+      ...entry,
+      percent: index === 0 ? Math.min(entry.percent, 60) : entry.percent,
+    }));
+
+  const adjustedTotal = capped.reduce((sum, entry) => sum + entry.percent, 0);
+  const normalized = capped.map((entry, index) => {
+    if (index === 0) {
+      return {
+        ...entry,
+        percent: Math.max(10, entry.percent + (100 - adjustedTotal)),
+      };
+    }
+    return entry;
+  });
+
+  return {
+    subjectPriorityOrder: normalized.map((row) => row.subject),
+    timeAllocation,
+    dailyStudyPlan: [
+      {
+        slot: 'Session 1 (60 min)',
+        task: `${normalized[0]?.subject || 'Weakest Subject'} concept drill + 15 timed MCQs`,
+      },
+      {
+        slot: 'Session 2 (45 min)',
+        task: `${normalized[1]?.subject || 'Second Priority'} mixed practice + error log review`,
+      },
+      {
+        slot: 'Session 3 (30 min)',
+        task: `${normalized[2]?.subject || 'Strong Subject'} retention revision and quick recap`,
+      },
+    ],
+    guidanceText: normalized.length
+      ? `Spend ${normalized.map((entry) => `${entry.percent}% on ${entry.subject}`).join(', ')} this week.`
+      : 'Collect at least one week of attempts for a personalized study strategy.',
+  };
+};
+
+const buildBehaviorAnalysis = (attempts = [], now = Date.now()) => {
+  const last14 = attempts.filter((entry) => new Date(entry.createdAt).getTime() >= now - 14 * DAY_MS);
+  const bySubject = last14.reduce((acc, entry) => {
+    if (!acc[entry.subject]) acc[entry.subject] = [];
+    acc[entry.subject].push(entry);
+    return acc;
+  }, {});
+
+  const insights = [];
+  Object.entries(bySubject).forEach(([subject, rows]) => {
+    const rushingWrong = rows.filter((row) => !row.isCorrect && Number(row.timeTakenSec || 0) < 0.75 * Number(row.expectedSolvingTimeSec || 60)).length;
+    const overthinkingWrong = rows.filter((row) => !row.isCorrect && Number(row.timeTakenSec || 0) > 1.3 * Number(row.expectedSolvingTimeSec || 60)).length;
+    const guessing = rows.filter((row) => !row.isCorrect && Number(row.timeTakenSec || 0) < 0.5 * Number(row.expectedSolvingTimeSec || 60)).length;
+
+    if (rushingWrong >= 3) {
+      insights.push({
+        type: 'rushing',
+        subject,
+        message: `You are rushing through ${subject} questions, and that speed is converting into avoidable mistakes.`,
+      });
+    }
+
+    if (overthinkingWrong >= 3) {
+      insights.push({
+        type: 'overthinking',
+        subject,
+        message: `You spend too long on difficult ${subject} problems and still lose marks; cap decision time and move on earlier.`,
+      });
+    }
+
+    if (guessing >= 3) {
+      insights.push({
+        type: 'guessing',
+        subject,
+        message: `Your ${subject} pattern shows quick guesses under pressure. Pause for one elimination step before locking answers.`,
+      });
+    }
+  });
+
+  return {
+    patterns: insights,
+    summary:
+      insights[0]?.message ||
+      'Your pace and accuracy pattern is balanced right now. Maintain this rhythm and keep logging mistakes.',
+  };
+};
+
+const buildConsistencyScore = ({ attempts = [], topicStats = [], now = Date.now() }) => {
+  const last14 = attempts.filter((entry) => new Date(entry.createdAt).getTime() >= now - 14 * DAY_MS);
+  const activeDaySet = new Set(last14.map((entry) => new Date(entry.createdAt).toISOString().slice(0, 10)));
+  const usageScore = clamp((activeDaySet.size / 14) * 100, 0, 100);
+
+  const byDay = last14.reduce((acc, entry) => {
+    const dayKey = new Date(entry.createdAt).toISOString().slice(0, 10);
+    if (!acc[dayKey]) acc[dayKey] = [];
+    acc[dayKey].push(entry);
+    return acc;
+  }, {});
+
+  const dailyAccuracies = Object.values(byDay).map((rows) => accuracyPct(rows) / 100);
+  const accStd = stdDev(dailyAccuracies);
+  const accuracyStability = clamp(100 - accStd * 120, 0, 100);
+
+  const coveredTopics = new Set(last14.map((entry) => `${entry.subject}::${entry.topic}`)).size;
+  const baselineTopics = Math.max(topicStats.length || 1, 1);
+  const topicCoverage = clamp((coveredTopics / Math.min(12, baselineTopics + 4)) * 100, 0, 100);
+
+  const score = round(usageScore * 0.4 + accuracyStability * 0.35 + topicCoverage * 0.25, 1);
+
+  return {
+    score,
+    components: {
+      usageScore: round(usageScore),
+      accuracyStability: round(accuracyStability),
+      topicCoverage: round(topicCoverage),
+    },
+  };
+};
+
+const buildImprovementTrajectory = ({ attempts = [], consistencyScore, now = Date.now() }) => {
+  const last14 = attempts.filter((entry) => new Date(entry.createdAt).getTime() >= now - 14 * DAY_MS);
+  const previous14 = attempts.filter((entry) => {
+    const ts = new Date(entry.createdAt).getTime();
+    return ts >= now - 28 * DAY_MS && ts < now - 14 * DAY_MS;
+  });
+
+  const currentAcc = accuracyPct(last14) / 100;
+  const previousAcc = accuracyPct(previous14) / 100;
+  const dailySlope = (currentAcc - previousAcc) / 14;
+  const projectedAcc = clamp(currentAcc + dailySlope * 30, 0.2, 0.95);
+  const confidenceBoost = consistencyScore >= 70 ? 1.02 : consistencyScore <= 40 ? 0.96 : 1;
+  const projectedAccAdjusted = clamp(projectedAcc * confidenceBoost, 0.2, 0.96);
+
+  const expectedScore30Days = round((5 * projectedAccAdjusted - 1) * 180, 0);
+
+  return {
+    currentAccuracy: round(currentAcc * 100),
+    projectedAccuracy30Days: round(projectedAccAdjusted * 100),
+    expectedScore30Days,
+    message: `If you continue this trend, your expected score in 30 days is ${expectedScore30Days}.`,
+  };
+};
+
+const buildStudentInsightLayer = ({ attempts = [], topicStats = [], now = Date.now() }) => {
+  const weeklyReport = buildWeeklyPerformanceReport(attempts, now);
+  const studyStrategy = buildStudyStrategyRecommendation(attempts, now);
+  const behaviorAnalysis = buildBehaviorAnalysis(attempts, now);
+  const consistency = buildConsistencyScore({ attempts, topicStats, now });
+  const trajectory = buildImprovementTrajectory({
+    attempts,
+    consistencyScore: consistency.score,
+    now,
+  });
+
+  return {
+    weeklyPerformanceReport: weeklyReport,
+    studyStrategy,
+    behaviorAnalysis,
+    consistencyScore: consistency,
+    improvementTrajectory: trajectory,
+    mentorVoice: [
+      ...weeklyReport.summary.slice(0, 2),
+      behaviorAnalysis.summary,
+      trajectory.message,
+    ].slice(0, 4),
+  };
+};
 
 const groupAttemptsByTopic = (attempts) => {
   const map = new Map();
@@ -291,6 +592,11 @@ const getAdaptiveAnalytics = async (userId) => {
       },
     },
     mistakeBank: mistakeBank,
+    studentInsightLayer: buildStudentInsightLayer({
+      attempts: allAttempts || [],
+      topicStats: performance?.topicStats || [],
+      now: Date.now(),
+    }),
   };
 };
 

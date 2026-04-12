@@ -180,12 +180,22 @@ describe('Intelligence Refactor Strict Behavioral Validation', () => {
       improvementInsight: analytics.improvementInsight,
     });
 
+    console.log('WEEKLY_REPORT_SAMPLE', analytics.studentInsightLayer.weeklyPerformanceReport);
+    console.log('STUDY_PLAN_SAMPLE', analytics.studentInsightLayer.studyStrategy);
+    console.log('BEHAVIOR_INSIGHT_SAMPLE', analytics.studentInsightLayer.behaviorAnalysis);
+
     expect(analysis.weakTopics.some((entry) => entry.includes('Algebra'))).toBe(true);
     expect(analysis.strongTopics.some((entry) => entry.includes('Calculus'))).toBe(true);
     expect(analytics.habit).toHaveProperty('currentStreak');
     expect(analytics.nextAction).toHaveProperty('reason');
     expect(analytics.improvementInsight).toHaveProperty('text');
     expect(analytics.suggestedFocusTopic).toBeTruthy();
+    expect(analytics.studentInsightLayer).toHaveProperty('weeklyPerformanceReport');
+    expect(analytics.studentInsightLayer).toHaveProperty('studyStrategy');
+    expect(analytics.studentInsightLayer).toHaveProperty('behaviorAnalysis');
+    expect(analytics.studentInsightLayer).toHaveProperty('consistencyScore');
+    expect(analytics.studentInsightLayer).toHaveProperty('improvementTrajectory');
+    expect(Array.isArray(analytics.studentInsightLayer.mentorVoice)).toBe(true);
   });
 
   test('2) adaptive feedback quality differs by mistake type', async () => {
