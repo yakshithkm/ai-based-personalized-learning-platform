@@ -12,6 +12,26 @@ const difficultyForIndex = (index) => {
   return 'Hard';
 };
 
+const difficultyLevelForDifficulty = (difficulty) => {
+  if (difficulty === 'Easy') return 'Easy';
+  if (difficulty === 'Hard') return 'Tough';
+  return 'Moderate';
+};
+
+const yearTagForIndex = (index) => {
+  const mod = index % 10;
+  if (mod < 4) return 'Previous Year';
+  if (mod < 7) return 'Mock';
+  return 'Conceptual';
+};
+
+const weightageForIndex = (index) => {
+  const mod = index % 10;
+  if (mod < 4) return 'High';
+  if (mod < 8) return 'Medium';
+  return 'Low';
+};
+
 const mistakeTypes = ['concept', 'calculation', 'trap'];
 
 const examCycleBySubject = {
@@ -99,7 +119,7 @@ const buildOptions = (base, correctOffset = 1) => {
 };
 
 const questionFactory = {
-  Physics: ({ topic, subtopic, difficulty, examType, index }) => {
+  Physics: ({ topic, subtopic, difficulty, difficultyLevel, yearTag, weightage, examType, index }) => {
     const a = (index % 7) + 2;
     const t = (index % 5) + 3;
     const result = a * t;
@@ -110,6 +130,9 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      difficultyLevel,
+      yearTag,
+      weightage,
       ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: If acceleration is ${a} m/s^2 for ${t} s from rest, final velocity is? [Q${index + 1}]`,
       options: built.options,
@@ -118,7 +141,7 @@ const questionFactory = {
       mistakeType: mistakeTypes[index % mistakeTypes.length],
     };
   },
-  Chemistry: ({ topic, subtopic, difficulty, examType, index }) => {
+  Chemistry: ({ topic, subtopic, difficulty, difficultyLevel, yearTag, weightage, examType, index }) => {
     const n = (index % 9) + 1;
     const molar = (index % 8) + 10;
     const result = n * molar;
@@ -129,6 +152,9 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      difficultyLevel,
+      yearTag,
+      weightage,
       ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: If ${n} mol has molar mass ${molar} g/mol, total mass is? [Q${index + 1}]`,
       options: built.options,
@@ -137,7 +163,7 @@ const questionFactory = {
       mistakeType: mistakeTypes[index % mistakeTypes.length],
     };
   },
-  Mathematics: ({ topic, subtopic, difficulty, examType, index }) => {
+  Mathematics: ({ topic, subtopic, difficulty, difficultyLevel, yearTag, weightage, examType, index }) => {
     const x = (index % 10) + 1;
     const value = x * x + 2;
     const built = buildOptions(value, 1);
@@ -147,6 +173,9 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      difficultyLevel,
+      yearTag,
+      weightage,
       ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: Evaluate x^2 + 2 for x = ${x}. [Q${index + 1}]`,
       options: built.options,
@@ -155,7 +184,7 @@ const questionFactory = {
       mistakeType: mistakeTypes[index % mistakeTypes.length],
     };
   },
-  Biology: ({ topic, subtopic, difficulty, examType, index }) => {
+  Biology: ({ topic, subtopic, difficulty, difficultyLevel, yearTag, weightage, examType, index }) => {
     const baseFacts = [
       'Mitochondria are linked to ATP production',
       'Genes are units of heredity',
@@ -178,6 +207,9 @@ const questionFactory = {
       topic,
       subtopic,
       difficulty,
+      difficultyLevel,
+      yearTag,
+      weightage,
       ...buildQualityMeta({ topic, subtopic, difficulty, index }),
       text: `(${difficulty}) ${topic}/${subtopic}: Select the correct biological statement. [Q${index + 1}]`,
       options,
@@ -198,6 +230,9 @@ const generateSubjectQuestions = (subject, total = 100) => {
     const topicEntry = topics[index % topics.length];
     const subtopic = topicEntry.subtopics[index % topicEntry.subtopics.length];
     const difficulty = difficultyForIndex(index);
+    const difficultyLevel = difficultyLevelForDifficulty(difficulty);
+    const yearTag = yearTagForIndex(index);
+    const weightage = weightageForIndex(index);
     const examType = examCycle[index % examCycle.length];
 
     questions.push(
@@ -205,6 +240,9 @@ const generateSubjectQuestions = (subject, total = 100) => {
         topic: topicEntry.topic,
         subtopic,
         difficulty,
+        difficultyLevel,
+        yearTag,
+        weightage,
         examType,
         index,
       })

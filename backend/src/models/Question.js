@@ -28,6 +28,24 @@ const questionSchema = new mongoose.Schema(
       enum: ['Easy', 'Medium', 'Hard'],
       default: 'Medium',
     },
+    yearTag: {
+      type: String,
+      enum: ['Previous Year', 'Mock', 'Conceptual'],
+      default: 'Mock',
+      index: true,
+    },
+    difficultyLevel: {
+      type: String,
+      enum: ['Easy', 'Moderate', 'Tough'],
+      default: 'Moderate',
+      index: true,
+    },
+    weightage: {
+      type: String,
+      enum: ['High', 'Medium', 'Low'],
+      default: 'Medium',
+      index: true,
+    },
     text: {
       type: String,
       required: true,
@@ -85,5 +103,23 @@ const questionSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+questionSchema.pre('validate', function normalizeExamDifficultyTags(next) {
+  if (!this.difficultyLevel) {
+    if (this.difficulty === 'Easy') this.difficultyLevel = 'Easy';
+    else if (this.difficulty === 'Hard') this.difficultyLevel = 'Tough';
+    else this.difficultyLevel = 'Moderate';
+  }
+
+  if (!this.yearTag) {
+    this.yearTag = 'Mock';
+  }
+
+  if (!this.weightage) {
+    this.weightage = 'Medium';
+  }
+
+  next();
+});
 
 module.exports = mongoose.model('Question', questionSchema);

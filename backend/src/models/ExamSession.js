@@ -27,6 +27,21 @@ const questionSnapshotSchema = new mongoose.Schema(
       enum: ['Easy', 'Medium', 'Hard'],
       default: 'Medium',
     },
+    difficultyLevel: {
+      type: String,
+      enum: ['Easy', 'Moderate', 'Tough'],
+      default: 'Moderate',
+    },
+    yearTag: {
+      type: String,
+      enum: ['Previous Year', 'Mock', 'Conceptual'],
+      default: 'Mock',
+    },
+    weightage: {
+      type: String,
+      enum: ['High', 'Medium', 'Low'],
+      default: 'Medium',
+    },
     conceptTested: {
       type: String,
       default: 'General Concept',
@@ -136,6 +151,10 @@ const examSessionSchema = new mongoose.Schema(
     responses: {
       type: [responseSchema],
       default: [],
+    },
+    blueprintDiagnostics: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null,
     },
     resultSummary: {
       type: mongoose.Schema.Types.Mixed,
