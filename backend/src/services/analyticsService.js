@@ -78,19 +78,19 @@ const buildWeeklyPerformanceReport = (attempts = [], now = Date.now()) => {
   const highlights = [];
 
   if (strongestRise && strongestRise.delta >= 2) {
-    highlights.push(`You improved ${round(strongestRise.delta, 0)}% in ${strongestRise.subject} this week.`);
+    highlights.push(`You are improving in ${strongestRise.subject}, but your accuracy is still unreliable — this suggests shallow understanding, not mastery.`);
   }
 
   if (steepestDrop && steepestDrop.delta <= -2) {
-    highlights.push(`Your ${steepestDrop.subject} accuracy dropped by ${Math.abs(round(steepestDrop.delta, 0))}% this week.`);
+    highlights.push(`Your ${steepestDrop.subject} accuracy dropped by ${Math.abs(round(steepestDrop.delta, 0))}% this week. That is a liability, not a fluctuation.`);
   }
 
   if (strongStable.length) {
-    highlights.push(`You are consistently strong in ${strongStable.join(' and ')}.`);
+    highlights.push(`You are consistently strong in ${strongStable.join(' and ')}, which means your execution there is disciplined.`);
   }
 
   if (!highlights.length) {
-    highlights.push('Your weekly trend is stable. Keep your current rhythm and increase one weak-topic drill daily.');
+    highlights.push('Your weekly trend is flat. That usually means you are working, but not extracting enough correction from mistakes.');
   }
 
   return {
@@ -182,7 +182,7 @@ const buildStudyStrategyRecommendation = (attempts = [], now = Date.now()) => {
       },
     ],
     guidanceText: normalized.length
-      ? `Spend ${normalized.map((entry) => `${entry.percent}% on ${entry.subject}`).join(', ')} this week.`
+      ? `Decision for this week: spend ${normalized.map((entry) => `${entry.percent}% on ${entry.subject}`).join(', ')}.`
       : 'Collect at least one week of attempts for a personalized study strategy.',
   };
 };
@@ -290,7 +290,164 @@ const buildImprovementTrajectory = ({ attempts = [], consistencyScore, now = Dat
   };
 };
 
-const buildStudentInsightLayer = ({ attempts = [], topicStats = [], now = Date.now() }) => {
+const buildMentorJudgmentSystem = ({
+  attempts = [],
+  weeklyReport,
+  studyStrategy,
+  behaviorAnalysis,
+  consistencyScore,
+  mistakeBank,
+  now = Date.now(),
+}) => {
+  const last14 = attempts.filter((entry) => new Date(entry.createdAt).getTime() >= now - 14 * DAY_MS);
+  const subjectRows = ['Physics', 'Chemistry', 'Mathematics', 'Biology']
+    .map((subject) => {
+      const subjectAttempts = last14.filter((entry) => entry.subject === subject);
+      const accuracy = accuracyPct(subjectAttempts);
+      const avgTimeSec = average(subjectAttempts.map((entry) => Number(entry.timeTakenSec || 0)));
+      const expectedTimeSec = average(subjectAttempts.map((entry) => Number(entry.expectedSolvingTimeSec || 60)));
+      const wrongCount = subjectAttempts.filter((entry) => !entry.isCorrect).length;
+      return {
+        subject,
+        accuracy,
+        avgTimeSec,
+        expectedTimeSec,
+        wrongCount,
+        count: subjectAttempts.length,
+      };
+    })
+    .filter((row) => row.count > 0);
+
+  const criticalWeaknesses = subjectRows.filter((row) => row.accuracy > 0 && row.accuracy < 55);
+  const liabilities = criticalWeaknesses.map(
+    (row) => `${row.subject} is currently a liability in your exam performance.`
+  );
+
+  const repeatedPatternMap = new Map();
+  last14.forEach((attempt) => {
+    const key = `${attempt.subject}::${attempt.topic}::${attempt.subtopic || 'General'}`;
+    if (!repeatedPatternMap.has(key)) {
+      repeatedPatternMap.set(key, { subject: attempt.subject, topic: attempt.topic, subtopic: attempt.subtopic || 'General', count: 0, wrong: 0 });
+    }
+    const row = repeatedPatternMap.get(key);
+    row.count += 1;
+    if (!attempt.isCorrect) row.wrong += 1;
+  });
+
+  const bankMistakePatterns = Array.isArray(mistakeBank?.repeatedMistakes)
+    ? mistakeBank.repeatedMistakes.map((entry) => ({
+        subject: entry.subject || 'General',
+        topic: entry.topic || entry.concept || 'General',
+        subtopic: entry.subtopic || 'General',
+        message: `You are repeating the same mistake pattern in ${entry.topic || entry.concept || 'this topic'}. Practicing more without fixing the concept will not help.`,
+      }))
+    : [];
+
+  const repeatedMistakePatterns = Array.from(repeatedPatternMap.values())
+    .filter((row) => row.count >= 3 && row.wrong >= 2)
+    .sort((a, b) => b.wrong - a.wrong || b.count - a.count)
+    .slice(0, 3)
+    .map((row) => ({
+      subject: row.subject,
+      topic: row.topic,
+      subtopic: row.subtopic,
+      message: `You are repeating the same mistake pattern in ${row.topic}. Practicing more without fixing the concept will not help.`,
+    }));
+
+  const critiquePool = repeatedMistakePatterns.length ? repeatedMistakePatterns : bankMistakePatterns;
+
+  const effortVsResult = subjectRows.map((row) => {
+    const timeRatio = row.expectedTimeSec ? row.avgTimeSec / row.expectedTimeSec : 1;
+    let judgment = 'balanced';
+    let message = `${row.subject} is steady: effort and accuracy are in acceptable balance.`;
+
+    if (row.accuracy < 55 && timeRatio > 1.15) {
+      judgment = 'inefficient';
+      message = `You are spending too much time on ${row.subject} without results — this indicates inefficient problem-solving.`;
+    } else if (row.accuracy < 55 && timeRatio < 0.85) {
+      judgment = 'rushing';
+      message = `You are rushing ${row.subject} and compromising accuracy.`;
+    } else if (row.accuracy >= 70 && timeRatio <= 1.1) {
+      judgment = 'strong';
+      message = `${row.subject} shows controlled execution and dependable accuracy.`;
+    }
+
+    return {
+      subject: row.subject,
+      accuracy: round(row.accuracy),
+      avgTimeSec: round(row.avgTimeSec),
+      expectedTimeSec: round(row.expectedTimeSec),
+      timeRatio: round(timeRatio, 2),
+      judgment,
+      message,
+    };
+  });
+
+  const focusSubject = [...subjectRows]
+    .sort((a, b) => a.accuracy - b.accuracy || b.wrongCount - a.wrongCount)[0];
+
+  const decisionGuidance = focusSubject
+    ? `Stop practicing new topics. Focus only on correcting ${focusSubject.subject} for the next 3 days.`
+    : 'Stop spreading attention thinly. Lock onto one weakness and repair it before adding new material.';
+
+  const analyticalInsight = weeklyReport.summary[0]
+    ? weeklyReport.summary[0].replace('You improved', 'You are improving').replace('this week.', 'this week, but your accuracy is still unreliable — this suggests shallow understanding, not mastery.')
+    : 'Your trend is changing, but not in a way that yet proves mastery.';
+
+  const strictInsight = criticalWeaknesses[0]
+    ? `${criticalWeaknesses[0].subject} is currently a liability in your exam performance. You do not need more volume; you need correction.`
+    : 'Your current effort is not yet translating into stable marks. That is a correction problem, not a practice problem.';
+
+  const encouragingInsight = subjectRows.some((row) => row.accuracy >= 70)
+    ? `${subjectRows.find((row) => row.accuracy >= 70).subject} is becoming dependable. Keep the same method, because the consistency is finally showing.`
+    : 'You can recover this profile if you stop guessing and start fixing one concept at a time.';
+
+  const harshCritique = critiquePool[0]
+    ? critiquePool[0].message
+    : criticalWeaknesses[0]
+      ? `${criticalWeaknesses[0].subject} is currently a liability in your exam performance.`
+      : 'Practicing harder without correcting the underlying concept will keep producing the same score.';
+
+  const balancedFeedback = focusSubject
+    ? `You are improving in ${focusSubject.subject}, but your accuracy is still unreliable — this suggests shallow understanding, not mastery.`
+    : 'Your progress is real, but it is not yet dependable enough to change your strategy.';
+
+  return {
+    priorityWarnings: liabilities,
+    repeatedPatternCritique: repeatedMistakePatterns,
+    effortVsResult,
+    decisionGuidance,
+    sampleInsights: [
+      {
+        tone: 'analytical',
+        text: analyticalInsight,
+      },
+      {
+        tone: 'strict',
+        text: strictInsight,
+      },
+      {
+        tone: 'encouraging',
+        text: encouragingInsight,
+      },
+    ],
+    harshCritique,
+    balancedFeedback,
+    toneSummary: {
+      analytical: 'Evidence-based evaluation of change and stability.',
+      strict: 'Direct correction when performance is becoming a liability.',
+      encouraging: 'Supportive only when progress is observable and repeatable.',
+    },
+    mentorJudgmentNarrative: [
+      analyticalInsight,
+      strictInsight,
+      balancedFeedback,
+      decisionGuidance,
+    ],
+  };
+};
+
+const buildStudentInsightLayer = ({ attempts = [], topicStats = [], mistakeBank = null, now = Date.now() }) => {
   const weeklyReport = buildWeeklyPerformanceReport(attempts, now);
   const studyStrategy = buildStudyStrategyRecommendation(attempts, now);
   const behaviorAnalysis = buildBehaviorAnalysis(attempts, now);
@@ -300,6 +457,15 @@ const buildStudentInsightLayer = ({ attempts = [], topicStats = [], now = Date.n
     consistencyScore: consistency.score,
     now,
   });
+  const mentorJudgmentSystem = buildMentorJudgmentSystem({
+    attempts,
+    weeklyReport,
+    studyStrategy,
+    behaviorAnalysis,
+    consistencyScore: consistency.score,
+    mistakeBank,
+    now,
+  });
 
   return {
     weeklyPerformanceReport: weeklyReport,
@@ -307,10 +473,12 @@ const buildStudentInsightLayer = ({ attempts = [], topicStats = [], now = Date.n
     behaviorAnalysis,
     consistencyScore: consistency,
     improvementTrajectory: trajectory,
+    mentorJudgmentSystem,
     mentorVoice: [
       ...weeklyReport.summary.slice(0, 2),
       behaviorAnalysis.summary,
       trajectory.message,
+      mentorJudgmentSystem.decisionGuidance,
     ].slice(0, 4),
   };
 };
@@ -595,6 +763,7 @@ const getAdaptiveAnalytics = async (userId) => {
     studentInsightLayer: buildStudentInsightLayer({
       attempts: allAttempts || [],
       topicStats: performance?.topicStats || [],
+      mistakeBank,
       now: Date.now(),
     }),
   };

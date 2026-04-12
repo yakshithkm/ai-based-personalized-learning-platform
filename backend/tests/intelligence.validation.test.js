@@ -183,6 +183,7 @@ describe('Intelligence Refactor Strict Behavioral Validation', () => {
     console.log('WEEKLY_REPORT_SAMPLE', analytics.studentInsightLayer.weeklyPerformanceReport);
     console.log('STUDY_PLAN_SAMPLE', analytics.studentInsightLayer.studyStrategy);
     console.log('BEHAVIOR_INSIGHT_SAMPLE', analytics.studentInsightLayer.behaviorAnalysis);
+    console.log('MENTOR_JUDGMENT_SAMPLE', analytics.studentInsightLayer.mentorJudgmentSystem);
 
     expect(analysis.weakTopics.some((entry) => entry.includes('Algebra'))).toBe(true);
     expect(analysis.strongTopics.some((entry) => entry.includes('Calculus'))).toBe(true);
@@ -195,7 +196,13 @@ describe('Intelligence Refactor Strict Behavioral Validation', () => {
     expect(analytics.studentInsightLayer).toHaveProperty('behaviorAnalysis');
     expect(analytics.studentInsightLayer).toHaveProperty('consistencyScore');
     expect(analytics.studentInsightLayer).toHaveProperty('improvementTrajectory');
+    expect(analytics.studentInsightLayer).toHaveProperty('mentorJudgmentSystem');
     expect(Array.isArray(analytics.studentInsightLayer.mentorVoice)).toBe(true);
+    expect(analytics.studentInsightLayer.mentorJudgmentSystem).toHaveProperty('sampleInsights');
+    expect(analytics.studentInsightLayer.mentorJudgmentSystem.sampleInsights.length).toBeGreaterThanOrEqual(3);
+    expect(analytics.studentInsightLayer.mentorJudgmentSystem).toHaveProperty('harshCritique');
+    expect(analytics.studentInsightLayer.mentorJudgmentSystem).toHaveProperty('balancedFeedback');
+    expect(analytics.studentInsightLayer.mentorJudgmentSystem).toHaveProperty('decisionGuidance');
   });
 
   test('2) adaptive feedback quality differs by mistake type', async () => {
