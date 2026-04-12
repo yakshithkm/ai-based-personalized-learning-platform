@@ -612,6 +612,46 @@ const buildScoreInterpretation = ({ scoreSummary, postTestAnalysis }) => {
   };
 };
 
+const computeScoreNormalization = ({ rawScore, maxScore, blueprintDiagnostics, subjectBreakdown }) => {
+  const difficultyMix = blueprintDiagnostics?.difficultyMix || {};
+  const total = Math.max(
+    Number(difficultyMix.Easy || 0) + Number(difficultyMix.Medium || 0) + Number(difficultyMix.Hard || 0),
+    1
+  );
+
+  const easyShare = Number(difficultyMix.Easy || 0) / total;
+  const hardShare = Number(difficultyMix.Hard || 0) / total;
+  const difficultyFactor = clamp(1 + (hardShare - easyShare) * 0.12, 0.9, 1.12);
+
+  const accuracies = (subjectBreakdown || [])
+    .filter((row) => row.attempted > 0)
+    .map((row) => Number(row.accuracy || 0) / 100);
+  const mean = accuracies.length
+    ? accuracies.reduce((sum, value) => sum + value, 0) / accuracies.length
+    : 0;
+  const variance = accuracies.length
+    ? accuracies.reduce((sum, value) => sum + (value - mean) ** 2, 0) / accuracies.length
+    : 0;
+  const stdDev = Math.sqrt(variance);
+  const consistencyFactor = clamp(1 + (0.35 - stdDev) * 0.08, 0.92, 1.08);
+
+  const normalized = clamp(
+    rawScore * difficultyFactor * consistencyFactor,
+    -0.25 * Math.max(maxScore, 1),
+    1.05 * Math.max(maxScore, 1)
+  );
+
+  return {
+    rawScore,
+    normalizedScore: Number(normalized.toFixed(2)),
+    factors: {
+      difficultyFactor: Number(difficultyFactor.toFixed(4)),
+      consistencyFactor: Number(consistencyFactor.toFixed(4)),
+      accuracyStdDev: Number(stdDev.toFixed(4)),
+    },
+  };
+};
+
 const buildPostTestAnalysis = ({
   questionOrder,
   questionDocMap,
@@ -847,7 +887,15 @@ const submitExamSession = async ({ userId, sessionId }) => {
   const resultSummary = {
     sessionId: String(session._id),
     submittedAt: new Date(),
-    scoreSummary,
+    scoreSummary: {
+      ...scoreSummary,
+      ...computeScoreNormalization({
+        rawScore: scoreSummary.totalScore,
+        maxScore: scoreSummary.maxScore,
+        blueprintDiagnostics: session.blueprintDiagnostics || null,
+        subjectBreakdown: analysis.subjectBreakdown,
+      }),
+    },
     postTestAnalysis: {
       strongSubjects: analysis.strongSubjects,
       weakSubjects: analysis.weakSubjects,

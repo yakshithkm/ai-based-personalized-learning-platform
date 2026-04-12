@@ -11,12 +11,16 @@ const SUBJECT_TOPICS = {
 
 const buildQuestion = ({ examType, subject, idx }) => {
   const topic = SUBJECT_TOPICS[subject][idx % SUBJECT_TOPICS[subject].length];
+  const difficulty = idx % 3 === 0 ? 'Easy' : idx % 3 === 1 ? 'Medium' : 'Hard';
   return {
     examType,
     subject,
     topic,
     subtopic: `${topic} Basics`,
-    difficulty: idx % 3 === 0 ? 'Easy' : idx % 3 === 1 ? 'Medium' : 'Hard',
+    difficulty,
+    difficultyLevel: difficulty === 'Easy' ? 'Easy' : difficulty === 'Hard' ? 'Tough' : 'Moderate',
+    yearTag: idx % 10 < 4 ? 'Previous Year' : idx % 10 < 7 ? 'Mock' : 'Conceptual',
+    weightage: idx % 10 < 4 ? 'High' : idx % 10 < 8 ? 'Medium' : 'Low',
     text: `${examType} ${subject} Q${idx + 1}: Solve scenario ${idx + 1}`,
     conceptTested: `${subject} - ${topic}`,
     commonMistake: `Students rush ${topic} transformations under pressure.`,
@@ -85,9 +89,22 @@ describe('Exam simulation system', () => {
     expect(startRes.body.behavior.hintsEnabled).toBe(false);
     expect(startRes.body.behavior.explanationsEnabled).toBe(false);
     expect(startRes.body.behavior.resultsVisibleBeforeSubmit).toBe(false);
+    expect(startRes.body.behavior.modeExplanation).toMatch(/Exam mode simulates real test pressure/i);
     expect(startRes.body.questions.length).toBe(180);
     expect(startRes.body.questions[0].correctAnswer).toBeUndefined();
     expect(startRes.body.questions[0].correctAnswerIndex).toBeUndefined();
+    expect(startRes.body.questions[0].yearTag).toBeDefined();
+    expect(startRes.body.questions[0].difficultyLevel).toBeDefined();
+    expect(startRes.body.questions[0].weightage).toBeDefined();
+    expect(startRes.body.blueprintDiagnostics).toBeDefined();
+    expect(startRes.body.blueprintDiagnostics.subjectTargets.Biology).toBe(90);
+    expect(startRes.body.blueprintDiagnostics.pyqCount).toBeGreaterThan(0);
+    console.log('BLUEPRINT_DISTRIBUTION_LOG', {
+      targets: startRes.body.blueprintDiagnostics.subjectTargets,
+      selectedCounts: startRes.body.blueprintDiagnostics.selectedSubjectCounts,
+      subjectSharePct: startRes.body.blueprintDiagnostics.subjectSharePct,
+      pyqSharePct: startRes.body.blueprintDiagnostics.pyqSharePct,
+    });
 
     const sessionId = startRes.body.sessionId;
     const firstTwenty = startRes.body.questions.slice(0, 20);
@@ -146,6 +163,8 @@ describe('Exam simulation system', () => {
     expect(submitRes.body.scoreSummary.wrong).toBe(wrong);
     expect(submitRes.body.scoreSummary.unattempted).toBe(expectedUnattempted);
     expect(submitRes.body.scoreSummary.totalScore).toBe(expectedScore);
+    expect(submitRes.body.scoreSummary.rawScore).toBe(expectedScore);
+    expect(typeof submitRes.body.scoreSummary.normalizedScore).toBe('number');
     expect(submitRes.body.scoreSummary.scoring.correct).toBe(4);
     expect(submitRes.body.scoreSummary.scoring.wrong).toBe(-1);
     expect(submitRes.body.scoreSummary.scoring.unattempted).toBe(0);
@@ -162,6 +181,17 @@ describe('Exam simulation system', () => {
     expect(submitRes.body.postTestAnalysis.accuracyPerSubject.length).toBeGreaterThan(0);
     expect(submitRes.body.postTestAnalysis.improvementProjection.gainIfFixed).toBeGreaterThanOrEqual(5);
     expect(submitRes.body.postTestAnalysis.improvementProjection.message).toMatch(/score can improve by/i);
+    expect(submitRes.body.scoreInterpretation.scoreBand).toBeDefined();
+    expect(submitRes.body.scoreInterpretation.rankMessage).toMatch(/Likely rank range/i);
+    expect(submitRes.body.blueprintDiagnostics).toBeDefined();
+    expect(submitRes.body.blueprintDiagnostics.pyqSharePct).toBeGreaterThan(0);
+    console.log('MOCK_BREAKDOWN_LOG', {
+      score: submitRes.body.scoreSummary,
+      subjectAccuracy: submitRes.body.postTestAnalysis.accuracyPerSubject,
+      yearTagMix: submitRes.body.blueprintDiagnostics.yearTagMix,
+      difficultyLevelMix: submitRes.body.blueprintDiagnostics.difficultyLevelMix,
+    });
+    console.log('SCORE_INTERPRETATION_SAMPLE', submitRes.body.scoreInterpretation);
 
     expect(submitRes.body.adaptiveFollowUp.weakSubjects).toBeDefined();
     expect(submitRes.body.adaptiveFollowUp.repeatedMistakes).toBeDefined();
@@ -202,5 +232,6 @@ describe('Exam simulation system', () => {
     expect(new Set(startRes.body.questions.map((q) => q.subject))).toEqual(new Set(['Physics']));
     expect(startRes.body.strictNavigation).toBe(false);
     expect(startRes.body.behavior.hintsEnabled).toBe(false);
+    expect(startRes.body.blueprintDiagnostics.subjectTargets.Physics).toBe(45);
   });
 });
