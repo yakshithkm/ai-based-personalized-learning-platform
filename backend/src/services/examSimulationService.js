@@ -2,6 +2,7 @@ const Attempt = require('../models/Attempt');
 const Question = require('../models/Question');
 const ExamSession = require('../models/ExamSession');
 const { normalizeExamType, getAllowedSubjectsForExam, normalizeSubjectName } = require('../config/examSubjectMap');
+const { getExamConfig } = require('../config/examConfig');
 
 const MOCK_BLUEPRINTS = {
   NEET: {
@@ -42,6 +43,18 @@ const SCORE_RULES = {
   unattempted: 0,
 };
 
+const YEAR_TAG_PRIORITY = {
+  'Previous Year': 1.35,
+  Conceptual: 1.12,
+  Mock: 1,
+};
+
+const WEIGHTAGE_PRIORITY = {
+  High: 1.15,
+  Medium: 1,
+  Low: 0.92,
+};
+
 const CANDIDATE_POOL_MULTIPLIER = 6;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
@@ -70,6 +83,23 @@ const getDifficultyWeights = (accuracy) => {
   return { Easy: 0.28, Medium: 0.52, Hard: 0.2 };
 };
 
+const mapLegacyDifficultyLevel = (difficulty, explicitLevel) => {
+  if (explicitLevel) return explicitLevel;
+  if (difficulty === 'Easy') return 'Easy';
+  if (difficulty === 'Hard') return 'Tough';
+  return 'Moderate';
+};
+
+const getDifficultyLevelWeights = (accuracy) => {
+  if (accuracy < 50) {
+    return { Easy: 0.54, Moderate: 0.34, Tough: 0.12 };
+  }
+  if (accuracy > 75) {
+    return { Easy: 0.22, Moderate: 0.46, Tough: 0.32 };
+  }
+  return { Easy: 0.28, Moderate: 0.5, Tough: 0.22 };
+};
+
 const getSubjectAccuracyMap = async (userId) => {
   const subjectStats = await Attempt.aggregate([
     { $match: { user: userId } },
@@ -94,23 +124,160 @@ const getSubjectAccuracyMap = async (userId) => {
   return accuracyMap;
 };
 
-const scoreQuestionForSelection = ({ question, weights, recentQuestionIds }) => {
+const scoreQuestionForSelection = ({ question, weights, levelWeights, recentQuestionIds }) => {
   const difficultyWeight = Number(weights[question.difficulty] || 0);
+  const level = mapLegacyDifficultyLevel(question.difficulty, question.difficultyLevel);
+  const levelWeight = Number(levelWeights[level] || 0);
+  const pyqBoost = Number(YEAR_TAG_PRIORITY[question.yearTag] || 1);
+  const weightageBoost = Number(WEIGHTAGE_PRIORITY[question.weightage] || 1);
   const recentPenalty = recentQuestionIds.has(String(question._id)) ? 0.22 : 0;
   const noveltyBoost = Math.random() * 0.12;
-  return difficultyWeight + noveltyBoost - recentPenalty;
+  return (difficultyWeight + levelWeight + noveltyBoost) * pyqBoost * weightageBoost - recentPenalty;
 };
 
-const pickQuestionsForSubject = ({ questions, count, weights, recentQuestionIds }) => {
-  const ranked = [...questions]
-    .map((question) => ({
-      question,
-      score: scoreQuestionForSelection({ question, weights, recentQuestionIds }),
-    }))
-    .sort((a, b) => b.score - a.score)
-    .map((entry) => entry.question);
+const pickQuestionsForSubject = ({ questions, count, weights, levelWeights, recentQuestionIds }) => {
+  const groupedByTopic = questions.reduce((acc, question) => {
+    const topicKey = question.topic || 'General';
+    if (!acc.has(topicKey)) {
+      acc.set(topicKey, []);
+    }
+    acc.get(topicKey).push(question);
+    return acc;
+  }, new Map());
 
-  return ranked.slice(0, count);
+  const topicRows = Array.from(groupedByTopic.entries()).map(([topic, items]) => ({ topic, items, quota: 0 }));
+  const totalPool = Math.max(questions.length, 1);
+  topicRows.forEach((row) => {
+    row.quota = Math.max(1, Math.floor((row.items.length / totalPool) * count));
+  });
+
+  let allocated = topicRows.reduce((sum, row) => sum + row.quota, 0);
+  while (allocated > count) {
+    const candidate = topicRows.find((row) => row.quota > 1);
+    if (!candidate) break;
+    candidate.quota -= 1;
+    allocated -= 1;
+  }
+
+  while (allocated < count) {
+    const candidate = topicRows
+      .slice()
+      .sort((a, b) => b.items.length - a.items.length)
+      .find((row) => row.quota < row.items.length);
+    if (!candidate) break;
+    candidate.quota += 1;
+    allocated += 1;
+  }
+
+  const selected = [];
+  const selectedIds = new Set();
+
+  topicRows.forEach((row) => {
+    const ranked = [...row.items]
+      .map((question) => ({
+        question,
+        score: scoreQuestionForSelection({
+          question,
+          weights,
+          levelWeights,
+          recentQuestionIds,
+        }),
+      }))
+      .sort((a, b) => b.score - a.score)
+      .map((entry) => entry.question)
+      .slice(0, row.quota);
+
+    ranked.forEach((question) => {
+      const id = String(question._id);
+      if (!selectedIds.has(id) && selected.length < count) {
+        selected.push(question);
+        selectedIds.add(id);
+      }
+    });
+  });
+
+  if (selected.length < count) {
+    const fill = questions
+      .filter((question) => !selectedIds.has(String(question._id)))
+      .map((question) => ({
+        question,
+        score: scoreQuestionForSelection({
+          question,
+          weights,
+          levelWeights,
+          recentQuestionIds,
+        }),
+      }))
+      .sort((a, b) => b.score - a.score)
+      .map((entry) => entry.question)
+      .slice(0, count - selected.length);
+
+    selected.push(...fill);
+  }
+
+  return selected.slice(0, count);
+};
+
+const summarizeBlueprintDiagnostics = ({ distribution, selectedQuestions }) => {
+  const subjectCounts = selectedQuestions.reduce((acc, question) => {
+    acc[question.subject] = (acc[question.subject] || 0) + 1;
+    return acc;
+  }, {});
+
+  const yearTagMix = selectedQuestions.reduce((acc, question) => {
+    const key = question.yearTag || 'Mock';
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+
+  const difficultyMix = selectedQuestions.reduce((acc, question) => {
+    const key = question.difficulty || 'Medium';
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+
+  const difficultyLevelMix = selectedQuestions.reduce((acc, question) => {
+    const key = mapLegacyDifficultyLevel(question.difficulty, question.difficultyLevel);
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+
+  const totalQuestions = Math.max(selectedQuestions.length, 1);
+  const topicCoverageBySubject = Object.keys(distribution).reduce((acc, subject) => {
+    const byTopic = selectedQuestions
+      .filter((question) => question.subject === subject)
+      .reduce((topicAcc, question) => {
+        const key = question.topic || 'General';
+        topicAcc[key] = (topicAcc[key] || 0) + 1;
+        return topicAcc;
+      }, {});
+
+    const subjectTotal = Math.max(Object.values(byTopic).reduce((sum, val) => sum + val, 0), 1);
+    acc[subject] = Object.keys(byTopic)
+      .sort((a, b) => byTopic[b] - byTopic[a])
+      .map((topic) => ({
+        topic,
+        count: byTopic[topic],
+        actualSharePct: Number(((byTopic[topic] / subjectTotal) * 100).toFixed(1)),
+      }));
+
+    return acc;
+  }, {});
+
+  return {
+    subjectTargets: distribution,
+    selectedSubjectCounts: subjectCounts,
+    subjectSharePct: Object.keys(subjectCounts).reduce((acc, subject) => {
+      acc[subject] = Number(((subjectCounts[subject] / totalQuestions) * 100).toFixed(1));
+      return acc;
+    }, {}),
+    topicCoverageBySubject,
+    pyqCount: yearTagMix['Previous Year'] || 0,
+    pyqSharePct: Number((((yearTagMix['Previous Year'] || 0) / totalQuestions) * 100).toFixed(1)),
+    yearTagMix,
+    difficultyMix,
+    difficultyLevelMix,
+  };
 };
 
 const buildDistributionForSession = ({ mode, examType, sectionSubject }) => {
@@ -155,6 +322,10 @@ const publicQuestion = (snapshot, questionDoc) => ({
   topic: snapshot.topic,
   subtopic: snapshot.subtopic || 'General',
   difficulty: snapshot.difficulty,
+  difficultyLevel: snapshot.difficultyLevel || mapLegacyDifficultyLevel(snapshot.difficulty, null),
+  yearTag: snapshot.yearTag || 'Mock',
+  weightage: snapshot.weightage || 'Medium',
+  isPreviousYear: snapshot.yearTag === 'Previous Year',
   conceptTested: snapshot.conceptTested,
   text: questionDoc?.text || '',
   options: questionDoc?.options || [],
@@ -198,6 +369,8 @@ const serializeSessionState = async (session) => {
       hintsEnabled: false,
       explanationsEnabled: false,
       resultsVisibleBeforeSubmit: false,
+      modeExplanation:
+        'Exam mode simulates real test pressure: timer, no hints/explanations, and results only after final submission.',
     },
     questions: session.questionOrder.map((entry) =>
       publicQuestion(entry, docMap.get(String(entry.question)))
@@ -211,6 +384,7 @@ const serializeSessionState = async (session) => {
       answeredAt: entry.answeredAt,
     })),
     palette: buildPalette(session),
+    blueprintDiagnostics: session.blueprintDiagnostics || null,
   };
 };
 
@@ -261,13 +435,14 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
     const poolLimit = Math.max(count * CANDIDATE_POOL_MULTIPLIER, 120);
     const accuracy = Number(subjectAccuracy.get(subject) || 60);
     const weights = getDifficultyWeights(accuracy);
+    const levelWeights = getDifficultyLevelWeights(accuracy);
 
     const pool = await Question.find({
       examType: resolvedExam,
       subject,
     })
       .limit(poolLimit)
-      .select('subject topic subtopic difficulty conceptTested')
+      .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
       .lean();
 
     if (pool.length < count) {
@@ -280,6 +455,7 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
       questions: shuffle(pool),
       count,
       weights,
+      levelWeights,
       recentQuestionIds,
     });
 
@@ -287,6 +463,10 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
   }
 
   const shuffledSessionQuestions = shuffle(selectedQuestions).slice(0, questionCount);
+  const blueprintDiagnostics = summarizeBlueprintDiagnostics({
+    distribution,
+    selectedQuestions: shuffledSessionQuestions,
+  });
 
   const session = await ExamSession.create({
     user: user._id,
@@ -305,10 +485,14 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
       topic: question.topic,
       subtopic: question.subtopic || 'General',
       difficulty: question.difficulty,
+      difficultyLevel: mapLegacyDifficultyLevel(question.difficulty, question.difficultyLevel),
+      yearTag: question.yearTag || 'Mock',
+      weightage: question.weightage || 'Medium',
       conceptTested: question.conceptTested || `${question.topic} Core Concept`,
     })),
     responses: [],
     currentQuestionIndex: 0,
+    blueprintDiagnostics,
     resultSummary: null,
   });
 
@@ -386,23 +570,45 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
 };
 
 const computePercentileAndRank = ({ examType, score, maxScore }) => {
-  const candidatePool = {
-    NEET: 2400000,
-    JEE: 1200000,
-    CET: 350000,
-  };
+  const examConfig = getExamConfig(examType);
 
   const normalized = clamp(score / Math.max(maxScore, 1), -0.25, 1);
   const percentile = clamp(50 + normalized * 46, 1, 99.9);
-  const totalCandidates = candidatePool[examType] || 500000;
-  const estimatedRank = Math.max(1, Math.round(((100 - percentile) / 100) * totalCandidates));
+  const totalCandidates = Number(examConfig.totalCandidates || 500000);
+  const estimatedRank = Math.max(1, Math.round(totalCandidates * (1 - percentile / 100)));
 
   return {
     percentileEstimate: Number(percentile.toFixed(2)),
+    totalCandidates,
+    estimatedRank,
     rankRange: {
       low: Math.max(1, Math.round(estimatedRank * 0.88)),
       high: Math.max(1, Math.round(estimatedRank * 1.12)),
     },
+  };
+};
+
+const buildScoreInterpretation = ({ scoreSummary, postTestAnalysis }) => {
+  const percentile = Number(scoreSummary.percentileEstimate || 0);
+  let scoreBand = 'average';
+  let message = 'This score is around average for current exam trends.';
+
+  if (percentile >= 85) {
+    scoreBand = 'above-average';
+    message = 'This score is above average and competitive for many exam cohorts.';
+  } else if (percentile <= 35) {
+    scoreBand = 'needs-attention';
+    message = 'This score is below average right now, but targeted correction can improve rank quickly.';
+  }
+
+  const strongest = postTestAnalysis.strongSubjects?.[0]?.subject || 'N/A';
+  const weakest = postTestAnalysis.weakSubjects?.[0]?.subject || 'N/A';
+
+  return {
+    scoreBand,
+    message,
+    rankMessage: `Likely rank range: ${scoreSummary.rankRange.low} - ${scoreSummary.rankRange.high}`,
+    strengthWeaknessMessage: `You are currently stronger in ${strongest} and weaker in ${weakest}.`,
   };
 };
 
@@ -650,6 +856,14 @@ const submitExamSession = async ({ userId, sessionId }) => {
       topMistakes: analysis.topMistakes,
       improvementProjection: analysis.improvementProjection,
     },
+    scoreInterpretation: buildScoreInterpretation({
+      scoreSummary,
+      postTestAnalysis: {
+        strongSubjects: analysis.strongSubjects,
+        weakSubjects: analysis.weakSubjects,
+      },
+    }),
+    blueprintDiagnostics: session.blueprintDiagnostics || null,
     adaptiveFollowUp: analysis.adaptiveFollowUp,
   };
 
