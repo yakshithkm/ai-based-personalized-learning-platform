@@ -29,7 +29,7 @@ const ExamSimulationPage = () => {
   const [session, setSession] = useState(null);
   const [result, setResult] = useState(null);
   const [timeLeftSec, setTimeLeftSec] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -87,21 +87,28 @@ const ExamSimulationPage = () => {
     return map;
   }, [session]);
 
-  const effectiveIndex = useMemo(() => {
-    if (!session) return 0;
-    if (session.strictNavigation) {
-      return Number(session.currentQuestionIndex || 0);
-    }
-    return currentIndex;
-  }, [session, currentIndex]);
+  const questions = session?.questions || [];
+  const currentQuestion = questions[currentQuestionIndex] || null;
 
-  const currentQuestion = session?.questions?.[effectiveIndex] || null;
+  useEffect(() => {
+    setCurrentQuestionIndex(0);
+  }, [questions]);
+
+  useEffect(() => {
+    if (!session || !session.strictNavigation) return;
+    setCurrentQuestionIndex(Number(session.currentQuestionIndex || 0));
+  }, [session]);
+
+  useEffect(() => {
+    if (!session || !session.strictNavigation || !currentQuestion) return;
+    console.log('Current Index:', currentQuestionIndex);
+  }, [currentQuestionIndex, session, currentQuestion]);
 
   useEffect(() => {
     if (!session) return;
-    const preselected = responsesMap.has(effectiveIndex) ? responsesMap.get(effectiveIndex) : null;
+    const preselected = responsesMap.has(currentQuestionIndex) ? responsesMap.get(currentQuestionIndex) : null;
     setSelectedAnswer(Number.isInteger(preselected) ? preselected : null);
-  }, [effectiveIndex, responsesMap, session]);
+  }, [currentQuestionIndex, responsesMap, session]);
 
   const startSimulation = async () => {
     setError('');
@@ -120,7 +127,7 @@ const ExamSimulationPage = () => {
 
       const { data } = await api.post('/exams/sessions', payload);
       setSession(data);
-      setCurrentIndex(0);
+      setCurrentQuestionIndex(0);
       setSelectedAnswer(null);
       setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
     } catch (err) {
@@ -128,7 +135,7 @@ const ExamSimulationPage = () => {
     }
   };
 
-  const saveAnswer = async (targetIndex = effectiveIndex) => {
+  const saveAnswer = async (targetIndex = currentQuestionIndex) => {
     if (!session || session.status !== 'active') return;
     if (!Number.isInteger(selectedAnswer)) {
       setError('Select an option before saving your answer.');
@@ -144,17 +151,18 @@ const ExamSimulationPage = () => {
       });
       setSession(data);
 
-      if (!data.strictNavigation) {
-        setCurrentIndex(targetIndex);
-      }
+      const nextServerIndex = Number(data.currentQuestionIndex || targetIndex);
+      setCurrentQuestionIndex(nextServerIndex);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to save answer.');
     }
   };
 
   const goToQuestion = (index) => {
-    if (!session || session.strictNavigation || session.status !== 'active') return;
-    setCurrentIndex(index);
+    if (!session || session.status !== 'active') return;
+    if (index < 0 || index >= questions.length) return;
+    if (session.strictNavigation && index > currentQuestionIndex + 1) return;
+    setCurrentQuestionIndex(index);
   };
 
   const submitSimulation = async () => {
@@ -174,18 +182,26 @@ const ExamSimulationPage = () => {
     }
   };
 
-  const nextQuestion = () => {
-    if (!session) return;
-    const nextIndex = Math.min(effectiveIndex + 1, session.questionCount - 1);
-    if (!session.strictNavigation) {
-      setCurrentIndex(nextIndex);
+  const canGoNext = () => {
+    if (!session?.strictNavigation) return true;
+    if (!currentQuestion) return false;
+    return responsesMap.has(currentQuestionIndex);
+  };
+
+  const handleNext = () => {
+    if (!session || !questions.length) return;
+    if (!canGoNext()) return;
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex((prev) => prev + 1);
     }
   };
 
-  const prevQuestion = () => {
-    if (!session || session.strictNavigation) return;
-    const prevIndex = Math.max(effectiveIndex - 1, 0);
-    setCurrentIndex(prevIndex);
+  const handlePrevious = () => {
+    if (!session || !questions.length) return;
+    if (session.strictNavigation) return;
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex((prev) => prev - 1);
+    }
   };
 
   const behaviorText = session?.strictNavigation
@@ -273,7 +289,7 @@ const ExamSimulationPage = () => {
 
           <section className="panel">
             <div className="exam-meta-row">
-              <span>Question {effectiveIndex + 1} / {session.questionCount}</span>
+              <span>Question {currentQuestionIndex + 1} / {session.questionCount}</span>
               <span>Hints: OFF</span>
               <span>Explanations: OFF</span>
             </div>
@@ -303,13 +319,17 @@ const ExamSimulationPage = () => {
             </div>
 
             <div className="exam-action-row">
-              <button className="outline-btn" onClick={prevQuestion} disabled={session.strictNavigation || effectiveIndex === 0}>
+              <button className="outline-btn" onClick={handlePrevious} disabled={session.strictNavigation || currentQuestionIndex === 0}>
                 Previous
               </button>
-              <button className="outline-btn" onClick={() => saveAnswer(effectiveIndex)}>
+              <button className="outline-btn" onClick={() => saveAnswer(currentQuestionIndex)}>
                 Save Answer
               </button>
-              <button className="outline-btn" onClick={nextQuestion} disabled={effectiveIndex >= session.questionCount - 1}>
+              <button
+                className="outline-btn"
+                onClick={handleNext}
+                disabled={currentQuestionIndex === questions.length - 1 || !canGoNext()}
+              >
                 Next
               </button>
               <button className="solid-btn" onClick={submitSimulation} disabled={isSubmitting}>
@@ -324,9 +344,8 @@ const ExamSimulationPage = () => {
               {(session.palette || []).map((entry) => (
                 <button
                   key={entry.index}
-                  className={`palette-btn ${entry.current ? 'current' : ''} ${entry.status}`}
+                  className={`palette-btn ${entry.index === currentQuestionIndex ? 'current' : ''} ${entry.status}`}
                   onClick={() => goToQuestion(entry.index)}
-                  disabled={session.strictNavigation}
                 >
                   {entry.index + 1}
                 </button>
