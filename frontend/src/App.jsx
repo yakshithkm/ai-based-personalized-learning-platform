@@ -8,6 +8,7 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import SessionSummaryPage from './pages/SessionSummaryPage';
 import AdminAnalyticsPage from './pages/AdminAnalyticsPage';
 import ExamSimulationPage from './pages/ExamSimulationPage';
+import ExamSimulationResultPage from './pages/ExamSimulationResultPage';
 
 const App = () => {
   return (
@@ -55,6 +56,17 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <ExamSimulationPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/exam-simulation/result"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ExamSimulationResultPage />
             </Layout>
           </ProtectedRoute>
         }

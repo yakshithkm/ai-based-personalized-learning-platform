@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
 
@@ -18,8 +19,88 @@ const formatTime = (seconds) => {
 };
 
 const getSessionStorageKey = (sessionId, key) => `exam-session:${sessionId}:${key}`;
+const TAB_SWITCH_WARNING_LIMIT = 3;
+
+const initialExamInteractionState = {
+  currentIndex: 0,
+  answers: {},
+  reviewFlags: {},
+  visitedQuestions: {},
+  tabSwitchCount: 0,
+};
+
+const examInteractionReducer = (state, action) => {
+  switch (action.type) {
+    case 'INIT_SESSION_STATE':
+      return {
+        ...state,
+        currentIndex: 0,
+        answers: action.payload.answers || {},
+        reviewFlags: action.payload.reviewFlags || {},
+        visitedQuestions: action.payload.visitedQuestions || {},
+      };
+    case 'SET_CURRENT_INDEX':
+      return {
+        ...state,
+        currentIndex: Math.max(0, Number(action.payload.index || 0)),
+      };
+    case 'NEXT': {
+      const maxIndex = Number(action.payload.maxIndex || 0);
+      const strictNavigation = Boolean(action.payload.strictNavigation);
+      const canAdvance = Boolean(action.payload.canAdvance);
+      if (strictNavigation && !canAdvance) return state;
+      return {
+        ...state,
+        currentIndex: Math.min(state.currentIndex + 1, maxIndex),
+      };
+    }
+    case 'PREVIOUS':
+      return {
+        ...state,
+        currentIndex: Math.max(state.currentIndex - 1, 0),
+      };
+    case 'SET_ANSWER':
+      return {
+        ...state,
+        answers: {
+          ...state.answers,
+          [action.payload.questionId]: action.payload.answerIndex,
+        },
+      };
+    case 'TOGGLE_REVIEW': {
+      const next = { ...state.reviewFlags };
+      if (next[action.payload.questionId]) {
+        delete next[action.payload.questionId];
+      } else {
+        next[action.payload.questionId] = true;
+      }
+      return {
+        ...state,
+        reviewFlags: next,
+      };
+    }
+    case 'MARK_VISITED':
+      return {
+        ...state,
+        visitedQuestions: {
+          ...state.visitedQuestions,
+          [action.payload.questionId]: true,
+        },
+      };
+    case 'INCREMENT_TAB_SWITCH':
+      return {
+        ...state,
+        tabSwitchCount: state.tabSwitchCount + 1,
+      };
+    case 'RESET':
+      return initialExamInteractionState;
+    default:
+      return state;
+  }
+};
 
 const ExamSimulationPage = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const userExam = (user?.targetExam || user?.exam || 'NEET').trim().toUpperCase();
 
@@ -29,14 +110,14 @@ const ExamSimulationPage = () => {
   const [strictNavigation, setStrictNavigation] = useState(true);
 
   const [session, setSession] = useState(null);
-  const [result, setResult] = useState(null);
   const [timeLeftSec, setTimeLeftSec] = useState(0);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [localAnswers, setLocalAnswers] = useState({});
-  const [markedForReview, setMarkedForReview] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [tabWarning, setTabWarning] = useState('');
+
+  const [examState, dispatch] = useReducer(examInteractionReducer, initialExamInteractionState);
+  const saveDebounceRef = useRef(null);
+  const pendingSaveRef = useRef(null);
 
   const allowedSectionSubjects = useMemo(
     () => SECTION_SUBJECT_OPTIONS[examType] || SECTION_SUBJECT_OPTIONS.NEET,
@@ -65,14 +146,23 @@ const ExamSimulationPage = () => {
   }, [session]);
 
   useEffect(() => {
-    if (!session || session.status !== 'active' || timeLeftSec > 0 || isSubmitting || result) return;
+    if (!session || session.status !== 'active' || timeLeftSec > 0 || isSubmitting) return;
 
     const autoSubmit = async () => {
       try {
         setIsSubmitting(true);
         const { data } = await api.post(`/exams/sessions/${session.sessionId}/submit`);
-        setResult(data);
         setSession((prev) => (prev ? { ...prev, status: 'expired', submittedAt: data.submittedAt } : prev));
+        navigate('/exam-simulation/result', {
+          replace: true,
+          state: {
+            result: data,
+            sessionMeta: {
+              examType: session.examType,
+              mode: session.mode,
+            },
+          },
+        });
       } catch (err) {
         setError(err?.response?.data?.message || 'Auto-submit failed. Please submit manually.');
       } finally {
@@ -81,81 +171,133 @@ const ExamSimulationPage = () => {
     };
 
     autoSubmit();
-  }, [timeLeftSec, session, isSubmitting, result]);
-
-  const responsesMap = useMemo(() => {
-    const map = new Map();
-    (session?.responses || []).forEach((entry) => {
-      map.set(entry.questionIndex, entry.selectedAnswerIndex);
-    });
-    return map;
-  }, [session]);
+  }, [timeLeftSec, session, isSubmitting, navigate]);
 
   const questions = session?.questions || [];
-  const currentQuestion = questions[currentIndex] || null;
+  const currentQuestion = questions[examState.currentIndex] || null;
+  const selectedAnswer = currentQuestion ? examState.answers[currentQuestion._id] : null;
+  const inputsDisabled = !session || session.status !== 'active' || timeLeftSec <= 0 || isSubmitting;
 
-  const getAnsweredValueByIndex = (index) => {
+  const getAnswerByIndex = (index) => {
     const question = questions[index];
     if (!question) return undefined;
-    const local = localAnswers[question._id];
-    if (Number.isInteger(local)) return local;
-    return responsesMap.get(index);
+    return examState.answers[question._id];
+  };
+
+  const flushPendingSave = async () => {
+    const pending = pendingSaveRef.current;
+    if (!pending || !session || session.status !== 'active') return;
+    pendingSaveRef.current = null;
+
+    try {
+      const { data } = await api.patch(`/exams/sessions/${session.sessionId}/answer`, {
+        questionIndex: pending.questionIndex,
+        selectedAnswerIndex: pending.answerIndex,
+        timeTakenSec: 0,
+      });
+      setSession(data);
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Failed to save answer.');
+    }
+  };
+
+  const queueAnswerSave = (questionIndex, answerIndex) => {
+    pendingSaveRef.current = { questionIndex, answerIndex };
+    if (saveDebounceRef.current) {
+      clearTimeout(saveDebounceRef.current);
+    }
+
+    saveDebounceRef.current = setTimeout(() => {
+      flushPendingSave();
+    }, 300);
   };
 
   const answeredByIndex = useMemo(
     () =>
       questions.reduce((acc, question, index) => {
-        acc[index] = Number.isInteger(getAnsweredValueByIndex(index));
+        acc[index] = Number.isInteger(examState.answers[question._id]);
         return acc;
       }, {}),
-    [questions, responsesMap, localAnswers]
+    [questions, examState.answers]
   );
 
   useEffect(() => {
-    setCurrentIndex(0);
-  }, [session?.sessionId]);
-
-  useEffect(() => {
     if (!session?.sessionId) {
-      setLocalAnswers({});
-      setMarkedForReview({});
+      dispatch({ type: 'RESET' });
       return;
     }
 
-    const answerRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'answers'));
-    const reviewRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'review'));
+    const serverAnswerMap = (session.responses || {}).reduce
+      ? session.responses.reduce((acc, entry) => {
+          if (Number.isInteger(entry.selectedAnswerIndex)) {
+            const question = questions[entry.questionIndex];
+            if (question?._id) {
+              acc[question._id] = entry.selectedAnswerIndex;
+            }
+          }
+          return acc;
+        }, {})
+      : {};
 
-    setLocalAnswers(answerRaw ? JSON.parse(answerRaw) : {});
-    setMarkedForReview(reviewRaw ? JSON.parse(reviewRaw) : {});
+    const answerRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'answers'));
+    const reviewRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'reviewFlags'));
+    const visitedRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'visitedQuestions'));
+
+    const storedAnswers = answerRaw ? JSON.parse(answerRaw) : {};
+    const storedReviewFlags = reviewRaw ? JSON.parse(reviewRaw) : {};
+    const storedVisited = visitedRaw ? JSON.parse(visitedRaw) : {};
+
+    dispatch({
+      type: 'INIT_SESSION_STATE',
+      payload: {
+        answers: {
+          ...serverAnswerMap,
+          ...storedAnswers,
+        },
+        reviewFlags: storedReviewFlags,
+        visitedQuestions: storedVisited,
+      },
+    });
+    setTabWarning('');
   }, [session?.sessionId]);
 
   useEffect(() => {
     if (!session?.sessionId) return;
-    localStorage.setItem(getSessionStorageKey(session.sessionId, 'answers'), JSON.stringify(localAnswers));
-  }, [localAnswers, session?.sessionId]);
+    localStorage.setItem(getSessionStorageKey(session.sessionId, 'answers'), JSON.stringify(examState.answers));
+  }, [examState.answers, session?.sessionId]);
 
   useEffect(() => {
     if (!session?.sessionId) return;
-    localStorage.setItem(getSessionStorageKey(session.sessionId, 'review'), JSON.stringify(markedForReview));
-  }, [markedForReview, session?.sessionId]);
+    localStorage.setItem(
+      getSessionStorageKey(session.sessionId, 'reviewFlags'),
+      JSON.stringify(examState.reviewFlags)
+    );
+  }, [examState.reviewFlags, session?.sessionId]);
 
   useEffect(() => {
-    if (!session || !session.strictNavigation) return;
-    setCurrentIndex(Number(session.currentQuestionIndex || 0));
-  }, [session]);
+    if (!session?.sessionId) return;
+    localStorage.setItem(
+      getSessionStorageKey(session.sessionId, 'visitedQuestions'),
+      JSON.stringify(examState.visitedQuestions)
+    );
+  }, [examState.visitedQuestions, session?.sessionId]);
 
   useEffect(() => {
-    console.log('Current Index:', currentIndex);
-  }, [currentIndex]);
+    if (!currentQuestion?._id) return;
+    dispatch({
+      type: 'MARK_VISITED',
+      payload: {
+        questionId: currentQuestion._id,
+      },
+    });
+  }, [currentQuestion?._id]);
 
   useEffect(() => {
-    if (!session || !currentQuestion) return;
-    const preselected = getAnsweredValueByIndex(currentIndex);
-    setSelectedAnswer(Number.isInteger(preselected) ? preselected : null);
-  }, [currentIndex, responsesMap, localAnswers, session, currentQuestion]);
+    console.log('Current Index:', examState.currentIndex);
+  }, [examState.currentIndex]);
 
   useEffect(() => {
-    if (!session || session.status !== 'active' || result) return undefined;
+    if (!session || session.status !== 'active') return undefined;
 
     const onBeforeUnload = (event) => {
       event.preventDefault();
@@ -164,11 +306,39 @@ const ExamSimulationPage = () => {
 
     window.addEventListener('beforeunload', onBeforeUnload);
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
-  }, [session, result]);
+  }, [session]);
+
+  useEffect(() => {
+    if (!session || session.status !== 'active') return undefined;
+
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== 'hidden') return;
+
+      const nextCount = examState.tabSwitchCount + 1;
+      dispatch({ type: 'INCREMENT_TAB_SWITCH' });
+      if (nextCount > TAB_SWITCH_WARNING_LIMIT) {
+        setTabWarning(
+          `You switched tabs ${nextCount} times. Stay on this tab to avoid invalidating the simulation.`
+        );
+      }
+    };
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', onVisibilityChange);
+  }, [session, examState.tabSwitchCount]);
+
+  useEffect(
+    () => () => {
+      if (saveDebounceRef.current) {
+        clearTimeout(saveDebounceRef.current);
+      }
+    },
+    []
+  );
 
   const startSimulation = async () => {
     setError('');
-    setResult(null);
+    setTabWarning('');
 
     try {
       const payload = {
@@ -183,55 +353,23 @@ const ExamSimulationPage = () => {
 
       const { data } = await api.post('/exams/sessions', payload);
       setSession(data);
-      setCurrentIndex(0);
-      setSelectedAnswer(null);
-      setLocalAnswers({});
-      setMarkedForReview({});
       setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to start exam simulation.');
     }
   };
 
-  const saveAnswer = async (targetIndex = currentIndex, answerIndex = selectedAnswer) => {
-    if (!session || session.status !== 'active') return;
-    if (!Number.isInteger(answerIndex)) {
-      setError('Select an option before saving your answer.');
-      return;
-    }
-
-    const question = questions[targetIndex];
-    if (!question) return;
-
-    setLocalAnswers((prev) => ({
-      ...prev,
-      [question._id]: answerIndex,
-    }));
-
-    try {
-      setError('');
-      const { data } = await api.patch(`/exams/sessions/${session.sessionId}/answer`, {
-        questionIndex: targetIndex,
-        selectedAnswerIndex: answerIndex,
-        timeTakenSec: 0,
-      });
-      setSession(data);
-
-      const nextServerIndex = Number(data.currentQuestionIndex || targetIndex);
-      setCurrentIndex(nextServerIndex);
-    } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to save answer.');
-    }
-  };
-
   const goToQuestion = (index) => {
-    if (!session || session.status !== 'active') return;
+    if (inputsDisabled) return;
     if (index < 0 || index >= questions.length) return;
     if (session.strictNavigation) {
-      if (!canGoNext() && index > currentIndex) return;
-      if (index > currentIndex + 1) return;
+      if (!canGoNext() && index > examState.currentIndex) return;
+      if (index > examState.currentIndex + 1) return;
     }
-    setCurrentIndex(index);
+    dispatch({
+      type: 'SET_CURRENT_INDEX',
+      payload: { index },
+    });
   };
 
   const goToFirstUnanswered = () => {
@@ -242,14 +380,11 @@ const ExamSimulationPage = () => {
 
   const toggleMarkForReview = () => {
     if (!currentQuestion) return;
-    setMarkedForReview((prev) => {
-      const next = { ...prev };
-      if (next[currentQuestion._id]) {
-        delete next[currentQuestion._id];
-      } else {
-        next[currentQuestion._id] = true;
-      }
-      return next;
+    dispatch({
+      type: 'TOGGLE_REVIEW',
+      payload: {
+        questionId: currentQuestion._id,
+      },
     });
   };
 
@@ -260,9 +395,19 @@ const ExamSimulationPage = () => {
 
     try {
       setIsSubmitting(true);
+      await flushPendingSave();
       const { data } = await api.post(`/exams/sessions/${session.sessionId}/submit`);
-      setResult(data);
       setSession((prev) => (prev ? { ...prev, status: 'submitted', submittedAt: data.submittedAt } : prev));
+      navigate('/exam-simulation/result', {
+        replace: true,
+        state: {
+          result: data,
+          sessionMeta: {
+            examType: session.examType,
+            mode: session.mode,
+          },
+        },
+      });
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to submit exam simulation.');
     } finally {
@@ -273,30 +418,49 @@ const ExamSimulationPage = () => {
   const canGoNext = () => {
     if (!session?.strictNavigation) return true;
     if (!currentQuestion) return false;
-    return Number.isInteger(getAnsweredValueByIndex(currentIndex));
+    return Number.isInteger(selectedAnswer);
   };
 
-  const handleNext = () => {
-    if (!session || !questions.length) return;
-    setCurrentIndex((prev) => {
-      if (session.strictNavigation && !Number.isInteger(getAnsweredValueByIndex(prev))) return prev;
-      return Math.min(prev + 1, questions.length - 1);
+  const handleSaveAndNext = async () => {
+    if (inputsDisabled || !questions.length || !currentQuestion) return;
+    if (!Number.isInteger(selectedAnswer)) {
+      setError('Select an option before moving to the next question.');
+      return;
+    }
+
+    setError('');
+    queueAnswerSave(examState.currentIndex, selectedAnswer);
+
+    dispatch({
+      type: 'NEXT',
+      payload: {
+        maxIndex: questions.length - 1,
+        strictNavigation: session.strictNavigation,
+        canAdvance: canGoNext(),
+      },
     });
   };
 
   const handlePrevious = () => {
-    if (!session || !questions.length) return;
-    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+    if (inputsDisabled || !questions.length) return;
+    dispatch({ type: 'PREVIOUS' });
   };
 
   const handleOptionSelect = (answerIndex) => {
-    if (!Number.isInteger(answerIndex)) return;
-    setSelectedAnswer(answerIndex);
-    saveAnswer(currentIndex, answerIndex);
+    if (!Number.isInteger(answerIndex) || !currentQuestion || inputsDisabled) return;
+    dispatch({
+      type: 'SET_ANSWER',
+      payload: {
+        questionId: currentQuestion._id,
+        answerIndex,
+      },
+    });
+
+    queueAnswerSave(examState.currentIndex, answerIndex);
   };
 
   useEffect(() => {
-    if (!session || session.status !== 'active' || !questions.length || result) return undefined;
+    if (!session || session.status !== 'active' || !questions.length) return undefined;
 
     const onKeyDown = (event) => {
       const activeTag = document.activeElement?.tagName;
@@ -306,7 +470,7 @@ const ExamSimulationPage = () => {
 
       if (event.key === 'ArrowRight') {
         event.preventDefault();
-        handleNext();
+        handleSaveAndNext();
       }
 
       if (event.key === 'ArrowLeft') {
@@ -317,7 +481,7 @@ const ExamSimulationPage = () => {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [session, questions.length, currentIndex, selectedAnswer, result, localAnswers, responsesMap]);
+  }, [session, questions.length, examState.currentIndex, selectedAnswer, examState.answers, isSubmitting, timeLeftSec]);
 
   const behaviorText = session?.strictNavigation
     ? 'Strict navigation enabled: only current question can be answered in sequence.'
@@ -379,6 +543,7 @@ const ExamSimulationPage = () => {
       </section>
 
       {error && <section className="panel error-text">{error}</section>}
+      {tabWarning && <section className="panel error-text">{tabWarning}</section>}
 
       {session?.generationNotice && (
         <section className="panel">
@@ -386,7 +551,7 @@ const ExamSimulationPage = () => {
         </section>
       )}
 
-      {session && !result && (
+      {session && (
         <>
           <section className="panel exam-live-header">
             <div>
@@ -404,13 +569,13 @@ const ExamSimulationPage = () => {
 
           <section className="panel">
             <div className="exam-meta-row">
-              <span>Question {currentIndex + 1} / {session.questionCount}</span>
-              <span className="progress-pill">Question {currentIndex + 1} / {questions.length || session.questionCount}</span>
+              <span>Question {examState.currentIndex + 1} / {session.questionCount}</span>
+              <span className="progress-pill">Question {examState.currentIndex + 1} / {questions.length || session.questionCount}</span>
               <span>Hints: OFF</span>
               <span>Explanations: OFF</span>
             </div>
 
-            <div className="exam-question-card question-transition" key={currentQuestion?._id || currentIndex}>
+            <div className="exam-question-card question-transition" key={currentQuestion?._id || examState.currentIndex}>
               <h3>{currentQuestion?.subject} • {currentQuestion?.topic}</h3>
               <div className="exam-question-tags">
                 <span className={`exam-tag-chip ${currentQuestion?.isPreviousYear ? 'pyq' : 'mock'}`}>
@@ -427,6 +592,7 @@ const ExamSimulationPage = () => {
                     key={`${currentQuestion?._id}-${idx}`}
                     className={`option-btn ${selectedAnswer === idx ? 'selected' : ''}`}
                     onClick={() => handleOptionSelect(idx)}
+                    disabled={inputsDisabled}
                   >
                     {option}
                   </button>
@@ -435,26 +601,27 @@ const ExamSimulationPage = () => {
             </div>
 
             <div className="exam-action-row">
-              <button className="outline-btn" onClick={handlePrevious} disabled={currentIndex === 0}>
+              <button className="outline-btn" onClick={handlePrevious} disabled={inputsDisabled || examState.currentIndex === 0}>
                 Previous
               </button>
-              <button className="outline-btn" onClick={() => saveAnswer(currentIndex)}>
-                Save Answer
-              </button>
               <button
-                className="outline-btn"
-                onClick={handleNext}
-                disabled={currentIndex === questions.length - 1 || (session.strictNavigation && !Number.isInteger(getAnsweredValueByIndex(currentIndex)))}
+                className="solid-btn"
+                onClick={handleSaveAndNext}
+                disabled={
+                  inputsDisabled ||
+                  examState.currentIndex === questions.length - 1 ||
+                  (session.strictNavigation && !Number.isInteger(selectedAnswer))
+                }
               >
-                Next
+                Save & Next
               </button>
-              <button className="outline-btn" onClick={goToFirstUnanswered}>
+              <button className="outline-btn" onClick={goToFirstUnanswered} disabled={inputsDisabled}>
                 Jump to First Unanswered
               </button>
-              <button className="outline-btn" onClick={toggleMarkForReview}>
-                {currentQuestion && markedForReview[currentQuestion._id] ? 'Unmark Review' : 'Mark for Review'}
+              <button className="outline-btn" onClick={toggleMarkForReview} disabled={inputsDisabled || !currentQuestion}>
+                {currentQuestion && examState.reviewFlags[currentQuestion._id] ? 'Unmark Review' : 'Mark for Review'}
               </button>
-              <button className="solid-btn" onClick={submitSimulation} disabled={isSubmitting}>
+              <button className="outline-btn" onClick={submitSimulation} disabled={inputsDisabled}>
                 Submit Test
               </button>
             </div>
@@ -465,15 +632,24 @@ const ExamSimulationPage = () => {
             <div className="palette-grid">
               {questions.map((question, index) => {
                 const answered = Boolean(answeredByIndex[index]);
-                const marked = Boolean(markedForReview[question._id]);
+                const marked = Boolean(examState.reviewFlags[question._id]);
+                const visited = Boolean(examState.visitedQuestions[question._id]);
+                const paletteState = marked
+                  ? 'Marked for Review'
+                  : answered
+                    ? 'Answered'
+                    : visited
+                      ? 'Visited'
+                      : 'Not Visited';
                 return (
                 <button
                   key={question._id || index}
-                  className={`palette-btn ${index === currentIndex ? 'current' : ''} ${answered ? 'answered' : 'unanswered'} ${marked ? 'review' : ''}`}
+                  className={`palette-btn ${index === examState.currentIndex ? 'current' : ''} ${answered ? 'answered' : ''} ${visited ? 'visited' : ''} ${!answered && !visited ? 'unanswered' : ''} ${marked ? 'review' : ''}`}
                   onClick={() => goToQuestion(index)}
+                  disabled={inputsDisabled}
                 >
                   <span className="palette-number">{index + 1}</span>
-                  <span className="palette-state">{answered ? 'Answered' : 'Not Answered'}</span>
+                  <span className="palette-state">{paletteState}</span>
                   {marked && <span className="palette-review-flag">Review</span>}
                 </button>
                 );
@@ -481,113 +657,6 @@ const ExamSimulationPage = () => {
             </div>
           </section>
         </>
-      )}
-
-      {result && (
-        <section className="panel">
-          <h3>Post-Test Result</h3>
-          <div className="exam-score-grid">
-            <div className="score-box">
-              <span>Total Score</span>
-              <strong>{result.scoreSummary.totalScore} / {result.scoreSummary.maxScore}</strong>
-            </div>
-            <div className="score-box">
-              <span>Percentile Estimate</span>
-              <strong>{result.scoreSummary.percentileEstimate}%</strong>
-            </div>
-            <div className="score-box">
-              <span>Estimated Rank Range</span>
-              <strong>
-                {result.scoreSummary.rankRange.low} - {result.scoreSummary.rankRange.high}
-              </strong>
-            </div>
-          </div>
-
-          <div className="exam-interpretation-box">
-            <h4>Score Interpretation</h4>
-            <p>{result.scoreInterpretation?.message}</p>
-            <p>{result.scoreInterpretation?.rankMessage}</p>
-            <p>{result.scoreInterpretation?.strengthWeaknessMessage}</p>
-            <p>{result.scoreInterpretation?.whyThisRank}</p>
-            <p>{result.scoreInterpretation?.howScoreCompares}</p>
-            <p>
-              Confidence: {result.scoreInterpretation?.confidenceLevel || 'medium'}
-              {' '}({result.scoreInterpretation?.confidenceReason})
-            </p>
-          </div>
-
-          <div className="exam-interpretation-box">
-            <h4>Blueprint Credibility</h4>
-            {(result.blueprintDiagnostics?.warnings || []).length > 0 && (
-              <p>
-                Limited question availability detected. Generated a slightly adjusted mock test.
-              </p>
-            )}
-            <p>
-              PYQ share: {result.blueprintDiagnostics?.pyqSharePct ?? 0}%
-              {' '}({result.blueprintDiagnostics?.pyqCount ?? 0} questions)
-            </p>
-            <p>
-              Requested vs actual questions: {result.blueprintDiagnostics?.expectedTotal ?? result.scoreSummary?.maxScore / 4}
-              {' '}requested, {result.blueprintDiagnostics?.actualTotal ?? result.scoreSummary?.maxScore / 4} generated.
-            </p>
-            <p>
-              Question mix: PYQ {result.blueprintDiagnostics?.pyqSharePct ?? 0}%,
-              {' '}Conceptual {result.blueprintDiagnostics?.yearTagMix?.Conceptual || 0} / {result.scoreSummary?.maxScore ? Math.round((result.blueprintDiagnostics?.yearTagMix?.Conceptual || 0) * 100 / (result.scoreSummary.maxScore / 4)) : 0}%
-            </p>
-            <p>
-              Subject share: {Object.entries(result.blueprintDiagnostics?.subjectSharePct || {})
-                .map(([subject, share]) => `${subject} ${share}%`)
-                .join(' | ')}
-            </p>
-            <p>
-              Simulated rank based on {result.scoreSummary?.totalCandidates || 0} candidates.
-            </p>
-          </div>
-
-          <div className="exam-result-split">
-            <div>
-              <h4>Subject Analysis</h4>
-              {(result.postTestAnalysis.accuracyPerSubject || []).map((row) => (
-                <p key={row.subject}>
-                  {row.subject}: accuracy {row.accuracy}% ({row.attempted}/{row.total})
-                </p>
-              ))}
-            </div>
-
-            <div>
-              <h4>Time Spent</h4>
-              {(result.postTestAnalysis.timeSpentPerSubject || []).map((row) => (
-                <p key={row.subject}>
-                  {row.subject}: {Math.round(row.timeSpentSec)}s total, {Math.round(row.avgTimePerAttemptSec)}s avg/attempt
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div className="exam-result-split">
-            <div>
-              <h4>Top Mistakes</h4>
-              {(result.postTestAnalysis.topMistakes || []).length === 0 && <p>No major repeated mistake pattern found.</p>}
-              {(result.postTestAnalysis.topMistakes || []).map((item) => (
-                <p key={`${item.subject}-${item.concept}`}>
-                  {item.subject} - {item.concept}: {item.count} wrong
-                </p>
-              ))}
-            </div>
-
-            <div>
-              <h4>Improvement Projection</h4>
-              <p>{result.postTestAnalysis.improvementProjection?.message}</p>
-              <h4>Adaptive Follow-Up</h4>
-              {(result.adaptiveFollowUp.nextPracticePlan || []).map((item) => (
-                <p key={`${item.type}-${item.label}`}>
-                  {item.label}: {item.reason}
-                </p>
-              ))}
-            </div>
-          </div>
-        </section>
       )}
     </div>
   );
