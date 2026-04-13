@@ -1,6 +1,7 @@
 const {
   createExamSession,
   getExamSessionState,
+  getLatestActiveExamSessionState,
   submitAnswer,
   submitExamSession,
 } = require('../services/examSimulationService');
@@ -32,6 +33,21 @@ const getSessionState = async (req, res, next) => {
     });
 
     return res.json(data);
+  } catch (error) {
+    res.status(error.statusCode || 400);
+    return next(error);
+  }
+};
+
+const getLatestActiveSessionState = async (req, res, next) => {
+  try {
+    const data = await getLatestActiveExamSessionState({
+      userId: req.user._id,
+    });
+
+    return res.json({
+      session: data,
+    });
   } catch (error) {
     res.status(error.statusCode || 400);
     return next(error);
@@ -74,6 +90,7 @@ const finalizeExamSession = async (req, res, next) => {
 module.exports = {
   startExamSession,
   getSessionState,
+  getLatestActiveSessionState,
   submitSessionAnswer,
   finalizeExamSession,
 };

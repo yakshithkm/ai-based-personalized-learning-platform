@@ -954,6 +954,20 @@ const getExamSessionState = async ({ userId, sessionId }) => {
   return serializeSessionState(refreshed);
 };
 
+const getLatestActiveExamSessionState = async ({ userId }) => {
+  const session = await ExamSession.findOne({ user: userId, status: 'active' }).sort({ createdAt: -1 });
+  if (!session) {
+    return null;
+  }
+
+  const refreshed = await autoExpireIfNeeded(session);
+  if (refreshed.status !== 'active') {
+    return null;
+  }
+
+  return serializeSessionState(refreshed);
+};
+
 const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIndex, timeTakenSec = 0 }) => {
   const session = await ExamSession.findOne({ _id: sessionId, user: userId });
   if (!session) {
@@ -1397,6 +1411,7 @@ module.exports = {
   SCORE_RULES,
   createExamSession,
   getExamSessionState,
+  getLatestActiveExamSessionState,
   submitAnswer,
   submitExamSession,
 };

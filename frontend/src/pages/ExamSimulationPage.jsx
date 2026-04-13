@@ -19,6 +19,7 @@ const formatTime = (seconds) => {
 };
 
 const getSessionStorageKey = (sessionId, key) => `exam-session:${sessionId}:${key}`;
+const ACTIVE_SESSION_STORAGE_KEY = 'exam-active-session-id';
 const TAB_SWITCH_WARNING_LIMIT = 3;
 
 const initialNavigationState = {
@@ -176,6 +177,40 @@ const ExamSimulationPage = () => {
   }, [mode, sectionSubject, allowedSectionSubjects]);
 
   useEffect(() => {
+    if (session) return;
+
+    const restoreSession = async () => {
+      const storedSessionId = localStorage.getItem(ACTIVE_SESSION_STORAGE_KEY);
+
+      if (storedSessionId) {
+        try {
+          const { data } = await api.get(`/exams/sessions/${storedSessionId}`);
+          if (data?.status === 'active') {
+            setSession(data);
+            setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
+            return;
+          }
+        } catch (error) {
+          localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
+        }
+      }
+
+      try {
+        const { data } = await api.get('/exams/sessions/active/latest');
+        if (data?.session) {
+          setSession(data.session);
+          setTimeLeftSec(Number(data.session.timeLeftSec || data.session.timeLimitSec || 0));
+          localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, data.session.sessionId);
+        }
+      } catch (error) {
+        // No active session to restore.
+      }
+    };
+
+    restoreSession();
+  }, [session]);
+
+  useEffect(() => {
     if (!session || session.status !== 'active') return undefined;
 
     const tick = () => {
@@ -206,12 +241,14 @@ const ExamSimulationPage = () => {
           replace: true,
           state: {
             result: data,
+            sessionId: session.sessionId,
             sessionMeta: {
               examType: session.examType,
               mode: session.mode,
             },
           },
         });
+        localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
       } catch (err) {
         setError(err?.response?.data?.message || 'Auto-submit failed. Please submit manually.');
         submitTriggeredRef.current = false;
@@ -348,6 +385,8 @@ const ExamSimulationPage = () => {
       return;
     }
 
+    localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, session.sessionId);
+
     const serverAnswerMap = (session.responses || {}).reduce
       ? session.responses.reduce((acc, entry) => {
           if (Number.isInteger(entry.selectedAnswerIndex)) {
@@ -363,10 +402,12 @@ const ExamSimulationPage = () => {
     const answerRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'answers'));
     const reviewRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'reviewFlags'));
     const visitedRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'visitedQuestions'));
+    const currentIndexRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'currentIndex'));
 
     const storedAnswers = answerRaw ? JSON.parse(answerRaw) : {};
     const storedReviewFlags = reviewRaw ? JSON.parse(reviewRaw) : {};
     const storedVisited = visitedRaw ? JSON.parse(visitedRaw) : {};
+    const parsedStoredIndex = Number(currentIndexRaw);
 
     dispatchAnswer({
       type: 'INIT_ANSWERS',
@@ -384,11 +425,25 @@ const ExamSimulationPage = () => {
         visitedQuestions: storedVisited,
       },
     });
-    dispatchNavigation({ type: 'SET_INDEX', payload: { index: 0 } });
+    const restoredIndex = session.strictNavigation
+      ? Number(session.currentQuestionIndex || 0)
+      : Number.isInteger(parsedStoredIndex)
+        ? Math.min(Math.max(parsedStoredIndex, 0), Math.max((session.questionCount || 1) - 1, 0))
+        : Number(session.currentQuestionIndex || 0);
+
+    dispatchNavigation({ type: 'SET_INDEX', payload: { index: restoredIndex } });
     setTabWarning('');
     submitTriggeredRef.current = false;
     setSubmitLocked(false);
   }, [session?.sessionId]);
+
+  useEffect(() => {
+    if (!session?.sessionId) return;
+    localStorage.setItem(
+      getSessionStorageKey(session.sessionId, 'currentIndex'),
+      String(navigationState.currentIndex)
+    );
+  }, [session?.sessionId, navigationState.currentIndex]);
 
   useEffect(() => {
     if (!session?.sessionId) return;
@@ -483,6 +538,7 @@ const ExamSimulationPage = () => {
       const { data } = await api.post('/exams/sessions', payload);
       setSession(data);
       setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
+      localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, data.sessionId);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to start exam simulation.');
     }
@@ -547,6 +603,7 @@ const ExamSimulationPage = () => {
           },
         },
       });
+      localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to submit exam simulation.');
       submitTriggeredRef.current = false;
