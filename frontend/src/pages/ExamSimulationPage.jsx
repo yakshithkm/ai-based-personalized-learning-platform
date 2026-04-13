@@ -21,43 +21,51 @@ const formatTime = (seconds) => {
 const getSessionStorageKey = (sessionId, key) => `exam-session:${sessionId}:${key}`;
 const TAB_SWITCH_WARNING_LIMIT = 3;
 
-const initialExamInteractionState = {
+const initialNavigationState = {
   currentIndex: 0,
-  answers: {},
-  reviewFlags: {},
-  visitedQuestions: {},
-  tabSwitchCount: 0,
 };
 
-const examInteractionReducer = (state, action) => {
+const navigationReducer = (state, action) => {
   switch (action.type) {
-    case 'INIT_SESSION_STATE':
-      return {
-        ...state,
-        currentIndex: 0,
-        answers: action.payload.answers || {},
-        reviewFlags: action.payload.reviewFlags || {},
-        visitedQuestions: action.payload.visitedQuestions || {},
-      };
-    case 'SET_CURRENT_INDEX':
+    case 'RESET':
+      return initialNavigationState;
+    case 'SET_INDEX':
       return {
         ...state,
         currentIndex: Math.max(0, Number(action.payload.index || 0)),
       };
-    case 'NEXT': {
-      const maxIndex = Number(action.payload.maxIndex || 0);
-      const strictNavigation = Boolean(action.payload.strictNavigation);
-      const canAdvance = Boolean(action.payload.canAdvance);
-      if (strictNavigation && !canAdvance) return state;
-      return {
-        ...state,
-        currentIndex: Math.min(state.currentIndex + 1, maxIndex),
-      };
-    }
     case 'PREVIOUS':
       return {
         ...state,
         currentIndex: Math.max(state.currentIndex - 1, 0),
+      };
+    case 'NEXT':
+      return {
+        ...state,
+        currentIndex: Math.min(state.currentIndex + 1, Number(action.payload.maxIndex || 0)),
+      };
+    default:
+      return state;
+  }
+};
+
+const initialAnswerState = {
+  answers: {},
+  isSaving: false,
+  hasPendingSync: false,
+  syncWarning: '',
+};
+
+const answerReducer = (state, action) => {
+  switch (action.type) {
+    case 'RESET':
+      return initialAnswerState;
+    case 'INIT_ANSWERS':
+      return {
+        ...state,
+        answers: action.payload.answers || {},
+        hasPendingSync: false,
+        syncWarning: '',
       };
     case 'SET_ANSWER':
       return {
@@ -66,6 +74,38 @@ const examInteractionReducer = (state, action) => {
           ...state.answers,
           [action.payload.questionId]: action.payload.answerIndex,
         },
+      };
+    case 'SET_SAVING':
+      return {
+        ...state,
+        isSaving: Boolean(action.payload.isSaving),
+      };
+    case 'SET_SYNC_WARNING':
+      return {
+        ...state,
+        hasPendingSync: Boolean(action.payload.hasPendingSync),
+        syncWarning: action.payload.message || '',
+      };
+    default:
+      return state;
+  }
+};
+
+const initialMetaState = {
+  reviewFlags: {},
+  visitedQuestions: {},
+  tabSwitchCount: 0,
+};
+
+const metaReducer = (state, action) => {
+  switch (action.type) {
+    case 'RESET':
+      return initialMetaState;
+    case 'INIT_META':
+      return {
+        ...state,
+        reviewFlags: action.payload.reviewFlags || {},
+        visitedQuestions: action.payload.visitedQuestions || {},
       };
     case 'TOGGLE_REVIEW': {
       const next = { ...state.reviewFlags };
@@ -92,8 +132,6 @@ const examInteractionReducer = (state, action) => {
         ...state,
         tabSwitchCount: state.tabSwitchCount + 1,
       };
-    case 'RESET':
-      return initialExamInteractionState;
     default:
       return state;
   }
@@ -112,12 +150,18 @@ const ExamSimulationPage = () => {
   const [session, setSession] = useState(null);
   const [timeLeftSec, setTimeLeftSec] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitLocked, setSubmitLocked] = useState(false);
   const [error, setError] = useState('');
   const [tabWarning, setTabWarning] = useState('');
 
-  const [examState, dispatch] = useReducer(examInteractionReducer, initialExamInteractionState);
+  const [navigationState, dispatchNavigation] = useReducer(navigationReducer, initialNavigationState);
+  const [answerState, dispatchAnswer] = useReducer(answerReducer, initialAnswerState);
+  const [metaState, dispatchMeta] = useReducer(metaReducer, initialMetaState);
+
   const saveDebounceRef = useRef(null);
-  const pendingSaveRef = useRef(null);
+  const saveQueueRef = useRef(new Map());
+  const inFlightSavesRef = useRef([]);
+  const submitTriggeredRef = useRef(false);
 
   const allowedSectionSubjects = useMemo(
     () => SECTION_SUBJECT_OPTIONS[examType] || SECTION_SUBJECT_OPTIONS.NEET,
@@ -146,11 +190,16 @@ const ExamSimulationPage = () => {
   }, [session]);
 
   useEffect(() => {
-    if (!session || session.status !== 'active' || timeLeftSec > 0 || isSubmitting) return;
+    if (!session || session.status !== 'active' || timeLeftSec > 0 || isSubmitting || submitLocked) return;
 
     const autoSubmit = async () => {
       try {
+        if (submitTriggeredRef.current) return;
+        submitTriggeredRef.current = true;
+        setSubmitLocked(true);
         setIsSubmitting(true);
+        await flushSaveQueue();
+        await Promise.all(inFlightSavesRef.current);
         const { data } = await api.post(`/exams/sessions/${session.sessionId}/submit`);
         setSession((prev) => (prev ? { ...prev, status: 'expired', submittedAt: data.submittedAt } : prev));
         navigate('/exam-simulation/result', {
@@ -165,44 +214,112 @@ const ExamSimulationPage = () => {
         });
       } catch (err) {
         setError(err?.response?.data?.message || 'Auto-submit failed. Please submit manually.');
+        submitTriggeredRef.current = false;
+        setSubmitLocked(false);
       } finally {
         setIsSubmitting(false);
       }
     };
 
     autoSubmit();
-  }, [timeLeftSec, session, isSubmitting, navigate]);
+  }, [timeLeftSec, session, isSubmitting, submitLocked, navigate]);
 
   const questions = session?.questions || [];
-  const currentQuestion = questions[examState.currentIndex] || null;
-  const selectedAnswer = currentQuestion ? examState.answers[currentQuestion._id] : null;
-  const inputsDisabled = !session || session.status !== 'active' || timeLeftSec <= 0 || isSubmitting;
+  const currentQuestion = questions[navigationState.currentIndex] || null;
+  const selectedAnswer = currentQuestion ? answerState.answers[currentQuestion._id] : null;
+  const inputsDisabled = !session || session.status !== 'active' || timeLeftSec <= 0 || isSubmitting || submitLocked;
 
   const getAnswerByIndex = (index) => {
     const question = questions[index];
     if (!question) return undefined;
-    return examState.answers[question._id];
+    return answerState.answers[question._id];
   };
 
-  const flushPendingSave = async () => {
-    const pending = pendingSaveRef.current;
-    if (!pending || !session || session.status !== 'active') return;
-    pendingSaveRef.current = null;
+  const canMoveForwardTo = (targetIndex) => {
+    if (!session?.strictNavigation) return true;
+    if (targetIndex <= navigationState.currentIndex) return true;
 
-    try {
+    for (let idx = navigationState.currentIndex; idx < targetIndex; idx += 1) {
+      if (!Number.isInteger(getAnswerByIndex(idx))) {
+        console.log('[exam-nav] blocked-forward', {
+          from: navigationState.currentIndex,
+          to: targetIndex,
+          blockedAt: idx,
+        });
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const saveAnswerWithRetry = async ({ questionIndex, answerIndex }) => {
+    const runSave = async () => {
       const { data } = await api.patch(`/exams/sessions/${session.sessionId}/answer`, {
-        questionIndex: pending.questionIndex,
-        selectedAnswerIndex: pending.answerIndex,
+        questionIndex,
+        selectedAnswerIndex: answerIndex,
         timeTakenSec: 0,
       });
       setSession(data);
-    } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to save answer.');
+    };
+
+    try {
+      await runSave();
+      dispatchAnswer({
+        type: 'SET_SYNC_WARNING',
+        payload: {
+          hasPendingSync: false,
+          message: '',
+        },
+      });
+    } catch (firstError) {
+      try {
+        await runSave();
+      } catch (secondError) {
+        console.log('[exam-save] retry-failed', { questionIndex, answerIndex });
+        dispatchAnswer({
+          type: 'SET_SYNC_WARNING',
+          payload: {
+            hasPendingSync: true,
+            message: 'Answer saved locally, sync pending',
+          },
+        });
+      }
     }
   };
 
+  const flushPendingSave = async () => {
+    if (!session || session.status !== 'active') return;
+    if (saveDebounceRef.current) {
+      clearTimeout(saveDebounceRef.current);
+      saveDebounceRef.current = null;
+    }
+
+    const entries = Array.from(saveQueueRef.current.entries()).map(([questionIndex, answerIndex]) => ({
+      questionIndex: Number(questionIndex),
+      answerIndex,
+    }));
+    saveQueueRef.current.clear();
+
+    if (!entries.length) return;
+    dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: true } });
+    console.log('[exam-save] flushing-queue', { size: entries.length });
+
+    const promises = entries.map((entry) => saveAnswerWithRetry(entry));
+    inFlightSavesRef.current.push(...promises);
+    await Promise.all(promises);
+    inFlightSavesRef.current = inFlightSavesRef.current.filter(
+      (promise) => !promises.includes(promise)
+    );
+    dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: false } });
+  };
+
   const queueAnswerSave = (questionIndex, answerIndex) => {
-    pendingSaveRef.current = { questionIndex, answerIndex };
+    saveQueueRef.current.set(Number(questionIndex), answerIndex);
+    console.log('[exam-save] queued', {
+      questionIndex,
+      queueSize: saveQueueRef.current.size,
+    });
+
     if (saveDebounceRef.current) {
       clearTimeout(saveDebounceRef.current);
     }
@@ -215,15 +332,19 @@ const ExamSimulationPage = () => {
   const answeredByIndex = useMemo(
     () =>
       questions.reduce((acc, question, index) => {
-        acc[index] = Number.isInteger(examState.answers[question._id]);
+        acc[index] = Number.isInteger(answerState.answers[question._id]);
         return acc;
       }, {}),
-    [questions, examState.answers]
+    [questions, answerState.answers]
   );
 
   useEffect(() => {
     if (!session?.sessionId) {
-      dispatch({ type: 'RESET' });
+      dispatchNavigation({ type: 'RESET' });
+      dispatchAnswer({ type: 'RESET' });
+      dispatchMeta({ type: 'RESET' });
+      submitTriggeredRef.current = false;
+      setSubmitLocked(false);
       return;
     }
 
@@ -247,44 +368,52 @@ const ExamSimulationPage = () => {
     const storedReviewFlags = reviewRaw ? JSON.parse(reviewRaw) : {};
     const storedVisited = visitedRaw ? JSON.parse(visitedRaw) : {};
 
-    dispatch({
-      type: 'INIT_SESSION_STATE',
+    dispatchAnswer({
+      type: 'INIT_ANSWERS',
       payload: {
         answers: {
           ...serverAnswerMap,
           ...storedAnswers,
         },
+      },
+    });
+    dispatchMeta({
+      type: 'INIT_META',
+      payload: {
         reviewFlags: storedReviewFlags,
         visitedQuestions: storedVisited,
       },
     });
+    dispatchNavigation({ type: 'SET_INDEX', payload: { index: 0 } });
     setTabWarning('');
+    submitTriggeredRef.current = false;
+    setSubmitLocked(false);
   }, [session?.sessionId]);
 
   useEffect(() => {
     if (!session?.sessionId) return;
-    localStorage.setItem(getSessionStorageKey(session.sessionId, 'answers'), JSON.stringify(examState.answers));
-  }, [examState.answers, session?.sessionId]);
+    localStorage.setItem(getSessionStorageKey(session.sessionId, 'answers'), JSON.stringify(answerState.answers));
+  }, [answerState.answers, session?.sessionId]);
 
   useEffect(() => {
     if (!session?.sessionId) return;
     localStorage.setItem(
       getSessionStorageKey(session.sessionId, 'reviewFlags'),
-      JSON.stringify(examState.reviewFlags)
+      JSON.stringify(metaState.reviewFlags)
     );
-  }, [examState.reviewFlags, session?.sessionId]);
+  }, [metaState.reviewFlags, session?.sessionId]);
 
   useEffect(() => {
     if (!session?.sessionId) return;
     localStorage.setItem(
       getSessionStorageKey(session.sessionId, 'visitedQuestions'),
-      JSON.stringify(examState.visitedQuestions)
+      JSON.stringify(metaState.visitedQuestions)
     );
-  }, [examState.visitedQuestions, session?.sessionId]);
+  }, [metaState.visitedQuestions, session?.sessionId]);
 
   useEffect(() => {
     if (!currentQuestion?._id) return;
-    dispatch({
+    dispatchMeta({
       type: 'MARK_VISITED',
       payload: {
         questionId: currentQuestion._id,
@@ -293,8 +422,8 @@ const ExamSimulationPage = () => {
   }, [currentQuestion?._id]);
 
   useEffect(() => {
-    console.log('Current Index:', examState.currentIndex);
-  }, [examState.currentIndex]);
+    console.log('Current Index:', navigationState.currentIndex);
+  }, [navigationState.currentIndex]);
 
   useEffect(() => {
     if (!session || session.status !== 'active') return undefined;
@@ -314,8 +443,8 @@ const ExamSimulationPage = () => {
     const onVisibilityChange = () => {
       if (document.visibilityState !== 'hidden') return;
 
-      const nextCount = examState.tabSwitchCount + 1;
-      dispatch({ type: 'INCREMENT_TAB_SWITCH' });
+      const nextCount = metaState.tabSwitchCount + 1;
+      dispatchMeta({ type: 'INCREMENT_TAB_SWITCH' });
       if (nextCount > TAB_SWITCH_WARNING_LIMIT) {
         setTabWarning(
           `You switched tabs ${nextCount} times. Stay on this tab to avoid invalidating the simulation.`
@@ -325,7 +454,7 @@ const ExamSimulationPage = () => {
 
     document.addEventListener('visibilitychange', onVisibilityChange);
     return () => document.removeEventListener('visibilitychange', onVisibilityChange);
-  }, [session, examState.tabSwitchCount]);
+  }, [session, metaState.tabSwitchCount]);
 
   useEffect(
     () => () => {
@@ -360,14 +489,19 @@ const ExamSimulationPage = () => {
   };
 
   const goToQuestion = (index) => {
+    console.log('[exam-nav] attempt', {
+      from: navigationState.currentIndex,
+      to: index,
+      strict: Boolean(session?.strictNavigation),
+    });
+
     if (inputsDisabled) return;
     if (index < 0 || index >= questions.length) return;
-    if (session.strictNavigation) {
-      if (!canGoNext() && index > examState.currentIndex) return;
-      if (index > examState.currentIndex + 1) return;
+    if (!canMoveForwardTo(index)) {
+      return;
     }
-    dispatch({
-      type: 'SET_CURRENT_INDEX',
+    dispatchNavigation({
+      type: 'SET_INDEX',
       payload: { index },
     });
   };
@@ -380,7 +514,7 @@ const ExamSimulationPage = () => {
 
   const toggleMarkForReview = () => {
     if (!currentQuestion) return;
-    dispatch({
+    dispatchMeta({
       type: 'TOGGLE_REVIEW',
       payload: {
         questionId: currentQuestion._id,
@@ -389,19 +523,24 @@ const ExamSimulationPage = () => {
   };
 
   const submitSimulation = async () => {
-    if (!session || session.status !== 'active') return;
+    if (!session || session.status !== 'active' || isSubmitting || submitLocked) return;
     const ok = window.confirm('Submit test now? You cannot change answers after submission.');
     if (!ok) return;
 
     try {
+      if (submitTriggeredRef.current) return;
+      submitTriggeredRef.current = true;
+      setSubmitLocked(true);
       setIsSubmitting(true);
-      await flushPendingSave();
+      await flushSaveQueue();
+      await Promise.all(inFlightSavesRef.current);
       const { data } = await api.post(`/exams/sessions/${session.sessionId}/submit`);
       setSession((prev) => (prev ? { ...prev, status: 'submitted', submittedAt: data.submittedAt } : prev));
       navigate('/exam-simulation/result', {
         replace: true,
         state: {
           result: data,
+          sessionId: session.sessionId,
           sessionMeta: {
             examType: session.examType,
             mode: session.mode,
@@ -410,9 +549,15 @@ const ExamSimulationPage = () => {
       });
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to submit exam simulation.');
+      submitTriggeredRef.current = false;
+      setSubmitLocked(false);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const flushSaveQueue = async () => {
+    await flushPendingSave();
   };
 
   const canGoNext = () => {
@@ -428,27 +573,30 @@ const ExamSimulationPage = () => {
       return;
     }
 
-    setError('');
-    queueAnswerSave(examState.currentIndex, selectedAnswer);
+    const targetIndex = navigationState.currentIndex + 1;
+    if (!canMoveForwardTo(targetIndex)) {
+      return;
+    }
 
-    dispatch({
+    setError('');
+    queueAnswerSave(navigationState.currentIndex, selectedAnswer);
+
+    dispatchNavigation({
       type: 'NEXT',
       payload: {
         maxIndex: questions.length - 1,
-        strictNavigation: session.strictNavigation,
-        canAdvance: canGoNext(),
       },
     });
   };
 
   const handlePrevious = () => {
     if (inputsDisabled || !questions.length) return;
-    dispatch({ type: 'PREVIOUS' });
+    dispatchNavigation({ type: 'PREVIOUS' });
   };
 
   const handleOptionSelect = (answerIndex) => {
     if (!Number.isInteger(answerIndex) || !currentQuestion || inputsDisabled) return;
-    dispatch({
+    dispatchAnswer({
       type: 'SET_ANSWER',
       payload: {
         questionId: currentQuestion._id,
@@ -456,7 +604,7 @@ const ExamSimulationPage = () => {
       },
     });
 
-    queueAnswerSave(examState.currentIndex, answerIndex);
+    queueAnswerSave(navigationState.currentIndex, answerIndex);
   };
 
   useEffect(() => {
@@ -481,7 +629,7 @@ const ExamSimulationPage = () => {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [session, questions.length, examState.currentIndex, selectedAnswer, examState.answers, isSubmitting, timeLeftSec]);
+  }, [session, questions.length, navigationState.currentIndex, selectedAnswer, answerState.answers, isSubmitting, timeLeftSec, submitLocked]);
 
   const behaviorText = session?.strictNavigation
     ? 'Strict navigation enabled: only current question can be answered in sequence.'
@@ -544,6 +692,7 @@ const ExamSimulationPage = () => {
 
       {error && <section className="panel error-text">{error}</section>}
       {tabWarning && <section className="panel error-text">{tabWarning}</section>}
+      {answerState.syncWarning && <section className="panel error-text">{answerState.syncWarning}</section>}
 
       {session?.generationNotice && (
         <section className="panel">
@@ -569,13 +718,14 @@ const ExamSimulationPage = () => {
 
           <section className="panel">
             <div className="exam-meta-row">
-              <span>Question {examState.currentIndex + 1} / {session.questionCount}</span>
-              <span className="progress-pill">Question {examState.currentIndex + 1} / {questions.length || session.questionCount}</span>
+              <span>Question {navigationState.currentIndex + 1} / {session.questionCount}</span>
+              <span className="progress-pill">Question {navigationState.currentIndex + 1} / {questions.length || session.questionCount}</span>
               <span>Hints: OFF</span>
               <span>Explanations: OFF</span>
+              <span>{answerState.isSaving ? 'Saving...' : 'All changes synced'}</span>
             </div>
 
-            <div className="exam-question-card question-transition" key={currentQuestion?._id || examState.currentIndex}>
+            <div className="exam-question-card question-transition" key={currentQuestion?._id || navigationState.currentIndex}>
               <h3>{currentQuestion?.subject} • {currentQuestion?.topic}</h3>
               <div className="exam-question-tags">
                 <span className={`exam-tag-chip ${currentQuestion?.isPreviousYear ? 'pyq' : 'mock'}`}>
@@ -601,7 +751,7 @@ const ExamSimulationPage = () => {
             </div>
 
             <div className="exam-action-row">
-              <button className="outline-btn" onClick={handlePrevious} disabled={inputsDisabled || examState.currentIndex === 0}>
+              <button className="outline-btn" onClick={handlePrevious} disabled={inputsDisabled || navigationState.currentIndex === 0}>
                 Previous
               </button>
               <button
@@ -609,7 +759,7 @@ const ExamSimulationPage = () => {
                 onClick={handleSaveAndNext}
                 disabled={
                   inputsDisabled ||
-                  examState.currentIndex === questions.length - 1 ||
+                  navigationState.currentIndex === questions.length - 1 ||
                   (session.strictNavigation && !Number.isInteger(selectedAnswer))
                 }
               >
@@ -619,7 +769,7 @@ const ExamSimulationPage = () => {
                 Jump to First Unanswered
               </button>
               <button className="outline-btn" onClick={toggleMarkForReview} disabled={inputsDisabled || !currentQuestion}>
-                {currentQuestion && examState.reviewFlags[currentQuestion._id] ? 'Unmark Review' : 'Mark for Review'}
+                {currentQuestion && metaState.reviewFlags[currentQuestion._id] ? 'Unmark Review' : 'Mark for Review'}
               </button>
               <button className="outline-btn" onClick={submitSimulation} disabled={inputsDisabled}>
                 Submit Test
@@ -632,8 +782,8 @@ const ExamSimulationPage = () => {
             <div className="palette-grid">
               {questions.map((question, index) => {
                 const answered = Boolean(answeredByIndex[index]);
-                const marked = Boolean(examState.reviewFlags[question._id]);
-                const visited = Boolean(examState.visitedQuestions[question._id]);
+                const marked = Boolean(metaState.reviewFlags[question._id]);
+                const visited = Boolean(metaState.visitedQuestions[question._id]);
                 const paletteState = marked
                   ? 'Marked for Review'
                   : answered
@@ -644,7 +794,7 @@ const ExamSimulationPage = () => {
                 return (
                 <button
                   key={question._id || index}
-                  className={`palette-btn ${index === examState.currentIndex ? 'current' : ''} ${answered ? 'answered' : ''} ${visited ? 'visited' : ''} ${!answered && !visited ? 'unanswered' : ''} ${marked ? 'review' : ''}`}
+                  className={`palette-btn ${index === navigationState.currentIndex ? 'current' : ''} ${answered ? 'answered' : ''} ${visited ? 'visited' : ''} ${!answered && !visited ? 'unanswered' : ''} ${marked ? 'review' : ''}`}
                   onClick={() => goToQuestion(index)}
                   disabled={inputsDisabled}
                 >

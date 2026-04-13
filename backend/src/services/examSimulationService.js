@@ -574,6 +574,7 @@ const serializeSessionState = async (session) => {
       ? 'Limited question availability detected. Generated a slightly adjusted mock test.'
       : null,
     blueprintDiagnostics: session.blueprintDiagnostics || null,
+    resultSummary: session.resultSummary || null,
   };
 };
 
