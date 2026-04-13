@@ -17,6 +17,8 @@ const formatTime = (seconds) => {
   return `${withPad(hrs)}:${withPad(mins)}:${withPad(secs)}`;
 };
 
+const getSessionStorageKey = (sessionId, key) => `exam-session:${sessionId}:${key}`;
+
 const ExamSimulationPage = () => {
   const { user } = useAuth();
   const userExam = (user?.targetExam || user?.exam || 'NEET').trim().toUpperCase();
@@ -29,8 +31,10 @@ const ExamSimulationPage = () => {
   const [session, setSession] = useState(null);
   const [result, setResult] = useState(null);
   const [timeLeftSec, setTimeLeftSec] = useState(0);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [localAnswers, setLocalAnswers] = useState({});
+  const [markedForReview, setMarkedForReview] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -88,27 +92,79 @@ const ExamSimulationPage = () => {
   }, [session]);
 
   const questions = session?.questions || [];
-  const currentQuestion = questions[currentQuestionIndex] || null;
+  const currentQuestion = questions[currentIndex] || null;
+
+  const getAnsweredValueByIndex = (index) => {
+    const question = questions[index];
+    if (!question) return undefined;
+    const local = localAnswers[question._id];
+    if (Number.isInteger(local)) return local;
+    return responsesMap.get(index);
+  };
+
+  const answeredByIndex = useMemo(
+    () =>
+      questions.reduce((acc, question, index) => {
+        acc[index] = Number.isInteger(getAnsweredValueByIndex(index));
+        return acc;
+      }, {}),
+    [questions, responsesMap, localAnswers]
+  );
 
   useEffect(() => {
-    setCurrentQuestionIndex(0);
-  }, [questions]);
+    setCurrentIndex(0);
+  }, [session?.sessionId]);
+
+  useEffect(() => {
+    if (!session?.sessionId) {
+      setLocalAnswers({});
+      setMarkedForReview({});
+      return;
+    }
+
+    const answerRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'answers'));
+    const reviewRaw = localStorage.getItem(getSessionStorageKey(session.sessionId, 'review'));
+
+    setLocalAnswers(answerRaw ? JSON.parse(answerRaw) : {});
+    setMarkedForReview(reviewRaw ? JSON.parse(reviewRaw) : {});
+  }, [session?.sessionId]);
+
+  useEffect(() => {
+    if (!session?.sessionId) return;
+    localStorage.setItem(getSessionStorageKey(session.sessionId, 'answers'), JSON.stringify(localAnswers));
+  }, [localAnswers, session?.sessionId]);
+
+  useEffect(() => {
+    if (!session?.sessionId) return;
+    localStorage.setItem(getSessionStorageKey(session.sessionId, 'review'), JSON.stringify(markedForReview));
+  }, [markedForReview, session?.sessionId]);
 
   useEffect(() => {
     if (!session || !session.strictNavigation) return;
-    setCurrentQuestionIndex(Number(session.currentQuestionIndex || 0));
+    setCurrentIndex(Number(session.currentQuestionIndex || 0));
   }, [session]);
 
   useEffect(() => {
-    if (!session || !session.strictNavigation || !currentQuestion) return;
-    console.log('Current Index:', currentQuestionIndex);
-  }, [currentQuestionIndex, session, currentQuestion]);
+    console.log('Current Index:', currentIndex);
+  }, [currentIndex]);
 
   useEffect(() => {
-    if (!session) return;
-    const preselected = responsesMap.has(currentQuestionIndex) ? responsesMap.get(currentQuestionIndex) : null;
+    if (!session || !currentQuestion) return;
+    const preselected = getAnsweredValueByIndex(currentIndex);
     setSelectedAnswer(Number.isInteger(preselected) ? preselected : null);
-  }, [currentQuestionIndex, responsesMap, session]);
+  }, [currentIndex, responsesMap, localAnswers, session, currentQuestion]);
+
+  useEffect(() => {
+    if (!session || session.status !== 'active' || result) return undefined;
+
+    const onBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [session, result]);
 
   const startSimulation = async () => {
     setError('');
@@ -127,32 +183,42 @@ const ExamSimulationPage = () => {
 
       const { data } = await api.post('/exams/sessions', payload);
       setSession(data);
-      setCurrentQuestionIndex(0);
+      setCurrentIndex(0);
       setSelectedAnswer(null);
+      setLocalAnswers({});
+      setMarkedForReview({});
       setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to start exam simulation.');
     }
   };
 
-  const saveAnswer = async (targetIndex = currentQuestionIndex) => {
+  const saveAnswer = async (targetIndex = currentIndex, answerIndex = selectedAnswer) => {
     if (!session || session.status !== 'active') return;
-    if (!Number.isInteger(selectedAnswer)) {
+    if (!Number.isInteger(answerIndex)) {
       setError('Select an option before saving your answer.');
       return;
     }
+
+    const question = questions[targetIndex];
+    if (!question) return;
+
+    setLocalAnswers((prev) => ({
+      ...prev,
+      [question._id]: answerIndex,
+    }));
 
     try {
       setError('');
       const { data } = await api.patch(`/exams/sessions/${session.sessionId}/answer`, {
         questionIndex: targetIndex,
-        selectedAnswerIndex: selectedAnswer,
+        selectedAnswerIndex: answerIndex,
         timeTakenSec: 0,
       });
       setSession(data);
 
       const nextServerIndex = Number(data.currentQuestionIndex || targetIndex);
-      setCurrentQuestionIndex(nextServerIndex);
+      setCurrentIndex(nextServerIndex);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to save answer.');
     }
@@ -161,8 +227,30 @@ const ExamSimulationPage = () => {
   const goToQuestion = (index) => {
     if (!session || session.status !== 'active') return;
     if (index < 0 || index >= questions.length) return;
-    if (session.strictNavigation && index > currentQuestionIndex + 1) return;
-    setCurrentQuestionIndex(index);
+    if (session.strictNavigation) {
+      if (!canGoNext() && index > currentIndex) return;
+      if (index > currentIndex + 1) return;
+    }
+    setCurrentIndex(index);
+  };
+
+  const goToFirstUnanswered = () => {
+    const unansweredIndex = questions.findIndex((_, index) => !answeredByIndex[index]);
+    if (unansweredIndex < 0) return;
+    goToQuestion(unansweredIndex);
+  };
+
+  const toggleMarkForReview = () => {
+    if (!currentQuestion) return;
+    setMarkedForReview((prev) => {
+      const next = { ...prev };
+      if (next[currentQuestion._id]) {
+        delete next[currentQuestion._id];
+      } else {
+        next[currentQuestion._id] = true;
+      }
+      return next;
+    });
   };
 
   const submitSimulation = async () => {
@@ -185,24 +273,51 @@ const ExamSimulationPage = () => {
   const canGoNext = () => {
     if (!session?.strictNavigation) return true;
     if (!currentQuestion) return false;
-    return responsesMap.has(currentQuestionIndex);
+    return Number.isInteger(getAnsweredValueByIndex(currentIndex));
   };
 
   const handleNext = () => {
     if (!session || !questions.length) return;
-    if (!canGoNext()) return;
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
-    }
+    setCurrentIndex((prev) => {
+      if (session.strictNavigation && !Number.isInteger(getAnsweredValueByIndex(prev))) return prev;
+      return Math.min(prev + 1, questions.length - 1);
+    });
   };
 
   const handlePrevious = () => {
     if (!session || !questions.length) return;
-    if (session.strictNavigation) return;
-    if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex((prev) => prev - 1);
-    }
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
+
+  const handleOptionSelect = (answerIndex) => {
+    if (!Number.isInteger(answerIndex)) return;
+    setSelectedAnswer(answerIndex);
+    saveAnswer(currentIndex, answerIndex);
+  };
+
+  useEffect(() => {
+    if (!session || session.status !== 'active' || !questions.length || result) return undefined;
+
+    const onKeyDown = (event) => {
+      const activeTag = document.activeElement?.tagName;
+      if (activeTag === 'INPUT' || activeTag === 'TEXTAREA' || activeTag === 'SELECT') {
+        return;
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        handleNext();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        handlePrevious();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [session, questions.length, currentIndex, selectedAnswer, result, localAnswers, responsesMap]);
 
   const behaviorText = session?.strictNavigation
     ? 'Strict navigation enabled: only current question can be answered in sequence.'
@@ -289,12 +404,13 @@ const ExamSimulationPage = () => {
 
           <section className="panel">
             <div className="exam-meta-row">
-              <span>Question {currentQuestionIndex + 1} / {session.questionCount}</span>
+              <span>Question {currentIndex + 1} / {session.questionCount}</span>
+              <span className="progress-pill">Question {currentIndex + 1} / {questions.length || session.questionCount}</span>
               <span>Hints: OFF</span>
               <span>Explanations: OFF</span>
             </div>
 
-            <div className="exam-question-card">
+            <div className="exam-question-card question-transition" key={currentQuestion?._id || currentIndex}>
               <h3>{currentQuestion?.subject} • {currentQuestion?.topic}</h3>
               <div className="exam-question-tags">
                 <span className={`exam-tag-chip ${currentQuestion?.isPreviousYear ? 'pyq' : 'mock'}`}>
@@ -310,7 +426,7 @@ const ExamSimulationPage = () => {
                   <button
                     key={`${currentQuestion?._id}-${idx}`}
                     className={`option-btn ${selectedAnswer === idx ? 'selected' : ''}`}
-                    onClick={() => setSelectedAnswer(idx)}
+                    onClick={() => handleOptionSelect(idx)}
                   >
                     {option}
                   </button>
@@ -319,18 +435,24 @@ const ExamSimulationPage = () => {
             </div>
 
             <div className="exam-action-row">
-              <button className="outline-btn" onClick={handlePrevious} disabled={session.strictNavigation || currentQuestionIndex === 0}>
+              <button className="outline-btn" onClick={handlePrevious} disabled={currentIndex === 0}>
                 Previous
               </button>
-              <button className="outline-btn" onClick={() => saveAnswer(currentQuestionIndex)}>
+              <button className="outline-btn" onClick={() => saveAnswer(currentIndex)}>
                 Save Answer
               </button>
               <button
                 className="outline-btn"
                 onClick={handleNext}
-                disabled={currentQuestionIndex === questions.length - 1 || !canGoNext()}
+                disabled={currentIndex === questions.length - 1 || (session.strictNavigation && !Number.isInteger(getAnsweredValueByIndex(currentIndex)))}
               >
                 Next
+              </button>
+              <button className="outline-btn" onClick={goToFirstUnanswered}>
+                Jump to First Unanswered
+              </button>
+              <button className="outline-btn" onClick={toggleMarkForReview}>
+                {currentQuestion && markedForReview[currentQuestion._id] ? 'Unmark Review' : 'Mark for Review'}
               </button>
               <button className="solid-btn" onClick={submitSimulation} disabled={isSubmitting}>
                 Submit Test
@@ -341,15 +463,21 @@ const ExamSimulationPage = () => {
           <section className="panel">
             <h3>Question Palette</h3>
             <div className="palette-grid">
-              {(session.palette || []).map((entry) => (
+              {questions.map((question, index) => {
+                const answered = Boolean(answeredByIndex[index]);
+                const marked = Boolean(markedForReview[question._id]);
+                return (
                 <button
-                  key={entry.index}
-                  className={`palette-btn ${entry.index === currentQuestionIndex ? 'current' : ''} ${entry.status}`}
-                  onClick={() => goToQuestion(entry.index)}
+                  key={question._id || index}
+                  className={`palette-btn ${index === currentIndex ? 'current' : ''} ${answered ? 'answered' : 'unanswered'} ${marked ? 'review' : ''}`}
+                  onClick={() => goToQuestion(index)}
                 >
-                  {entry.index + 1}
+                  <span className="palette-number">{index + 1}</span>
+                  <span className="palette-state">{answered ? 'Answered' : 'Not Answered'}</span>
+                  {marked && <span className="palette-review-flag">Review</span>}
                 </button>
-              ))}
+                );
+              })}
             </div>
           </section>
         </>
