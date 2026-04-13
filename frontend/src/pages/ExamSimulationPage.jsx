@@ -2,7 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
 
-const SECTION_SUBJECT_OPTIONS = ['Physics', 'Chemistry', 'Mathematics', 'Biology'];
+const SECTION_SUBJECT_OPTIONS = {
+  NEET: ['Physics', 'Chemistry', 'Biology'],
+  CET: ['Physics', 'Chemistry', 'Mathematics', 'Biology'],
+  JEE: ['Physics', 'Chemistry', 'Mathematics'],
+};
 
 const formatTime = (seconds) => {
   const safe = Math.max(0, Number(seconds || 0));
@@ -29,6 +33,18 @@ const ExamSimulationPage = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+
+  const allowedSectionSubjects = useMemo(
+    () => SECTION_SUBJECT_OPTIONS[examType] || SECTION_SUBJECT_OPTIONS.NEET,
+    [examType]
+  );
+
+  useEffect(() => {
+    if (mode !== 'section-wise') return;
+    if (!allowedSectionSubjects.includes(sectionSubject)) {
+      setSectionSubject(allowedSectionSubjects[0]);
+    }
+  }, [mode, sectionSubject, allowedSectionSubjects]);
 
   useEffect(() => {
     if (!session || session.status !== 'active') return undefined;
@@ -208,7 +224,7 @@ const ExamSimulationPage = () => {
               <label>
                 Section Subject
                 <select value={sectionSubject} onChange={(e) => setSectionSubject(e.target.value)}>
-                  {SECTION_SUBJECT_OPTIONS.map((subject) => (
+                  {allowedSectionSubjects.map((subject) => (
                     <option key={subject} value={subject}>
                       {subject}
                     </option>
@@ -232,6 +248,12 @@ const ExamSimulationPage = () => {
       </section>
 
       {error && <section className="panel error-text">{error}</section>}
+
+      {session?.generationNotice && (
+        <section className="panel">
+          <p>{session.generationNotice}</p>
+        </section>
+      )}
 
       {session && !result && (
         <>
@@ -349,9 +371,18 @@ const ExamSimulationPage = () => {
 
           <div className="exam-interpretation-box">
             <h4>Blueprint Credibility</h4>
+            {(result.blueprintDiagnostics?.warnings || []).length > 0 && (
+              <p>
+                Limited question availability detected. Generated a slightly adjusted mock test.
+              </p>
+            )}
             <p>
               PYQ share: {result.blueprintDiagnostics?.pyqSharePct ?? 0}%
               {' '}({result.blueprintDiagnostics?.pyqCount ?? 0} questions)
+            </p>
+            <p>
+              Requested vs actual questions: {result.blueprintDiagnostics?.expectedTotal ?? result.scoreSummary?.maxScore / 4}
+              {' '}requested, {result.blueprintDiagnostics?.actualTotal ?? result.scoreSummary?.maxScore / 4} generated.
             </p>
             <p>
               Question mix: PYQ {result.blueprintDiagnostics?.pyqSharePct ?? 0}%,

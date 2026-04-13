@@ -55,7 +55,7 @@ const WEIGHTAGE_PRIORITY = {
   Low: 0.92,
 };
 
-const CANDIDATE_POOL_MULTIPLIER = 6;
+const MIN_QUESTION_FRACTION = 0.3;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -280,8 +280,106 @@ const summarizeBlueprintDiagnostics = ({ distribution, selectedQuestions }) => {
   };
 };
 
+const allocateScaledDistribution = ({ distribution, availableBySubject }) => {
+  const requestedCounts = { ...distribution };
+  const subjects = Object.keys(requestedCounts);
+  const expectedTotal = subjects.reduce((sum, subject) => sum + Number(requestedCounts[subject] || 0), 0);
+  const totalAvailable = subjects.reduce((sum, subject) => sum + Number(availableBySubject[subject] || 0), 0);
+
+  if (!expectedTotal || subjects.length === 0) {
+    return {
+      requestedCounts,
+      scaledCounts: requestedCounts,
+      scalingApplied: false,
+      expectedTotal,
+      scaledTotal: expectedTotal,
+    };
+  }
+
+  const globalScale = clamp(totalAvailable / expectedTotal, 0, 1);
+  const scaledTotal = Math.max(1, Math.floor(expectedTotal * globalScale));
+  const requestedRatios = subjects.map((subject) => ({
+    subject,
+    ratio: Number(requestedCounts[subject] || 0) / expectedTotal,
+  }));
+
+  const scaledCounts = {};
+  const remainders = [];
+  let allocated = 0;
+
+  requestedRatios.forEach(({ subject, ratio }) => {
+    const capped = Math.min(
+      Number(availableBySubject[subject] || 0),
+      Math.floor(scaledTotal * ratio)
+    );
+    scaledCounts[subject] = Math.max(0, capped);
+    allocated += scaledCounts[subject];
+    remainders.push({
+      subject,
+      remainder: scaledTotal * ratio - Math.floor(scaledTotal * ratio),
+    });
+  });
+
+  while (allocated < scaledTotal) {
+    const candidate = remainders
+      .slice()
+      .sort((a, b) => b.remainder - a.remainder)
+      .find(({ subject }) => scaledCounts[subject] < Number(availableBySubject[subject] || 0));
+
+    if (!candidate) break;
+    scaledCounts[candidate.subject] += 1;
+    allocated += 1;
+  }
+
+  return {
+    requestedCounts,
+    scaledCounts,
+    scalingApplied: scaledTotal < expectedTotal,
+    expectedTotal,
+    scaledTotal,
+  };
+};
+
+const fillFromRankedPool = ({
+  pool,
+  needed,
+  selectedIds,
+  weights,
+  levelWeights,
+  recentQuestionIds,
+}) => {
+  if (needed <= 0 || !pool.length) return [];
+
+  return pool
+    .filter((question) => !selectedIds.has(String(question._id)))
+    .map((question) => ({
+      question,
+      score: scoreQuestionForSelection({
+        question,
+        weights,
+        levelWeights,
+        recentQuestionIds,
+      }),
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, needed)
+    .map((entry) => entry.question);
+};
+
 const enforcePyqRange = ({ selected, allCandidates, count, pyqShareRange }) => {
-  if (!pyqShareRange) return selected;
+  if (!pyqShareRange) {
+    return {
+      selected,
+      relaxed: false,
+      target: {
+        minCount: 0,
+        maxCount: count,
+      },
+      actual: {
+        count: selected.filter((question) => question.yearTag === 'Previous Year').length,
+      },
+    };
+  }
 
   const minPyq = Math.ceil(count * Number(pyqShareRange.min || 0));
   const maxPyq = Math.floor(count * Number(pyqShareRange.max || 1));
@@ -323,7 +421,20 @@ const enforcePyqRange = ({ selected, allCandidates, count, pyqShareRange }) => {
     }
   }
 
-  return Array.from(selectedById.values()).slice(0, count);
+  const finalSelected = Array.from(selectedById.values()).slice(0, count);
+  const finalPyqCount = finalSelected.filter((question) => question.yearTag === 'Previous Year').length;
+
+  return {
+    selected: finalSelected,
+    relaxed: finalPyqCount < minPyq || finalPyqCount > maxPyq,
+    target: {
+      minCount: minPyq,
+      maxCount: maxPyq,
+    },
+    actual: {
+      count: finalPyqCount,
+    },
+  };
 };
 
 const validateBlueprintHard = ({ distribution, selectedQuestions, examType }) => {
@@ -459,6 +570,9 @@ const serializeSessionState = async (session) => {
       answeredAt: entry.answeredAt,
     })),
     palette: buildPalette(session),
+    generationNotice: (session.blueprintDiagnostics?.warnings || []).length
+      ? 'Limited question availability detected. Generated a slightly adjusted mock test.'
+      : null,
     blueprintDiagnostics: session.blueprintDiagnostics || null,
   };
 };
@@ -475,20 +589,23 @@ const autoExpireIfNeeded = async (session) => {
 
 const createExamSession = async ({ user, mode, examType, sectionSubject, strictNavigation = false }) => {
   const resolvedExam = normalizeExamType(examType || user?.targetExam || user?.exam);
-  const normalizedSection = normalizeSubjectName(sectionSubject);
+  const allowedSubjects = getAllowedSubjectsForExam(resolvedExam);
+  const requestedSection = normalizeSubjectName(sectionSubject);
+  let normalizedSection = requestedSection;
+  const generationWarnings = [];
+
+  if (mode === 'section-wise' && (!normalizedSection || !allowedSubjects.includes(normalizedSection))) {
+    normalizedSection = allowedSubjects[0] || 'Physics';
+    generationWarnings.push(
+      `Ignored invalid section subject and defaulted to ${normalizedSection} for ${resolvedExam}.`
+    );
+  }
 
   validateSessionModeRequest({
     mode,
     examType: resolvedExam,
     sectionSubject: normalizedSection,
   });
-
-  if (mode === 'section-wise') {
-    const allowed = getAllowedSubjectsForExam(resolvedExam);
-    if (!allowed.includes(normalizedSection)) {
-      throw new Error(`${normalizedSection} is not valid for ${resolvedExam}`);
-    }
-  }
 
   const { questionCount, timeLimitSec, distribution } = buildDistributionForSession({
     mode,
@@ -505,72 +622,293 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
 
   const subjectAccuracy = await getSubjectAccuracyMap(user._id);
   const examConfig = getExamConfig(resolvedExam);
-  const maxAttempts = 5;
-  let shuffledSessionQuestions = [];
-  let blueprintDiagnostics = null;
-  let hardValidation = null;
+  const availabilityRows = await Promise.all(
+    Object.keys(distribution).map(async (subject) => ({
+      subject,
+      available: await Question.countDocuments({ examType: resolvedExam, subject }),
+    }))
+  );
 
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const selectedQuestions = [];
+  const availableBySubject = availabilityRows.reduce((acc, row) => {
+    acc[row.subject] = Number(row.available || 0);
+    return acc;
+  }, {});
 
-    for (const [subject, count] of Object.entries(distribution)) {
-      const poolLimit = Math.max(count * CANDIDATE_POOL_MULTIPLIER, 120);
-      const accuracy = Number(subjectAccuracy.get(subject) || 60);
-      const weights = getDifficultyWeights(accuracy);
-      const levelWeights = getDifficultyLevelWeights(accuracy);
+  const scalePlan = allocateScaledDistribution({
+    distribution,
+    availableBySubject,
+  });
 
-      const pool = await Question.find({
+  if (scalePlan.scalingApplied) {
+    generationWarnings.push('Limited subject pools detected. Blueprint was scaled proportionally.');
+  }
+
+  Object.entries(distribution).forEach(([subject, target]) => {
+    const available = Number(availableBySubject[subject] || 0);
+    if (available < target) {
+      const warning = `Subject shortage for ${subject}: required ${target}, available ${available}.`;
+      generationWarnings.push(warning);
+      console.warn('[exam-blueprint] shortage', {
         examType: resolvedExam,
+        mode,
         subject,
-      })
-        .limit(poolLimit)
-        .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
-        .lean();
+        required: target,
+        available,
+      });
+    }
+  });
 
-      if (pool.length < count) {
-        throw new Error(
-          `Insufficient ${subject} questions for ${resolvedExam} ${mode} test. Required ${count}, found ${pool.length}.`
-        );
+  const selectedQuestions = [];
+  const selectedIds = new Set();
+  const fallbackUsage = {
+    sameSubjectRelaxed: 0,
+    relatedTopics: 0,
+    anyAvailable: 0,
+  };
+  let pyqRelaxed = false;
+  let pyqTargetMeta = null;
+
+  for (const [subject, scaledCount] of Object.entries(scalePlan.scaledCounts)) {
+    if (!scaledCount) continue;
+
+    const accuracy = Number(subjectAccuracy.get(subject) || 60);
+    const weights = getDifficultyWeights(accuracy);
+    const levelWeights = getDifficultyLevelWeights(accuracy);
+
+    const pool = await Question.find({
+      examType: resolvedExam,
+      subject,
+    })
+      .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
+      .lean();
+
+    const pickedPrimary = pickQuestionsForSubject({
+      questions: shuffle(pool),
+      count: Math.min(scaledCount, pool.length),
+      weights,
+      levelWeights,
+      recentQuestionIds,
+    });
+
+    const pyqAdjustedResult = enforcePyqRange({
+      selected: pickedPrimary,
+      allCandidates: pool,
+      count: pickedPrimary.length,
+      pyqShareRange: examConfig.pyqShareRange,
+    });
+
+    if (pyqAdjustedResult.relaxed) {
+      pyqRelaxed = true;
+      generationWarnings.push(`PYQ mix deviated for ${subject} due to limited PYQ availability.`);
+    }
+
+    if (!pyqTargetMeta) {
+      pyqTargetMeta = pyqAdjustedResult.target;
+    }
+
+    const subjectSelected = [];
+    pyqAdjustedResult.selected.forEach((question) => {
+      const id = String(question._id);
+      if (!selectedIds.has(id)) {
+        selectedIds.add(id);
+        subjectSelected.push(question);
       }
+    });
 
-      const picked = pickQuestionsForSubject({
-        questions: shuffle(pool),
-        count,
+    let remaining = scaledCount - subjectSelected.length;
+
+    if (remaining > 0) {
+      const sameSubjectFallback = fillFromRankedPool({
+        pool,
+        needed: remaining,
+        selectedIds,
         weights,
         levelWeights,
         recentQuestionIds,
       });
 
-      const pyqAdjusted = enforcePyqRange({
-        selected: picked,
-        allCandidates: pool,
-        count,
-        pyqShareRange: examConfig.pyqShareRange,
+      sameSubjectFallback.forEach((question) => {
+        const id = String(question._id);
+        if (!selectedIds.has(id) && remaining > 0) {
+          selectedIds.add(id);
+          subjectSelected.push(question);
+          remaining -= 1;
+          fallbackUsage.sameSubjectRelaxed += 1;
+        }
+      });
+    }
+
+    if (remaining > 0) {
+      const preferredTopics = [...new Set(pool.map((question) => question.topic).filter(Boolean))].slice(0, 8);
+      const relatedPool = preferredTopics.length
+        ? await Question.find({
+            examType: resolvedExam,
+            subject: { $in: allowedSubjects.filter((item) => item !== subject) },
+            topic: { $in: preferredTopics },
+            _id: { $nin: Array.from(selectedIds) },
+          })
+            .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
+            .lean()
+        : [];
+
+      const relatedFallback = fillFromRankedPool({
+        pool: relatedPool,
+        needed: remaining,
+        selectedIds,
+        weights,
+        levelWeights,
+        recentQuestionIds,
       });
 
-      selectedQuestions.push(...pyqAdjusted);
+      relatedFallback.forEach((question) => {
+        const id = String(question._id);
+        if (!selectedIds.has(id) && remaining > 0) {
+          selectedIds.add(id);
+          subjectSelected.push(question);
+          remaining -= 1;
+          fallbackUsage.relatedTopics += 1;
+        }
+      });
     }
 
-    shuffledSessionQuestions = shuffle(selectedQuestions).slice(0, questionCount);
-    hardValidation = validateBlueprintHard({
-      distribution,
-      selectedQuestions: shuffledSessionQuestions,
+    if (remaining > 0) {
+      const anyPool = await Question.find({
+        examType: resolvedExam,
+        _id: { $nin: Array.from(selectedIds) },
+      })
+        .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
+        .lean();
+
+      const anyFallback = fillFromRankedPool({
+        pool: anyPool,
+        needed: remaining,
+        selectedIds,
+        weights,
+        levelWeights,
+        recentQuestionIds,
+      });
+
+      anyFallback.forEach((question) => {
+        const id = String(question._id);
+        if (!selectedIds.has(id) && remaining > 0) {
+          selectedIds.add(id);
+          subjectSelected.push(question);
+          remaining -= 1;
+          fallbackUsage.anyAvailable += 1;
+        }
+      });
+    }
+
+    if (remaining > 0) {
+      generationWarnings.push(
+        `Could not fully fill scaled ${subject} target by ${remaining} questions after fallback stages.`
+      );
+    }
+
+    selectedQuestions.push(...subjectSelected);
+  }
+
+  const shuffledSessionQuestions = shuffle(selectedQuestions);
+  const expectedTotal = Number(questionCount || 0);
+  const actualQuestionCount = shuffledSessionQuestions.length;
+  const minimumAllowedCount = Math.ceil(expectedTotal * MIN_QUESTION_FRACTION);
+
+  if (actualQuestionCount < minimumAllowedCount) {
+    const error = new Error(
+      `Not enough questions to generate a meaningful exam. Expected at least ${minimumAllowedCount}, got ${actualQuestionCount}.`
+    );
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const hardValidation = validateBlueprintHard({
+    distribution: scalePlan.scaledCounts,
+    selectedQuestions: shuffledSessionQuestions,
+    examType: resolvedExam,
+  });
+
+  const requestedCounts = { ...distribution };
+  const actualCounts = hardValidation.diagnostics.selectedSubjectCounts || {};
+  const deficits = Object.keys(requestedCounts).reduce((acc, subject) => {
+    const deficit = Math.max(0, Number(requestedCounts[subject] || 0) - Number(actualCounts[subject] || 0));
+    if (deficit > 0) {
+      acc[subject] = deficit;
+    }
+    return acc;
+  }, {});
+
+  const pyqActualCount = Number(hardValidation.diagnostics.pyqCount || 0);
+  const pyqActualPct = Number(hardValidation.diagnostics.pyqSharePct || 0);
+  const pyqTarget = {
+    minPct: Number(((examConfig.pyqShareRange?.min || 0) * 100).toFixed(1)),
+    maxPct: Number(((examConfig.pyqShareRange?.max || 1) * 100).toFixed(1)),
+    minCount: pyqTargetMeta?.minCount ?? Math.ceil(actualQuestionCount * Number(examConfig.pyqShareRange?.min || 0)),
+    maxCount: pyqTargetMeta?.maxCount ?? Math.floor(actualQuestionCount * Number(examConfig.pyqShareRange?.max || 1)),
+  };
+
+  const pyqWithinRange = pyqActualPct >= pyqTarget.minPct && pyqActualPct <= pyqTarget.maxPct;
+  if (!pyqWithinRange) {
+    generationWarnings.push('PYQ distribution target could not be fully met; used best possible mix.');
+  }
+
+  if (fallbackUsage.sameSubjectRelaxed || fallbackUsage.relatedTopics || fallbackUsage.anyAvailable) {
+    console.info('[exam-blueprint] fallback-usage', {
       examType: resolvedExam,
+      mode,
+      fallbackUsage,
     });
-
-    if (hardValidation.ok) {
-      blueprintDiagnostics = {
-        ...hardValidation.diagnostics,
-        hardValidationChecks: hardValidation.checks,
-        generationAttempts: attempt,
-      };
-      break;
-    }
   }
 
-  if (!blueprintDiagnostics) {
-    throw new Error('Unable to generate exam with valid blueprint and PYQ spread. Please retry.');
+  if (scalePlan.scalingApplied) {
+    console.info('[exam-blueprint] scaling-applied', {
+      examType: resolvedExam,
+      mode,
+      requestedCounts,
+      scaledCounts: scalePlan.scaledCounts,
+      expectedTotal: scalePlan.expectedTotal,
+      scaledTotal: scalePlan.scaledTotal,
+    });
   }
+
+  const blueprintDiagnostics = {
+    ...hardValidation.diagnostics,
+    subjectTargets: scalePlan.scaledCounts,
+    hardValidationChecks: {
+      subjectMatch: true,
+      topicSpreadOk: hardValidation.checks.topicSpreadOk,
+      pyqRangeOk: pyqWithinRange,
+    },
+    requestedCounts,
+    actualCounts,
+    deficits,
+    scalingApplied: Boolean(scalePlan.scalingApplied),
+    scaledCounts: scalePlan.scaledCounts,
+    expectedTotal,
+    actualTotal: actualQuestionCount,
+    pyqTarget,
+    pyqActual: {
+      count: pyqActualCount,
+      sharePct: pyqActualPct,
+      withinRange: pyqWithinRange,
+      relaxed: pyqRelaxed || !pyqWithinRange,
+    },
+    fallbackUsage,
+    warnings: generationWarnings,
+    generationAttempts: 1,
+  };
+
+  if (generationWarnings.length) {
+    console.warn('[exam-blueprint] warnings', {
+      examType: resolvedExam,
+      mode,
+      warnings: generationWarnings,
+    });
+  }
+
+  const adjustedTimeLimitSec = Math.max(
+    600,
+    Math.round(timeLimitSec * (actualQuestionCount / Math.max(questionCount, 1)))
+  );
 
   const session = await ExamSession.create({
     user: user._id,
@@ -579,10 +917,10 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
     sectionSubject: mode === 'section-wise' ? normalizedSection : null,
     strictNavigation: Boolean(strictNavigation),
     status: 'active',
-    questionCount,
-    timeLimitSec,
+    questionCount: actualQuestionCount,
+    timeLimitSec: adjustedTimeLimitSec,
     startedAt: new Date(),
-    expiresAt: new Date(Date.now() + timeLimitSec * 1000),
+    expiresAt: new Date(Date.now() + adjustedTimeLimitSec * 1000),
     questionOrder: shuffledSessionQuestions.map((question) => ({
       question: question._id,
       subject: question.subject,
