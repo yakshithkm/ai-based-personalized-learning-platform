@@ -1,4 +1,5 @@
 const request = require('supertest');
+const http = require('http');
 const app = require('../src/app');
 const Question = require('../src/models/Question');
 const ExamAuditLog = require('../src/models/ExamAuditLog');
@@ -77,6 +78,11 @@ const submitAnswerSecurely = async ({
     selectedAnswerIndex,
     timeTakenSec,
   });
+
+const startHttpServer = () => new Promise((resolve) => {
+  const server = http.createServer(app);
+  server.listen(0, () => resolve(server));
+});
 
 describe('Exam simulation system', () => {
   test('enforces single active session per user', async () => {
@@ -429,5 +435,129 @@ describe('Exam simulation system', () => {
 
     const auditCount = await ExamAuditLog.countDocuments({ sessionId });
     expect(auditCount).toBeGreaterThan(0);
+  });
+
+  test('serializes rapid clicks so only the latest answer survives and stale nonce replays fail', async () => {
+    await createExamQuestions({
+      examType: 'NEET',
+      distribution: {
+        Physics: 60,
+        Chemistry: 60,
+        Biology: 120,
+      },
+    });
+
+    const token = await registerAndLogin({
+      targetExam: 'NEET',
+      email: 'rapid-clicks@test.com',
+    });
+
+    const startRes = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'NEET',
+        strictNavigation: false,
+      });
+
+    expect(startRes.status).toBe(201);
+
+    const server = await startHttpServer();
+    const port = server.address().port;
+    const baseUrl = `http://127.0.0.1:${port}/api`;
+
+    try {
+      const sessionToken = startRes.body.sessionToken;
+      const initialNonce = startRes.body.requestNonce;
+      const [firstQuestion, secondQuestion] = startRes.body.questions.slice(0, 2);
+
+      const firstController = new AbortController();
+      const firstRequest = fetch(`${baseUrl}/exams/sessions/${startRes.body.sessionId}/answer`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'x-exam-session-token': sessionToken,
+          'x-exam-request-nonce': initialNonce,
+        },
+        body: JSON.stringify({
+          questionIndex: 0,
+          questionId: firstQuestion._id,
+          selectedAnswerIndex: 0,
+          timeTakenSec: 10,
+        }),
+        signal: firstController.signal,
+      });
+
+      firstController.abort();
+
+      let firstAborted = false;
+      try {
+        await firstRequest;
+      } catch (error) {
+        firstAborted = error?.name === 'AbortError' || error?.code === 'ABORT_ERR';
+      }
+      expect(firstAborted).toBe(true);
+
+      const refreshedAfterAbort = await request(app)
+        .get(`/api/exams/sessions/${startRes.body.sessionId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(refreshedAfterAbort.status).toBe(200);
+
+      const latestNonce = refreshedAfterAbort.body.requestNonce || initialNonce;
+      const answerRes = await fetch(`${baseUrl}/exams/sessions/${startRes.body.sessionId}/answer`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'x-exam-session-token': sessionToken,
+          'x-exam-request-nonce': latestNonce,
+        },
+        body: JSON.stringify({
+          questionIndex: 1,
+          questionId: secondQuestion._id,
+          selectedAnswerIndex: 2,
+          timeTakenSec: 12,
+        }),
+      });
+
+      expect(answerRes.status).toBe(200);
+      const answerBody = await answerRes.json();
+      expect(answerBody.requestNonce).toBeDefined();
+
+      const replayRes = await fetch(`${baseUrl}/exams/sessions/${startRes.body.sessionId}/answer`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'x-exam-session-token': sessionToken,
+          'x-exam-request-nonce': latestNonce,
+        },
+        body: JSON.stringify({
+          questionIndex: 1,
+          questionId: secondQuestion._id,
+          selectedAnswerIndex: 3,
+          timeTakenSec: 12,
+        }),
+      });
+
+      expect([400, 401, 409, 429]).toContain(replayRes.status);
+
+      const finalState = await request(app)
+        .get(`/api/exams/sessions/${startRes.body.sessionId}`)
+        .set('Authorization', `Bearer ${token}`);
+
+      expect(finalState.status).toBe(200);
+      const question0Answer = finalState.body.responses.find((entry) => entry.questionIndex === 0);
+      const question1Answer = finalState.body.responses.find((entry) => entry.questionIndex === 1);
+
+      expect(question0Answer).toBeUndefined();
+      expect(question1Answer?.selectedAnswerIndex).toBe(2);
+      expect(finalState.body.requestNonce).toBe(answerBody.requestNonce);
+    } finally {
+      await new Promise((resolve) => server.close(resolve));
+    }
   });
 });

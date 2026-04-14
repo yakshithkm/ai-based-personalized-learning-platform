@@ -320,7 +320,11 @@ const ExamSimulationPage = () => {
           throw new Error('Unable to sync answers before auto-submit.');
         }
         await Promise.all(inFlightSavesRef.current);
-        const { data } = await submitExamSession({ sessionId: session.sessionId });
+        const submitResponse = await submitExamSession({ sessionId: session.sessionId });
+        if (submitResponse?.aborted) {
+          throw new Error('Submit was superseded by a newer request.');
+        }
+        const { data } = submitResponse;
         setSession((prev) => (prev ? { ...prev, status: 'expired', submittedAt: data.submittedAt } : prev));
         navigate('/exam-simulation/result', {
           replace: true,
@@ -396,7 +400,7 @@ const ExamSimulationPage = () => {
     });
 
     try {
-      const { data } = await submitExamAnswer({
+      const response = await submitExamAnswer({
         sessionId: session.sessionId,
         payload: {
           questionIndex,
@@ -405,6 +409,16 @@ const ExamSimulationPage = () => {
           timeTakenSec: 0,
         },
       });
+
+      if (response?.aborted) {
+        console.log('[exam-save] ignored-aborted-response', {
+          questionIndex,
+          requestId: response.requestId,
+        });
+        return false;
+      }
+
+      const { data } = response;
 
       console.log('[exam-save] incoming-auth', {
         questionIndex,
@@ -848,7 +862,11 @@ const ExamSimulationPage = () => {
         throw new Error('Unable to sync answers before submit.');
       }
       await Promise.all(inFlightSavesRef.current);
-      const { data } = await submitExamSession({ sessionId: session.sessionId });
+      const submitResponse = await submitExamSession({ sessionId: session.sessionId });
+      if (submitResponse?.aborted) {
+        throw new Error('Submit was superseded by a newer request.');
+      }
+      const { data } = submitResponse;
       setSession((prev) => (prev ? { ...prev, status: 'submitted', submittedAt: data.submittedAt } : prev));
       navigate('/exam-simulation/result', {
         replace: true,
