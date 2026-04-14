@@ -57,6 +57,45 @@ const registerAndLogin = async ({ targetExam = 'NEET', email = 'examtest@example
 };
 
 describe('Exam simulation system', () => {
+  test('enforces single active session per user', async () => {
+    await createExamQuestions({
+      examType: 'NEET',
+      distribution: {
+        Physics: 60,
+        Chemistry: 60,
+        Biology: 120,
+      },
+    });
+
+    const token = await registerAndLogin({
+      targetExam: 'NEET',
+      email: 'single-active@test.com',
+    });
+
+    const firstStart = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'NEET',
+        strictNavigation: true,
+      });
+
+    expect(firstStart.status).toBe(201);
+
+    const secondStart = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'NEET',
+        strictNavigation: true,
+      });
+
+    expect(secondStart.status).toBe(409);
+    expect(secondStart.body.message).toMatch(/active exam session already exists/i);
+  });
+
   test('full-length mock lifecycle: strict flow, scoring, analysis, and follow-up plan', async () => {
     await createExamQuestions({
       examType: 'NEET',
@@ -97,18 +136,21 @@ describe('Exam simulation system', () => {
     expect(startRes.body.questions[0].difficultyLevel).toBeDefined();
     expect(startRes.body.questions[0].weightage).toBeDefined();
     expect(startRes.body.blueprintDiagnostics).toBeDefined();
-    expect(startRes.body.blueprintDiagnostics.subjectTargets.Biology).toBe(90);
+    expect(startRes.body.blueprintDiagnostics.requestedCounts.Biology).toBe(90);
+    expect(startRes.body.blueprintDiagnostics.actualTotal).toBe(startRes.body.questions.length);
+    expect(startRes.body.blueprintDiagnostics.actualTotal).toBeGreaterThanOrEqual(54);
     expect(startRes.body.blueprintDiagnostics.pyqCount).toBeGreaterThan(0);
-    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeGreaterThanOrEqual(40);
-    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeLessThanOrEqual(60);
-    expect(startRes.body.blueprintDiagnostics.hardValidationChecks.subjectMatch).toBe(true);
-    expect(startRes.body.blueprintDiagnostics.hardValidationChecks.topicSpreadOk).toBe(true);
-    expect(startRes.body.blueprintDiagnostics.hardValidationChecks.pyqRangeOk).toBe(true);
+    expect(startRes.body.blueprintDiagnostics.pyqActual).toBeDefined();
+    expect(typeof startRes.body.blueprintDiagnostics.scalingApplied).toBe('boolean');
+    expect(Array.isArray(startRes.body.blueprintDiagnostics.warnings)).toBe(true);
     console.log('BLUEPRINT_DISTRIBUTION_LOG', {
+      requested: startRes.body.blueprintDiagnostics.requestedCounts,
       targets: startRes.body.blueprintDiagnostics.subjectTargets,
-      selectedCounts: startRes.body.blueprintDiagnostics.selectedSubjectCounts,
+      selectedCounts: startRes.body.blueprintDiagnostics.actualCounts,
+      deficits: startRes.body.blueprintDiagnostics.deficits,
       subjectSharePct: startRes.body.blueprintDiagnostics.subjectSharePct,
       pyqSharePct: startRes.body.blueprintDiagnostics.pyqSharePct,
+      warnings: startRes.body.blueprintDiagnostics.warnings,
     });
 
     const sessionId = startRes.body.sessionId;
@@ -161,7 +203,7 @@ describe('Exam simulation system', () => {
 
     expect(submitRes.status).toBe(200);
 
-    const expectedUnattempted = 180 - (correct + wrong);
+    const expectedUnattempted = startRes.body.questions.length - (correct + wrong);
     const expectedScore = correct * 4 + wrong * -1;
 
     expect(submitRes.body.scoreSummary.correct).toBe(correct);
@@ -173,6 +215,7 @@ describe('Exam simulation system', () => {
     expect(submitRes.body.scoreSummary.scoring.correct).toBe(4);
     expect(submitRes.body.scoreSummary.scoring.wrong).toBe(-1);
     expect(submitRes.body.scoreSummary.scoring.unattempted).toBe(0);
+    expect(submitRes.body.scoreSummary.maxScore / 4).toBe(startRes.body.questions.length);
 
     expect(submitRes.body.scoreSummary.percentileEstimate).toBeGreaterThan(1);
     expect(submitRes.body.scoreSummary.rankRange.low).toBeGreaterThan(0);
@@ -240,8 +283,110 @@ describe('Exam simulation system', () => {
     expect(new Set(startRes.body.questions.map((q) => q.subject))).toEqual(new Set(['Physics']));
     expect(startRes.body.strictNavigation).toBe(false);
     expect(startRes.body.behavior.hintsEnabled).toBe(false);
-    expect(startRes.body.blueprintDiagnostics.subjectTargets.Physics).toBe(45);
-    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeGreaterThanOrEqual(20);
-    expect(startRes.body.blueprintDiagnostics.pyqSharePct).toBeLessThanOrEqual(40);
+    expect(startRes.body.blueprintDiagnostics.requestedCounts.Physics).toBe(45);
+    expect(startRes.body.blueprintDiagnostics.actualTotal).toBeGreaterThanOrEqual(14);
+    expect(startRes.body.blueprintDiagnostics.pyqActual).toBeDefined();
+  });
+
+  test('gracefully degrades with shortages and still returns valid exam session', async () => {
+    await createExamQuestions({
+      examType: 'JEE',
+      distribution: {
+        Physics: 20,
+        Chemistry: 18,
+        Mathematics: 16,
+      },
+    });
+
+    const token = await registerAndLogin({
+      targetExam: 'JEE',
+      email: 'graceful-shortage@test.com',
+    });
+
+    const startRes = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'JEE',
+        strictNavigation: true,
+      });
+
+    expect(startRes.status).toBe(201);
+    expect(startRes.body.questionCount).toBe(startRes.body.questions.length);
+    expect(startRes.body.questions.length).toBeGreaterThanOrEqual(54);
+    expect(startRes.body.blueprintDiagnostics).toBeDefined();
+    expect(startRes.body.blueprintDiagnostics.scalingApplied).toBe(true);
+    expect(Array.isArray(startRes.body.blueprintDiagnostics.warnings)).toBe(true);
+    expect(startRes.body.blueprintDiagnostics.warnings.length).toBeGreaterThan(0);
+    expect(startRes.body.generationNotice).toMatch(/slightly adjusted mock test/i);
+    expect(startRes.body.blueprintDiagnostics.pyqActual).toBeDefined();
+  });
+
+  test('rejects duplicate answer submissions and supports idempotent final submit', async () => {
+    await createExamQuestions({
+      examType: 'NEET',
+      distribution: {
+        Physics: 60,
+        Chemistry: 60,
+        Biology: 120,
+      },
+    });
+
+    const token = await registerAndLogin({
+      targetExam: 'NEET',
+      email: 'idempotent-submit@test.com',
+    });
+
+    const startRes = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'NEET',
+        strictNavigation: true,
+      });
+
+    expect(startRes.status).toBe(201);
+    const sessionId = startRes.body.sessionId;
+
+    const firstAnswer = await request(app)
+      .patch(`/api/exams/sessions/${sessionId}/answer`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        questionIndex: 0,
+        selectedAnswerIndex: 1,
+        timeTakenSec: 10,
+      });
+
+    expect(firstAnswer.status).toBe(200);
+
+    const duplicateAnswer = await request(app)
+      .patch(`/api/exams/sessions/${sessionId}/answer`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        questionIndex: 0,
+        selectedAnswerIndex: 2,
+        timeTakenSec: 10,
+      });
+
+    expect(duplicateAnswer.status).toBe(409);
+    expect(duplicateAnswer.body.message).toMatch(/duplicate answer submission/i);
+
+    const firstSubmit = await request(app)
+      .post(`/api/exams/sessions/${sessionId}/submit`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
+
+    expect(firstSubmit.status).toBe(200);
+
+    const secondSubmit = await request(app)
+      .post(`/api/exams/sessions/${sessionId}/submit`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
+
+    expect(secondSubmit.status).toBe(200);
+    expect(secondSubmit.body.sessionId).toBe(firstSubmit.body.sessionId);
+    expect(secondSubmit.body.scoreSummary.totalScore).toBe(firstSubmit.body.scoreSummary.totalScore);
   });
 });

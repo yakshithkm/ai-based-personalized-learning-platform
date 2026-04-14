@@ -55,9 +55,20 @@ const WEIGHTAGE_PRIORITY = {
   Low: 0.92,
 };
 
-const CANDIDATE_POOL_MULTIPLIER = 6;
+const MIN_QUESTION_FRACTION = 0.3;
+const INACTIVITY_EXPIRE_WINDOW_MS = 15 * 60 * 1000;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const logExamIntegrity = (event, payload = {}) => {
+  console.warn(`[exam-integrity] ${event}`, payload);
+};
+
+const buildHttpError = (message, statusCode = 400) => {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
+};
 
 const shuffle = (list) => {
   const copy = [...list];
@@ -280,8 +291,106 @@ const summarizeBlueprintDiagnostics = ({ distribution, selectedQuestions }) => {
   };
 };
 
+const allocateScaledDistribution = ({ distribution, availableBySubject }) => {
+  const requestedCounts = { ...distribution };
+  const subjects = Object.keys(requestedCounts);
+  const expectedTotal = subjects.reduce((sum, subject) => sum + Number(requestedCounts[subject] || 0), 0);
+  const totalAvailable = subjects.reduce((sum, subject) => sum + Number(availableBySubject[subject] || 0), 0);
+
+  if (!expectedTotal || subjects.length === 0) {
+    return {
+      requestedCounts,
+      scaledCounts: requestedCounts,
+      scalingApplied: false,
+      expectedTotal,
+      scaledTotal: expectedTotal,
+    };
+  }
+
+  const globalScale = clamp(totalAvailable / expectedTotal, 0, 1);
+  const scaledTotal = Math.max(1, Math.floor(expectedTotal * globalScale));
+  const requestedRatios = subjects.map((subject) => ({
+    subject,
+    ratio: Number(requestedCounts[subject] || 0) / expectedTotal,
+  }));
+
+  const scaledCounts = {};
+  const remainders = [];
+  let allocated = 0;
+
+  requestedRatios.forEach(({ subject, ratio }) => {
+    const capped = Math.min(
+      Number(availableBySubject[subject] || 0),
+      Math.floor(scaledTotal * ratio)
+    );
+    scaledCounts[subject] = Math.max(0, capped);
+    allocated += scaledCounts[subject];
+    remainders.push({
+      subject,
+      remainder: scaledTotal * ratio - Math.floor(scaledTotal * ratio),
+    });
+  });
+
+  while (allocated < scaledTotal) {
+    const candidate = remainders
+      .slice()
+      .sort((a, b) => b.remainder - a.remainder)
+      .find(({ subject }) => scaledCounts[subject] < Number(availableBySubject[subject] || 0));
+
+    if (!candidate) break;
+    scaledCounts[candidate.subject] += 1;
+    allocated += 1;
+  }
+
+  return {
+    requestedCounts,
+    scaledCounts,
+    scalingApplied: scaledTotal < expectedTotal,
+    expectedTotal,
+    scaledTotal,
+  };
+};
+
+const fillFromRankedPool = ({
+  pool,
+  needed,
+  selectedIds,
+  weights,
+  levelWeights,
+  recentQuestionIds,
+}) => {
+  if (needed <= 0 || !pool.length) return [];
+
+  return pool
+    .filter((question) => !selectedIds.has(String(question._id)))
+    .map((question) => ({
+      question,
+      score: scoreQuestionForSelection({
+        question,
+        weights,
+        levelWeights,
+        recentQuestionIds,
+      }),
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, needed)
+    .map((entry) => entry.question);
+};
+
 const enforcePyqRange = ({ selected, allCandidates, count, pyqShareRange }) => {
-  if (!pyqShareRange) return selected;
+  if (!pyqShareRange) {
+    return {
+      selected,
+      relaxed: false,
+      target: {
+        minCount: 0,
+        maxCount: count,
+      },
+      actual: {
+        count: selected.filter((question) => question.yearTag === 'Previous Year').length,
+      },
+    };
+  }
 
   const minPyq = Math.ceil(count * Number(pyqShareRange.min || 0));
   const maxPyq = Math.floor(count * Number(pyqShareRange.max || 1));
@@ -323,7 +432,20 @@ const enforcePyqRange = ({ selected, allCandidates, count, pyqShareRange }) => {
     }
   }
 
-  return Array.from(selectedById.values()).slice(0, count);
+  const finalSelected = Array.from(selectedById.values()).slice(0, count);
+  const finalPyqCount = finalSelected.filter((question) => question.yearTag === 'Previous Year').length;
+
+  return {
+    selected: finalSelected,
+    relaxed: finalPyqCount < minPyq || finalPyqCount > maxPyq,
+    target: {
+      minCount: minPyq,
+      maxCount: maxPyq,
+    },
+    actual: {
+      count: finalPyqCount,
+    },
+  };
 };
 
 const validateBlueprintHard = ({ distribution, selectedQuestions, examType }) => {
@@ -437,6 +559,7 @@ const serializeSessionState = async (session) => {
     startedAt: session.startedAt,
     expiresAt: session.expiresAt,
     submittedAt: session.submittedAt,
+    serverNow: new Date(),
     currentQuestionIndex: session.currentQuestionIndex,
     timeLeftSec: getTimeLeftSec(session),
     scoringRules: SCORE_RULES,
@@ -459,36 +582,73 @@ const serializeSessionState = async (session) => {
       answeredAt: entry.answeredAt,
     })),
     palette: buildPalette(session),
+    generationNotice: (session.blueprintDiagnostics?.warnings || []).length
+      ? 'Limited question availability detected. Generated a slightly adjusted mock test.'
+      : null,
     blueprintDiagnostics: session.blueprintDiagnostics || null,
+    resultSummary: session.resultSummary || null,
   };
 };
 
 const autoExpireIfNeeded = async (session) => {
   if (!session || session.status !== 'active') return session;
-  if (new Date(session.expiresAt).getTime() > Date.now()) return session;
+  const nowMs = Date.now();
+  const expiresAtMs = new Date(session.expiresAt).getTime();
+  const inactivityMs = nowMs - new Date(session.lastActivityAt || session.updatedAt || session.startedAt).getTime();
+  const expiredByTimer = expiresAtMs <= nowMs;
+  const expiredByInactivity = inactivityMs >= INACTIVITY_EXPIRE_WINDOW_MS;
+
+  if (!expiredByTimer && !expiredByInactivity) return session;
 
   session.status = 'expired';
   session.submittedAt = new Date();
+  session.isSubmitting = false;
+  session.lastActivityAt = new Date();
+  session.version = Number(session.version || 0) + 1;
   await session.save();
+  if (expiredByInactivity) {
+    logExamIntegrity('session-auto-expired-inactivity', {
+      sessionId: String(session._id),
+      userId: String(session.user),
+      inactivityMs,
+      windowMs: INACTIVITY_EXPIRE_WINDOW_MS,
+    });
+  }
   return session;
 };
 
 const createExamSession = async ({ user, mode, examType, sectionSubject, strictNavigation = false }) => {
+  const activeSession = await ExamSession.findOne({ user: user._id, status: 'active' }).sort({ createdAt: -1 });
+  if (activeSession) {
+    const refreshed = await autoExpireIfNeeded(activeSession);
+    if (refreshed.status === 'active') {
+      logExamIntegrity('answer-rejected', {
+        reason: 'active-session-exists',
+        userId: String(user._id),
+        sessionId: String(refreshed._id),
+      });
+      throw buildHttpError('An active exam session already exists for this user.', 409);
+    }
+  }
+
   const resolvedExam = normalizeExamType(examType || user?.targetExam || user?.exam);
-  const normalizedSection = normalizeSubjectName(sectionSubject);
+  const allowedSubjects = getAllowedSubjectsForExam(resolvedExam);
+  const requestedSection = normalizeSubjectName(sectionSubject);
+  let normalizedSection = requestedSection;
+  const generationWarnings = [];
+
+  if (mode === 'section-wise' && (!normalizedSection || !allowedSubjects.includes(normalizedSection))) {
+    normalizedSection = allowedSubjects[0] || 'Physics';
+    generationWarnings.push(
+      `Ignored invalid section subject and defaulted to ${normalizedSection} for ${resolvedExam}.`
+    );
+  }
 
   validateSessionModeRequest({
     mode,
     examType: resolvedExam,
     sectionSubject: normalizedSection,
   });
-
-  if (mode === 'section-wise') {
-    const allowed = getAllowedSubjectsForExam(resolvedExam);
-    if (!allowed.includes(normalizedSection)) {
-      throw new Error(`${normalizedSection} is not valid for ${resolvedExam}`);
-    }
-  }
 
   const { questionCount, timeLimitSec, distribution } = buildDistributionForSession({
     mode,
@@ -505,72 +665,293 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
 
   const subjectAccuracy = await getSubjectAccuracyMap(user._id);
   const examConfig = getExamConfig(resolvedExam);
-  const maxAttempts = 5;
-  let shuffledSessionQuestions = [];
-  let blueprintDiagnostics = null;
-  let hardValidation = null;
+  const availabilityRows = await Promise.all(
+    Object.keys(distribution).map(async (subject) => ({
+      subject,
+      available: await Question.countDocuments({ examType: resolvedExam, subject }),
+    }))
+  );
 
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
-    const selectedQuestions = [];
+  const availableBySubject = availabilityRows.reduce((acc, row) => {
+    acc[row.subject] = Number(row.available || 0);
+    return acc;
+  }, {});
 
-    for (const [subject, count] of Object.entries(distribution)) {
-      const poolLimit = Math.max(count * CANDIDATE_POOL_MULTIPLIER, 120);
-      const accuracy = Number(subjectAccuracy.get(subject) || 60);
-      const weights = getDifficultyWeights(accuracy);
-      const levelWeights = getDifficultyLevelWeights(accuracy);
+  const scalePlan = allocateScaledDistribution({
+    distribution,
+    availableBySubject,
+  });
 
-      const pool = await Question.find({
+  if (scalePlan.scalingApplied) {
+    generationWarnings.push('Limited subject pools detected. Blueprint was scaled proportionally.');
+  }
+
+  Object.entries(distribution).forEach(([subject, target]) => {
+    const available = Number(availableBySubject[subject] || 0);
+    if (available < target) {
+      const warning = `Subject shortage for ${subject}: required ${target}, available ${available}.`;
+      generationWarnings.push(warning);
+      console.warn('[exam-blueprint] shortage', {
         examType: resolvedExam,
+        mode,
         subject,
-      })
-        .limit(poolLimit)
-        .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
-        .lean();
+        required: target,
+        available,
+      });
+    }
+  });
 
-      if (pool.length < count) {
-        throw new Error(
-          `Insufficient ${subject} questions for ${resolvedExam} ${mode} test. Required ${count}, found ${pool.length}.`
-        );
+  const selectedQuestions = [];
+  const selectedIds = new Set();
+  const fallbackUsage = {
+    sameSubjectRelaxed: 0,
+    relatedTopics: 0,
+    anyAvailable: 0,
+  };
+  let pyqRelaxed = false;
+  let pyqTargetMeta = null;
+
+  for (const [subject, scaledCount] of Object.entries(scalePlan.scaledCounts)) {
+    if (!scaledCount) continue;
+
+    const accuracy = Number(subjectAccuracy.get(subject) || 60);
+    const weights = getDifficultyWeights(accuracy);
+    const levelWeights = getDifficultyLevelWeights(accuracy);
+
+    const pool = await Question.find({
+      examType: resolvedExam,
+      subject,
+    })
+      .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
+      .lean();
+
+    const pickedPrimary = pickQuestionsForSubject({
+      questions: shuffle(pool),
+      count: Math.min(scaledCount, pool.length),
+      weights,
+      levelWeights,
+      recentQuestionIds,
+    });
+
+    const pyqAdjustedResult = enforcePyqRange({
+      selected: pickedPrimary,
+      allCandidates: pool,
+      count: pickedPrimary.length,
+      pyqShareRange: examConfig.pyqShareRange,
+    });
+
+    if (pyqAdjustedResult.relaxed) {
+      pyqRelaxed = true;
+      generationWarnings.push(`PYQ mix deviated for ${subject} due to limited PYQ availability.`);
+    }
+
+    if (!pyqTargetMeta) {
+      pyqTargetMeta = pyqAdjustedResult.target;
+    }
+
+    const subjectSelected = [];
+    pyqAdjustedResult.selected.forEach((question) => {
+      const id = String(question._id);
+      if (!selectedIds.has(id)) {
+        selectedIds.add(id);
+        subjectSelected.push(question);
       }
+    });
 
-      const picked = pickQuestionsForSubject({
-        questions: shuffle(pool),
-        count,
+    let remaining = scaledCount - subjectSelected.length;
+
+    if (remaining > 0) {
+      const sameSubjectFallback = fillFromRankedPool({
+        pool,
+        needed: remaining,
+        selectedIds,
         weights,
         levelWeights,
         recentQuestionIds,
       });
 
-      const pyqAdjusted = enforcePyqRange({
-        selected: picked,
-        allCandidates: pool,
-        count,
-        pyqShareRange: examConfig.pyqShareRange,
+      sameSubjectFallback.forEach((question) => {
+        const id = String(question._id);
+        if (!selectedIds.has(id) && remaining > 0) {
+          selectedIds.add(id);
+          subjectSelected.push(question);
+          remaining -= 1;
+          fallbackUsage.sameSubjectRelaxed += 1;
+        }
+      });
+    }
+
+    if (remaining > 0) {
+      const preferredTopics = [...new Set(pool.map((question) => question.topic).filter(Boolean))].slice(0, 8);
+      const relatedPool = preferredTopics.length
+        ? await Question.find({
+            examType: resolvedExam,
+            subject: { $in: allowedSubjects.filter((item) => item !== subject) },
+            topic: { $in: preferredTopics },
+            _id: { $nin: Array.from(selectedIds) },
+          })
+            .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
+            .lean()
+        : [];
+
+      const relatedFallback = fillFromRankedPool({
+        pool: relatedPool,
+        needed: remaining,
+        selectedIds,
+        weights,
+        levelWeights,
+        recentQuestionIds,
       });
 
-      selectedQuestions.push(...pyqAdjusted);
+      relatedFallback.forEach((question) => {
+        const id = String(question._id);
+        if (!selectedIds.has(id) && remaining > 0) {
+          selectedIds.add(id);
+          subjectSelected.push(question);
+          remaining -= 1;
+          fallbackUsage.relatedTopics += 1;
+        }
+      });
     }
 
-    shuffledSessionQuestions = shuffle(selectedQuestions).slice(0, questionCount);
-    hardValidation = validateBlueprintHard({
-      distribution,
-      selectedQuestions: shuffledSessionQuestions,
+    if (remaining > 0) {
+      const anyPool = await Question.find({
+        examType: resolvedExam,
+        _id: { $nin: Array.from(selectedIds) },
+      })
+        .select('subject topic subtopic difficulty difficultyLevel conceptTested yearTag weightage')
+        .lean();
+
+      const anyFallback = fillFromRankedPool({
+        pool: anyPool,
+        needed: remaining,
+        selectedIds,
+        weights,
+        levelWeights,
+        recentQuestionIds,
+      });
+
+      anyFallback.forEach((question) => {
+        const id = String(question._id);
+        if (!selectedIds.has(id) && remaining > 0) {
+          selectedIds.add(id);
+          subjectSelected.push(question);
+          remaining -= 1;
+          fallbackUsage.anyAvailable += 1;
+        }
+      });
+    }
+
+    if (remaining > 0) {
+      generationWarnings.push(
+        `Could not fully fill scaled ${subject} target by ${remaining} questions after fallback stages.`
+      );
+    }
+
+    selectedQuestions.push(...subjectSelected);
+  }
+
+  const shuffledSessionQuestions = shuffle(selectedQuestions);
+  const expectedTotal = Number(questionCount || 0);
+  const actualQuestionCount = shuffledSessionQuestions.length;
+  const minimumAllowedCount = Math.ceil(expectedTotal * MIN_QUESTION_FRACTION);
+
+  if (actualQuestionCount < minimumAllowedCount) {
+    const error = new Error(
+      `Not enough questions to generate a meaningful exam. Expected at least ${minimumAllowedCount}, got ${actualQuestionCount}.`
+    );
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const hardValidation = validateBlueprintHard({
+    distribution: scalePlan.scaledCounts,
+    selectedQuestions: shuffledSessionQuestions,
+    examType: resolvedExam,
+  });
+
+  const requestedCounts = { ...distribution };
+  const actualCounts = hardValidation.diagnostics.selectedSubjectCounts || {};
+  const deficits = Object.keys(requestedCounts).reduce((acc, subject) => {
+    const deficit = Math.max(0, Number(requestedCounts[subject] || 0) - Number(actualCounts[subject] || 0));
+    if (deficit > 0) {
+      acc[subject] = deficit;
+    }
+    return acc;
+  }, {});
+
+  const pyqActualCount = Number(hardValidation.diagnostics.pyqCount || 0);
+  const pyqActualPct = Number(hardValidation.diagnostics.pyqSharePct || 0);
+  const pyqTarget = {
+    minPct: Number(((examConfig.pyqShareRange?.min || 0) * 100).toFixed(1)),
+    maxPct: Number(((examConfig.pyqShareRange?.max || 1) * 100).toFixed(1)),
+    minCount: pyqTargetMeta?.minCount ?? Math.ceil(actualQuestionCount * Number(examConfig.pyqShareRange?.min || 0)),
+    maxCount: pyqTargetMeta?.maxCount ?? Math.floor(actualQuestionCount * Number(examConfig.pyqShareRange?.max || 1)),
+  };
+
+  const pyqWithinRange = pyqActualPct >= pyqTarget.minPct && pyqActualPct <= pyqTarget.maxPct;
+  if (!pyqWithinRange) {
+    generationWarnings.push('PYQ distribution target could not be fully met; used best possible mix.');
+  }
+
+  if (fallbackUsage.sameSubjectRelaxed || fallbackUsage.relatedTopics || fallbackUsage.anyAvailable) {
+    console.info('[exam-blueprint] fallback-usage', {
       examType: resolvedExam,
+      mode,
+      fallbackUsage,
     });
-
-    if (hardValidation.ok) {
-      blueprintDiagnostics = {
-        ...hardValidation.diagnostics,
-        hardValidationChecks: hardValidation.checks,
-        generationAttempts: attempt,
-      };
-      break;
-    }
   }
 
-  if (!blueprintDiagnostics) {
-    throw new Error('Unable to generate exam with valid blueprint and PYQ spread. Please retry.');
+  if (scalePlan.scalingApplied) {
+    console.info('[exam-blueprint] scaling-applied', {
+      examType: resolvedExam,
+      mode,
+      requestedCounts,
+      scaledCounts: scalePlan.scaledCounts,
+      expectedTotal: scalePlan.expectedTotal,
+      scaledTotal: scalePlan.scaledTotal,
+    });
   }
+
+  const blueprintDiagnostics = {
+    ...hardValidation.diagnostics,
+    subjectTargets: scalePlan.scaledCounts,
+    hardValidationChecks: {
+      subjectMatch: true,
+      topicSpreadOk: hardValidation.checks.topicSpreadOk,
+      pyqRangeOk: pyqWithinRange,
+    },
+    requestedCounts,
+    actualCounts,
+    deficits,
+    scalingApplied: Boolean(scalePlan.scalingApplied),
+    scaledCounts: scalePlan.scaledCounts,
+    expectedTotal,
+    actualTotal: actualQuestionCount,
+    pyqTarget,
+    pyqActual: {
+      count: pyqActualCount,
+      sharePct: pyqActualPct,
+      withinRange: pyqWithinRange,
+      relaxed: pyqRelaxed || !pyqWithinRange,
+    },
+    fallbackUsage,
+    warnings: generationWarnings,
+    generationAttempts: 1,
+  };
+
+  if (generationWarnings.length) {
+    console.warn('[exam-blueprint] warnings', {
+      examType: resolvedExam,
+      mode,
+      warnings: generationWarnings,
+    });
+  }
+
+  const adjustedTimeLimitSec = Math.max(
+    600,
+    Math.round(timeLimitSec * (actualQuestionCount / Math.max(questionCount, 1)))
+  );
 
   const session = await ExamSession.create({
     user: user._id,
@@ -579,10 +960,14 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
     sectionSubject: mode === 'section-wise' ? normalizedSection : null,
     strictNavigation: Boolean(strictNavigation),
     status: 'active',
-    questionCount,
-    timeLimitSec,
+    questionCount: actualQuestionCount,
+    timeLimitSec: adjustedTimeLimitSec,
     startedAt: new Date(),
-    expiresAt: new Date(Date.now() + timeLimitSec * 1000),
+    expiresAt: new Date(Date.now() + adjustedTimeLimitSec * 1000),
+    lastActivityAt: new Date(),
+    isSubmitting: false,
+    version: 0,
+    lastAnsweredIndex: -1,
     questionOrder: shuffledSessionQuestions.map((question) => ({
       question: question._id,
       subject: question.subject,
@@ -615,6 +1000,20 @@ const getExamSessionState = async ({ userId, sessionId }) => {
   return serializeSessionState(refreshed);
 };
 
+const getLatestActiveExamSessionState = async ({ userId }) => {
+  const session = await ExamSession.findOne({ user: userId, status: 'active' }).sort({ createdAt: -1 });
+  if (!session) {
+    return null;
+  }
+
+  const refreshed = await autoExpireIfNeeded(session);
+  if (refreshed.status !== 'active') {
+    return null;
+  }
+
+  return serializeSessionState(refreshed);
+};
+
 const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIndex, timeTakenSec = 0 }) => {
   const session = await ExamSession.findOne({ _id: sessionId, user: userId });
   if (!session) {
@@ -625,6 +1024,33 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
 
   await autoExpireIfNeeded(session);
 
+  if (session.status === 'submitted') {
+    logExamIntegrity('answer-rejected', {
+      reason: 'submitted-session',
+      sessionId,
+      userId: String(userId),
+    });
+    throw buildHttpError('Exam session already submitted', 400);
+  }
+
+  if (session.status === 'expired') {
+    logExamIntegrity('answer-rejected', {
+      reason: 'expired-session',
+      sessionId,
+      userId: String(userId),
+    });
+    throw buildHttpError('Exam session expired', 400);
+  }
+
+  if (session.isSubmitting) {
+    logExamIntegrity('answer-rejected', {
+      reason: 'submit-lock-active',
+      sessionId,
+      userId: String(userId),
+    });
+    throw buildHttpError('Session submission in progress', 409);
+  }
+
   if (session.status !== 'active') {
     const error = new Error('Exam session is not active');
     error.statusCode = 400;
@@ -633,24 +1059,60 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
 
   const resolvedIndex = Number(questionIndex);
   if (!Number.isInteger(resolvedIndex) || resolvedIndex < 0 || resolvedIndex >= session.questionCount) {
-    const error = new Error('Invalid questionIndex');
-    error.statusCode = 400;
-    throw error;
+    logExamIntegrity('answer-rejected', {
+      reason: 'invalid-question-index',
+      sessionId,
+      userId: String(userId),
+      questionIndex,
+    });
+    throw buildHttpError('Invalid questionIndex', 400);
   }
 
   if (!Number.isInteger(Number(selectedAnswerIndex)) || Number(selectedAnswerIndex) < 0 || Number(selectedAnswerIndex) > 3) {
-    const error = new Error('selectedAnswerIndex must be 0..3');
-    error.statusCode = 400;
-    throw error;
+    logExamIntegrity('answer-rejected', {
+      reason: 'invalid-answer-index',
+      sessionId,
+      userId: String(userId),
+      selectedAnswerIndex,
+    });
+    throw buildHttpError('selectedAnswerIndex must be 0..3', 400);
   }
 
-  if (session.strictNavigation && resolvedIndex !== session.currentQuestionIndex) {
-    const error = new Error('Strict navigation enabled: answer the current question only');
-    error.statusCode = 400;
-    throw error;
+  if (!session.questionOrder[resolvedIndex]?.question) {
+    logExamIntegrity('answer-rejected', {
+      reason: 'question-id-missing',
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+    });
+    throw buildHttpError('Question not found in session', 400);
+  }
+
+  const persistedLastAnswered = Number(session.lastAnsweredIndex);
+  const lastAnsweredIndex = Number.isInteger(persistedLastAnswered) ? persistedLastAnswered : -1;
+  const maxAllowedIndex = lastAnsweredIndex + 1;
+  if (session.strictNavigation && resolvedIndex > maxAllowedIndex) {
+    logExamIntegrity('out-of-order-attempt', {
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+      maxAllowedIndex,
+      lastAnsweredIndex,
+    });
+    throw buildHttpError('Strict navigation enabled: cannot skip ahead', 400);
   }
 
   const responseIdx = (session.responses || []).findIndex((entry) => entry.questionIndex === resolvedIndex);
+  if (responseIdx >= 0) {
+    logExamIntegrity('answer-rejected', {
+      reason: 'duplicate-question-submission',
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+    });
+    throw buildHttpError('Duplicate answer submission for question', 409);
+  }
+
   const payload = {
     questionIndex: resolvedIndex,
     question: session.questionOrder[resolvedIndex].question,
@@ -659,18 +1121,69 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
     answeredAt: new Date(),
   };
 
-  if (responseIdx >= 0) {
-    session.responses[responseIdx] = payload;
-  } else {
-    session.responses.push(payload);
+  const nextResponses = [...(session.responses || []), payload];
+  const nextLastAnsweredIndex = Math.max(lastAnsweredIndex, resolvedIndex);
+  const nextCurrentQuestionIndex = Math.min(nextLastAnsweredIndex + 1, session.questionCount - 1);
+
+  const updated = await ExamSession.findOneAndUpdate(
+    {
+      _id: sessionId,
+      user: userId,
+      status: 'active',
+      isSubmitting: { $ne: true },
+      version: Number(session.version || 0),
+      'responses.questionIndex': { $ne: resolvedIndex },
+    },
+    {
+      $set: {
+        responses: nextResponses,
+        lastAnsweredIndex: nextLastAnsweredIndex,
+        currentQuestionIndex: nextCurrentQuestionIndex,
+        lastActivityAt: new Date(),
+      },
+      $inc: { version: 1 },
+    },
+    { new: true }
+  );
+
+  if (!updated) {
+    const latest = await ExamSession.findOne({ _id: sessionId, user: userId });
+    if (latest?.isSubmitting) {
+      logExamIntegrity('answer-rejected', {
+        reason: 'submit-lock-active',
+        sessionId,
+        userId: String(userId),
+      });
+      throw buildHttpError('Session submission in progress', 409);
+    }
+    if (latest?.status && latest.status !== 'active') {
+      logExamIntegrity('answer-rejected', {
+        reason: `status-${latest.status}`,
+        sessionId,
+        userId: String(userId),
+      });
+      throw buildHttpError(`Exam session ${latest.status}`, 400);
+    }
+    if ((latest?.responses || []).some((entry) => entry.questionIndex === resolvedIndex)) {
+      logExamIntegrity('answer-rejected', {
+        reason: 'duplicate-question-submission',
+        sessionId,
+        userId: String(userId),
+        questionIndex: resolvedIndex,
+      });
+      throw buildHttpError('Duplicate answer submission for question', 409);
+    }
+    logExamIntegrity('multi-tab-conflict', {
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+      expectedVersion: Number(session.version || 0),
+      actualVersion: Number(latest?.version || 0),
+    });
+    throw buildHttpError('Stale session update rejected', 409);
   }
 
-  if (session.strictNavigation) {
-    session.currentQuestionIndex = Math.min(session.currentQuestionIndex + 1, session.questionCount - 1);
-  }
-
-  await session.save();
-  return serializeSessionState(session);
+  return serializeSessionState(updated);
 };
 
 const computePercentileAndRank = ({ examType, score, maxScore }) => {
@@ -933,7 +1446,7 @@ const buildPostTestAnalysis = ({
 };
 
 const submitExamSession = async ({ userId, sessionId }) => {
-  const session = await ExamSession.findOne({ _id: sessionId, user: userId });
+  let session = await ExamSession.findOne({ _id: sessionId, user: userId });
   if (!session) {
     const error = new Error('Exam session not found');
     error.statusCode = 404;
@@ -945,6 +1458,40 @@ const submitExamSession = async ({ userId, sessionId }) => {
   }
 
   await autoExpireIfNeeded(session);
+
+  const lockAcquired = await ExamSession.updateOne(
+    {
+      _id: sessionId,
+      user: userId,
+      status: { $ne: 'submitted' },
+      isSubmitting: { $ne: true },
+    },
+    {
+      $set: {
+        isSubmitting: true,
+        lastActivityAt: new Date(),
+      },
+      $inc: { version: 1 },
+    }
+  );
+
+  if (!lockAcquired.modifiedCount) {
+    const latest = await ExamSession.findOne({ _id: sessionId, user: userId });
+    if (latest?.status === 'submitted' && latest.resultSummary) {
+      return latest.resultSummary;
+    }
+    if (latest?.isSubmitting) {
+      logExamIntegrity('answer-rejected', {
+        reason: 'submit-lock-active',
+        sessionId,
+        userId: String(userId),
+      });
+      throw buildHttpError('Session submission in progress', 409);
+    }
+    throw buildHttpError('Unable to acquire submit lock', 409);
+  }
+
+  session = await ExamSession.findOne({ _id: sessionId, user: userId });
 
   const questionIds = session.questionOrder.map((entry) => entry.question);
   const questions = await Question.find({ _id: { $in: questionIds } })
@@ -1046,18 +1593,36 @@ const submitExamSession = async ({ userId, sessionId }) => {
     adaptiveFollowUp: analysis.adaptiveFollowUp,
   };
 
-  session.status = getTimeLeftSec(session) === 0 ? 'expired' : 'submitted';
-  session.submittedAt = new Date();
-  session.resultSummary = resultSummary;
-  await session.save();
+  try {
+    session.status = getTimeLeftSec(session) === 0 ? 'expired' : 'submitted';
+    session.submittedAt = new Date();
+    session.resultSummary = resultSummary;
+    session.isSubmitting = false;
+    session.lastActivityAt = new Date();
+    session.version = Number(session.version || 0) + 1;
+    await session.save();
 
-  return resultSummary;
+    return resultSummary;
+  } catch (error) {
+    await ExamSession.updateOne(
+      { _id: sessionId, user: userId },
+      {
+        $set: {
+          isSubmitting: false,
+          lastActivityAt: new Date(),
+        },
+        $inc: { version: 1 },
+      }
+    );
+    throw error;
+  }
 };
 
 module.exports = {
   SCORE_RULES,
   createExamSession,
   getExamSessionState,
+  getLatestActiveExamSessionState,
   submitAnswer,
   submitExamSession,
 };

@@ -139,6 +139,26 @@ const examSessionSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    lastActivityAt: {
+      type: Date,
+      default: Date.now,
+      index: true,
+    },
+    isSubmitting: {
+      type: Boolean,
+      default: false,
+      index: true,
+    },
+    version: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    lastAnsweredIndex: {
+      type: Number,
+      default: -1,
+      min: -1,
+    },
     currentQuestionIndex: {
       type: Number,
       default: 0,
@@ -161,7 +181,10 @@ const examSessionSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    optimisticConcurrency: true,
+  }
 );
 
 examSessionSchema.index({ user: 1, status: 1, createdAt: -1 });
