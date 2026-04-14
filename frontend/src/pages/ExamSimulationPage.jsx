@@ -166,6 +166,8 @@ const ExamSimulationPage = () => {
   const [restoreNotice, setRestoreNotice] = useState('');
   const [multiTabWarning, setMultiTabWarning] = useState('');
   const [isSecondaryTab, setIsSecondaryTab] = useState(false);
+  const [isReconciling, setIsReconciling] = useState(false);
+  const [syncIndicator, setSyncIndicator] = useState('');
 
   const [navigationState, dispatchNavigation] = useReducer(navigationReducer, initialNavigationState);
   const [answerState, dispatchAnswer] = useReducer(answerReducer, initialAnswerState);
@@ -175,7 +177,7 @@ const ExamSimulationPage = () => {
   const saveQueueRef = useRef(new Map());
   const inFlightSavesRef = useRef([]);
   const isSaveInFlightRef = useRef(false);
-  const retryTimeoutRef = useRef(null);
+  const syncIndicatorTimeoutRef = useRef(null);
   const submitTriggeredRef = useRef(false);
   const serverOffsetMsRef = useRef(0);
   const tabIdRef = useRef(`${Date.now()}-${Math.random().toString(36).slice(2)}`);
@@ -360,6 +362,7 @@ const ExamSimulationPage = () => {
     timeLeftSec <= 0 ||
     isSubmitting ||
     answerState.isSaving ||
+    isReconciling ||
     submitLocked ||
     isSecondaryTab;
 
@@ -386,11 +389,82 @@ const ExamSimulationPage = () => {
     return true;
   };
 
-  const waitMs = (ms) => new Promise((resolve) => {
-    retryTimeoutRef.current = setTimeout(resolve, ms);
-  });
+  const setSyncIndicatorWithReset = (message) => {
+    setSyncIndicator(message);
+    if (syncIndicatorTimeoutRef.current) {
+      clearTimeout(syncIndicatorTimeoutRef.current);
+    }
+    syncIndicatorTimeoutRef.current = setTimeout(() => {
+      setSyncIndicator('');
+      syncIndicatorTimeoutRef.current = null;
+    }, 1800);
+  };
 
-  const saveAnswerWithRetry = async ({ questionIndex, questionId, answerIndex, allowRateRetry = true }) => {
+  const buildAnswerMapFromSessionState = (sessionState) => {
+    const questionList = sessionState?.questions || [];
+    return (sessionState?.responses || []).reduce((acc, entry) => {
+      if (!Number.isInteger(entry?.selectedAnswerIndex)) return acc;
+      const question = questionList[Number(entry.questionIndex)];
+      if (question?._id) {
+        acc[question._id] = entry.selectedAnswerIndex;
+      }
+      return acc;
+    }, {});
+  };
+
+  const reconcileStateWithBackend = ({
+    backendSession,
+    selectedQuestionId,
+    selectedAnswerIndex,
+  }) => {
+    const backendAnswers = buildAnswerMapFromSessionState(backendSession);
+    const mergedAnswers = {
+      ...answerState.answers,
+      ...backendAnswers,
+    };
+
+    dispatchAnswer({
+      type: 'INIT_ANSWERS',
+      payload: {
+        answers: mergedAnswers,
+      },
+    });
+
+    const backendIndex = Number(backendSession?.currentQuestionIndex);
+    if (Number.isInteger(backendIndex)) {
+      dispatchNavigation({
+        type: 'SET_INDEX',
+        payload: { index: backendIndex },
+      });
+    }
+
+    if (selectedQuestionId && Number.isInteger(selectedAnswerIndex)) {
+      const backendSavedAnswer = backendAnswers[selectedQuestionId];
+      if (Number.isInteger(backendSavedAnswer) && backendSavedAnswer !== selectedAnswerIndex) {
+        console.log('[exam-sync] mismatch-detected', {
+          questionId: selectedQuestionId,
+          localAnswer: selectedAnswerIndex,
+          backendAnswer: backendSavedAnswer,
+        });
+        dispatchAnswer({
+          type: 'SET_ANSWER',
+          payload: {
+            questionId: selectedQuestionId,
+            answerIndex: backendSavedAnswer,
+          },
+        });
+        setSyncIndicatorWithReset('Corrected to latest saved state');
+      } else {
+        setSyncIndicatorWithReset('Synced');
+      }
+    } else {
+      setSyncIndicatorWithReset('Synced');
+    }
+
+    setSession(backendSession);
+  };
+
+  const saveAnswerWithRetry = async ({ questionIndex, questionId, answerIndex }) => {
     if (!session?.sessionId) return false;
 
     console.log('[exam-save] outgoing-auth', {
@@ -418,14 +492,33 @@ const ExamSimulationPage = () => {
         return false;
       }
 
-      const { data } = response;
+      let backendSession = response.data;
+      const didRetry = Boolean(response?.__examMeta?.didRetry);
+      const missingExpectedFields =
+        !backendSession ||
+        !Array.isArray(backendSession.responses) ||
+        !Number.isInteger(Number(backendSession.currentQuestionIndex));
+
+      if (didRetry || missingExpectedFields) {
+        console.log('[exam-sync] refetch-triggered', {
+          reason: didRetry ? 'retry-path' : 'missing-fields',
+          questionIndex,
+        });
+        setIsReconciling(true);
+        backendSession = await getExamSession(session.sessionId);
+      }
 
       console.log('[exam-save] incoming-auth', {
         questionIndex,
-        nonce: data?.requestNonce,
+        nonce: backendSession?.requestNonce,
       });
 
-      setSession(data);
+      setIsReconciling(true);
+      reconcileStateWithBackend({
+        backendSession,
+        selectedQuestionId: questionId,
+        selectedAnswerIndex: answerIndex,
+      });
       dispatchAnswer({
         type: 'SET_SYNC_WARNING',
         payload: {
@@ -445,19 +538,25 @@ const ExamSimulationPage = () => {
       if (status === 401) {
         setError('Session authentication failed. Restarting exam session is required.');
         localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
+        clearExamSessionAuth();
         setSession(null);
-      } else if (status === 409) {
+      } else if (status === 409 || status === 429) {
         try {
+          setIsReconciling(true);
+          console.log('[exam-sync] refetch-triggered', {
+            reason: status === 409 ? 'conflict-failure' : 'rate-limit-failure',
+            questionIndex,
+          });
           const data = await getExamSession(session.sessionId);
-          setSession(data);
-          setError('Session was refreshed due to request conflict. Retry your action.');
+          reconcileStateWithBackend({
+            backendSession: data,
+            selectedQuestionId: questionId,
+            selectedAnswerIndex: answerIndex,
+          });
+          setError('Session was refreshed after save failure. Retry your action.');
         } catch (refreshError) {
-          setError('Session conflict detected and state refresh failed. Please reload.');
+          setError('Save failed and state refresh failed. Please reload the exam.');
         }
-      } else if (status === 429 && allowRateRetry) {
-        setError('Rate limit reached. Retrying answer save...');
-        await waitMs(1200);
-        return saveAnswerWithRetry({ questionIndex, questionId, answerIndex, allowRateRetry: false });
       } else {
         setError(requestError?.response?.data?.message || 'Failed to save answer.');
       }
@@ -470,6 +569,8 @@ const ExamSimulationPage = () => {
         },
       });
       return false;
+    } finally {
+      setIsReconciling(false);
     }
   };
 
@@ -774,8 +875,8 @@ const ExamSimulationPage = () => {
       if (saveDebounceRef.current) {
         clearTimeout(saveDebounceRef.current);
       }
-      if (retryTimeoutRef.current) {
-        clearTimeout(retryTimeoutRef.current);
+      if (syncIndicatorTimeoutRef.current) {
+        clearTimeout(syncIndicatorTimeoutRef.current);
       }
     },
     []
@@ -1071,6 +1172,7 @@ const ExamSimulationPage = () => {
               <span className="progress-pill">Question {navigationState.currentIndex + 1} / {questions.length || session.questionCount}</span>
               <span>Hints: OFF</span>
               <span>Explanations: OFF</span>
+              {syncIndicator && <span>{syncIndicator}</span>}
               <span>{answerState.isSaving ? 'Saving...' : 'All changes synced'}</span>
             </div>
 

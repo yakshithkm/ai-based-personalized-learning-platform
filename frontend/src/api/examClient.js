@@ -109,6 +109,7 @@ const submitExamAnswer = async ({
   payload,
   allowRateRetry = true,
   allowConflictRetry = true,
+  didRetry = false,
 }) => {
   const { requestId, signal } = beginRequest();
   const requestConfig = attachExamAuthHeaders({ signal });
@@ -129,6 +130,10 @@ const submitExamAnswer = async ({
     if (response?.data?.sessionToken) {
       requestState.sessionToken = response.data.sessionToken;
     }
+    response.__examMeta = {
+      didRetry,
+      refetched: false,
+    };
     requestState.activeController = null;
     return response;
   } catch (error) {
@@ -142,7 +147,7 @@ const submitExamAnswer = async ({
 
     const status = Number(error?.response?.status || 0);
     if (status === 409 && allowConflictRetry) {
-      const refreshed = await refreshExamSession(sessionId);
+      await refreshExamSession(sessionId);
       if (!isLatestRequest(requestId)) {
         console.log('[exam-client] ignored-stale-response', { requestId, latestRequestId: requestState.latestRequestId });
         return { aborted: true, requestId, stale: true };
@@ -162,6 +167,11 @@ const submitExamAnswer = async ({
       if (retryResponse?.data?.sessionToken) {
         requestState.sessionToken = retryResponse.data.sessionToken;
       }
+      retryResponse.__examMeta = {
+        didRetry: true,
+        refetched: true,
+        retryReason: 409,
+      };
       requestState.activeController = null;
       return retryResponse;
     }
@@ -178,6 +188,7 @@ const submitExamAnswer = async ({
         payload,
         allowRateRetry: false,
         allowConflictRetry,
+        didRetry: true,
       });
     }
 
