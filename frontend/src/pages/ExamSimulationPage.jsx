@@ -2,6 +2,7 @@ import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
+const EXAM_TAB_LOCK_KEY = 'exam-active-tab-lock';
 
 const SECTION_SUBJECT_OPTIONS = {
   NEET: ['Physics', 'Chemistry', 'Biology'],
@@ -21,6 +22,7 @@ const formatTime = (seconds) => {
 const getSessionStorageKey = (sessionId, key) => `exam-session:${sessionId}:${key}`;
 const ACTIVE_SESSION_STORAGE_KEY = 'exam-active-session-id';
 const TAB_SWITCH_WARNING_LIMIT = 3;
+const TAB_LOCK_STALE_MS = 8000;
 
 const initialNavigationState = {
   currentIndex: 0,
@@ -154,6 +156,9 @@ const ExamSimulationPage = () => {
   const [submitLocked, setSubmitLocked] = useState(false);
   const [error, setError] = useState('');
   const [tabWarning, setTabWarning] = useState('');
+  const [restoreNotice, setRestoreNotice] = useState('');
+  const [multiTabWarning, setMultiTabWarning] = useState('');
+  const [isSecondaryTab, setIsSecondaryTab] = useState(false);
 
   const [navigationState, dispatchNavigation] = useReducer(navigationReducer, initialNavigationState);
   const [answerState, dispatchAnswer] = useReducer(answerReducer, initialAnswerState);
@@ -163,6 +168,8 @@ const ExamSimulationPage = () => {
   const saveQueueRef = useRef(new Map());
   const inFlightSavesRef = useRef([]);
   const submitTriggeredRef = useRef(false);
+  const serverOffsetMsRef = useRef(0);
+  const tabIdRef = useRef(`${Date.now()}-${Math.random().toString(36).slice(2)}`);
 
   const allowedSectionSubjects = useMemo(
     () => SECTION_SUBJECT_OPTIONS[examType] || SECTION_SUBJECT_OPTIONS.NEET,
@@ -176,46 +183,107 @@ const ExamSimulationPage = () => {
     }
   }, [mode, sectionSubject, allowedSectionSubjects]);
 
+  const computeRemainingSec = (sessionData, offsetMs = serverOffsetMsRef.current) => {
+    const expiresAtMs = new Date(sessionData.expiresAt).getTime();
+    return Math.max(0, Math.floor((expiresAtMs - (Date.now() + offsetMs)) / 1000));
+  };
+
+  const redirectToResultPage = (sessionData, resultData) => {
+    navigate('/exam-simulation/result', {
+      replace: true,
+      state: {
+        result: resultData || sessionData.resultSummary,
+        sessionId: sessionData.sessionId,
+        sessionMeta: {
+          examType: sessionData.examType,
+          mode: sessionData.mode,
+        },
+      },
+    });
+  };
+
   useEffect(() => {
     if (session) return;
 
     const restoreSession = async () => {
       const storedSessionId = localStorage.getItem(ACTIVE_SESSION_STORAGE_KEY);
+      let restored = null;
+      let restoreSource = null;
 
       if (storedSessionId) {
         try {
           const { data } = await api.get(`/exams/sessions/${storedSessionId}`);
-          if (data?.status === 'active') {
-            setSession(data);
-            setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
-            return;
-          }
-        } catch (error) {
+          restored = data;
+          restoreSource = 'stored-session-id';
+        } catch (requestError) {
+          console.log('[exam-restore] stored-session-fetch-failed', { storedSessionId });
           localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
         }
       }
 
-      try {
-        const { data } = await api.get('/exams/sessions/active/latest');
-        if (data?.session) {
-          setSession(data.session);
-          setTimeLeftSec(Number(data.session.timeLeftSec || data.session.timeLimitSec || 0));
-          localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, data.session.sessionId);
+      if (!restored) {
+        try {
+          const { data } = await api.get('/exams/sessions/active/latest');
+          if (data?.session) {
+            restored = data.session;
+            restoreSource = 'latest-active-session';
+          }
+        } catch (requestError) {
+          console.log('[exam-restore] latest-active-none');
         }
-      } catch (error) {
-        // No active session to restore.
       }
+
+      if (!restored) return;
+
+      const serverNowMs = new Date(restored.serverNow || Date.now()).getTime();
+      serverOffsetMsRef.current = serverNowMs - Date.now();
+
+      if (restored.status !== 'active') {
+        console.log('[exam-restore] redirect-non-active', {
+          source: restoreSource,
+          sessionId: restored.sessionId,
+          status: restored.status,
+        });
+        localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
+        redirectToResultPage(restored, restored.resultSummary);
+        return;
+      }
+
+      const remaining = computeRemainingSec(restored, serverOffsetMsRef.current);
+      if (remaining <= 0) {
+        try {
+          console.log('[exam-restore] expired-on-restore-submit', {
+            source: restoreSource,
+            sessionId: restored.sessionId,
+          });
+          const { data } = await api.post(`/exams/sessions/${restored.sessionId}/submit`);
+          localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
+          redirectToResultPage(restored, data);
+          return;
+        } catch (submitError) {
+          setError('Session expired during restore and auto-submit failed. Please retry.');
+          return;
+        }
+      }
+
+      console.log('[exam-restore] restored-active-session', {
+        source: restoreSource,
+        sessionId: restored.sessionId,
+      });
+      setRestoreNotice('Your exam session was restored. Timer resumed.');
+      setSession(restored);
+      setTimeLeftSec(remaining);
+      localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, restored.sessionId);
     };
 
     restoreSession();
-  }, [session]);
+  }, [session, navigate]);
 
   useEffect(() => {
     if (!session || session.status !== 'active') return undefined;
 
     const tick = () => {
-      const expiresAt = new Date(session.expiresAt).getTime();
-      const remaining = Math.max(0, Math.floor((expiresAt - Date.now()) / 1000));
+      const remaining = computeRemainingSec(session);
       setTimeLeftSec(remaining);
     };
 
@@ -249,6 +317,7 @@ const ExamSimulationPage = () => {
           },
         });
         localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
+        localStorage.removeItem(EXAM_TAB_LOCK_KEY);
       } catch (err) {
         setError(err?.response?.data?.message || 'Auto-submit failed. Please submit manually.');
         submitTriggeredRef.current = false;
@@ -264,7 +333,13 @@ const ExamSimulationPage = () => {
   const questions = session?.questions || [];
   const currentQuestion = questions[navigationState.currentIndex] || null;
   const selectedAnswer = currentQuestion ? answerState.answers[currentQuestion._id] : null;
-  const inputsDisabled = !session || session.status !== 'active' || timeLeftSec <= 0 || isSubmitting || submitLocked;
+  const inputsDisabled =
+    !session ||
+    session.status !== 'active' ||
+    timeLeftSec <= 0 ||
+    isSubmitting ||
+    submitLocked ||
+    isSecondaryTab;
 
   const getAnswerByIndex = (index) => {
     const question = questions[index];
@@ -409,13 +484,12 @@ const ExamSimulationPage = () => {
     const storedVisited = visitedRaw ? JSON.parse(visitedRaw) : {};
     const parsedStoredIndex = Number(currentIndexRaw);
 
+    const mergedAnswers = { ...storedAnswers, ...serverAnswerMap };
+
     dispatchAnswer({
       type: 'INIT_ANSWERS',
       payload: {
-        answers: {
-          ...serverAnswerMap,
-          ...storedAnswers,
-        },
+        answers: mergedAnswers,
       },
     });
     dispatchMeta({
@@ -425,11 +499,25 @@ const ExamSimulationPage = () => {
         visitedQuestions: storedVisited,
       },
     });
-    const restoredIndex = session.strictNavigation
-      ? Number(session.currentQuestionIndex || 0)
-      : Number.isInteger(parsedStoredIndex)
-        ? Math.min(Math.max(parsedStoredIndex, 0), Math.max((session.questionCount || 1) - 1, 0))
-        : Number(session.currentQuestionIndex || 0);
+
+    const maxIndex = Math.max((session.questionCount || 1) - 1, 0);
+    const serverIndex = Number(session.currentQuestionIndex);
+    const hasServerIndex = Number.isInteger(serverIndex);
+    const fallbackIndex = Number.isInteger(parsedStoredIndex)
+      ? Math.min(Math.max(parsedStoredIndex, 0), maxIndex)
+      : 0;
+    const restoredIndex = hasServerIndex
+      ? Math.min(Math.max(serverIndex, 0), maxIndex)
+      : fallbackIndex;
+
+    console.log('[exam-restore] merge-decisions', {
+      sessionId: session.sessionId,
+      serverAnswers: Object.keys(serverAnswerMap).length,
+      localAnswers: Object.keys(storedAnswers).length,
+      mergedAnswers: Object.keys(mergedAnswers).length,
+      indexSource: hasServerIndex ? 'server' : 'local-fallback',
+      restoredIndex,
+    });
 
     dispatchNavigation({ type: 'SET_INDEX', payload: { index: restoredIndex } });
     setTabWarning('');
@@ -495,6 +583,84 @@ const ExamSimulationPage = () => {
   useEffect(() => {
     if (!session || session.status !== 'active') return undefined;
 
+    const lockBelongsToCurrentTab = (lockValue) => {
+      if (!lockValue) return false;
+      try {
+        const parsed = JSON.parse(lockValue);
+        return parsed.tabId === tabIdRef.current;
+      } catch (error) {
+        return false;
+      }
+    };
+
+    const tryAcquireLock = () => {
+      const now = Date.now();
+      const existingRaw = localStorage.getItem(EXAM_TAB_LOCK_KEY);
+      let canAcquire = false;
+
+      if (!existingRaw) {
+        canAcquire = true;
+      } else {
+        try {
+          const existing = JSON.parse(existingRaw);
+          const isSameTab = existing.tabId === tabIdRef.current;
+          const isSameSession = existing.sessionId === session.sessionId;
+          const isStale = now - Number(existing.timestamp || 0) > TAB_LOCK_STALE_MS;
+          canAcquire = isSameTab || !isSameSession || isStale;
+        } catch (error) {
+          canAcquire = true;
+        }
+      }
+
+      if (canAcquire) {
+        localStorage.setItem(
+          EXAM_TAB_LOCK_KEY,
+          JSON.stringify({
+            tabId: tabIdRef.current,
+            sessionId: session.sessionId,
+            timestamp: now,
+          })
+        );
+      }
+
+      const currentRaw = localStorage.getItem(EXAM_TAB_LOCK_KEY);
+      const isOwner = lockBelongsToCurrentTab(currentRaw);
+      setIsSecondaryTab(!isOwner);
+      if (isOwner) {
+        setMultiTabWarning('');
+      } else {
+        setMultiTabWarning('This exam is active in another tab. Interaction is disabled in this tab.');
+      }
+    };
+
+    const onStorage = (event) => {
+      if (event.key !== EXAM_TAB_LOCK_KEY) return;
+      const isOwner = lockBelongsToCurrentTab(event.newValue || localStorage.getItem(EXAM_TAB_LOCK_KEY));
+      setIsSecondaryTab(!isOwner);
+      if (isOwner) {
+        setMultiTabWarning('');
+      } else {
+        setMultiTabWarning('This exam is active in another tab. Interaction is disabled in this tab.');
+      }
+    };
+
+    tryAcquireLock();
+    const heartbeat = setInterval(tryAcquireLock, 2000);
+    window.addEventListener('storage', onStorage);
+
+    return () => {
+      clearInterval(heartbeat);
+      window.removeEventListener('storage', onStorage);
+      const currentRaw = localStorage.getItem(EXAM_TAB_LOCK_KEY);
+      if (lockBelongsToCurrentTab(currentRaw)) {
+        localStorage.removeItem(EXAM_TAB_LOCK_KEY);
+      }
+    };
+  }, [session?.sessionId, session?.status]);
+
+  useEffect(() => {
+    if (!session || session.status !== 'active') return undefined;
+
     const onVisibilityChange = () => {
       if (document.visibilityState !== 'hidden') return;
 
@@ -523,6 +689,9 @@ const ExamSimulationPage = () => {
   const startSimulation = async () => {
     setError('');
     setTabWarning('');
+    setRestoreNotice('');
+    setMultiTabWarning('');
+    setIsSecondaryTab(false);
 
     try {
       const payload = {
@@ -604,6 +773,7 @@ const ExamSimulationPage = () => {
         },
       });
       localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
+      localStorage.removeItem(EXAM_TAB_LOCK_KEY);
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to submit exam simulation.');
       submitTriggeredRef.current = false;
@@ -748,6 +918,8 @@ const ExamSimulationPage = () => {
       </section>
 
       {error && <section className="panel error-text">{error}</section>}
+      {restoreNotice && <section className="panel">{restoreNotice}</section>}
+      {multiTabWarning && <section className="panel error-text">{multiTabWarning}</section>}
       {tabWarning && <section className="panel error-text">{tabWarning}</section>}
       {answerState.syncWarning && <section className="panel error-text">{answerState.syncWarning}</section>}
 

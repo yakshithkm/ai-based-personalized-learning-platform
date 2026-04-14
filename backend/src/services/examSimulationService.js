@@ -548,6 +548,7 @@ const serializeSessionState = async (session) => {
     startedAt: session.startedAt,
     expiresAt: session.expiresAt,
     submittedAt: session.submittedAt,
+    serverNow: new Date(),
     currentQuestionIndex: session.currentQuestionIndex,
     timeLeftSec: getTimeLeftSec(session),
     scoringRules: SCORE_RULES,
@@ -977,6 +978,18 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
   }
 
   await autoExpireIfNeeded(session);
+
+  if (session.status === 'submitted') {
+    const error = new Error('Exam session already submitted');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  if (session.status === 'expired') {
+    const error = new Error('Exam session expired');
+    error.statusCode = 400;
+    throw error;
+  }
 
   if (session.status !== 'active') {
     const error = new Error('Exam session is not active');
