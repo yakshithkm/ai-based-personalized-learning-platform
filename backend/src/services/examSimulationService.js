@@ -1,6 +1,8 @@
+const crypto = require('crypto');
 const Attempt = require('../models/Attempt');
 const Question = require('../models/Question');
 const ExamSession = require('../models/ExamSession');
+const ExamAuditLog = require('../models/ExamAuditLog');
 const { normalizeExamType, getAllowedSubjectsForExam, normalizeSubjectName } = require('../config/examSubjectMap');
 const { getExamConfig } = require('../config/examConfig');
 
@@ -57,6 +59,9 @@ const WEIGHTAGE_PRIORITY = {
 
 const MIN_QUESTION_FRACTION = 0.3;
 const INACTIVITY_EXPIRE_WINDOW_MS = 15 * 60 * 1000;
+const RATE_WINDOW_MS = 60 * 1000;
+const MAX_ANSWER_SUBMISSIONS_PER_MIN = 30;
+const MAX_SUBMIT_ATTEMPTS_PER_MIN = 5;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -68,6 +73,81 @@ const buildHttpError = (message, statusCode = 400) => {
   const error = new Error(message);
   error.statusCode = statusCode;
   return error;
+};
+
+const generateOpaqueToken = () => crypto.randomBytes(24).toString('hex');
+
+const buildAnswersChecksum = (responses = []) => {
+  const canonical = [...responses]
+    .filter((entry) => Number.isInteger(entry.questionIndex))
+    .sort((a, b) => Number(a.questionIndex) - Number(b.questionIndex))
+    .map((entry) => `${entry.questionIndex}:${Number.isInteger(entry.selectedAnswerIndex) ? entry.selectedAnswerIndex : 'null'}`)
+    .join('|');
+  return crypto.createHash('sha256').update(canonical).digest('hex');
+};
+
+const appendAuditTrail = async ({ userId, sessionId, action, reason, details = null }) => {
+  try {
+    await ExamAuditLog.create({
+      userId,
+      sessionId,
+      action,
+      reason,
+      details,
+      createdAt: new Date(),
+    });
+  } catch (error) {
+    console.error('[exam-audit] write-failed', {
+      action,
+      reason,
+      sessionId: String(sessionId),
+      userId: String(userId),
+      message: error.message,
+    });
+  }
+};
+
+const rejectWithAudit = async ({
+  userId,
+  sessionId,
+  reason,
+  message,
+  statusCode = 400,
+  details = null,
+}) => {
+  logExamIntegrity('answer-rejected', {
+    reason,
+    sessionId: String(sessionId),
+    userId: String(userId),
+    ...(details || {}),
+  });
+  await appendAuditTrail({
+    userId,
+    sessionId,
+    action: 'reject',
+    reason,
+    details,
+  });
+  throw buildHttpError(message, statusCode);
+};
+
+const updateRateWindow = ({
+  windowStartedAt,
+  currentCount,
+  now,
+  windowMs,
+}) => {
+  const startMs = windowStartedAt ? new Date(windowStartedAt).getTime() : 0;
+  if (!startMs || now.getTime() - startMs >= windowMs) {
+    return {
+      nextStartedAt: now,
+      nextCount: 1,
+    };
+  }
+  return {
+    nextStartedAt: new Date(startMs),
+    nextCount: Number(currentCount || 0) + 1,
+  };
 };
 
 const shuffle = (list) => {
@@ -560,6 +640,8 @@ const serializeSessionState = async (session) => {
     expiresAt: session.expiresAt,
     submittedAt: session.submittedAt,
     serverNow: new Date(),
+    sessionToken: session.sessionToken || null,
+    requestNonce: session.nextRequestNonce || null,
     currentQuestionIndex: session.currentQuestionIndex,
     timeLeftSec: getTimeLeftSec(session),
     scoringRules: SCORE_RULES,
@@ -594,9 +676,13 @@ const autoExpireIfNeeded = async (session) => {
   if (!session || session.status !== 'active') return session;
   const nowMs = Date.now();
   const expiresAtMs = new Date(session.expiresAt).getTime();
-  const inactivityMs = nowMs - new Date(session.lastActivityAt || session.updatedAt || session.startedAt).getTime();
+  const lastActivityMs = new Date(session.lastActivityAt || session.updatedAt || session.startedAt).getTime();
+  const lastAnswerMs = new Date(session.lastAnswerAt || session.updatedAt || session.startedAt).getTime();
+  const idleByActivityMs = nowMs - lastActivityMs;
+  const idleByAnswerMs = nowMs - lastAnswerMs;
   const expiredByTimer = expiresAtMs <= nowMs;
-  const expiredByInactivity = inactivityMs >= INACTIVITY_EXPIRE_WINDOW_MS;
+  const expiredByInactivity =
+    idleByActivityMs >= INACTIVITY_EXPIRE_WINDOW_MS && idleByAnswerMs >= INACTIVITY_EXPIRE_WINDOW_MS;
 
   if (!expiredByTimer && !expiredByInactivity) return session;
 
@@ -610,8 +696,20 @@ const autoExpireIfNeeded = async (session) => {
     logExamIntegrity('session-auto-expired-inactivity', {
       sessionId: String(session._id),
       userId: String(session.user),
-      inactivityMs,
+      idleByActivityMs,
+      idleByAnswerMs,
       windowMs: INACTIVITY_EXPIRE_WINDOW_MS,
+    });
+    await appendAuditTrail({
+      userId: session.user,
+      sessionId: session._id,
+      action: 'reject',
+      reason: 'session-auto-expired-inactivity',
+      details: {
+        idleByActivityMs,
+        idleByAnswerMs,
+        windowMs: INACTIVITY_EXPIRE_WINDOW_MS,
+      },
     });
   }
   return session;
@@ -964,7 +1062,16 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
     timeLimitSec: adjustedTimeLimitSec,
     startedAt: new Date(),
     expiresAt: new Date(Date.now() + adjustedTimeLimitSec * 1000),
+    sessionToken: generateOpaqueToken(),
+    nextRequestNonce: generateOpaqueToken(),
     lastActivityAt: new Date(),
+    lastAnswerAt: null,
+    answerRateWindowStartedAt: null,
+    answerRateCount: 0,
+    submitRateWindowStartedAt: null,
+    submitRateCount: 0,
+    answerAttemptCount: 0,
+    abnormalAttemptFlag: false,
     isSubmitting: false,
     version: 0,
     lastAnsweredIndex: -1,
@@ -983,6 +1090,8 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
     currentQuestionIndex: 0,
     blueprintDiagnostics,
     resultSummary: null,
+    answersChecksum: buildAnswersChecksum([]),
+    lastSubmitChecksum: null,
   });
 
   return serializeSessionState(session);
@@ -1014,7 +1123,16 @@ const getLatestActiveExamSessionState = async ({ userId }) => {
   return serializeSessionState(refreshed);
 };
 
-const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIndex, timeTakenSec = 0 }) => {
+const submitAnswer = async ({
+  userId,
+  sessionId,
+  questionIndex,
+  questionId,
+  selectedAnswerIndex,
+  timeTakenSec = 0,
+  sessionToken,
+  requestNonce,
+}) => {
   const session = await ExamSession.findOne({ _id: sessionId, user: userId });
   if (!session) {
     const error = new Error('Exam session not found');
@@ -1022,33 +1140,98 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
     throw error;
   }
 
+  const now = new Date();
+  session.lastActivityAt = now;
+  session.answerAttemptCount = Number(session.answerAttemptCount || 0) + 1;
+  if (!session.abnormalAttemptFlag && session.answerAttemptCount > Math.max(session.questionCount * 3, 50)) {
+    session.abnormalAttemptFlag = true;
+    await appendAuditTrail({
+      userId,
+      sessionId,
+      action: 'reject',
+      reason: 'abnormal-answer-attempt-pattern',
+      details: {
+        answerAttemptCount: session.answerAttemptCount,
+        questionCount: session.questionCount,
+      },
+    });
+  }
+
+  const answerRateWindow = updateRateWindow({
+    windowStartedAt: session.answerRateWindowStartedAt,
+    currentCount: session.answerRateCount,
+    now,
+    windowMs: RATE_WINDOW_MS,
+  });
+  session.answerRateWindowStartedAt = answerRateWindow.nextStartedAt;
+  session.answerRateCount = answerRateWindow.nextCount;
+  await session.save();
+
+  if (session.answerRateCount > MAX_ANSWER_SUBMISSIONS_PER_MIN) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'answer-rate-limit-exceeded',
+      message: 'Too many answer submissions. Please slow down.',
+      statusCode: 429,
+      details: {
+        count: session.answerRateCount,
+        limit: MAX_ANSWER_SUBMISSIONS_PER_MIN,
+      },
+    });
+  }
+
   await autoExpireIfNeeded(session);
 
   if (session.status === 'submitted') {
-    logExamIntegrity('answer-rejected', {
-      reason: 'submitted-session',
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
+      reason: 'submitted-session',
+      message: 'Exam session already submitted',
     });
-    throw buildHttpError('Exam session already submitted', 400);
   }
 
   if (session.status === 'expired') {
-    logExamIntegrity('answer-rejected', {
-      reason: 'expired-session',
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
+      reason: 'expired-session',
+      message: 'Exam session expired',
     });
-    throw buildHttpError('Exam session expired', 400);
   }
 
   if (session.isSubmitting) {
-    logExamIntegrity('answer-rejected', {
-      reason: 'submit-lock-active',
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
+      reason: 'submit-lock-active',
+      message: 'Session submission in progress',
+      statusCode: 409,
     });
-    throw buildHttpError('Session submission in progress', 409);
+  }
+
+  if (!sessionToken || sessionToken !== session.sessionToken) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'invalid-session-token',
+      message: 'Invalid session token',
+      statusCode: 401,
+    });
+  }
+
+  if (!requestNonce || requestNonce !== session.nextRequestNonce) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'stale-or-replayed-request',
+      message: 'Stale request rejected',
+      statusCode: 409,
+      details: {
+        providedNonce: Boolean(requestNonce),
+      },
+    });
   }
 
   if (session.status !== 'active') {
@@ -1059,58 +1242,85 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
 
   const resolvedIndex = Number(questionIndex);
   if (!Number.isInteger(resolvedIndex) || resolvedIndex < 0 || resolvedIndex >= session.questionCount) {
-    logExamIntegrity('answer-rejected', {
-      reason: 'invalid-question-index',
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
-      questionIndex,
+      reason: 'invalid-question-index',
+      message: 'Invalid questionIndex',
+      details: {
+        questionIndex,
+      },
     });
-    throw buildHttpError('Invalid questionIndex', 400);
   }
 
   if (!Number.isInteger(Number(selectedAnswerIndex)) || Number(selectedAnswerIndex) < 0 || Number(selectedAnswerIndex) > 3) {
-    logExamIntegrity('answer-rejected', {
-      reason: 'invalid-answer-index',
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
-      selectedAnswerIndex,
+      reason: 'invalid-answer-index',
+      message: 'selectedAnswerIndex must be 0..3',
+      details: {
+        selectedAnswerIndex,
+      },
     });
-    throw buildHttpError('selectedAnswerIndex must be 0..3', 400);
   }
 
-  if (!session.questionOrder[resolvedIndex]?.question) {
-    logExamIntegrity('answer-rejected', {
-      reason: 'question-id-missing',
+  const snapshotQuestionId = String(session.questionOrder[resolvedIndex]?.question || '');
+  if (!snapshotQuestionId) {
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
-      questionIndex: resolvedIndex,
+      reason: 'question-id-missing',
+      message: 'Question not found in session',
+      details: {
+        questionIndex: resolvedIndex,
+      },
     });
-    throw buildHttpError('Question not found in session', 400);
+  }
+
+  if (questionId && String(questionId) !== snapshotQuestionId) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'question-index-id-mismatch',
+      message: 'questionId does not match questionIndex mapping',
+      details: {
+        questionIndex: resolvedIndex,
+        questionId: String(questionId),
+        expectedQuestionId: snapshotQuestionId,
+      },
+    });
   }
 
   const persistedLastAnswered = Number(session.lastAnsweredIndex);
   const lastAnsweredIndex = Number.isInteger(persistedLastAnswered) ? persistedLastAnswered : -1;
   const maxAllowedIndex = lastAnsweredIndex + 1;
   if (session.strictNavigation && resolvedIndex > maxAllowedIndex) {
-    logExamIntegrity('out-of-order-attempt', {
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
-      questionIndex: resolvedIndex,
-      maxAllowedIndex,
-      lastAnsweredIndex,
+      reason: 'out-of-order-attempt',
+      message: 'Strict navigation enabled: cannot skip ahead',
+      details: {
+        questionIndex: resolvedIndex,
+        maxAllowedIndex,
+        lastAnsweredIndex,
+      },
     });
-    throw buildHttpError('Strict navigation enabled: cannot skip ahead', 400);
   }
 
   const responseIdx = (session.responses || []).findIndex((entry) => entry.questionIndex === resolvedIndex);
   if (responseIdx >= 0) {
-    logExamIntegrity('answer-rejected', {
-      reason: 'duplicate-question-submission',
+    await rejectWithAudit({
+      userId,
       sessionId,
-      userId: String(userId),
-      questionIndex: resolvedIndex,
+      reason: 'duplicate-question-submission',
+      message: 'Duplicate answer submission for question',
+      statusCode: 409,
+      details: {
+        questionIndex: resolvedIndex,
+      },
     });
-    throw buildHttpError('Duplicate answer submission for question', 409);
   }
 
   const payload = {
@@ -1124,66 +1334,54 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
   const nextResponses = [...(session.responses || []), payload];
   const nextLastAnsweredIndex = Math.max(lastAnsweredIndex, resolvedIndex);
   const nextCurrentQuestionIndex = Math.min(nextLastAnsweredIndex + 1, session.questionCount - 1);
+  const nextChecksum = buildAnswersChecksum(nextResponses);
 
-  const updated = await ExamSession.findOneAndUpdate(
-    {
-      _id: sessionId,
-      user: userId,
-      status: 'active',
-      isSubmitting: { $ne: true },
-      version: Number(session.version || 0),
-      'responses.questionIndex': { $ne: resolvedIndex },
-    },
-    {
-      $set: {
-        responses: nextResponses,
-        lastAnsweredIndex: nextLastAnsweredIndex,
-        currentQuestionIndex: nextCurrentQuestionIndex,
-        lastActivityAt: new Date(),
-      },
-      $inc: { version: 1 },
-    },
-    { new: true }
-  );
+  session.responses = nextResponses;
+  session.lastAnsweredIndex = nextLastAnsweredIndex;
+  session.currentQuestionIndex = nextCurrentQuestionIndex;
+  session.lastActivityAt = new Date();
+  session.lastAnswerAt = new Date();
+  session.nextRequestNonce = generateOpaqueToken();
+  session.answersChecksum = nextChecksum;
+  session.version = Number(session.version || 0) + 1;
 
-  if (!updated) {
-    const latest = await ExamSession.findOne({ _id: sessionId, user: userId });
-    if (latest?.isSubmitting) {
-      logExamIntegrity('answer-rejected', {
-        reason: 'submit-lock-active',
-        sessionId,
-        userId: String(userId),
-      });
-      throw buildHttpError('Session submission in progress', 409);
-    }
-    if (latest?.status && latest.status !== 'active') {
-      logExamIntegrity('answer-rejected', {
-        reason: `status-${latest.status}`,
-        sessionId,
-        userId: String(userId),
-      });
-      throw buildHttpError(`Exam session ${latest.status}`, 400);
-    }
-    if ((latest?.responses || []).some((entry) => entry.questionIndex === resolvedIndex)) {
-      logExamIntegrity('answer-rejected', {
-        reason: 'duplicate-question-submission',
+  try {
+    await session.save();
+  } catch (error) {
+    if (error.name === 'VersionError') {
+      logExamIntegrity('multi-tab-conflict', {
         sessionId,
         userId: String(userId),
         questionIndex: resolvedIndex,
       });
-      throw buildHttpError('Duplicate answer submission for question', 409);
+      await appendAuditTrail({
+        userId,
+        sessionId,
+        action: 'reject',
+        reason: 'stale-session-update',
+        details: {
+          questionIndex: resolvedIndex,
+        },
+      });
+      throw buildHttpError('Stale session update rejected', 409);
     }
-    logExamIntegrity('multi-tab-conflict', {
-      sessionId,
-      userId: String(userId),
-      questionIndex: resolvedIndex,
-      expectedVersion: Number(session.version || 0),
-      actualVersion: Number(latest?.version || 0),
-    });
-    throw buildHttpError('Stale session update rejected', 409);
+    throw error;
   }
 
-  return serializeSessionState(updated);
+  await appendAuditTrail({
+    userId,
+    sessionId,
+    action: 'answer',
+    reason: 'accepted',
+    details: {
+      questionIndex: resolvedIndex,
+      questionId: snapshotQuestionId,
+      answerAttemptCount: session.answerAttemptCount,
+      version: session.version,
+    },
+  });
+
+  return serializeSessionState(session);
 };
 
 const computePercentileAndRank = ({ examType, score, maxScore }) => {
@@ -1454,10 +1652,46 @@ const submitExamSession = async ({ userId, sessionId }) => {
   }
 
   if (session.status === 'submitted' && session.resultSummary) {
+    await appendAuditTrail({
+      userId,
+      sessionId,
+      action: 'submit',
+      reason: 'idempotent-return',
+      details: {
+        status: session.status,
+      },
+    });
     return session.resultSummary;
   }
 
   await autoExpireIfNeeded(session);
+
+  const now = new Date();
+  const submitRateWindow = updateRateWindow({
+    windowStartedAt: session.submitRateWindowStartedAt,
+    currentCount: session.submitRateCount,
+    now,
+    windowMs: RATE_WINDOW_MS,
+  });
+  session.submitRateWindowStartedAt = submitRateWindow.nextStartedAt;
+  session.submitRateCount = submitRateWindow.nextCount;
+  session.lastActivityAt = now;
+  session.version = Number(session.version || 0) + 1;
+  await session.save();
+
+  if (session.submitRateCount > MAX_SUBMIT_ATTEMPTS_PER_MIN) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'submit-rate-limit-exceeded',
+      message: 'Too many submit attempts. Please wait before retrying.',
+      statusCode: 429,
+      details: {
+        count: session.submitRateCount,
+        limit: MAX_SUBMIT_ATTEMPTS_PER_MIN,
+      },
+    });
+  }
 
   const lockAcquired = await ExamSession.updateOne(
     {
@@ -1492,6 +1726,22 @@ const submitExamSession = async ({ userId, sessionId }) => {
   }
 
   session = await ExamSession.findOne({ _id: sessionId, user: userId });
+
+  const computedChecksum = buildAnswersChecksum(session.responses || []);
+  const storedChecksum = session.answersChecksum || buildAnswersChecksum([]);
+  if (computedChecksum !== storedChecksum) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'checksum-mismatch-before-submit',
+      message: 'Session integrity check failed before submit',
+      statusCode: 409,
+      details: {
+        storedChecksum,
+        computedChecksum,
+      },
+    });
+  }
 
   const questionIds = session.questionOrder.map((entry) => entry.question);
   const questions = await Question.find({ _id: { $in: questionIds } })
@@ -1597,10 +1847,22 @@ const submitExamSession = async ({ userId, sessionId }) => {
     session.status = getTimeLeftSec(session) === 0 ? 'expired' : 'submitted';
     session.submittedAt = new Date();
     session.resultSummary = resultSummary;
+    session.lastSubmitChecksum = computedChecksum;
     session.isSubmitting = false;
     session.lastActivityAt = new Date();
     session.version = Number(session.version || 0) + 1;
     await session.save();
+
+    await appendAuditTrail({
+      userId,
+      sessionId,
+      action: 'submit',
+      reason: 'accepted',
+      details: {
+        score: resultSummary.scoreSummary.totalScore,
+        checksum: computedChecksum,
+      },
+    });
 
     return resultSummary;
   } catch (error) {

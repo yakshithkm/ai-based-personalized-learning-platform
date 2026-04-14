@@ -56,14 +56,27 @@ const getLatestActiveSessionState = async (req, res, next) => {
 
 const submitSessionAnswer = async (req, res, next) => {
   try {
-    const { questionIndex, selectedAnswerIndex, timeTakenSec } = req.body || {};
+    const {
+      questionIndex,
+      questionId,
+      selectedAnswerIndex,
+      timeTakenSec,
+      sessionToken: bodySessionToken,
+      requestNonce: bodyRequestNonce,
+    } = req.body || {};
+
+    const sessionToken = req.headers['x-exam-session-token'] || bodySessionToken;
+    const requestNonce = req.headers['x-exam-request-nonce'] || bodyRequestNonce;
 
     const data = await submitAnswer({
       userId: req.user._id,
       sessionId: req.params.sessionId,
       questionIndex,
+      questionId,
       selectedAnswerIndex,
       timeTakenSec,
+      sessionToken,
+      requestNonce,
     });
 
     return res.json(data);

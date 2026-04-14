@@ -2,6 +2,13 @@ import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import {
+  clearExamSessionAuth,
+  getExamSession,
+  setExamSessionAuth,
+  submitExamAnswer,
+  submitExamSession,
+} from '../api/examClient';
 const EXAM_TAB_LOCK_KEY = 'exam-active-tab-lock';
 
 const SECTION_SUBJECT_OPTIONS = {
@@ -167,6 +174,8 @@ const ExamSimulationPage = () => {
   const saveDebounceRef = useRef(null);
   const saveQueueRef = useRef(new Map());
   const inFlightSavesRef = useRef([]);
+  const isSaveInFlightRef = useRef(false);
+  const retryTimeoutRef = useRef(null);
   const submitTriggeredRef = useRef(false);
   const serverOffsetMsRef = useRef(0);
   const tabIdRef = useRef(`${Date.now()}-${Math.random().toString(36).slice(2)}`);
@@ -212,7 +221,7 @@ const ExamSimulationPage = () => {
 
       if (storedSessionId) {
         try {
-          const { data } = await api.get(`/exams/sessions/${storedSessionId}`);
+          const data = await getExamSession(storedSessionId);
           restored = data;
           restoreSource = 'stored-session-id';
         } catch (requestError) {
@@ -270,6 +279,11 @@ const ExamSimulationPage = () => {
         source: restoreSource,
         sessionId: restored.sessionId,
       });
+      setExamSessionAuth({
+        sessionId: restored.sessionId,
+        sessionToken: restored.sessionToken,
+        requestNonce: restored.requestNonce,
+      });
       setRestoreNotice('Your exam session was restored. Timer resumed.');
       setSession(restored);
       setTimeLeftSec(remaining);
@@ -301,9 +315,12 @@ const ExamSimulationPage = () => {
         submitTriggeredRef.current = true;
         setSubmitLocked(true);
         setIsSubmitting(true);
-        await flushSaveQueue();
+        const synced = await flushSaveQueue();
+        if (!synced) {
+          throw new Error('Unable to sync answers before auto-submit.');
+        }
         await Promise.all(inFlightSavesRef.current);
-        const { data } = await api.post(`/exams/sessions/${session.sessionId}/submit`);
+        const { data } = await submitExamSession({ sessionId: session.sessionId });
         setSession((prev) => (prev ? { ...prev, status: 'expired', submittedAt: data.submittedAt } : prev));
         navigate('/exam-simulation/result', {
           replace: true,
@@ -338,6 +355,7 @@ const ExamSimulationPage = () => {
     session.status !== 'active' ||
     timeLeftSec <= 0 ||
     isSubmitting ||
+    answerState.isSaving ||
     submitLocked ||
     isSecondaryTab;
 
@@ -364,18 +382,36 @@ const ExamSimulationPage = () => {
     return true;
   };
 
-  const saveAnswerWithRetry = async ({ questionIndex, answerIndex }) => {
-    const runSave = async () => {
-      const { data } = await api.patch(`/exams/sessions/${session.sessionId}/answer`, {
-        questionIndex,
-        selectedAnswerIndex: answerIndex,
-        timeTakenSec: 0,
-      });
-      setSession(data);
-    };
+  const waitMs = (ms) => new Promise((resolve) => {
+    retryTimeoutRef.current = setTimeout(resolve, ms);
+  });
+
+  const saveAnswerWithRetry = async ({ questionIndex, questionId, answerIndex, allowRateRetry = true }) => {
+    if (!session?.sessionId) return false;
+
+    console.log('[exam-save] outgoing-auth', {
+      questionIndex,
+      nonce: 'managed-by-wrapper',
+      hasToken: true,
+    });
 
     try {
-      await runSave();
+      const { data } = await submitExamAnswer({
+        sessionId: session.sessionId,
+        payload: {
+          questionIndex,
+          questionId,
+          selectedAnswerIndex: answerIndex,
+          timeTakenSec: 0,
+        },
+      });
+
+      console.log('[exam-save] incoming-auth', {
+        questionIndex,
+        nonce: data?.requestNonce,
+      });
+
+      setSession(data);
       dispatchAnswer({
         type: 'SET_SYNC_WARNING',
         payload: {
@@ -383,24 +419,49 @@ const ExamSimulationPage = () => {
           message: '',
         },
       });
-    } catch (firstError) {
-      try {
-        await runSave();
-      } catch (secondError) {
-        console.log('[exam-save] retry-failed', { questionIndex, answerIndex });
-        dispatchAnswer({
-          type: 'SET_SYNC_WARNING',
-          payload: {
-            hasPendingSync: true,
-            message: 'Answer saved locally, sync pending',
-          },
-        });
+      return true;
+    } catch (requestError) {
+      const status = Number(requestError?.response?.status || 0);
+      console.log('[exam-save] rejected-request', {
+        questionIndex,
+        status,
+        message: requestError?.response?.data?.message,
+      });
+
+      if (status === 401) {
+        setError('Session authentication failed. Restarting exam session is required.');
+        localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
+        setSession(null);
+      } else if (status === 409) {
+        try {
+          const data = await getExamSession(session.sessionId);
+          setSession(data);
+          setError('Session was refreshed due to request conflict. Retry your action.');
+        } catch (refreshError) {
+          setError('Session conflict detected and state refresh failed. Please reload.');
+        }
+      } else if (status === 429 && allowRateRetry) {
+        setError('Rate limit reached. Retrying answer save...');
+        await waitMs(1200);
+        return saveAnswerWithRetry({ questionIndex, questionId, answerIndex, allowRateRetry: false });
+      } else {
+        setError(requestError?.response?.data?.message || 'Failed to save answer.');
       }
+
+      dispatchAnswer({
+        type: 'SET_SYNC_WARNING',
+        payload: {
+          hasPendingSync: true,
+          message: 'Answer sync failed. Please retry.',
+        },
+      });
+      return false;
     }
   };
 
   const flushPendingSave = async () => {
-    if (!session || session.status !== 'active') return;
+    if (!session || session.status !== 'active') return true;
+    if (isSaveInFlightRef.current) return false;
     if (saveDebounceRef.current) {
       clearTimeout(saveDebounceRef.current);
       saveDebounceRef.current = null;
@@ -412,17 +473,27 @@ const ExamSimulationPage = () => {
     }));
     saveQueueRef.current.clear();
 
-    if (!entries.length) return;
+    if (!entries.length) return true;
     dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: true } });
+    isSaveInFlightRef.current = true;
     console.log('[exam-save] flushing-queue', { size: entries.length });
 
-    const promises = entries.map((entry) => saveAnswerWithRetry(entry));
-    inFlightSavesRef.current.push(...promises);
-    await Promise.all(promises);
-    inFlightSavesRef.current = inFlightSavesRef.current.filter(
-      (promise) => !promises.includes(promise)
-    );
+    const outcomes = [];
+    for (const entry of entries) {
+      const questionId = questions[entry.questionIndex]?._id;
+      const savePromise = saveAnswerWithRetry({ ...entry, questionId });
+      inFlightSavesRef.current.push(savePromise);
+      const success = await savePromise;
+      outcomes.push(success);
+      inFlightSavesRef.current = inFlightSavesRef.current.filter((promise) => promise !== savePromise);
+      if (!success) {
+        break;
+      }
+    }
+    isSaveInFlightRef.current = false;
     dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: false } });
+
+    return outcomes.every(Boolean);
   };
 
   const queueAnswerSave = (questionIndex, answerIndex) => {
@@ -452,6 +523,7 @@ const ExamSimulationPage = () => {
 
   useEffect(() => {
     if (!session?.sessionId) {
+      clearExamSessionAuth();
       dispatchNavigation({ type: 'RESET' });
       dispatchAnswer({ type: 'RESET' });
       dispatchMeta({ type: 'RESET' });
@@ -459,6 +531,12 @@ const ExamSimulationPage = () => {
       setSubmitLocked(false);
       return;
     }
+
+    setExamSessionAuth({
+      sessionId: session.sessionId,
+      sessionToken: session.sessionToken,
+      requestNonce: session.requestNonce,
+    });
 
     localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, session.sessionId);
 
@@ -682,6 +760,9 @@ const ExamSimulationPage = () => {
       if (saveDebounceRef.current) {
         clearTimeout(saveDebounceRef.current);
       }
+      if (retryTimeoutRef.current) {
+        clearTimeout(retryTimeoutRef.current);
+      }
     },
     []
   );
@@ -705,6 +786,11 @@ const ExamSimulationPage = () => {
       }
 
       const { data } = await api.post('/exams/sessions', payload);
+      setExamSessionAuth({
+        sessionId: data.sessionId,
+        sessionToken: data.sessionToken,
+        requestNonce: data.requestNonce,
+      });
       setSession(data);
       setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
       localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, data.sessionId);
@@ -757,9 +843,12 @@ const ExamSimulationPage = () => {
       submitTriggeredRef.current = true;
       setSubmitLocked(true);
       setIsSubmitting(true);
-      await flushSaveQueue();
+      const synced = await flushSaveQueue();
+      if (!synced) {
+        throw new Error('Unable to sync answers before submit.');
+      }
       await Promise.all(inFlightSavesRef.current);
-      const { data } = await api.post(`/exams/sessions/${session.sessionId}/submit`);
+      const { data } = await submitExamSession({ sessionId: session.sessionId });
       setSession((prev) => (prev ? { ...prev, status: 'submitted', submittedAt: data.submittedAt } : prev));
       navigate('/exam-simulation/result', {
         replace: true,
@@ -784,7 +873,7 @@ const ExamSimulationPage = () => {
   };
 
   const flushSaveQueue = async () => {
-    await flushPendingSave();
+    return flushPendingSave();
   };
 
   const canGoNext = () => {
@@ -806,7 +895,20 @@ const ExamSimulationPage = () => {
     }
 
     setError('');
-    queueAnswerSave(navigationState.currentIndex, selectedAnswer);
+
+    dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: true } });
+    const saved = await saveAnswerWithRetry({
+      questionIndex: navigationState.currentIndex,
+      questionId: currentQuestion._id,
+      answerIndex: selectedAnswer,
+    });
+    dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: false } });
+
+    if (!saved) {
+      return;
+    }
+
+    saveQueueRef.current.delete(Number(navigationState.currentIndex));
 
     dispatchNavigation({
       type: 'NEXT',
@@ -988,11 +1090,12 @@ const ExamSimulationPage = () => {
                 onClick={handleSaveAndNext}
                 disabled={
                   inputsDisabled ||
+                  answerState.isSaving ||
                   navigationState.currentIndex === questions.length - 1 ||
                   (session.strictNavigation && !Number.isInteger(selectedAnswer))
                 }
               >
-                Save & Next
+                {answerState.isSaving ? 'Saving...' : 'Save & Next'}
               </button>
               <button className="outline-btn" onClick={goToFirstUnanswered} disabled={inputsDisabled}>
                 Jump to First Unanswered

@@ -139,10 +139,51 @@ const examSessionSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    sessionToken: {
+      type: String,
+      default: null,
+      index: true,
+    },
+    nextRequestNonce: {
+      type: String,
+      default: null,
+    },
     lastActivityAt: {
       type: Date,
       default: Date.now,
       index: true,
+    },
+    lastAnswerAt: {
+      type: Date,
+      default: null,
+      index: true,
+    },
+    answerRateWindowStartedAt: {
+      type: Date,
+      default: null,
+    },
+    answerRateCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    submitRateWindowStartedAt: {
+      type: Date,
+      default: null,
+    },
+    submitRateCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    answerAttemptCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    abnormalAttemptFlag: {
+      type: Boolean,
+      default: false,
     },
     isSubmitting: {
       type: Boolean,
@@ -178,6 +219,14 @@ const examSessionSchema = new mongoose.Schema(
     },
     resultSummary: {
       type: mongoose.Schema.Types.Mixed,
+      default: null,
+    },
+    answersChecksum: {
+      type: String,
+      default: null,
+    },
+    lastSubmitChecksum: {
+      type: String,
       default: null,
     },
   },

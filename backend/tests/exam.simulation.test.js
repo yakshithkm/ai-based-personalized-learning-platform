@@ -1,6 +1,7 @@
 const request = require('supertest');
 const app = require('../src/app');
 const Question = require('../src/models/Question');
+const ExamAuditLog = require('../src/models/ExamAuditLog');
 
 const SUBJECT_TOPICS = {
   Physics: ['Mechanics', 'Waves', 'Electrostatics', 'Optics'],
@@ -55,6 +56,27 @@ const registerAndLogin = async ({ targetExam = 'NEET', email = 'examtest@example
   const registerRes = await request(app).post('/api/auth/register').send(payload);
   return registerRes.body.token;
 };
+
+const submitAnswerSecurely = async ({
+  token,
+  sessionId,
+  sessionToken,
+  requestNonce,
+  questionIndex,
+  questionId,
+  selectedAnswerIndex,
+  timeTakenSec,
+}) => request(app)
+  .patch(`/api/exams/sessions/${sessionId}/answer`)
+  .set('Authorization', `Bearer ${token}`)
+  .set('x-exam-session-token', sessionToken)
+  .set('x-exam-request-nonce', requestNonce)
+  .send({
+    questionIndex,
+    questionId,
+    selectedAnswerIndex,
+    timeTakenSec,
+  });
 
 describe('Exam simulation system', () => {
   test('enforces single active session per user', async () => {
@@ -154,6 +176,10 @@ describe('Exam simulation system', () => {
     });
 
     const sessionId = startRes.body.sessionId;
+    const sessionToken = startRes.body.sessionToken;
+    let requestNonce = startRes.body.requestNonce;
+    expect(sessionToken).toBeDefined();
+    expect(requestNonce).toBeDefined();
     const firstTwenty = startRes.body.questions.slice(0, 20);
     const questionDocs = await Question.find({ _id: { $in: firstTwenty.map((q) => q._id) } }).lean();
     const correctIndexMap = new Map(questionDocs.map((q) => [String(q._id), q.correctAnswerIndex]));
@@ -171,27 +197,32 @@ describe('Exam simulation system', () => {
         wrong += 1;
       }
 
-      const answerRes = await request(app)
-        .patch(`/api/exams/sessions/${sessionId}/answer`)
-        .set('Authorization', `Bearer ${token}`)
-        .send({
-          questionIndex: idx,
-          selectedAnswerIndex,
-          timeTakenSec: 45 + (idx % 5) * 4,
-        });
+      const answerRes = await submitAnswerSecurely({
+        token,
+        sessionId,
+        sessionToken,
+        requestNonce,
+        questionIndex: idx,
+        questionId: q._id,
+        selectedAnswerIndex,
+        timeTakenSec: 45 + (idx % 5) * 4,
+      });
 
       expect(answerRes.status).toBe(200);
       expect(answerRes.body.responses.length).toBe(idx + 1);
+      requestNonce = answerRes.body.requestNonce;
     }
 
-    const outOfOrderRes = await request(app)
-      .patch(`/api/exams/sessions/${sessionId}/answer`)
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        questionIndex: 35,
-        selectedAnswerIndex: 1,
-        timeTakenSec: 60,
-      });
+    const outOfOrderRes = await submitAnswerSecurely({
+      token,
+      sessionId,
+      sessionToken,
+      requestNonce,
+      questionIndex: 35,
+      questionId: startRes.body.questions[35]._id,
+      selectedAnswerIndex: 1,
+      timeTakenSec: 60,
+    });
 
     expect(outOfOrderRes.status).toBe(400);
     expect(outOfOrderRes.body.message).toMatch(/Strict navigation enabled/i);
@@ -349,26 +380,33 @@ describe('Exam simulation system', () => {
 
     expect(startRes.status).toBe(201);
     const sessionId = startRes.body.sessionId;
+    const sessionToken = startRes.body.sessionToken;
+    let requestNonce = startRes.body.requestNonce;
 
-    const firstAnswer = await request(app)
-      .patch(`/api/exams/sessions/${sessionId}/answer`)
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        questionIndex: 0,
-        selectedAnswerIndex: 1,
-        timeTakenSec: 10,
-      });
+    const firstAnswer = await submitAnswerSecurely({
+      token,
+      sessionId,
+      sessionToken,
+      requestNonce,
+      questionIndex: 0,
+      questionId: startRes.body.questions[0]._id,
+      selectedAnswerIndex: 1,
+      timeTakenSec: 10,
+    });
 
     expect(firstAnswer.status).toBe(200);
+    requestNonce = firstAnswer.body.requestNonce;
 
-    const duplicateAnswer = await request(app)
-      .patch(`/api/exams/sessions/${sessionId}/answer`)
-      .set('Authorization', `Bearer ${token}`)
-      .send({
-        questionIndex: 0,
-        selectedAnswerIndex: 2,
-        timeTakenSec: 10,
-      });
+    const duplicateAnswer = await submitAnswerSecurely({
+      token,
+      sessionId,
+      sessionToken,
+      requestNonce,
+      questionIndex: 0,
+      questionId: startRes.body.questions[0]._id,
+      selectedAnswerIndex: 2,
+      timeTakenSec: 10,
+    });
 
     expect(duplicateAnswer.status).toBe(409);
     expect(duplicateAnswer.body.message).toMatch(/duplicate answer submission/i);
@@ -388,5 +426,8 @@ describe('Exam simulation system', () => {
     expect(secondSubmit.status).toBe(200);
     expect(secondSubmit.body.sessionId).toBe(firstSubmit.body.sessionId);
     expect(secondSubmit.body.scoreSummary.totalScore).toBe(firstSubmit.body.scoreSummary.totalScore);
+
+    const auditCount = await ExamAuditLog.countDocuments({ sessionId });
+    expect(auditCount).toBeGreaterThan(0);
   });
 });
