@@ -629,6 +629,7 @@ const serializeSessionState = async (session) => {
 
   return {
     sessionId: String(session._id),
+    version: Number(session.version || 0),
     examType: session.examType,
     mode: session.mode,
     sectionSubject: session.sectionSubject || null,

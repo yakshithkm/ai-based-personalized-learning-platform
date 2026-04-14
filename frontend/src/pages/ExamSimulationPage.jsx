@@ -6,6 +6,7 @@ import {
   clearExamSessionAuth,
   getExamSession,
   setExamSessionAuth,
+  setLatestVersion,
   submitExamAnswer,
   submitExamSession,
 } from '../api/examClient';
@@ -181,6 +182,7 @@ const ExamSimulationPage = () => {
   const submitTriggeredRef = useRef(false);
   const serverOffsetMsRef = useRef(0);
   const tabIdRef = useRef(`${Date.now()}-${Math.random().toString(36).slice(2)}`);
+  const latestVersionRef = useRef(0);
 
   const allowedSectionSubjects = useMemo(
     () => SECTION_SUBJECT_OPTIONS[examType] || SECTION_SUBJECT_OPTIONS.NEET,
@@ -286,6 +288,8 @@ const ExamSimulationPage = () => {
         sessionToken: restored.sessionToken,
         requestNonce: restored.requestNonce,
       });
+      latestVersionRef.current = Number(restored.version || latestVersionRef.current || 0);
+      setLatestVersion(latestVersionRef.current);
       setRestoreNotice('Your exam session was restored. Timer resumed.');
       setSession(restored);
       setTimeLeftSec(remaining);
@@ -417,6 +421,12 @@ const ExamSimulationPage = () => {
     selectedQuestionId,
     selectedAnswerIndex,
   }) => {
+    const backendVersion = Number(backendSession?.version || 0);
+    if (Number.isInteger(backendVersion) && backendVersion > 0) {
+      latestVersionRef.current = Math.max(latestVersionRef.current, backendVersion);
+      setLatestVersion(latestVersionRef.current);
+    }
+
     const backendAnswers = buildAnswerMapFromSessionState(backendSession);
     const mergedAnswers = {
       ...answerState.answers,
@@ -489,15 +499,33 @@ const ExamSimulationPage = () => {
           questionIndex,
           requestId: response.requestId,
         });
+        if (response?.staleVersion) {
+          console.log('[exam-sync] ignored-outdated-response', {
+            requestId: response.requestId,
+            incomingVersion: response.responseVersion,
+            latestVersion: latestVersionRef.current,
+          });
+        }
         return false;
       }
 
       let backendSession = response.data;
+      const responseVersion = Number(backendSession?.version || 0);
+      if (Number.isInteger(responseVersion) && responseVersion < latestVersionRef.current) {
+        console.log('[exam-sync] ignored-outdated-response', {
+          incomingVersion: responseVersion,
+          latestVersion: latestVersionRef.current,
+          questionIndex,
+        });
+        return false;
+      }
+
       const didRetry = Boolean(response?.__examMeta?.didRetry);
       const missingExpectedFields =
         !backendSession ||
         !Array.isArray(backendSession.responses) ||
-        !Number.isInteger(Number(backendSession.currentQuestionIndex));
+        !Number.isInteger(Number(backendSession.currentQuestionIndex)) ||
+        !Number.isInteger(Number(backendSession.version));
 
       if (didRetry || missingExpectedFields) {
         console.log('[exam-sync] refetch-triggered', {
@@ -548,6 +576,8 @@ const ExamSimulationPage = () => {
             questionIndex,
           });
           const data = await getExamSession(session.sessionId);
+          latestVersionRef.current = Math.max(latestVersionRef.current, Number(data?.version || 0));
+          setLatestVersion(latestVersionRef.current);
           reconcileStateWithBackend({
             backendSession: data,
             selectedQuestionId: questionId,
@@ -652,6 +682,8 @@ const ExamSimulationPage = () => {
       sessionToken: session.sessionToken,
       requestNonce: session.requestNonce,
     });
+    latestVersionRef.current = Math.max(latestVersionRef.current, Number(session.version || 0));
+    setLatestVersion(latestVersionRef.current);
 
     localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, session.sessionId);
 
@@ -906,6 +938,8 @@ const ExamSimulationPage = () => {
         sessionToken: data.sessionToken,
         requestNonce: data.requestNonce,
       });
+      latestVersionRef.current = Number(data.version || 0);
+      setLatestVersion(latestVersionRef.current);
       setSession(data);
       setTimeLeftSec(Number(data.timeLeftSec || data.timeLimitSec || 0));
       localStorage.setItem(ACTIVE_SESSION_STORAGE_KEY, data.sessionId);

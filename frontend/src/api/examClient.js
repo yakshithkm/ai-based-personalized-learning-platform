@@ -5,12 +5,15 @@ const requestState = {
   sessionId: '',
   sessionToken: '',
   requestNonce: '',
+  latestVersion: 0,
   requestId: 0,
   latestRequestId: 0,
   activeController: null,
 };
+const ENABLE_DEV_LATENCY = String(import.meta.env.VITE_EXAM_CLIENT_DELAY_SIM || 'false').toLowerCase() === 'true';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const randomDelay = () => 100 + Math.floor(Math.random() * 1900);
 
 const isAbortError = (error) =>
   error?.name === 'CanceledError' ||
@@ -18,6 +21,19 @@ const isAbortError = (error) =>
   error?.message === 'canceled';
 
 const isLatestRequest = (requestId) => requestId === requestState.latestRequestId;
+
+const parseVersion = (value) => {
+  const numeric = Number(value);
+  return Number.isInteger(numeric) ? numeric : null;
+};
+
+const versionIsOutdated = (incomingVersion) =>
+  incomingVersion !== null && incomingVersion < Number(requestState.latestVersion || 0);
+
+const applyVersionIfNew = (incomingVersion) => {
+  if (incomingVersion === null) return;
+  requestState.latestVersion = Math.max(Number(requestState.latestVersion || 0), incomingVersion);
+};
 
 const beginRequest = () => {
   const requestId = requestState.requestId + 1;
@@ -53,6 +69,12 @@ const setExamSessionAuth = ({ sessionId, sessionToken, requestNonce }) => {
   if (requestNonce) requestState.requestNonce = requestNonce;
 };
 
+const setLatestVersion = (version) => {
+  const parsed = parseVersion(version);
+  if (parsed === null) return;
+  applyVersionIfNew(parsed);
+};
+
 const clearExamSessionAuth = () => {
   if (requestState.activeController) {
     requestState.activeController.abort();
@@ -61,6 +83,7 @@ const clearExamSessionAuth = () => {
   requestState.sessionId = '';
   requestState.sessionToken = '';
   requestState.requestNonce = '';
+  requestState.latestVersion = 0;
   requestState.requestId = 0;
   requestState.latestRequestId = 0;
 };
@@ -90,6 +113,11 @@ api.interceptors.response.use((response) => {
     requestState.sessionToken = nextToken;
   }
 
+  const incomingVersion = parseVersion(response?.data?.version);
+  if (incomingVersion !== null) {
+    applyVersionIfNew(incomingVersion);
+  }
+
   return response;
 });
 
@@ -101,6 +129,8 @@ const refreshExamSession = async (sessionId) => {
   if (data?.requestNonce) {
     requestState.requestNonce = data.requestNonce;
   }
+  const incomingVersion = parseVersion(data?.version);
+  applyVersionIfNew(incomingVersion);
   return data;
 };
 
@@ -124,15 +154,34 @@ const submitExamAnswer = async ({
       console.log('[exam-client] ignored-stale-response', { requestId, latestRequestId: requestState.latestRequestId });
       return { aborted: true, requestId, stale: true };
     }
+    const incomingVersion = parseVersion(response?.data?.version);
+    if (versionIsOutdated(incomingVersion)) {
+      console.log('[exam-client] ignored-outdated-response-version', {
+        requestId,
+        latestVersion: requestState.latestVersion,
+        incomingVersion,
+      });
+      return {
+        aborted: true,
+        staleVersion: true,
+        requestId,
+        responseVersion: incomingVersion,
+      };
+    }
     if (response?.data?.requestNonce) {
       requestState.requestNonce = response.data.requestNonce;
     }
     if (response?.data?.sessionToken) {
       requestState.sessionToken = response.data.sessionToken;
     }
+    applyVersionIfNew(incomingVersion);
+    if (ENABLE_DEV_LATENCY) {
+      await delay(randomDelay());
+    }
     response.__examMeta = {
       didRetry,
       refetched: false,
+      version: incomingVersion,
     };
     requestState.activeController = null;
     return response;
@@ -167,10 +216,29 @@ const submitExamAnswer = async ({
       if (retryResponse?.data?.sessionToken) {
         requestState.sessionToken = retryResponse.data.sessionToken;
       }
+      const retryVersion = parseVersion(retryResponse?.data?.version);
+      if (versionIsOutdated(retryVersion)) {
+        console.log('[exam-client] ignored-outdated-response-version', {
+          requestId,
+          latestVersion: requestState.latestVersion,
+          incomingVersion: retryVersion,
+        });
+        return {
+          aborted: true,
+          staleVersion: true,
+          requestId,
+          responseVersion: retryVersion,
+        };
+      }
+      applyVersionIfNew(retryVersion);
+      if (ENABLE_DEV_LATENCY) {
+        await delay(randomDelay());
+      }
       retryResponse.__examMeta = {
         didRetry: true,
         refetched: true,
         retryReason: 409,
+        version: retryVersion,
       };
       requestState.activeController = null;
       return retryResponse;
@@ -228,6 +296,7 @@ export {
   clearExamSessionAuth,
   getExamSession,
   setExamSessionAuth,
+  setLatestVersion,
   submitExamAnswer,
   submitExamSession,
 };
