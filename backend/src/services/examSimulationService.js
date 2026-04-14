@@ -56,8 +56,19 @@ const WEIGHTAGE_PRIORITY = {
 };
 
 const MIN_QUESTION_FRACTION = 0.3;
+const INACTIVITY_EXPIRE_WINDOW_MS = 15 * 60 * 1000;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+const logExamIntegrity = (event, payload = {}) => {
+  console.warn(`[exam-integrity] ${event}`, payload);
+};
+
+const buildHttpError = (message, statusCode = 400) => {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
+};
 
 const shuffle = (list) => {
   const copy = [...list];
@@ -581,15 +592,45 @@ const serializeSessionState = async (session) => {
 
 const autoExpireIfNeeded = async (session) => {
   if (!session || session.status !== 'active') return session;
-  if (new Date(session.expiresAt).getTime() > Date.now()) return session;
+  const nowMs = Date.now();
+  const expiresAtMs = new Date(session.expiresAt).getTime();
+  const inactivityMs = nowMs - new Date(session.lastActivityAt || session.updatedAt || session.startedAt).getTime();
+  const expiredByTimer = expiresAtMs <= nowMs;
+  const expiredByInactivity = inactivityMs >= INACTIVITY_EXPIRE_WINDOW_MS;
+
+  if (!expiredByTimer && !expiredByInactivity) return session;
 
   session.status = 'expired';
   session.submittedAt = new Date();
+  session.isSubmitting = false;
+  session.lastActivityAt = new Date();
+  session.version = Number(session.version || 0) + 1;
   await session.save();
+  if (expiredByInactivity) {
+    logExamIntegrity('session-auto-expired-inactivity', {
+      sessionId: String(session._id),
+      userId: String(session.user),
+      inactivityMs,
+      windowMs: INACTIVITY_EXPIRE_WINDOW_MS,
+    });
+  }
   return session;
 };
 
 const createExamSession = async ({ user, mode, examType, sectionSubject, strictNavigation = false }) => {
+  const activeSession = await ExamSession.findOne({ user: user._id, status: 'active' }).sort({ createdAt: -1 });
+  if (activeSession) {
+    const refreshed = await autoExpireIfNeeded(activeSession);
+    if (refreshed.status === 'active') {
+      logExamIntegrity('answer-rejected', {
+        reason: 'active-session-exists',
+        userId: String(user._id),
+        sessionId: String(refreshed._id),
+      });
+      throw buildHttpError('An active exam session already exists for this user.', 409);
+    }
+  }
+
   const resolvedExam = normalizeExamType(examType || user?.targetExam || user?.exam);
   const allowedSubjects = getAllowedSubjectsForExam(resolvedExam);
   const requestedSection = normalizeSubjectName(sectionSubject);
@@ -923,6 +964,10 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
     timeLimitSec: adjustedTimeLimitSec,
     startedAt: new Date(),
     expiresAt: new Date(Date.now() + adjustedTimeLimitSec * 1000),
+    lastActivityAt: new Date(),
+    isSubmitting: false,
+    version: 0,
+    lastAnsweredIndex: -1,
     questionOrder: shuffledSessionQuestions.map((question) => ({
       question: question._id,
       subject: question.subject,
@@ -980,15 +1025,30 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
   await autoExpireIfNeeded(session);
 
   if (session.status === 'submitted') {
-    const error = new Error('Exam session already submitted');
-    error.statusCode = 400;
-    throw error;
+    logExamIntegrity('answer-rejected', {
+      reason: 'submitted-session',
+      sessionId,
+      userId: String(userId),
+    });
+    throw buildHttpError('Exam session already submitted', 400);
   }
 
   if (session.status === 'expired') {
-    const error = new Error('Exam session expired');
-    error.statusCode = 400;
-    throw error;
+    logExamIntegrity('answer-rejected', {
+      reason: 'expired-session',
+      sessionId,
+      userId: String(userId),
+    });
+    throw buildHttpError('Exam session expired', 400);
+  }
+
+  if (session.isSubmitting) {
+    logExamIntegrity('answer-rejected', {
+      reason: 'submit-lock-active',
+      sessionId,
+      userId: String(userId),
+    });
+    throw buildHttpError('Session submission in progress', 409);
   }
 
   if (session.status !== 'active') {
@@ -999,24 +1059,60 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
 
   const resolvedIndex = Number(questionIndex);
   if (!Number.isInteger(resolvedIndex) || resolvedIndex < 0 || resolvedIndex >= session.questionCount) {
-    const error = new Error('Invalid questionIndex');
-    error.statusCode = 400;
-    throw error;
+    logExamIntegrity('answer-rejected', {
+      reason: 'invalid-question-index',
+      sessionId,
+      userId: String(userId),
+      questionIndex,
+    });
+    throw buildHttpError('Invalid questionIndex', 400);
   }
 
   if (!Number.isInteger(Number(selectedAnswerIndex)) || Number(selectedAnswerIndex) < 0 || Number(selectedAnswerIndex) > 3) {
-    const error = new Error('selectedAnswerIndex must be 0..3');
-    error.statusCode = 400;
-    throw error;
+    logExamIntegrity('answer-rejected', {
+      reason: 'invalid-answer-index',
+      sessionId,
+      userId: String(userId),
+      selectedAnswerIndex,
+    });
+    throw buildHttpError('selectedAnswerIndex must be 0..3', 400);
   }
 
-  if (session.strictNavigation && resolvedIndex !== session.currentQuestionIndex) {
-    const error = new Error('Strict navigation enabled: answer the current question only');
-    error.statusCode = 400;
-    throw error;
+  if (!session.questionOrder[resolvedIndex]?.question) {
+    logExamIntegrity('answer-rejected', {
+      reason: 'question-id-missing',
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+    });
+    throw buildHttpError('Question not found in session', 400);
+  }
+
+  const persistedLastAnswered = Number(session.lastAnsweredIndex);
+  const lastAnsweredIndex = Number.isInteger(persistedLastAnswered) ? persistedLastAnswered : -1;
+  const maxAllowedIndex = lastAnsweredIndex + 1;
+  if (session.strictNavigation && resolvedIndex > maxAllowedIndex) {
+    logExamIntegrity('out-of-order-attempt', {
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+      maxAllowedIndex,
+      lastAnsweredIndex,
+    });
+    throw buildHttpError('Strict navigation enabled: cannot skip ahead', 400);
   }
 
   const responseIdx = (session.responses || []).findIndex((entry) => entry.questionIndex === resolvedIndex);
+  if (responseIdx >= 0) {
+    logExamIntegrity('answer-rejected', {
+      reason: 'duplicate-question-submission',
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+    });
+    throw buildHttpError('Duplicate answer submission for question', 409);
+  }
+
   const payload = {
     questionIndex: resolvedIndex,
     question: session.questionOrder[resolvedIndex].question,
@@ -1025,18 +1121,69 @@ const submitAnswer = async ({ userId, sessionId, questionIndex, selectedAnswerIn
     answeredAt: new Date(),
   };
 
-  if (responseIdx >= 0) {
-    session.responses[responseIdx] = payload;
-  } else {
-    session.responses.push(payload);
+  const nextResponses = [...(session.responses || []), payload];
+  const nextLastAnsweredIndex = Math.max(lastAnsweredIndex, resolvedIndex);
+  const nextCurrentQuestionIndex = Math.min(nextLastAnsweredIndex + 1, session.questionCount - 1);
+
+  const updated = await ExamSession.findOneAndUpdate(
+    {
+      _id: sessionId,
+      user: userId,
+      status: 'active',
+      isSubmitting: { $ne: true },
+      version: Number(session.version || 0),
+      'responses.questionIndex': { $ne: resolvedIndex },
+    },
+    {
+      $set: {
+        responses: nextResponses,
+        lastAnsweredIndex: nextLastAnsweredIndex,
+        currentQuestionIndex: nextCurrentQuestionIndex,
+        lastActivityAt: new Date(),
+      },
+      $inc: { version: 1 },
+    },
+    { new: true }
+  );
+
+  if (!updated) {
+    const latest = await ExamSession.findOne({ _id: sessionId, user: userId });
+    if (latest?.isSubmitting) {
+      logExamIntegrity('answer-rejected', {
+        reason: 'submit-lock-active',
+        sessionId,
+        userId: String(userId),
+      });
+      throw buildHttpError('Session submission in progress', 409);
+    }
+    if (latest?.status && latest.status !== 'active') {
+      logExamIntegrity('answer-rejected', {
+        reason: `status-${latest.status}`,
+        sessionId,
+        userId: String(userId),
+      });
+      throw buildHttpError(`Exam session ${latest.status}`, 400);
+    }
+    if ((latest?.responses || []).some((entry) => entry.questionIndex === resolvedIndex)) {
+      logExamIntegrity('answer-rejected', {
+        reason: 'duplicate-question-submission',
+        sessionId,
+        userId: String(userId),
+        questionIndex: resolvedIndex,
+      });
+      throw buildHttpError('Duplicate answer submission for question', 409);
+    }
+    logExamIntegrity('multi-tab-conflict', {
+      sessionId,
+      userId: String(userId),
+      questionIndex: resolvedIndex,
+      expectedVersion: Number(session.version || 0),
+      actualVersion: Number(latest?.version || 0),
+    });
+    throw buildHttpError('Stale session update rejected', 409);
   }
 
-  if (session.strictNavigation) {
-    session.currentQuestionIndex = Math.min(session.currentQuestionIndex + 1, session.questionCount - 1);
-  }
-
-  await session.save();
-  return serializeSessionState(session);
+  return serializeSessionState(updated);
 };
 
 const computePercentileAndRank = ({ examType, score, maxScore }) => {
@@ -1299,7 +1446,7 @@ const buildPostTestAnalysis = ({
 };
 
 const submitExamSession = async ({ userId, sessionId }) => {
-  const session = await ExamSession.findOne({ _id: sessionId, user: userId });
+  let session = await ExamSession.findOne({ _id: sessionId, user: userId });
   if (!session) {
     const error = new Error('Exam session not found');
     error.statusCode = 404;
@@ -1311,6 +1458,40 @@ const submitExamSession = async ({ userId, sessionId }) => {
   }
 
   await autoExpireIfNeeded(session);
+
+  const lockAcquired = await ExamSession.updateOne(
+    {
+      _id: sessionId,
+      user: userId,
+      status: { $ne: 'submitted' },
+      isSubmitting: { $ne: true },
+    },
+    {
+      $set: {
+        isSubmitting: true,
+        lastActivityAt: new Date(),
+      },
+      $inc: { version: 1 },
+    }
+  );
+
+  if (!lockAcquired.modifiedCount) {
+    const latest = await ExamSession.findOne({ _id: sessionId, user: userId });
+    if (latest?.status === 'submitted' && latest.resultSummary) {
+      return latest.resultSummary;
+    }
+    if (latest?.isSubmitting) {
+      logExamIntegrity('answer-rejected', {
+        reason: 'submit-lock-active',
+        sessionId,
+        userId: String(userId),
+      });
+      throw buildHttpError('Session submission in progress', 409);
+    }
+    throw buildHttpError('Unable to acquire submit lock', 409);
+  }
+
+  session = await ExamSession.findOne({ _id: sessionId, user: userId });
 
   const questionIds = session.questionOrder.map((entry) => entry.question);
   const questions = await Question.find({ _id: { $in: questionIds } })
@@ -1412,12 +1593,29 @@ const submitExamSession = async ({ userId, sessionId }) => {
     adaptiveFollowUp: analysis.adaptiveFollowUp,
   };
 
-  session.status = getTimeLeftSec(session) === 0 ? 'expired' : 'submitted';
-  session.submittedAt = new Date();
-  session.resultSummary = resultSummary;
-  await session.save();
+  try {
+    session.status = getTimeLeftSec(session) === 0 ? 'expired' : 'submitted';
+    session.submittedAt = new Date();
+    session.resultSummary = resultSummary;
+    session.isSubmitting = false;
+    session.lastActivityAt = new Date();
+    session.version = Number(session.version || 0) + 1;
+    await session.save();
 
-  return resultSummary;
+    return resultSummary;
+  } catch (error) {
+    await ExamSession.updateOne(
+      { _id: sessionId, user: userId },
+      {
+        $set: {
+          isSubmitting: false,
+          lastActivityAt: new Date(),
+        },
+        $inc: { version: 1 },
+      }
+    );
+    throw error;
+  }
 };
 
 module.exports = {

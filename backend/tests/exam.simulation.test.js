@@ -57,6 +57,45 @@ const registerAndLogin = async ({ targetExam = 'NEET', email = 'examtest@example
 };
 
 describe('Exam simulation system', () => {
+  test('enforces single active session per user', async () => {
+    await createExamQuestions({
+      examType: 'NEET',
+      distribution: {
+        Physics: 60,
+        Chemistry: 60,
+        Biology: 120,
+      },
+    });
+
+    const token = await registerAndLogin({
+      targetExam: 'NEET',
+      email: 'single-active@test.com',
+    });
+
+    const firstStart = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'NEET',
+        strictNavigation: true,
+      });
+
+    expect(firstStart.status).toBe(201);
+
+    const secondStart = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'NEET',
+        strictNavigation: true,
+      });
+
+    expect(secondStart.status).toBe(409);
+    expect(secondStart.body.message).toMatch(/active exam session already exists/i);
+  });
+
   test('full-length mock lifecycle: strict flow, scoring, analysis, and follow-up plan', async () => {
     await createExamQuestions({
       examType: 'NEET',
@@ -282,5 +321,72 @@ describe('Exam simulation system', () => {
     expect(startRes.body.blueprintDiagnostics.warnings.length).toBeGreaterThan(0);
     expect(startRes.body.generationNotice).toMatch(/slightly adjusted mock test/i);
     expect(startRes.body.blueprintDiagnostics.pyqActual).toBeDefined();
+  });
+
+  test('rejects duplicate answer submissions and supports idempotent final submit', async () => {
+    await createExamQuestions({
+      examType: 'NEET',
+      distribution: {
+        Physics: 60,
+        Chemistry: 60,
+        Biology: 120,
+      },
+    });
+
+    const token = await registerAndLogin({
+      targetExam: 'NEET',
+      email: 'idempotent-submit@test.com',
+    });
+
+    const startRes = await request(app)
+      .post('/api/exams/sessions')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        mode: 'full-length',
+        examType: 'NEET',
+        strictNavigation: true,
+      });
+
+    expect(startRes.status).toBe(201);
+    const sessionId = startRes.body.sessionId;
+
+    const firstAnswer = await request(app)
+      .patch(`/api/exams/sessions/${sessionId}/answer`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        questionIndex: 0,
+        selectedAnswerIndex: 1,
+        timeTakenSec: 10,
+      });
+
+    expect(firstAnswer.status).toBe(200);
+
+    const duplicateAnswer = await request(app)
+      .patch(`/api/exams/sessions/${sessionId}/answer`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        questionIndex: 0,
+        selectedAnswerIndex: 2,
+        timeTakenSec: 10,
+      });
+
+    expect(duplicateAnswer.status).toBe(409);
+    expect(duplicateAnswer.body.message).toMatch(/duplicate answer submission/i);
+
+    const firstSubmit = await request(app)
+      .post(`/api/exams/sessions/${sessionId}/submit`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
+
+    expect(firstSubmit.status).toBe(200);
+
+    const secondSubmit = await request(app)
+      .post(`/api/exams/sessions/${sessionId}/submit`)
+      .set('Authorization', `Bearer ${token}`)
+      .send({});
+
+    expect(secondSubmit.status).toBe(200);
+    expect(secondSubmit.body.sessionId).toBe(firstSubmit.body.sessionId);
+    expect(secondSubmit.body.scoreSummary.totalScore).toBe(firstSubmit.body.scoreSummary.totalScore);
   });
 });
