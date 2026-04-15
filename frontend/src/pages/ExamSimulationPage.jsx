@@ -32,6 +32,12 @@ const ACTIVE_SESSION_STORAGE_KEY = 'exam-active-session-id';
 const PENDING_INTENT_STORAGE_KEY = (sessionId) => getSessionStorageKey(sessionId, 'pendingIntent');
 const TAB_SWITCH_WARNING_LIMIT = 3;
 const TAB_LOCK_STALE_MS = 8000;
+const buildIntentId = () => {
+  if (window?.crypto?.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+};
 
 const initialNavigationState = {
   currentIndex: 0,
@@ -211,6 +217,8 @@ const ExamSimulationPage = () => {
   const pendingAnswerRef = useRef(null);
   const pendingQuestionIdRef = useRef('');
   const pendingIntentRef = useRef(null);
+  const latestIntentByQuestionRef = useRef(new Map());
+  const inFlightIntentMapRef = useRef(new Map());
 
   const allowedSectionSubjects = useMemo(
     () => SECTION_SUBJECT_OPTIONS[examType] || SECTION_SUBJECT_OPTIONS.NEET,
@@ -444,21 +452,53 @@ const ExamSimulationPage = () => {
     }, {});
   };
 
-  const setPendingIntent = ({ questionIndex, questionId, answerIndex }) => {
+  const debugIntentLog = ({ intentId, version, ignored = false, retryUsed = false, reconciled = false }) => {
+    if (import.meta.env.DEV) {
+      console.log({
+        intentId,
+        version,
+        ignored,
+        retryUsed,
+        reconciled,
+      });
+    }
+  };
+
+  const setPendingIntent = ({ questionIndex, questionId, answerIndex, intentId, timestamp }) => {
     if (!session?.sessionId || !questionId || !Number.isInteger(answerIndex)) return;
+    const resolvedIntentId = intentId || buildIntentId();
+    const resolvedTimestamp = Number(timestamp || Date.now());
+
+    const previousInFlight = inFlightIntentMapRef.current.get(questionId);
+    if (previousInFlight?.controller) {
+      previousInFlight.obsolete = true;
+      previousInFlight.controller.abort();
+    }
+
+    const nextController = new AbortController();
+    inFlightIntentMapRef.current.set(questionId, {
+      intentId: resolvedIntentId,
+      controller: nextController,
+      obsolete: false,
+    });
+    latestIntentByQuestionRef.current.set(questionId, resolvedIntentId);
+
     pendingAnswerRef.current = answerIndex;
     pendingQuestionIdRef.current = questionId;
     pendingIntentRef.current = {
       questionIndex: Number(questionIndex),
       questionId,
       answerIndex,
+      intentId: resolvedIntentId,
+      timestamp: resolvedTimestamp,
     };
     localStorage.setItem(PENDING_INTENT_STORAGE_KEY(session.sessionId), JSON.stringify(pendingIntentRef.current));
     dispatchAnswer({
       type: 'SET_PENDING_ANSWER',
       payload: { questionId, answerIndex },
     });
-    dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'saving' } });
+    dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'pending' } });
+    return pendingIntentRef.current;
   };
 
   const clearPendingIntent = ({ questionId }) => {
@@ -472,6 +512,7 @@ const ExamSimulationPage = () => {
     pendingIntentRef.current = null;
     localStorage.removeItem(PENDING_INTENT_STORAGE_KEY(session.sessionId));
     if (questionId) {
+      inFlightIntentMapRef.current.delete(questionId);
       dispatchAnswer({
         type: 'CLEAR_PENDING_ANSWER',
         payload: { questionId },
@@ -486,6 +527,17 @@ const ExamSimulationPage = () => {
     pendingRetryTimeoutRef.current = setTimeout(() => {
       flushPendingSave();
     }, 1500);
+  };
+
+  const persistPendingIntentSnapshot = () => {
+    if (!session?.sessionId || !pendingIntentRef.current) return;
+    localStorage.setItem(
+      PENDING_INTENT_STORAGE_KEY(session.sessionId),
+      JSON.stringify({
+        ...pendingIntentRef.current,
+        timestamp: Number(pendingIntentRef.current.timestamp || Date.now()),
+      })
+    );
   };
 
   const reconcileStateWithBackend = ({
@@ -546,18 +598,45 @@ const ExamSimulationPage = () => {
     setSession(backendSession);
   };
 
-  const saveAnswerWithRetry = async ({ questionIndex, questionId, answerIndex }) => {
+  const saveAnswerWithRetry = async ({ questionIndex, questionId, answerIndex, intentId }) => {
     if (!session?.sessionId) return false;
 
-    dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'saving' } });
+    const latestIntentId = latestIntentByQuestionRef.current.get(questionId);
+    if (!latestIntentId || latestIntentId !== intentId) {
+      debugIntentLog({
+        intentId,
+        version: latestVersionRef.current,
+        ignored: true,
+        retryUsed: false,
+        reconciled: false,
+      });
+      return false;
+    }
+
+    if (!navigator.onLine) {
+      dispatchAnswer({
+        type: 'SET_SYNC_WARNING',
+        payload: {
+          hasPendingSync: true,
+          message: 'Failed to save. Retrying...',
+        },
+      });
+      dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'failed' } });
+      schedulePendingRetry();
+      return false;
+    }
+
+    dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'pending' } });
 
     console.log('[exam-save] outgoing-auth', {
       questionIndex,
       nonce: 'managed-by-wrapper',
       hasToken: true,
+      intentId,
     });
 
     try {
+      const currentInFlight = inFlightIntentMapRef.current.get(questionId);
       const response = await submitExamAnswer({
         sessionId: session.sessionId,
         payload: {
@@ -565,7 +644,9 @@ const ExamSimulationPage = () => {
           questionId,
           selectedAnswerIndex: answerIndex,
           timeTakenSec: 0,
+          intentId,
         },
+        externalSignal: currentInFlight?.controller?.signal,
       });
 
       if (response?.aborted) {
@@ -580,16 +661,43 @@ const ExamSimulationPage = () => {
             latestVersion: latestVersionRef.current,
           });
         }
+        debugIntentLog({
+          intentId,
+          version: response?.responseVersion || latestVersionRef.current,
+          ignored: true,
+          retryUsed: Boolean(response?.__examMeta?.didRetry),
+          reconciled: false,
+        });
         return false;
       }
 
       let backendSession = response.data;
+      const backendIntentId = String(backendSession?.intentId || '');
+      const latestKnownIntentId = latestIntentByQuestionRef.current.get(questionId);
+      if (!backendIntentId || backendIntentId !== latestKnownIntentId) {
+        debugIntentLog({
+          intentId,
+          version: Number(backendSession?.version || latestVersionRef.current),
+          ignored: true,
+          retryUsed: Boolean(response?.__examMeta?.didRetry),
+          reconciled: false,
+        });
+        return false;
+      }
+
       const responseVersion = Number(backendSession?.version || 0);
       if (Number.isInteger(responseVersion) && responseVersion < latestVersionRef.current) {
         console.log('[exam-sync] ignored-outdated-response', {
           incomingVersion: responseVersion,
           latestVersion: latestVersionRef.current,
           questionIndex,
+        });
+        debugIntentLog({
+          intentId,
+          version: responseVersion,
+          ignored: true,
+          retryUsed: Boolean(response?.__examMeta?.didRetry),
+          reconciled: false,
         });
         return false;
       }
@@ -610,9 +718,28 @@ const ExamSimulationPage = () => {
         backendSession = await getExamSession(session.sessionId);
       }
 
+      const backendAnswerMap = buildAnswerMapFromSessionState(backendSession);
+      const backendSavedAnswer = backendAnswerMap[questionId];
+      let reconciled = false;
+      if (!Number.isInteger(backendSavedAnswer) || backendSavedAnswer !== answerIndex) {
+        setIsReconciling(true);
+        const correctedSession = await getExamSession(session.sessionId);
+        backendSession = correctedSession;
+        reconciled = true;
+        dispatchAnswer({
+          type: 'SET_SYNC_WARNING',
+          payload: {
+            hasPendingSync: true,
+            message: 'State corrected to server',
+          },
+        });
+        setSyncIndicatorWithReset('State corrected to server');
+      }
+
       console.log('[exam-save] incoming-auth', {
         questionIndex,
         nonce: backendSession?.requestNonce,
+        intentId: backendSession?.intentId,
       });
 
       setIsReconciling(true);
@@ -630,11 +757,19 @@ const ExamSimulationPage = () => {
       });
       if (
         pendingIntentRef.current?.questionId === questionId &&
-        pendingIntentRef.current?.answerIndex === answerIndex
+        pendingIntentRef.current?.answerIndex === answerIndex &&
+        pendingIntentRef.current?.intentId === intentId
       ) {
         clearPendingIntent({ questionId });
       }
-      dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'saved' } });
+      dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'confirmed' } });
+      debugIntentLog({
+        intentId,
+        version: Number(backendSession?.version || latestVersionRef.current),
+        ignored: false,
+        retryUsed: didRetry,
+        reconciled,
+      });
       return true;
     } catch (requestError) {
       const status = Number(requestError?.response?.status || 0);
@@ -679,10 +814,21 @@ const ExamSimulationPage = () => {
           message: 'Failed to save. Retrying...',
         },
       });
-      dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'retry-needed' } });
+      dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'failed' } });
+      debugIntentLog({
+        intentId,
+        version: latestVersionRef.current,
+        ignored: false,
+        retryUsed: true,
+        reconciled: false,
+      });
       schedulePendingRetry();
       return false;
     } finally {
+      const inFlight = inFlightIntentMapRef.current.get(questionId);
+      if (inFlight?.intentId === intentId) {
+        inFlightIntentMapRef.current.delete(questionId);
+      }
       setIsReconciling(false);
     }
   };
@@ -695,9 +841,9 @@ const ExamSimulationPage = () => {
       saveDebounceRef.current = null;
     }
 
-    const entries = Array.from(saveQueueRef.current.entries()).map(([questionIndex, answerIndex]) => ({
+    const entries = Array.from(saveQueueRef.current.entries()).map(([questionIndex, queuedPayload]) => ({
       questionIndex: Number(questionIndex),
-      answerIndex,
+      ...queuedPayload,
     }));
     saveQueueRef.current.clear();
 
@@ -709,7 +855,7 @@ const ExamSimulationPage = () => {
     const outcomes = [];
     for (let i = 0; i < entries.length; i += 1) {
       const entry = entries[i];
-      const questionId = questions[entry.questionIndex]?._id;
+      const questionId = entry.questionId || questions[entry.questionIndex]?._id;
       const savePromise = saveAnswerWithRetry({ ...entry, questionId });
       inFlightSavesRef.current.push(savePromise);
       const success = await savePromise;
@@ -717,7 +863,12 @@ const ExamSimulationPage = () => {
       inFlightSavesRef.current = inFlightSavesRef.current.filter((promise) => promise !== savePromise);
       if (!success) {
         for (let retryIdx = i; retryIdx < entries.length; retryIdx += 1) {
-          saveQueueRef.current.set(Number(entries[retryIdx].questionIndex), entries[retryIdx].answerIndex);
+          saveQueueRef.current.set(Number(entries[retryIdx].questionIndex), {
+            questionId: entries[retryIdx].questionId,
+            answerIndex: entries[retryIdx].answerIndex,
+            intentId: entries[retryIdx].intentId,
+            timestamp: entries[retryIdx].timestamp,
+          });
         }
         break;
       }
@@ -728,8 +879,13 @@ const ExamSimulationPage = () => {
     return outcomes.every(Boolean);
   };
 
-  const queueAnswerSave = (questionIndex, answerIndex) => {
-    saveQueueRef.current.set(Number(questionIndex), answerIndex);
+  const queueAnswerSave = ({ questionIndex, questionId, answerIndex, intentId, timestamp }) => {
+    saveQueueRef.current.set(Number(questionIndex), {
+      questionId,
+      answerIndex,
+      intentId,
+      timestamp,
+    });
     console.log('[exam-save] queued', {
       questionIndex,
       queueSize: saveQueueRef.current.size,
@@ -764,6 +920,9 @@ const ExamSimulationPage = () => {
       pendingAnswerRef.current = null;
       pendingQuestionIdRef.current = '';
       pendingIntentRef.current = null;
+      latestIntentByQuestionRef.current.clear();
+      inFlightIntentMapRef.current.forEach((entry) => entry?.controller?.abort?.());
+      inFlightIntentMapRef.current.clear();
       return;
     }
 
@@ -843,13 +1002,29 @@ const ExamSimulationPage = () => {
         const pendingQuestion = questions[Number(pendingParsed?.questionIndex)];
         if (
           pendingQuestion?._id === pendingParsed?.questionId &&
-          Number.isInteger(Number(pendingParsed?.answerIndex))
+          Number.isInteger(Number(pendingParsed?.answerIndex)) &&
+          typeof pendingParsed?.intentId === 'string'
         ) {
+          const existingLatestIntentId = latestIntentByQuestionRef.current.get(pendingParsed.questionId);
+          if (existingLatestIntentId && existingLatestIntentId !== pendingParsed.intentId) {
+            localStorage.removeItem(PENDING_INTENT_STORAGE_KEY(session.sessionId));
+            return;
+          }
+
           const answerIndex = Number(pendingParsed.answerIndex);
+          const serverConfirmedAnswer = serverAnswerMap[pendingParsed.questionId];
+          if (Number.isInteger(serverConfirmedAnswer) && serverConfirmedAnswer === answerIndex) {
+            localStorage.removeItem(PENDING_INTENT_STORAGE_KEY(session.sessionId));
+            dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'confirmed' } });
+            return;
+          }
+
           setPendingIntent({
             questionIndex: Number(pendingParsed.questionIndex),
             questionId: pendingParsed.questionId,
             answerIndex,
+            intentId: pendingParsed.intentId,
+            timestamp: Number(pendingParsed.timestamp || Date.now()),
           });
           dispatchAnswer({
             type: 'SET_ANSWER',
@@ -858,7 +1033,12 @@ const ExamSimulationPage = () => {
               answerIndex,
             },
           });
-          saveQueueRef.current.set(Number(pendingParsed.questionIndex), answerIndex);
+          saveQueueRef.current.set(Number(pendingParsed.questionIndex), {
+            questionId: pendingParsed.questionId,
+            answerIndex,
+            intentId: pendingParsed.intentId,
+            timestamp: Number(pendingParsed.timestamp || Date.now()),
+          });
           schedulePendingRetry();
           dispatchAnswer({
             type: 'SET_SYNC_WARNING',
@@ -867,7 +1047,7 @@ const ExamSimulationPage = () => {
               message: 'Failed to save. Retrying...',
             },
           });
-          dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'retry-needed' } });
+          dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'failed' } });
         } else {
           localStorage.removeItem(PENDING_INTENT_STORAGE_KEY(session.sessionId));
         }
@@ -929,6 +1109,7 @@ const ExamSimulationPage = () => {
 
     const onBeforeUnload = (event) => {
       if (!pendingIntentRef.current && saveQueueRef.current.size === 0) return;
+      persistPendingIntentSnapshot();
       event.preventDefault();
       event.returnValue = '';
     };
@@ -1021,6 +1202,10 @@ const ExamSimulationPage = () => {
     const onVisibilityChange = () => {
       if (document.visibilityState !== 'hidden') return;
 
+      if (pendingIntentRef.current) {
+        persistPendingIntentSnapshot();
+      }
+
       const nextCount = metaState.tabSwitchCount + 1;
       dispatchMeta({ type: 'INCREMENT_TAB_SWITCH' });
       if (nextCount > TAB_SWITCH_WARNING_LIMIT) {
@@ -1096,11 +1281,11 @@ const ExamSimulationPage = () => {
 
   const ensureNoPendingIntentBeforeNavigation = async () => {
     if (!pendingIntentRef.current) return true;
-    dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'saving' } });
+    dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'pending' } });
     const synced = await flushPendingSave();
     if (!synced) {
       setError('Unsaved answer detected. Retry save before navigating.');
-      dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'retry-needed' } });
+      dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'failed' } });
       return false;
     }
     return true;
@@ -1209,11 +1394,31 @@ const ExamSimulationPage = () => {
 
     setError('');
 
+    const activeIntent =
+      pendingIntentRef.current?.questionId === currentQuestion._id
+        ? pendingIntentRef.current
+        : setPendingIntent({
+            questionIndex: navigationState.currentIndex,
+            questionId: currentQuestion._id,
+            answerIndex: selectedAnswer,
+          });
+
+    if (activeIntent) {
+      queueAnswerSave({
+        questionIndex: navigationState.currentIndex,
+        questionId: currentQuestion._id,
+        answerIndex: selectedAnswer,
+        intentId: activeIntent.intentId,
+        timestamp: activeIntent.timestamp,
+      });
+    }
+
     dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: true } });
     const saved = await saveAnswerWithRetry({
       questionIndex: navigationState.currentIndex,
       questionId: currentQuestion._id,
       answerIndex: selectedAnswer,
+      intentId: activeIntent?.intentId,
     });
     dispatchAnswer({ type: 'SET_SAVING', payload: { isSaving: false } });
 
@@ -1249,13 +1454,19 @@ const ExamSimulationPage = () => {
       },
     });
 
-    setPendingIntent({
+    const pendingIntent = setPendingIntent({
       questionIndex: navigationState.currentIndex,
       questionId: currentQuestion._id,
       answerIndex,
     });
 
-    queueAnswerSave(navigationState.currentIndex, answerIndex);
+    queueAnswerSave({
+      questionIndex: navigationState.currentIndex,
+      questionId: currentQuestion._id,
+      answerIndex,
+      intentId: pendingIntent?.intentId,
+      timestamp: pendingIntent?.timestamp,
+    });
   };
 
   useEffect(() => {
@@ -1377,17 +1588,17 @@ const ExamSimulationPage = () => {
               <span>Explanations: OFF</span>
               {syncIndicator && <span>{syncIndicator}</span>}
               <span>
-                {answerState.saveStatus === 'saving'
+                {answerState.saveStatus === 'pending'
                   ? 'Saving...'
-                  : answerState.saveStatus === 'retry-needed'
+                  : answerState.saveStatus === 'failed'
                     ? 'Retry needed'
-                    : answerState.saveStatus === 'saved'
+                    : answerState.saveStatus === 'confirmed'
                       ? 'Saved'
                       : answerState.isSaving
                         ? 'Saving...'
                         : 'All changes synced'}
               </span>
-              {answerState.saveStatus === 'retry-needed' && (
+              {answerState.saveStatus === 'failed' && (
                 <button
                   className="outline-btn"
                   onClick={flushSaveQueue}

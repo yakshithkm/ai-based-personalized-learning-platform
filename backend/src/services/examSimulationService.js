@@ -1088,6 +1088,7 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
       conceptTested: question.conceptTested || `${question.topic} Core Concept`,
     })),
     responses: [],
+    acceptedIntents: [],
     currentQuestionIndex: 0,
     blueprintDiagnostics,
     resultSummary: null,
@@ -1131,6 +1132,7 @@ const submitAnswer = async ({
   questionId,
   selectedAnswerIndex,
   timeTakenSec = 0,
+  intentId,
   sessionToken,
   requestNonce,
 }) => {
@@ -1266,6 +1268,21 @@ const submitAnswer = async ({
     });
   }
 
+  if (!intentId || typeof intentId !== 'string' || !intentId.trim()) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'missing-intent-id',
+      message: 'intentId is required',
+      statusCode: 400,
+      details: {
+        questionIndex: resolvedIndex,
+      },
+    });
+  }
+
+  const normalizedIntentId = intentId.trim();
+
   const snapshotQuestionId = String(session.questionOrder[resolvedIndex]?.question || '');
   if (!snapshotQuestionId) {
     await rejectWithAudit({
@@ -1310,6 +1327,39 @@ const submitAnswer = async ({
     });
   }
 
+  const acceptedIntents = Array.isArray(session.acceptedIntents) ? session.acceptedIntents : [];
+  const acceptedIntentIndex = acceptedIntents.findIndex((entry) => entry.questionIndex === resolvedIndex);
+  const acceptedIntent = acceptedIntentIndex >= 0 ? acceptedIntents[acceptedIntentIndex] : null;
+
+  if (acceptedIntent && acceptedIntent.intentId !== normalizedIntentId) {
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'obsolete-intent-id',
+      message: 'Obsolete intent rejected for this question',
+      statusCode: 409,
+      details: {
+        questionIndex: resolvedIndex,
+        intentId: normalizedIntentId,
+        acceptedIntentId: acceptedIntent.intentId,
+      },
+    });
+  }
+
+  if (acceptedIntent && acceptedIntent.intentId === normalizedIntentId) {
+    session.nextRequestNonce = generateOpaqueToken();
+    session.lastActivityAt = new Date();
+    await session.save();
+    const state = await serializeSessionState(session);
+    const savedAnswer = (state.responses || []).find((entry) => entry.questionIndex === resolvedIndex) || null;
+    return {
+      ...state,
+      success: true,
+      intentId: normalizedIntentId,
+      savedAnswer,
+    };
+  }
+
   const responseIdx = (session.responses || []).findIndex((entry) => entry.questionIndex === resolvedIndex);
   if (responseIdx >= 0) {
     await rejectWithAudit({
@@ -1338,6 +1388,14 @@ const submitAnswer = async ({
   const nextChecksum = buildAnswersChecksum(nextResponses);
 
   session.responses = nextResponses;
+  session.acceptedIntents = [
+    ...acceptedIntents.filter((entry) => entry.questionIndex !== resolvedIndex),
+    {
+      questionIndex: resolvedIndex,
+      intentId: normalizedIntentId,
+      acceptedAt: new Date(),
+    },
+  ];
   session.lastAnsweredIndex = nextLastAnsweredIndex;
   session.currentQuestionIndex = nextCurrentQuestionIndex;
   session.lastActivityAt = new Date();
@@ -1377,12 +1435,20 @@ const submitAnswer = async ({
     details: {
       questionIndex: resolvedIndex,
       questionId: snapshotQuestionId,
+      intentId: normalizedIntentId,
       answerAttemptCount: session.answerAttemptCount,
       version: session.version,
     },
   });
 
-  return serializeSessionState(session);
+  const state = await serializeSessionState(session);
+  const savedAnswer = (state.responses || []).find((entry) => entry.questionIndex === resolvedIndex) || null;
+  return {
+    ...state,
+    success: true,
+    intentId: normalizedIntentId,
+    savedAnswer,
+  };
 };
 
 const computePercentileAndRank = ({ examType, score, maxScore }) => {

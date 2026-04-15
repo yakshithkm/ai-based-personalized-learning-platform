@@ -61,6 +61,7 @@ const submitSessionAnswer = async (req, res, next) => {
       questionId,
       selectedAnswerIndex,
       timeTakenSec,
+      intentId,
       sessionToken: bodySessionToken,
       requestNonce: bodyRequestNonce,
     } = req.body || {};
@@ -75,6 +76,7 @@ const submitSessionAnswer = async (req, res, next) => {
       questionId,
       selectedAnswerIndex,
       timeTakenSec,
+      intentId,
       sessionToken,
       requestNonce,
     });

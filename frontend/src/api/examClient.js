@@ -11,6 +11,7 @@ const requestState = {
   activeController: null,
 };
 const ENABLE_DEV_LATENCY = String(import.meta.env.VITE_EXAM_CLIENT_DELAY_SIM || 'false').toLowerCase() === 'true';
+const ENABLE_DEBUG_LOGS = Boolean(import.meta.env.DEV);
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const randomDelay = () => 100 + Math.floor(Math.random() * 1900);
@@ -140,8 +141,10 @@ const submitExamAnswer = async ({
   allowRateRetry = true,
   allowConflictRetry = true,
   didRetry = false,
+  externalSignal = null,
 }) => {
-  const { requestId, signal } = beginRequest();
+  const { requestId, signal: internalSignal } = beginRequest();
+  const signal = externalSignal || internalSignal;
   const requestConfig = attachExamAuthHeaders({ signal });
   console.log('[exam-client] request-start', {
     requestId,
@@ -152,6 +155,15 @@ const submitExamAnswer = async ({
     const response = await api.patch(`/exams/sessions/${sessionId}/answer`, payload, requestConfig);
     if (!isLatestRequest(requestId)) {
       console.log('[exam-client] ignored-stale-response', { requestId, latestRequestId: requestState.latestRequestId });
+      if (ENABLE_DEBUG_LOGS) {
+        console.log({
+          intentId: payload?.intentId || null,
+          version: parseVersion(response?.data?.version),
+          ignored: true,
+          retryUsed: didRetry,
+          reconciled: false,
+        });
+      }
       return { aborted: true, requestId, stale: true };
     }
     const incomingVersion = parseVersion(response?.data?.version);
@@ -161,6 +173,15 @@ const submitExamAnswer = async ({
         latestVersion: requestState.latestVersion,
         incomingVersion,
       });
+      if (ENABLE_DEBUG_LOGS) {
+        console.log({
+          intentId: payload?.intentId || null,
+          version: incomingVersion,
+          ignored: true,
+          retryUsed: didRetry,
+          reconciled: false,
+        });
+      }
       return {
         aborted: true,
         staleVersion: true,
@@ -183,6 +204,15 @@ const submitExamAnswer = async ({
       refetched: false,
       version: incomingVersion,
     };
+    if (ENABLE_DEBUG_LOGS) {
+      console.log({
+        intentId: payload?.intentId || response?.data?.intentId || null,
+        version: incomingVersion,
+        ignored: false,
+        retryUsed: didRetry,
+        reconciled: false,
+      });
+    }
     requestState.activeController = null;
     return response;
   } catch (error) {
@@ -199,6 +229,15 @@ const submitExamAnswer = async ({
       await refreshExamSession(sessionId);
       if (!isLatestRequest(requestId)) {
         console.log('[exam-client] ignored-stale-response', { requestId, latestRequestId: requestState.latestRequestId });
+        if (ENABLE_DEBUG_LOGS) {
+          console.log({
+            intentId: payload?.intentId || null,
+            version: null,
+            ignored: true,
+            retryUsed: true,
+            reconciled: false,
+          });
+        }
         return { aborted: true, requestId, stale: true };
       }
       const retryResponse = await api.patch(
@@ -223,6 +262,15 @@ const submitExamAnswer = async ({
           latestVersion: requestState.latestVersion,
           incomingVersion: retryVersion,
         });
+        if (ENABLE_DEBUG_LOGS) {
+          console.log({
+            intentId: payload?.intentId || null,
+            version: retryVersion,
+            ignored: true,
+            retryUsed: true,
+            reconciled: false,
+          });
+        }
         return {
           aborted: true,
           staleVersion: true,
@@ -240,6 +288,15 @@ const submitExamAnswer = async ({
         retryReason: 409,
         version: retryVersion,
       };
+      if (ENABLE_DEBUG_LOGS) {
+        console.log({
+          intentId: payload?.intentId || retryResponse?.data?.intentId || null,
+          version: retryVersion,
+          ignored: false,
+          retryUsed: true,
+          reconciled: false,
+        });
+      }
       requestState.activeController = null;
       return retryResponse;
     }
@@ -257,6 +314,7 @@ const submitExamAnswer = async ({
         allowRateRetry: false,
         allowConflictRetry,
         didRetry: true,
+        externalSignal,
       });
     }
 

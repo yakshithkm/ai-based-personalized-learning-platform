@@ -58,6 +58,8 @@ const registerAndLogin = async ({ targetExam = 'NEET', email = 'examtest@example
   return registerRes.body.token;
 };
 
+const buildIntentId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
 const submitAnswerSecurely = async ({
   token,
   sessionId,
@@ -67,6 +69,7 @@ const submitAnswerSecurely = async ({
   questionId,
   selectedAnswerIndex,
   timeTakenSec,
+  intentId = buildIntentId(),
 }) => request(app)
   .patch(`/api/exams/sessions/${sessionId}/answer`)
   .set('Authorization', `Bearer ${token}`)
@@ -77,6 +80,7 @@ const submitAnswerSecurely = async ({
     questionId,
     selectedAnswerIndex,
     timeTakenSec,
+    intentId,
   });
 
 const startHttpServer = () => new Promise((resolve) => {
@@ -415,7 +419,7 @@ describe('Exam simulation system', () => {
     });
 
     expect(duplicateAnswer.status).toBe(409);
-    expect(duplicateAnswer.body.message).toMatch(/duplicate answer submission/i);
+    expect(duplicateAnswer.body.message).toMatch(/duplicate answer submission|obsolete intent/i);
 
     const firstSubmit = await request(app)
       .post(`/api/exams/sessions/${sessionId}/submit`)
@@ -486,6 +490,7 @@ describe('Exam simulation system', () => {
           questionId: firstQuestion._id,
           selectedAnswerIndex: 0,
           timeTakenSec: 10,
+          intentId: buildIntentId(),
         }),
         signal: firstController.signal,
       });
@@ -520,6 +525,7 @@ describe('Exam simulation system', () => {
           questionId: secondQuestion._id,
           selectedAnswerIndex: 2,
           timeTakenSec: 12,
+          intentId: buildIntentId(),
         }),
       });
 
@@ -540,6 +546,7 @@ describe('Exam simulation system', () => {
           questionId: secondQuestion._id,
           selectedAnswerIndex: 3,
           timeTakenSec: 12,
+          intentId: buildIntentId(),
         }),
       });
 

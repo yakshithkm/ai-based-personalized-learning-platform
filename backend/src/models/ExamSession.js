@@ -82,6 +82,26 @@ const responseSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const acceptedIntentSchema = new mongoose.Schema(
+  {
+    questionIndex: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    intentId: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    acceptedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  { _id: false }
+);
+
 const examSessionSchema = new mongoose.Schema(
   {
     user: {
@@ -211,6 +231,10 @@ const examSessionSchema = new mongoose.Schema(
     },
     responses: {
       type: [responseSchema],
+      default: [],
+    },
+    acceptedIntents: {
+      type: [acceptedIntentSchema],
       default: [],
     },
     blueprintDiagnostics: {
