@@ -70,6 +70,7 @@ const submitAnswerSecurely = async ({
   selectedAnswerIndex,
   timeTakenSec,
   intentId = buildIntentId(),
+  intentSeq,
 }) => request(app)
   .patch(`/api/exams/sessions/${sessionId}/answer`)
   .set('Authorization', `Bearer ${token}`)
@@ -81,6 +82,7 @@ const submitAnswerSecurely = async ({
     selectedAnswerIndex,
     timeTakenSec,
     intentId,
+    intentSeq: Number.isInteger(Number(intentSeq)) ? Number(intentSeq) : Number(questionIndex) + 1,
   });
 
 const startHttpServer = () => new Promise((resolve) => {
@@ -491,6 +493,7 @@ describe('Exam simulation system', () => {
           selectedAnswerIndex: 0,
           timeTakenSec: 10,
           intentId: buildIntentId(),
+          intentSeq: 1,
         }),
         signal: firstController.signal,
       });
@@ -526,6 +529,7 @@ describe('Exam simulation system', () => {
           selectedAnswerIndex: 2,
           timeTakenSec: 12,
           intentId: buildIntentId(),
+          intentSeq: 2,
         }),
       });
 
@@ -547,6 +551,7 @@ describe('Exam simulation system', () => {
           selectedAnswerIndex: 3,
           timeTakenSec: 12,
           intentId: buildIntentId(),
+          intentSeq: 2,
         }),
       });
 

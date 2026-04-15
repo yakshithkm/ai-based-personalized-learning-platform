@@ -145,6 +145,10 @@ const submitExamAnswer = async ({
 }) => {
   const { requestId, signal: internalSignal } = beginRequest();
   const signal = externalSignal || internalSignal;
+  const requestPayload = {
+    ...payload,
+    retryAttempt: didRetry ? 1 : 0,
+  };
   const requestConfig = attachExamAuthHeaders({ signal });
   console.log('[exam-client] request-start', {
     requestId,
@@ -152,12 +156,13 @@ const submitExamAnswer = async ({
   });
 
   try {
-    const response = await api.patch(`/exams/sessions/${sessionId}/answer`, payload, requestConfig);
+    const response = await api.patch(`/exams/sessions/${sessionId}/answer`, requestPayload, requestConfig);
     if (!isLatestRequest(requestId)) {
       console.log('[exam-client] ignored-stale-response', { requestId, latestRequestId: requestState.latestRequestId });
       if (ENABLE_DEBUG_LOGS) {
         console.log({
           intentId: payload?.intentId || null,
+          intentSeq: payload?.intentSeq || null,
           version: parseVersion(response?.data?.version),
           ignored: true,
           retryUsed: didRetry,
@@ -176,6 +181,7 @@ const submitExamAnswer = async ({
       if (ENABLE_DEBUG_LOGS) {
         console.log({
           intentId: payload?.intentId || null,
+          intentSeq: payload?.intentSeq || null,
           version: incomingVersion,
           ignored: true,
           retryUsed: didRetry,
@@ -207,6 +213,7 @@ const submitExamAnswer = async ({
     if (ENABLE_DEBUG_LOGS) {
       console.log({
         intentId: payload?.intentId || response?.data?.intentId || null,
+        intentSeq: payload?.intentSeq || response?.data?.intentSeq || null,
         version: incomingVersion,
         ignored: false,
         retryUsed: didRetry,
@@ -232,6 +239,7 @@ const submitExamAnswer = async ({
         if (ENABLE_DEBUG_LOGS) {
           console.log({
             intentId: payload?.intentId || null,
+            intentSeq: payload?.intentSeq || null,
             version: null,
             ignored: true,
             retryUsed: true,
@@ -242,7 +250,7 @@ const submitExamAnswer = async ({
       }
       const retryResponse = await api.patch(
         `/exams/sessions/${sessionId}/answer`,
-        payload,
+        requestPayload,
         attachExamAuthHeaders({ signal })
       );
       if (!isLatestRequest(requestId)) {
@@ -265,6 +273,7 @@ const submitExamAnswer = async ({
         if (ENABLE_DEBUG_LOGS) {
           console.log({
             intentId: payload?.intentId || null,
+            intentSeq: payload?.intentSeq || null,
             version: retryVersion,
             ignored: true,
             retryUsed: true,
@@ -291,6 +300,7 @@ const submitExamAnswer = async ({
       if (ENABLE_DEBUG_LOGS) {
         console.log({
           intentId: payload?.intentId || retryResponse?.data?.intentId || null,
+          intentSeq: payload?.intentSeq || retryResponse?.data?.intentSeq || null,
           version: retryVersion,
           ignored: false,
           retryUsed: true,

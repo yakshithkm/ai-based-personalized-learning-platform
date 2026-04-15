@@ -62,6 +62,7 @@ const INACTIVITY_EXPIRE_WINDOW_MS = 15 * 60 * 1000;
 const RATE_WINDOW_MS = 60 * 1000;
 const MAX_ANSWER_SUBMISSIONS_PER_MIN = 30;
 const MAX_SUBMIT_ATTEMPTS_PER_MIN = 5;
+const INTEGRITY_RISK_THRESHOLD = 12;
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -129,6 +130,36 @@ const rejectWithAudit = async ({
     details,
   });
   throw buildHttpError(message, statusCode);
+};
+
+const incrementAnomalyCounter = async ({ sessionId, counter }) => {
+  if (!sessionId || !counter) return;
+  const counterPath = `anomalyCounters.${counter}`;
+  await ExamSession.updateOne(
+    { _id: sessionId },
+    {
+      $inc: { [counterPath]: 1 },
+    }
+  );
+
+  const snapshot = await ExamSession.findById(sessionId)
+    .select('anomalyCounters integrityRisk')
+    .lean();
+  if (!snapshot || snapshot.integrityRisk) return;
+
+  const counters = snapshot.anomalyCounters || {};
+  const total =
+    Number(counters.rejectedIntents || 0) +
+    Number(counters.staleRequests || 0) +
+    Number(counters.retries || 0);
+  if (total >= INTEGRITY_RISK_THRESHOLD) {
+    await ExamSession.updateOne(
+      { _id: sessionId },
+      {
+        $set: { integrityRisk: true },
+      }
+    );
+  }
 };
 
 const updateRateWindow = ({
@@ -670,6 +701,12 @@ const serializeSessionState = async (session) => {
       : null,
     blueprintDiagnostics: session.blueprintDiagnostics || null,
     resultSummary: session.resultSummary || null,
+    anomalyCounters: session.anomalyCounters || {
+      rejectedIntents: 0,
+      staleRequests: 0,
+      retries: 0,
+    },
+    integrityRisk: Boolean(session.integrityRisk),
   };
 };
 
@@ -1088,7 +1125,13 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
       conceptTested: question.conceptTested || `${question.topic} Core Concept`,
     })),
     responses: [],
-    acceptedIntents: [],
+    intentLedger: {},
+    anomalyCounters: {
+      rejectedIntents: 0,
+      staleRequests: 0,
+      retries: 0,
+    },
+    integrityRisk: false,
     currentQuestionIndex: 0,
     blueprintDiagnostics,
     resultSummary: null,
@@ -1133,6 +1176,8 @@ const submitAnswer = async ({
   selectedAnswerIndex,
   timeTakenSec = 0,
   intentId,
+  intentSeq,
+  retryAttempt = 0,
   sessionToken,
   requestNonce,
 }) => {
@@ -1146,6 +1191,9 @@ const submitAnswer = async ({
   const now = new Date();
   session.lastActivityAt = now;
   session.answerAttemptCount = Number(session.answerAttemptCount || 0) + 1;
+  if (Number(retryAttempt || 0) > 0) {
+    await incrementAnomalyCounter({ sessionId, counter: 'retries' });
+  }
   if (!session.abnormalAttemptFlag && session.answerAttemptCount > Math.max(session.questionCount * 3, 50)) {
     session.abnormalAttemptFlag = true;
     await appendAuditTrail({
@@ -1224,19 +1272,6 @@ const submitAnswer = async ({
     });
   }
 
-  if (!requestNonce || requestNonce !== session.nextRequestNonce) {
-    await rejectWithAudit({
-      userId,
-      sessionId,
-      reason: 'stale-or-replayed-request',
-      message: 'Stale request rejected',
-      statusCode: 409,
-      details: {
-        providedNonce: Boolean(requestNonce),
-      },
-    });
-  }
-
   if (session.status !== 'active') {
     const error = new Error('Exam session is not active');
     error.statusCode = 400;
@@ -1269,6 +1304,7 @@ const submitAnswer = async ({
   }
 
   if (!intentId || typeof intentId !== 'string' || !intentId.trim()) {
+    await incrementAnomalyCounter({ sessionId, counter: 'rejectedIntents' });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1282,6 +1318,21 @@ const submitAnswer = async ({
   }
 
   const normalizedIntentId = intentId.trim();
+  const normalizedIntentSeq = Number(intentSeq);
+  if (!Number.isInteger(normalizedIntentSeq) || normalizedIntentSeq <= 0) {
+    await incrementAnomalyCounter({ sessionId, counter: 'rejectedIntents' });
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'invalid-intent-seq',
+      message: 'intentSeq must be a positive integer',
+      statusCode: 400,
+      details: {
+        questionIndex: resolvedIndex,
+        intentSeq,
+      },
+    });
+  }
 
   const snapshotQuestionId = String(session.questionOrder[resolvedIndex]?.question || '');
   if (!snapshotQuestionId) {
@@ -1327,41 +1378,74 @@ const submitAnswer = async ({
     });
   }
 
-  const acceptedIntents = Array.isArray(session.acceptedIntents) ? session.acceptedIntents : [];
-  const acceptedIntentIndex = acceptedIntents.findIndex((entry) => entry.questionIndex === resolvedIndex);
-  const acceptedIntent = acceptedIntentIndex >= 0 ? acceptedIntents[acceptedIntentIndex] : null;
+  const intentLedger = session.intentLedger && typeof session.intentLedger === 'object'
+    ? session.intentLedger
+    : {};
+  const questionLedger = intentLedger[snapshotQuestionId] && typeof intentLedger[snapshotQuestionId] === 'object'
+    ? intentLedger[snapshotQuestionId]
+    : {
+        lastAcceptedIntentSeq: 0,
+        lastAcceptedIntentId: null,
+        processedIntents: {},
+      };
+  const processedIntents = questionLedger.processedIntents && typeof questionLedger.processedIntents === 'object'
+    ? questionLedger.processedIntents
+    : {};
 
-  if (acceptedIntent && acceptedIntent.intentId !== normalizedIntentId) {
-    await rejectWithAudit({
-      userId,
-      sessionId,
-      reason: 'obsolete-intent-id',
-      message: 'Obsolete intent rejected for this question',
-      statusCode: 409,
-      details: {
-        questionIndex: resolvedIndex,
-        intentId: normalizedIntentId,
-        acceptedIntentId: acceptedIntent.intentId,
-      },
-    });
-  }
-
-  if (acceptedIntent && acceptedIntent.intentId === normalizedIntentId) {
+  const processedIntent = processedIntents[normalizedIntentId];
+  if (processedIntent) {
     session.nextRequestNonce = generateOpaqueToken();
     session.lastActivityAt = new Date();
     await session.save();
     const state = await serializeSessionState(session);
-    const savedAnswer = (state.responses || []).find((entry) => entry.questionIndex === resolvedIndex) || null;
     return {
       ...state,
       success: true,
       intentId: normalizedIntentId,
-      savedAnswer,
+      intentSeq: Number(processedIntent.intentSeq || normalizedIntentSeq),
+      version: Number(processedIntent.version || state.version || 0),
+      savedAnswer: {
+        questionIndex: resolvedIndex,
+        selectedAnswerIndex: Number(processedIntent.savedAnswer),
+      },
     };
+  }
+
+  if (!requestNonce || requestNonce !== session.nextRequestNonce) {
+    await incrementAnomalyCounter({ sessionId, counter: 'staleRequests' });
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'stale-or-replayed-request',
+      message: 'Stale request rejected',
+      statusCode: 409,
+      details: {
+        providedNonce: Boolean(requestNonce),
+      },
+    });
+  }
+
+  const lastAcceptedIntentSeq = Number(questionLedger.lastAcceptedIntentSeq || 0);
+  if (normalizedIntentSeq <= lastAcceptedIntentSeq) {
+    await incrementAnomalyCounter({ sessionId, counter: 'staleRequests' });
+    await rejectWithAudit({
+      userId,
+      sessionId,
+      reason: 'obsolete-intent-seq',
+      message: 'Obsolete intent sequence rejected for this question',
+      statusCode: 409,
+      details: {
+        questionIndex: resolvedIndex,
+        intentId: normalizedIntentId,
+        intentSeq: normalizedIntentSeq,
+        lastAcceptedIntentSeq,
+      },
+    });
   }
 
   const responseIdx = (session.responses || []).findIndex((entry) => entry.questionIndex === resolvedIndex);
   if (responseIdx >= 0) {
+    await incrementAnomalyCounter({ sessionId, counter: 'rejectedIntents' });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1387,44 +1471,78 @@ const submitAnswer = async ({
   const nextCurrentQuestionIndex = Math.min(nextLastAnsweredIndex + 1, session.questionCount - 1);
   const nextChecksum = buildAnswersChecksum(nextResponses);
 
-  session.responses = nextResponses;
-  session.acceptedIntents = [
-    ...acceptedIntents.filter((entry) => entry.questionIndex !== resolvedIndex),
-    {
-      questionIndex: resolvedIndex,
-      intentId: normalizedIntentId,
-      acceptedAt: new Date(),
-    },
-  ];
-  session.lastAnsweredIndex = nextLastAnsweredIndex;
-  session.currentQuestionIndex = nextCurrentQuestionIndex;
-  session.lastActivityAt = new Date();
-  session.lastAnswerAt = new Date();
-  session.nextRequestNonce = generateOpaqueToken();
-  session.answersChecksum = nextChecksum;
-  session.version = Number(session.version || 0) + 1;
+  const nextVersion = Number(session.version || 0) + 1;
+  const nextNonce = generateOpaqueToken();
+  const processedIntentPayload = {
+    savedAnswer: Number(selectedAnswerIndex),
+    version: nextVersion,
+    intentSeq: normalizedIntentSeq,
+    processedAt: new Date().toISOString(),
+  };
 
-  try {
-    await session.save();
-  } catch (error) {
-    if (error.name === 'VersionError') {
-      logExamIntegrity('multi-tab-conflict', {
-        sessionId,
-        userId: String(userId),
-        questionIndex: resolvedIndex,
-      });
-      await appendAuditTrail({
-        userId,
-        sessionId,
-        action: 'reject',
-        reason: 'stale-session-update',
-        details: {
-          questionIndex: resolvedIndex,
+  const questionLedgerBasePath = `intentLedger.${snapshotQuestionId}`;
+  const updateResult = await ExamSession.updateOne(
+    {
+      _id: sessionId,
+      user: userId,
+      status: 'active',
+      isSubmitting: false,
+      sessionToken,
+      nextRequestNonce: requestNonce,
+      version: Number(session.version || 0),
+      responses: {
+        $not: {
+          $elemMatch: {
+            questionIndex: resolvedIndex,
+          },
         },
-      });
-      throw buildHttpError('Stale session update rejected', 409);
+      },
+      $or: [
+        {
+          [`${questionLedgerBasePath}.lastAcceptedIntentSeq`]: {
+            $exists: false,
+          },
+        },
+        {
+          [`${questionLedgerBasePath}.lastAcceptedIntentSeq`]: {
+            $lt: normalizedIntentSeq,
+          },
+        },
+      ],
+    },
+    {
+      $push: {
+        responses: payload,
+      },
+      $set: {
+        lastAnsweredIndex: nextLastAnsweredIndex,
+        currentQuestionIndex: nextCurrentQuestionIndex,
+        lastActivityAt: now,
+        lastAnswerAt: now,
+        nextRequestNonce: nextNonce,
+        answersChecksum: nextChecksum,
+        version: nextVersion,
+        [`${questionLedgerBasePath}.lastAcceptedIntentSeq`]: normalizedIntentSeq,
+        [`${questionLedgerBasePath}.lastAcceptedIntentId`]: normalizedIntentId,
+        [`${questionLedgerBasePath}.processedIntents.${normalizedIntentId}`]: processedIntentPayload,
+      },
     }
-    throw error;
+  );
+
+  if (!updateResult.modifiedCount) {
+    await incrementAnomalyCounter({ sessionId, counter: 'staleRequests' });
+    const latest = await ExamSession.findOne({ _id: sessionId, user: userId }).lean();
+    const latestLedger = latest?.intentLedger?.[snapshotQuestionId] || {};
+    const latestSeq = Number(latestLedger?.lastAcceptedIntentSeq || 0);
+    throw buildHttpError(
+      latestSeq >= normalizedIntentSeq ? 'Obsolete intent sequence rejected for this question' : 'Stale session update rejected',
+      409
+    );
+  }
+
+  const savedSession = await ExamSession.findOne({ _id: sessionId, user: userId });
+  if (!savedSession) {
+    throw buildHttpError('Exam session not found', 404);
   }
 
   await appendAuditTrail({
@@ -1436,18 +1554,23 @@ const submitAnswer = async ({
       questionIndex: resolvedIndex,
       questionId: snapshotQuestionId,
       intentId: normalizedIntentId,
+      intentSeq: normalizedIntentSeq,
       answerAttemptCount: session.answerAttemptCount,
-      version: session.version,
+      version: nextVersion,
     },
   });
 
-  const state = await serializeSessionState(session);
-  const savedAnswer = (state.responses || []).find((entry) => entry.questionIndex === resolvedIndex) || null;
+  const state = await serializeSessionState(savedSession);
   return {
     ...state,
     success: true,
     intentId: normalizedIntentId,
-    savedAnswer,
+    intentSeq: normalizedIntentSeq,
+    version: nextVersion,
+    savedAnswer: {
+      questionIndex: resolvedIndex,
+      selectedAnswerIndex: Number(selectedAnswerIndex),
+    },
   };
 };
 
