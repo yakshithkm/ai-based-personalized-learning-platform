@@ -1,4 +1,10 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+﻿/* 
+CORE STYLES ONLY
+Do NOT move structural/layout classes out of this file.
+Feature CSS must only contain isolated UI.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
 /* Do not add feature-specific styles here. Use structured styles folder. */
 
