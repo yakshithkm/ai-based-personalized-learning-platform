@@ -64,7 +64,7 @@ const Layout = ({ children }) => {
       <aside className="sidebar">
         <div className="brand-wrap">
           <BrandLogo className="sidebar-brand" to="/" />
-          <p className="exam-tag">{user?.targetExam} Prep</p>
+          <p className="nav-badge">{user?.targetExam} Prep</p>
         </div>
 
         <div className="user-block">

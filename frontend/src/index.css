@@ -215,7 +215,7 @@ select:focus {
   font-size: 1.7rem;
 }
 
-.exam-tag {
+.nav-badge {
   display: inline-flex;
   align-items: center;
   width: fit-content;
