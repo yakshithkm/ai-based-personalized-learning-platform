@@ -6,6 +6,17 @@ const {
   submitExamSession,
 } = require('../services/examSimulationService');
 
+const isTestOrDevMode = () => ['test', 'development'].includes(process.env.NODE_ENV);
+
+const maybeApplyTestDelay = async (req) => {
+  const testDelayMs = Number(req.query?.testDelay);
+  if (!isTestOrDevMode() || !Number.isFinite(testDelayMs) || testDelayMs <= 0) {
+    return;
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, testDelayMs));
+};
+
 const startExamSession = async (req, res, next) => {
   try {
     const { mode = 'full-length', examType, sectionSubject, strictNavigation = false } = req.body || {};
@@ -56,6 +67,8 @@ const getLatestActiveSessionState = async (req, res, next) => {
 
 const submitSessionAnswer = async (req, res, next) => {
   try {
+    await maybeApplyTestDelay(req);
+
     const {
       questionIndex,
       questionId,

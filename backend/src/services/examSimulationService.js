@@ -132,6 +132,15 @@ const rejectWithAudit = async ({
   throw buildHttpError(message, statusCode);
 };
 
+const logIntentRejection = ({ questionId, incomingSeq, lastAcceptedSeq, reason }) => {
+  console.warn('[exam-intent-rejection]', {
+    questionId: String(questionId || ''),
+    incomingSeq: Number(incomingSeq || 0),
+    lastAcceptedSeq: Number(lastAcceptedSeq || 0),
+    reason,
+  });
+};
+
 const incrementAnomalyCounter = async ({ sessionId, counter }) => {
   if (!sessionId || !counter) return;
   const counterPath = `anomalyCounters.${counter}`;
@@ -1413,6 +1422,12 @@ const submitAnswer = async ({
 
   if (!requestNonce || requestNonce !== session.nextRequestNonce) {
     await incrementAnomalyCounter({ sessionId, counter: 'staleRequests' });
+    logIntentRejection({
+      questionId: snapshotQuestionId,
+      incomingSeq: normalizedIntentSeq,
+      lastAcceptedSeq: Number(questionLedger.lastAcceptedIntentSeq || 0),
+      reason: 'stale-or-replayed-request',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1428,6 +1443,12 @@ const submitAnswer = async ({
   const lastAcceptedIntentSeq = Number(questionLedger.lastAcceptedIntentSeq || 0);
   if (normalizedIntentSeq <= lastAcceptedIntentSeq) {
     await incrementAnomalyCounter({ sessionId, counter: 'staleRequests' });
+    logIntentRejection({
+      questionId: snapshotQuestionId,
+      incomingSeq: normalizedIntentSeq,
+      lastAcceptedSeq: lastAcceptedIntentSeq,
+      reason: 'obsolete-intent-seq',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1446,6 +1467,12 @@ const submitAnswer = async ({
   const responseIdx = (session.responses || []).findIndex((entry) => entry.questionIndex === resolvedIndex);
   if (responseIdx >= 0) {
     await incrementAnomalyCounter({ sessionId, counter: 'rejectedIntents' });
+    logIntentRejection({
+      questionId: snapshotQuestionId,
+      incomingSeq: normalizedIntentSeq,
+      lastAcceptedSeq: lastAcceptedIntentSeq,
+      reason: 'duplicate-question-submission',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1534,6 +1561,12 @@ const submitAnswer = async ({
     const latest = await ExamSession.findOne({ _id: sessionId, user: userId }).lean();
     const latestLedger = latest?.intentLedger?.[snapshotQuestionId] || {};
     const latestSeq = Number(latestLedger?.lastAcceptedIntentSeq || 0);
+    logIntentRejection({
+      questionId: snapshotQuestionId,
+      incomingSeq: normalizedIntentSeq,
+      lastAcceptedSeq: latestSeq,
+      reason: latestSeq >= normalizedIntentSeq ? 'obsolete-intent-seq' : 'stale-session-update',
+    });
     throw buildHttpError(
       latestSeq >= normalizedIntentSeq ? 'Obsolete intent sequence rejected for this question' : 'Stale session update rejected',
       409
