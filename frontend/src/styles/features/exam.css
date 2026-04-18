@@ -61,6 +61,50 @@
   margin-bottom: 0.6rem;
 }
 
+.exam-resync-indicator,
+.exam-resync-badge {
+  color: #cbd5e1;
+}
+
+.exam-resync-indicator {
+  opacity: 0.85;
+}
+
+.exam-debug-toggle-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.exam-debug-panel {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.exam-debug-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.exam-debug-grid div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.exam-debug-grid span {
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.exam-debug-grid strong {
+  color: #eff6ff;
+  font-size: 1.1rem;
+}
+
 .progress-pill {
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
@@ -176,6 +220,24 @@
   background: rgba(30, 64, 175, 0.3);
 }
 
+.palette-btn.pending,
+.option-btn.pending {
+  border-color: rgba(249, 115, 22, 0.62);
+  background: rgba(249, 115, 22, 0.18);
+}
+
+.palette-btn.confirmed,
+.option-btn.confirmed {
+  border-color: rgba(59, 130, 246, 0.72);
+  background: rgba(59, 130, 246, 0.28);
+}
+
+.palette-btn.failed,
+.option-btn.failed {
+  border-color: rgba(239, 68, 68, 0.7);
+  background: rgba(239, 68, 68, 0.2);
+}
+
 .palette-btn.unanswered {
   border-color: rgba(148, 163, 184, 0.45);
 }
@@ -188,6 +250,10 @@
 .palette-btn.current {
   border-color: rgba(96, 165, 250, 0.72);
   box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.35);
+}
+
+.palette-btn.visited {
+  border-color: rgba(148, 163, 184, 0.55);
 }
 
 .exam-score-grid {
@@ -229,4 +295,10 @@
 .exam-interpretation-box p {
   color: #cbd5e1;
   margin-top: 0.35rem;
+}
+
+.exam-question-state-line {
+  margin-top: 0.3rem;
+  color: #93c5fd;
+  font-size: 0.84rem;
 }

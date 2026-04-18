@@ -1,5 +1,6 @@
 const {
   createExamSession,
+  getIntentDebugSnapshot,
   getExamSessionState,
   getLatestActiveExamSessionState,
   submitAnswer,
@@ -119,10 +120,29 @@ const finalizeExamSession = async (req, res, next) => {
   }
 };
 
+const getDebugIntents = async (req, res, next) => {
+  try {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(404).json({ message: 'Not found' });
+    }
+
+    const snapshot = await getIntentDebugSnapshot({
+      sessionId: req.params.sessionId,
+      userId: req.user._id,
+    });
+
+    return res.json(snapshot);
+  } catch (error) {
+    res.status(error.statusCode || 400);
+    return next(error);
+  }
+};
+
 module.exports = {
   startExamSession,
   getSessionState,
   getLatestActiveSessionState,
   submitSessionAnswer,
   finalizeExamSession,
+  getDebugIntents,
 };

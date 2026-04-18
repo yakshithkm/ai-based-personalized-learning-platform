@@ -63,11 +63,66 @@ const RATE_WINDOW_MS = 60 * 1000;
 const MAX_ANSWER_SUBMISSIONS_PER_MIN = 30;
 const MAX_SUBMIT_ATTEMPTS_PER_MIN = 5;
 const INTEGRITY_RISK_THRESHOLD = 12;
+const MAX_INTENT_AUDIT_LOGS = 500;
+
+const intentAuditLogBuffer = [];
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 const logExamIntegrity = (event, payload = {}) => {
   console.warn(`[exam-integrity] ${event}`, payload);
+};
+
+const recordIntentAuditLog = (entry) => {
+  const logEntry = {
+    sessionId: String(entry?.sessionId || ''),
+    questionId: String(entry?.questionId || ''),
+    intentId: entry?.intentId ? String(entry.intentId) : '',
+    intentSeq: Number(entry?.intentSeq || 0),
+    lastAcceptedIntentSeq: Number(entry?.lastAcceptedIntentSeq || 0),
+    decision: entry?.decision === 'REJECTED' ? 'REJECTED' : 'ACCEPTED',
+    reason: entry?.reason || 'VALID',
+    timestamp: entry?.timestamp || new Date().toISOString(),
+  };
+
+  intentAuditLogBuffer.push(logEntry);
+  if (intentAuditLogBuffer.length > MAX_INTENT_AUDIT_LOGS) {
+    intentAuditLogBuffer.splice(0, intentAuditLogBuffer.length - MAX_INTENT_AUDIT_LOGS);
+  }
+
+  setImmediate(() => {
+    console.info('[exam-intent-audit]', logEntry);
+  });
+
+  return logEntry;
+};
+
+const getIntentDebugSnapshot = async ({ sessionId, userId }) => {
+  const session = await ExamSession.findOne({ _id: sessionId, user: userId })
+    .select('intentLedger anomalyCounters')
+    .lean();
+
+  if (!session) {
+    const error = new Error('Exam session not found');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  const lastAcceptedIntentSeqByQuestion = Object.entries(session.intentLedger || {}).reduce((acc, [questionId, ledger]) => {
+    acc[questionId] = Number(ledger?.lastAcceptedIntentSeq || 0);
+    return acc;
+  }, {});
+
+  const intentLogs = intentAuditLogBuffer
+    .filter((entry) => String(entry.sessionId) === String(sessionId))
+    .slice(-20);
+
+  return {
+    sessionId: String(sessionId),
+    lastAcceptedIntentSeqByQuestion,
+    anomalyCounters: session.anomalyCounters || {},
+    intentLogs,
+  };
 };
 
 const buildHttpError = (message, statusCode = 400) => {
@@ -710,6 +765,7 @@ const serializeSessionState = async (session) => {
       : null,
     blueprintDiagnostics: session.blueprintDiagnostics || null,
     resultSummary: session.resultSummary || null,
+    intentLedger: session.intentLedger || {},
     anomalyCounters: session.anomalyCounters || {
       rejectedIntents: 0,
       staleRequests: 0,
@@ -1244,6 +1300,15 @@ const submitAnswer = async ({
   await autoExpireIfNeeded(session);
 
   if (session.status === 'submitted') {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId,
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1253,6 +1318,15 @@ const submitAnswer = async ({
   }
 
   if (session.status === 'expired') {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId,
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1262,6 +1336,15 @@ const submitAnswer = async ({
   }
 
   if (session.isSubmitting) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId,
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1272,6 +1355,15 @@ const submitAnswer = async ({
   }
 
   if (!sessionToken || sessionToken !== session.sessionToken) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId,
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1282,6 +1374,15 @@ const submitAnswer = async ({
   }
 
   if (session.status !== 'active') {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId,
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     const error = new Error('Exam session is not active');
     error.statusCode = 400;
     throw error;
@@ -1289,6 +1390,15 @@ const submitAnswer = async ({
 
   const resolvedIndex = Number(questionIndex);
   if (!Number.isInteger(resolvedIndex) || resolvedIndex < 0 || resolvedIndex >= session.questionCount) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId,
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1301,6 +1411,15 @@ const submitAnswer = async ({
   }
 
   if (!Number.isInteger(Number(selectedAnswerIndex)) || Number(selectedAnswerIndex) < 0 || Number(selectedAnswerIndex) > 3) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId,
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1313,6 +1432,15 @@ const submitAnswer = async ({
   }
 
   if (!intentId || typeof intentId !== 'string' || !intentId.trim()) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId: intentId || '',
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await incrementAnomalyCounter({ sessionId, counter: 'rejectedIntents' });
     await rejectWithAudit({
       userId,
@@ -1329,6 +1457,15 @@ const submitAnswer = async ({
   const normalizedIntentId = intentId.trim();
   const normalizedIntentSeq = Number(intentSeq);
   if (!Number.isInteger(normalizedIntentSeq) || normalizedIntentSeq <= 0) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId: normalizedIntentId || String(intentId || ''),
+      intentSeq: Number(intentSeq || 0),
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await incrementAnomalyCounter({ sessionId, counter: 'rejectedIntents' });
     await rejectWithAudit({
       userId,
@@ -1345,6 +1482,15 @@ const submitAnswer = async ({
 
   const snapshotQuestionId = String(session.questionOrder[resolvedIndex]?.question || '');
   if (!snapshotQuestionId) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: String(questionId || ''),
+      intentId: normalizedIntentId,
+      intentSeq: normalizedIntentSeq,
+      lastAcceptedIntentSeq: 0,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1356,7 +1502,32 @@ const submitAnswer = async ({
     });
   }
 
+  const logIntentAuditDecision = ({
+    decision,
+    reason,
+    lastAcceptedIntentSeq,
+    questionId = snapshotQuestionId,
+    seq = normalizedIntentSeq,
+    id = normalizedIntentId,
+  }) => recordIntentAuditLog({
+    sessionId,
+    questionId,
+    intentId: id,
+    intentSeq: seq,
+    lastAcceptedIntentSeq,
+    decision,
+    reason,
+  });
+
   if (questionId && String(questionId) !== snapshotQuestionId) {
+    logIntentAuditDecision({
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+      lastAcceptedIntentSeq: Number(questionLedger.lastAcceptedIntentSeq || 0),
+      questionId: snapshotQuestionId,
+      seq: normalizedIntentSeq,
+      id: normalizedIntentId,
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1374,6 +1545,15 @@ const submitAnswer = async ({
   const lastAnsweredIndex = Number.isInteger(persistedLastAnswered) ? persistedLastAnswered : -1;
   const maxAllowedIndex = lastAnsweredIndex + 1;
   if (session.strictNavigation && resolvedIndex > maxAllowedIndex) {
+    recordIntentAuditLog({
+      sessionId,
+      questionId: snapshotQuestionId || String(questionId || ''),
+      intentId: normalizedIntentId,
+      intentSeq: normalizedIntentSeq,
+      lastAcceptedIntentSeq: lastAnsweredIndex,
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+    });
     await rejectWithAudit({
       userId,
       sessionId,
@@ -1403,6 +1583,14 @@ const submitAnswer = async ({
 
   const processedIntent = processedIntents[normalizedIntentId];
   if (processedIntent) {
+    logIntentAuditDecision({
+      decision: 'REJECTED',
+      reason: 'DUPLICATE_INTENT',
+      lastAcceptedIntentSeq: Number(questionLedger.lastAcceptedIntentSeq || 0),
+      questionId: snapshotQuestionId,
+      seq: Number(processedIntent.intentSeq || normalizedIntentSeq),
+      id: normalizedIntentId,
+    });
     session.nextRequestNonce = generateOpaqueToken();
     session.lastActivityAt = new Date();
     await session.save();
@@ -1421,6 +1609,11 @@ const submitAnswer = async ({
   }
 
   if (!requestNonce || requestNonce !== session.nextRequestNonce) {
+    logIntentAuditDecision({
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+      lastAcceptedIntentSeq: Number(questionLedger.lastAcceptedIntentSeq || 0),
+    });
     await incrementAnomalyCounter({ sessionId, counter: 'staleRequests' });
     logIntentRejection({
       questionId: snapshotQuestionId,
@@ -1442,6 +1635,11 @@ const submitAnswer = async ({
 
   const lastAcceptedIntentSeq = Number(questionLedger.lastAcceptedIntentSeq || 0);
   if (normalizedIntentSeq <= lastAcceptedIntentSeq) {
+    logIntentAuditDecision({
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+      lastAcceptedIntentSeq,
+    });
     await incrementAnomalyCounter({ sessionId, counter: 'staleRequests' });
     logIntentRejection({
       questionId: snapshotQuestionId,
@@ -1466,6 +1664,11 @@ const submitAnswer = async ({
 
   const responseIdx = (session.responses || []).findIndex((entry) => entry.questionIndex === resolvedIndex);
   if (responseIdx >= 0) {
+    logIntentAuditDecision({
+      decision: 'REJECTED',
+      reason: 'DUPLICATE_INTENT',
+      lastAcceptedIntentSeq,
+    });
     await incrementAnomalyCounter({ sessionId, counter: 'rejectedIntents' });
     logIntentRejection({
       questionId: snapshotQuestionId,
@@ -1561,6 +1764,11 @@ const submitAnswer = async ({
     const latest = await ExamSession.findOne({ _id: sessionId, user: userId }).lean();
     const latestLedger = latest?.intentLedger?.[snapshotQuestionId] || {};
     const latestSeq = Number(latestLedger?.lastAcceptedIntentSeq || 0);
+    logIntentAuditDecision({
+      decision: 'REJECTED',
+      reason: 'STALE_SEQ',
+      lastAcceptedIntentSeq: latestSeq,
+    });
     logIntentRejection({
       questionId: snapshotQuestionId,
       incomingSeq: normalizedIntentSeq,
@@ -1591,6 +1799,12 @@ const submitAnswer = async ({
       answerAttemptCount: session.answerAttemptCount,
       version: nextVersion,
     },
+  });
+
+  logIntentAuditDecision({
+    decision: 'ACCEPTED',
+    reason: 'VALID',
+    lastAcceptedIntentSeq: normalizedIntentSeq,
   });
 
   const state = await serializeSessionState(savedSession);
@@ -2106,6 +2320,7 @@ const submitExamSession = async ({ userId, sessionId }) => {
 module.exports = {
   SCORE_RULES,
   createExamSession,
+  getIntentDebugSnapshot,
   getExamSessionState,
   getLatestActiveExamSessionState,
   submitAnswer,

@@ -11,6 +11,8 @@ const recommendationRoutes = require('./routes/recommendationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const examRoutes = require('./routes/examRoutes');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
+const { protect } = require('./middleware/authMiddleware');
+const { getDebugIntents } = require('./controllers/examController');
 
 const app = express();
 
@@ -34,6 +36,9 @@ app.use('/api/attempts', attemptRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/admin', adminRoutes);
+
+app.get('/api/exam/session/:sessionId/debug-intents', protect, getDebugIntents);
+
 app.use('/api/exams', examRoutes);
 
 app.use(notFoundHandler);

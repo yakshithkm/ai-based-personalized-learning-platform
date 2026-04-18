@@ -27,6 +27,21 @@ const formatTime = (seconds) => {
   return `${withPad(hrs)}:${withPad(mins)}:${withPad(secs)}`;
 };
 
+const formatClockTime = (value) => {
+  if (!value) return '--:--:--';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return '--:--:--';
+  return [date.getHours(), date.getMinutes(), date.getSeconds()]
+    .map((part) => String(part).padStart(2, '0'))
+    .join(':');
+};
+
+const buildConfirmedIntentSeqByQuestion = (intentLedger = {}) =>
+  Object.entries(intentLedger || {}).reduce((acc, [questionId, ledger]) => {
+    acc[questionId] = Number(ledger?.lastAcceptedIntentSeq || 0);
+    return acc;
+  }, {});
+
 const getSessionStorageKey = (sessionId, key) => `exam-session:${sessionId}:${key}`;
 const ACTIVE_SESSION_STORAGE_KEY = 'exam-active-session-id';
 const PENDING_INTENT_STORAGE_KEY = (sessionId) => getSessionStorageKey(sessionId, 'pendingIntent');
@@ -75,6 +90,7 @@ const initialAnswerState = {
   pendingByQuestion: {},
   failedByQuestion: {},
   lastConfirmedAtByQuestion: {},
+  lastConfirmedIntentSeqByQuestion: {},
   saveStatus: 'idle',
 };
 
@@ -88,6 +104,11 @@ const answerReducer = (state, action) => {
         answers: action.payload.answers || {},
         hasPendingSync: false,
         syncWarning: '',
+      };
+    case 'INIT_CONFIRMED_INTENT_SEQ':
+      return {
+        ...state,
+        lastConfirmedIntentSeqByQuestion: action.payload.intentSeqByQuestion || {},
       };
     case 'SET_ANSWER':
       return {
@@ -131,6 +152,14 @@ const answerReducer = (state, action) => {
         lastConfirmedAtByQuestion: {
           ...state.lastConfirmedAtByQuestion,
           [action.payload.questionId]: action.payload.timestamp,
+        },
+      };
+    case 'SET_LAST_CONFIRMED_INTENT_SEQ':
+      return {
+        ...state,
+        lastConfirmedIntentSeqByQuestion: {
+          ...state.lastConfirmedIntentSeqByQuestion,
+          [action.payload.questionId]: Number(action.payload.intentSeq || 0),
         },
       };
     case 'SET_SAVING':
@@ -203,6 +232,7 @@ const metaReducer = (state, action) => {
 const ExamSimulationPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const isDevMode = Boolean(import.meta.env.DEV);
   const userExam = (user?.targetExam || user?.exam || 'NEET').trim().toUpperCase();
 
   const [mode, setMode] = useState('full-length');
@@ -214,12 +244,16 @@ const ExamSimulationPage = () => {
   const [timeLeftSec, setTimeLeftSec] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitLocked, setSubmitLocked] = useState(false);
+  const [uiLocked, setUiLocked] = useState(false);
   const [error, setError] = useState('');
   const [tabWarning, setTabWarning] = useState('');
   const [restoreNotice, setRestoreNotice] = useState('');
   const [multiTabWarning, setMultiTabWarning] = useState('');
   const [isSecondaryTab, setIsSecondaryTab] = useState(false);
   const [isReconciling, setIsReconciling] = useState(false);
+  const [showDebugPanel, setShowDebugPanel] = useState(false);
+  const [mismatchCount, setMismatchCount] = useState(0);
+  const [pendingRequestCount, setPendingRequestCount] = useState(0);
 
   const [navigationState, dispatchNavigation] = useReducer(navigationReducer, initialNavigationState);
   const [answerState, dispatchAnswer] = useReducer(answerReducer, initialAnswerState);
@@ -240,6 +274,10 @@ const ExamSimulationPage = () => {
   const latestIntentByQuestionRef = useRef(new Map());
   const latestIntentSeqByQuestionRef = useRef(new Map());
   const inFlightIntentMapRef = useRef(new Map());
+
+  const syncPendingRequestCount = () => {
+    setPendingRequestCount(inFlightIntentMapRef.current.size);
+  };
 
   const allowedSectionSubjects = useMemo(
     () => SECTION_SUBJECT_OPTIONS[examType] || SECTION_SUBJECT_OPTIONS.NEET,
@@ -404,6 +442,15 @@ const ExamSimulationPage = () => {
   const currentQuestion = questions[navigationState.currentIndex] || null;
   const currentQuestionId = currentQuestion?._id || '';
   const selectedAnswer = currentQuestion ? answerState.answers[currentQuestion._id] : null;
+  const currentQuestionLastConfirmedAt = currentQuestionId
+    ? answerState.lastConfirmedAtByQuestion[currentQuestionId]
+    : '';
+  const currentQuestionLastConfirmedIntentSeq = currentQuestionId
+    ? Number(answerState.lastConfirmedIntentSeqByQuestion[currentQuestionId] || 0)
+    : 0;
+  const currentQuestionPending = Boolean(currentQuestionId && answerState.pendingByQuestion[currentQuestionId]);
+  const currentQuestionFailed = Boolean(currentQuestionId && answerState.failedByQuestion[currentQuestionId]);
+  const currentQuestionConfirmed = Boolean(currentQuestionId && currentQuestionLastConfirmedIntentSeq > 0);
   const inputsDisabled =
     !session ||
     session.status !== 'active' ||
@@ -411,6 +458,7 @@ const ExamSimulationPage = () => {
     isSubmitting ||
     answerState.isSaving ||
     isReconciling ||
+    uiLocked ||
     submitLocked ||
     isSecondaryTab;
 
@@ -489,6 +537,7 @@ const ExamSimulationPage = () => {
       payload: { questionId, failed: false },
     });
     dispatchAnswer({ type: 'SET_SAVE_STATUS', payload: { status: 'pending' } });
+    syncPendingRequestCount();
     return pendingIntentRef.current;
   };
 
@@ -509,6 +558,7 @@ const ExamSimulationPage = () => {
         payload: { questionId },
       });
     }
+    syncPendingRequestCount();
   };
 
   const schedulePendingRetry = () => {
@@ -554,6 +604,12 @@ const ExamSimulationPage = () => {
         answers: mergedAnswers,
       },
     });
+    dispatchAnswer({
+      type: 'INIT_CONFIRMED_INTENT_SEQ',
+      payload: {
+        intentSeqByQuestion: buildConfirmedIntentSeqByQuestion(backendSession?.intentLedger),
+      },
+    });
 
     const backendIndex = Number(backendSession?.currentQuestionIndex);
     if (Number.isInteger(backendIndex)) {
@@ -585,6 +641,7 @@ const ExamSimulationPage = () => {
     expectedAnswerIndex,
   }) => {
     if (!session?.sessionId) return false;
+    setUiLocked(true);
     setIsReconciling(true);
     try {
       const refreshed = await getExamSession(session.sessionId);
@@ -606,16 +663,24 @@ const ExamSimulationPage = () => {
       return false;
     } finally {
       setIsReconciling(false);
+      setUiLocked(false);
     }
   };
+
+  const forceRefetchSession = forceFullSessionRefetch;
 
   const saveAnswerWithRetry = async ({ questionIndex, questionId, answerIndex, intentId, intentSeq }) => {
     if (!session?.sessionId) return false;
 
+    const currentIntentId = String(intentId || '');
+    const currentIntentSeq = Number(intentSeq || 0);
+    const currentVersion = Number(latestVersionRef.current || 0);
+
     const latestIntentId = latestIntentByQuestionRef.current.get(questionId);
     const latestIntentSeq = Number(latestIntentSeqByQuestionRef.current.get(questionId) || 0);
     if (!latestIntentId || latestIntentId !== intentId || Number(intentSeq) !== latestIntentSeq) {
-      await forceFullSessionRefetch({
+      setMismatchCount((count) => count + 1);
+      await forceRefetchSession({
         reason: 'local-intent-mismatch-before-request',
         questionId,
         expectedAnswerIndex: answerIndex,
@@ -664,26 +729,18 @@ const ExamSimulationPage = () => {
       let backendSession = response.data;
       const backendIntentId = String(backendSession?.intentId || '');
       const backendIntentSeq = Number(backendSession?.intentSeq || 0);
-      const latestKnownIntentId = latestIntentByQuestionRef.current.get(questionId);
-      const latestKnownIntentSeq = Number(latestIntentSeqByQuestionRef.current.get(questionId) || 0);
-      if (
-        !backendIntentId ||
-        backendIntentId !== latestKnownIntentId ||
-        !Number.isInteger(backendIntentSeq) ||
-        backendIntentSeq !== latestKnownIntentSeq
-      ) {
-        await forceFullSessionRefetch({
-          reason: 'response-intent-mismatch',
-          questionId,
-          expectedAnswerIndex: answerIndex,
-        });
-        return false;
-      }
-
       const responseVersion = Number(backendSession?.version || 0);
-      if (Number.isInteger(responseVersion) && responseVersion < latestVersionRef.current) {
-        await forceFullSessionRefetch({
-          reason: 'version-rollback',
+      const responseMatchesIntent =
+        backendIntentId === currentIntentId &&
+        Number.isInteger(backendIntentSeq) &&
+        backendIntentSeq === currentIntentSeq &&
+        Number.isInteger(responseVersion) &&
+        responseVersion >= currentVersion;
+
+      if (!responseMatchesIntent) {
+        setMismatchCount((count) => count + 1);
+        await forceRefetchSession({
+          reason: 'response-validation-mismatch',
           questionId,
           expectedAnswerIndex: answerIndex,
         });
@@ -706,7 +763,8 @@ const ExamSimulationPage = () => {
       const backendSavedAnswer = backendAnswerMap[questionId];
       let reconciled = false;
       if (!Number.isInteger(backendSavedAnswer) || backendSavedAnswer !== answerIndex) {
-        await forceFullSessionRefetch({
+        setMismatchCount((count) => count + 1);
+        await forceRefetchSession({
           reason: 'answer-mismatch',
           questionId,
           expectedAnswerIndex: answerIndex,
@@ -721,6 +779,13 @@ const ExamSimulationPage = () => {
         backendSession,
         selectedQuestionId: questionId,
         selectedAnswerIndex: answerIndex,
+      });
+      dispatchAnswer({
+        type: 'SET_LAST_CONFIRMED_INTENT_SEQ',
+        payload: {
+          questionId,
+          intentSeq: currentIntentSeq,
+        },
       });
       dispatchAnswer({
         type: 'SET_SYNC_WARNING',
@@ -759,6 +824,7 @@ const ExamSimulationPage = () => {
         clearExamSessionAuth();
         setSession(null);
       } else if (status === 409 || status === 429) {
+        setMismatchCount((count) => count + 1);
         try {
           setIsReconciling(true);
           const data = await getExamSession(session.sessionId);
@@ -796,6 +862,7 @@ const ExamSimulationPage = () => {
       if (inFlight?.intentId === intentId) {
         inFlightIntentMapRef.current.delete(questionId);
       }
+      syncPendingRequestCount();
       setIsReconciling(false);
     }
   };
@@ -879,6 +946,10 @@ const ExamSimulationPage = () => {
       dispatchMeta({ type: 'RESET' });
       submitTriggeredRef.current = false;
       setSubmitLocked(false);
+      setUiLocked(false);
+      setMismatchCount(0);
+      setPendingRequestCount(0);
+      setShowDebugPanel(false);
       pendingAnswerRef.current = null;
       pendingQuestionIdRef.current = '';
       pendingIntentRef.current = null;
@@ -929,6 +1000,12 @@ const ExamSimulationPage = () => {
         answers: mergedAnswers,
       },
     });
+    dispatchAnswer({
+      type: 'INIT_CONFIRMED_INTENT_SEQ',
+      payload: {
+        intentSeqByQuestion: buildConfirmedIntentSeqByQuestion(session.intentLedger),
+      },
+    });
     dispatchMeta({
       type: 'INIT_META',
       payload: {
@@ -948,6 +1025,7 @@ const ExamSimulationPage = () => {
       : fallbackIndex;
 
     dispatchNavigation({ type: 'SET_INDEX', payload: { index: restoredIndex } });
+    syncPendingRequestCount();
 
     const pendingRaw = localStorage.getItem(PENDING_INTENT_STORAGE_KEY(session.sessionId));
     if (pendingRaw) {
@@ -1454,6 +1532,13 @@ const ExamSimulationPage = () => {
   const modeExplanation = session?.behavior?.modeExplanation ||
     'Exam mode mirrors real test pressure. Practice mode is better for hints and on-the-spot explanations.';
 
+  const currentDebugIntentSeq = currentQuestionId
+    ? Number(latestIntentSeqByQuestionRef.current.get(currentQuestionId) || 0)
+    : 0;
+  const currentDebugLastConfirmedIntentSeq = currentQuestionId
+    ? Number(answerState.lastConfirmedIntentSeqByQuestion[currentQuestionId] || 0)
+    : 0;
+
   return (
     <div className="page-grid">
       <section className="panel">
@@ -1511,6 +1596,7 @@ const ExamSimulationPage = () => {
       {multiTabWarning && <section className="panel error-text">{multiTabWarning}</section>}
       {tabWarning && <section className="panel error-text">{tabWarning}</section>}
       {answerState.syncWarning && <section className="panel error-text">{answerState.syncWarning}</section>}
+      {uiLocked && <section className="panel exam-resync-indicator">Resyncing...</section>}
 
       {session?.generationNotice && (
         <section className="panel">
@@ -1534,12 +1620,46 @@ const ExamSimulationPage = () => {
             </div>
           </section>
 
+          {isDevMode && (
+            <section className="panel exam-debug-toggle-row">
+              <button className="outline-btn" type="button" onClick={() => setShowDebugPanel((open) => !open)}>
+                {showDebugPanel ? 'Hide' : 'Show'} Debug Panel
+              </button>
+            </section>
+          )}
+
+          {isDevMode && showDebugPanel && (
+            <section className="panel exam-debug-panel">
+              <h3>Intent Debug</h3>
+              <div className="exam-debug-grid">
+                <div>
+                  <span>Current intentSeq</span>
+                  <strong>{currentDebugIntentSeq}</strong>
+                </div>
+                <div>
+                  <span>Last confirmed intentSeq</span>
+                  <strong>{currentDebugLastConfirmedIntentSeq}</strong>
+                </div>
+                <div>
+                  <span>Mismatch count</span>
+                  <strong>{mismatchCount}</strong>
+                </div>
+                <div>
+                  <span>Pending requests</span>
+                  <strong>{pendingRequestCount}</strong>
+                </div>
+              </div>
+            </section>
+          )}
+
           <section className="panel">
             <div className="exam-meta-row">
               <span>Question {navigationState.currentIndex + 1} / {session.questionCount}</span>
               <span className="progress-pill">Question {navigationState.currentIndex + 1} / {questions.length || session.questionCount}</span>
               <span>Hints: OFF</span>
               <span>Explanations: OFF</span>
+              <span>Last confirmed save: {formatClockTime(currentQuestionLastConfirmedAt)}</span>
+              {uiLocked && <span className="exam-resync-badge">Resyncing...</span>}
               <span>
                 {answerState.saveStatus === 'pending'
                   ? 'Saving...'
@@ -1564,6 +1684,15 @@ const ExamSimulationPage = () => {
 
             <div className="exam-question-card question-transition" key={currentQuestion?._id || navigationState.currentIndex}>
               <h3>{currentQuestion?.subject} • {currentQuestion?.topic}</h3>
+              <p className="exam-question-state-line">
+                {currentQuestionPending
+                  ? 'Pending'
+                  : currentQuestionFailed
+                    ? 'Failed'
+                    : currentQuestionConfirmed
+                      ? 'Confirmed'
+                      : 'Not visited'}
+              </p>
               <div className="exam-question-tags">
                 <span className={`exam-tag-chip ${currentQuestion?.isPreviousYear ? 'pyq' : 'mock'}`}>
                   {currentQuestion?.isPreviousYear ? 'PYQ Priority' : currentQuestion?.yearTag || 'Mock'}
@@ -1577,7 +1706,7 @@ const ExamSimulationPage = () => {
                 {(currentQuestion?.options || []).map((option, idx) => (
                   <button
                     key={`${currentQuestion?._id}-${idx}`}
-                    className={`option-btn ${selectedAnswer === idx ? 'selected' : ''}`}
+                    className={`option-btn ${selectedAnswer === idx ? 'selected' : ''} ${currentQuestionPending ? 'pending' : currentQuestionFailed ? 'failed' : currentQuestionConfirmed ? 'confirmed' : ''}`}
                     onClick={() => handleOptionSelect(idx)}
                     disabled={inputsDisabled}
                   >
@@ -1622,17 +1751,35 @@ const ExamSimulationPage = () => {
                 const answered = Boolean(answeredByIndex[index]);
                 const marked = Boolean(metaState.reviewFlags[question._id]);
                 const visited = Boolean(metaState.visitedQuestions[question._id]);
+                const pending = Boolean(answerState.pendingByQuestion[question._id]);
+                const failed = Boolean(answerState.failedByQuestion[question._id]);
+                const confirmed = Number(answerState.lastConfirmedIntentSeqByQuestion[question._id] || 0) > 0;
                 const paletteState = marked
                   ? 'Marked for Review'
-                  : answered
+                  : pending
+                    ? 'Pending'
+                    : failed
+                      ? 'Failed'
+                      : confirmed
+                        ? 'Confirmed'
+                        : answered
                     ? 'Answered'
                     : visited
                       ? 'Visited'
                       : 'Not Visited';
+                const statusClass = pending
+                  ? 'pending'
+                  : failed
+                    ? 'failed'
+                    : confirmed
+                      ? 'confirmed'
+                      : visited
+                        ? 'visited'
+                        : 'unanswered';
                 return (
                 <button
                   key={question._id || index}
-                  className={`palette-btn ${index === navigationState.currentIndex ? 'current' : ''} ${answered ? 'answered' : ''} ${visited ? 'visited' : ''} ${!answered && !visited ? 'unanswered' : ''} ${marked ? 'review' : ''}`}
+                  className={`palette-btn ${index === navigationState.currentIndex ? 'current' : ''} ${answered ? 'answered' : ''} ${marked ? 'review' : ''} ${statusClass}`}
                   onClick={() => goToQuestion(index)}
                   disabled={inputsDisabled}
                 >
