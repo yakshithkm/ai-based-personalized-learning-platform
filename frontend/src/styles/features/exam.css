@@ -1,0 +1,424 @@
+/* Exam feature stylesheet scaffold.
+   Non-destructive phase: styles are duplicated here and retained in frontend/src/index.css. */
+
+.exam-setup-grid {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: end;
+}
+
+.exam-setup-grid label {
+  display: grid;
+  gap: 0.35rem;
+  color: #cbd5e1;
+  font-size: 0.9rem;
+}
+
+.exam-toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+/* Modern custom checkbox */
+.exam-toggle-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-left: 0;
+  /* center within grid cell */
+  justify-self: center;
+  align-self: center;
+  margin: 0.6rem 0;
+}
+
+.exam-toggle-row input {
+  /* Keep the native input for accessibility but visually hide it */
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  flex: 0 0 20px;
+  display: inline-block;
+  box-shadow: inset 0 0 0 1px rgba(148,163,184,0.18), 0 2px 6px rgba(2,6,23,0.4);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(15,23,42,0.6));
+  transition: background 180ms ease, transform 150ms ease, box-shadow 180ms ease;
+  position: relative;
+  margin-left: 63px;
+}
+
+.exam-toggle-row input:focus + .checkbox-custom {
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.12), inset 0 0 0 1px rgba(59,130,246,0.25);
+}
+
+.exam-toggle-row input:checked + .checkbox-custom {
+  background: linear-gradient(180deg, #60a5fa, #2563eb);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 4px 12px rgba(37,99,235,0.24);
+  transform: translateY(-1px);
+}
+
+.checkbox-custom::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid rgba(255,255,255,0);
+  border-bottom: 2px solid rgba(255,255,255,0);
+  transform: translate(-50%, -60%) rotate(-45deg) scale(0.8);
+  transition: border-color 180ms ease, transform 180ms ease, opacity 120ms ease;
+  opacity: 0;
+}
+
+.exam-toggle-row input:checked + .checkbox-custom::after {
+  border-left-color: rgba(255,255,255,0.95);
+  border-bottom-color: rgba(255,255,255,0.95);
+  opacity: 1;
+  transform: translate(-50%, -60%) rotate(-45deg) scale(1);
+}
+
+.exam-toggle-label {
+  color: #cbd5e1;
+  font-size: 0.95rem;
+  line-height: 1;
+  margin-right: 0.4rem;
+}
+
+/* slightly lift the checkbox to visually align with other controls */
+.checkbox-custom {
+  transform-origin: center;
+}
+
+@media (max-width: 640px) {
+  .exam-toggle-row {
+    justify-self: start;
+    margin-left: 0;
+  }
+}
+
+.exam-live-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.exam-timer {
+  border: 1px solid rgba(96, 165, 250, 0.42);
+  border-radius: 12px;
+  padding: 0.55rem 0.8rem;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 140px;
+  text-align: right;
+  background: rgba(30, 58, 138, 0.22);
+}
+
+.exam-timer strong {
+  font-size: 1.2rem;
+}
+
+.exam-timer {
+  transition: border-color 200ms ease, background 200ms ease, box-shadow 200ms ease;
+}
+
+.exam-timer.danger {
+  border-color: rgba(239, 68, 68, 0.55);
+  background: rgba(185, 28, 28, 0.24);
+  animation: timerPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes timerPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+  }
+}
+
+.exam-meta-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  color: #bfdbfe;
+  margin-bottom: 0.6rem;
+}
+
+.exam-resync-indicator,
+.exam-resync-badge {
+  color: #cbd5e1;
+}
+
+.exam-resync-indicator {
+  opacity: 0.85;
+}
+
+.exam-debug-toggle-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.exam-debug-panel {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.exam-debug-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.exam-debug-grid div {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.7rem;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.exam-debug-grid span {
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.exam-debug-grid strong {
+  color: #eff6ff;
+  font-size: 1.1rem;
+}
+
+.progress-pill {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(96, 165, 250, 0.45);
+  background: rgba(30, 58, 138, 0.22);
+}
+
+.exam-question-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md, 12px);
+  padding: 0.85rem;
+  background: linear-gradient(180deg, var(--surface-0, rgba(15, 23, 42, 0.6)), var(--surface-1, rgba(15, 23, 42, 0.75)));
+  box-shadow: var(--elevation-1, 0 6px 16px rgba(2, 6, 23, 0.3));
+}
+
+.question-transition {
+  animation: questionSlideIn 0.24s ease;
+}
+
+@keyframes questionSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.exam-question-text {
+  color: #dbeafe;
+  margin-top: 0.4rem;
+}
+
+.exam-mode-note {
+  margin-top: 0.3rem;
+  color: #cbd5e1;
+  font-size: 0.88rem;
+}
+
+.exam-question-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.exam-tag-chip {
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  background: rgba(30, 58, 138, 0.24);
+  color: #dbeafe;
+  font-size: 0.76rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+}
+
+.exam-tag-chip.pyq {
+  border-color: rgba(34, 197, 94, 0.55);
+  background: rgba(22, 101, 52, 0.32);
+}
+
+.exam-tag-chip.mock {
+  border-color: rgba(148, 163, 184, 0.45);
+  background: rgba(30, 41, 59, 0.35);
+}
+
+.exam-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.palette-grid {
+  margin-top: 0.75rem;
+  display: grid;
+  /* Limit to a maximum of 15 palette items per row */
+  grid-template-columns: repeat(15, minmax(44px, 1fr));
+  gap: 0.5rem;
+}
+
+.palette-btn {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.5rem;
+  background: rgba(15, 23, 42, 0.7);
+  color: #e2e8f0;
+  cursor: pointer;
+  display: grid;
+  gap: 0.12rem;
+  justify-items: center;
+  align-content: center;
+  transition: transform 150ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.palette-btn:hover {
+  transform: translateY(-1px);
+}
+
+.palette-btn:active {
+  transform: scale(0.95);
+}
+
+.palette-number {
+  font-weight: 700;
+}
+
+.palette-state {
+  font-size: 0.62rem;
+  color: #cbd5e1;
+}
+
+.palette-review-flag {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #facc15;
+}
+
+.palette-btn.answered {
+  border-color: rgba(59, 130, 246, 0.62);
+  background: rgba(30, 64, 175, 0.3);
+}
+
+.palette-btn.pending,
+.option-btn.pending {
+  border-color: rgba(249, 115, 22, 0.62);
+  background: rgba(249, 115, 22, 0.18);
+}
+
+.option-btn.saving {
+  cursor: not-allowed;
+  opacity: 0.92;
+}
+
+.palette-btn.confirmed,
+.option-btn.confirmed {
+  border-color: rgba(59, 130, 246, 0.72);
+  background: rgba(59, 130, 246, 0.28);
+}
+
+.palette-btn.failed,
+.option-btn.failed {
+  border-color: rgba(239, 68, 68, 0.7);
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.palette-btn.unanswered {
+  border-color: rgba(148, 163, 184, 0.45);
+}
+
+.palette-btn.review {
+  border-color: rgba(250, 204, 21, 0.65);
+  box-shadow: inset 0 0 0 1px rgba(250, 204, 21, 0.25);
+}
+
+.palette-btn.current {
+  border-color: rgba(96, 165, 250, 0.72);
+  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.35);
+}
+
+.palette-btn.visited {
+  border-color: rgba(148, 163, 184, 0.55);
+}
+
+.exam-score-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.7rem;
+}
+
+.score-box {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+  background: rgba(15, 23, 42, 0.65);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.score-box strong {
+  color: #93c5fd;
+  font-size: 1.1rem;
+}
+
+.exam-result-split {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.exam-interpretation-box {
+  margin-top: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.exam-interpretation-box p {
+  color: #cbd5e1;
+  margin-top: 0.35rem;
+}
+
+.exam-question-state-line {
+  margin-top: 0.3rem;
+  color: #93c5fd;
+  font-size: 0.84rem;
+}

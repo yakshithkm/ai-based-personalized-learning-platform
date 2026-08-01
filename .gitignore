@@ -1,0 +1,81 @@
+# User Specified & Internal Documents
+code-review.md
+STATE_ARCHITECTURE_FIXES.md
+UI_REDESIGN_NOTES.md
+
+# Environment Variables & Sensitive Files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+*.pem
+*.key
+*.crt
+*.pfx
+secrets.*
+*.p12
+
+# Node / JS Dependencies
+node_modules/
+**/node_modules/
+.npm
+.pnpm-store
+
+# Logs & Output Files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+test-output.txt
+logs/
+
+# Build & Production Outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+coverage/
+.nyc_output/
+
+# Python / ML Files & Virtual Environments
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+venv/
+.venv/
+env/
+ENV/
+*.sqlite3
+*.db
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE & Editor Files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace

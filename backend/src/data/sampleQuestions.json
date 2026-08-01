@@ -1,0 +1,122 @@
+[
+  {
+    "examType": "JEE",
+    "subject": "Physics",
+    "topic": "Kinematics",
+    "difficulty": "Easy",
+    "text": "A body starts from rest and accelerates uniformly at 2 m/s^2. What is its velocity after 5 seconds?",
+    "options": ["5 m/s", "10 m/s", "12 m/s", "15 m/s"],
+    "correctAnswerIndex": 1,
+    "explanation": "Use v = u + at = 0 + 2 x 5 = 10 m/s."
+  },
+  {
+    "examType": "JEE",
+    "subject": "Chemistry",
+    "topic": "Mole Concept",
+    "difficulty": "Medium",
+    "text": "How many molecules are present in 22.4 L of an ideal gas at STP?",
+    "options": ["3.011 x 10^23", "6.022 x 10^23", "1.204 x 10^24", "2.24 x 10^23"],
+    "correctAnswerIndex": 1,
+    "explanation": "22.4 L at STP equals 1 mole, which has Avogadro number of molecules."
+  },
+  {
+    "examType": "JEE",
+    "subject": "Mathematics",
+    "topic": "Quadratic Equations",
+    "difficulty": "Easy",
+    "text": "For equation x^2 - 5x + 6 = 0, roots are:",
+    "options": ["2 and 3", "1 and 6", "-2 and -3", "3 and 4"],
+    "correctAnswerIndex": 0,
+    "explanation": "Factorization gives (x-2)(x-3)=0."
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Cell Structure",
+    "difficulty": "Easy",
+    "text": "Powerhouse of the cell is:",
+    "options": ["Nucleus", "Mitochondria", "Golgi body", "Ribosome"],
+    "correctAnswerIndex": 1,
+    "explanation": "Mitochondria generate ATP through cellular respiration."
+  },
+  {
+    "examType": "NEET",
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "difficulty": "Medium",
+    "text": "Equivalent resistance of two 6 ohm resistors in parallel is:",
+    "options": ["12 ohm", "6 ohm", "3 ohm", "1.5 ohm"],
+    "correctAnswerIndex": 2,
+    "explanation": "R_eq = (R x R)/(R+R) = 36/12 = 3 ohm."
+  },
+  {
+    "examType": "NEET",
+    "subject": "Chemistry",
+    "topic": "Periodic Table",
+    "difficulty": "Easy",
+    "text": "Atomic number of Carbon is:",
+    "options": ["4", "6", "8", "12"],
+    "correctAnswerIndex": 1,
+    "explanation": "Carbon has 6 protons, hence atomic number 6."
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Trigonometry",
+    "difficulty": "Medium",
+    "text": "Value of sin^2(theta) + cos^2(theta) is:",
+    "options": ["0", "1", "2", "Depends on theta"],
+    "correctAnswerIndex": 1,
+    "explanation": "Fundamental identity in trigonometry."
+  },
+  {
+    "examType": "CET",
+    "subject": "Physics",
+    "topic": "Work Energy Power",
+    "difficulty": "Medium",
+    "text": "SI unit of work is:",
+    "options": ["Watt", "Newton", "Joule", "Pascal"],
+    "correctAnswerIndex": 2,
+    "explanation": "Work is measured in Joules."
+  },
+  {
+    "examType": "CET",
+    "subject": "Chemistry",
+    "topic": "Chemical Bonding",
+    "difficulty": "Hard",
+    "text": "Which bond involves complete transfer of electron?",
+    "options": ["Covalent", "Ionic", "Hydrogen", "Metallic"],
+    "correctAnswerIndex": 1,
+    "explanation": "In ionic bonding, electron transfer occurs from one atom to another."
+  },
+  {
+    "examType": "JEE",
+    "subject": "Physics",
+    "topic": "Kinematics",
+    "difficulty": "Hard",
+    "text": "A particle moves such that x = t^3 - 3t. Velocity at t = 2 s is:",
+    "options": ["3 m/s", "6 m/s", "9 m/s", "12 m/s"],
+    "correctAnswerIndex": 2,
+    "explanation": "v = dx/dt = 3t^2 - 3; at t=2, v=9 m/s."
+  },
+  {
+    "examType": "NEET",
+    "subject": "Biology",
+    "topic": "Genetics",
+    "difficulty": "Medium",
+    "text": "Father of Genetics is:",
+    "options": ["Darwin", "Mendel", "Lamarck", "Watson"],
+    "correctAnswerIndex": 1,
+    "explanation": "Gregor Mendel established the laws of inheritance."
+  },
+  {
+    "examType": "CET",
+    "subject": "Mathematics",
+    "topic": "Probability",
+    "difficulty": "Easy",
+    "text": "Probability of getting head in a fair coin toss is:",
+    "options": ["0", "1/4", "1/2", "1"],
+    "correctAnswerIndex": 2,
+    "explanation": "Two equally likely outcomes, one favorable."
+  }
+]
