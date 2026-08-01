@@ -383,6 +383,12 @@ const ExamSimulationPage = () => {
   const inFlightRequestMapRef = useRef(new Map());
   const savingQuestionIdRef = useRef(''); // question-scoped saving lock
   const pendingIntentRecoveryAttemptedRef = useRef(''); // sessionId already checked for a crash-recovered answer
+  // Questions whose selectedOptionMap value was written by reconcileStateWithBackend's
+  // hard-mismatch recovery (stale/rolled-back/mismatched response resync), not by a
+  // genuinely confirmed submitExamAnswer round-trip for the user's current intent.
+  // A click that happens to match this value must still go through a real save —
+  // it must not be short-circuited as "already selected".
+  const reconciledOnlyQuestionsRef = useRef(new Set());
 
   const syncPendingRequestCount = () => {
     setPendingRequestCount(inFlightIntentMapRef.current.size);
@@ -728,6 +734,7 @@ const ExamSimulationPage = () => {
     if (hardMismatchEntries.length) {
       hardMismatchEntries.forEach(([questionId, backendSavedAnswer]) => {
         void backendSavedAnswer;
+        reconciledOnlyQuestionsRef.current.add(questionId);
       });
       setMismatchCount((count) => count + hardMismatchEntries.length);
       setSelectedOptionMap((prev) => {
@@ -935,6 +942,7 @@ const ExamSimulationPage = () => {
         ...prev,
         [questionId]: answerIndex,
       }));
+      reconciledOnlyQuestionsRef.current.delete(questionId);
 
       retryCountRef.current.delete(questionId);
       return true;
@@ -1108,6 +1116,7 @@ const ExamSimulationPage = () => {
       pendingIntentRef.current = null;
       latestIntentByQuestionRef.current.clear();
       latestIntentSeqByQuestionRef.current.clear();
+      reconciledOnlyQuestionsRef.current.clear();
       inFlightIntentMapRef.current.forEach((entry) => entry?.controller?.abort?.());
       inFlightIntentMapRef.current.clear();
       inFlightRequestMapRef.current.clear();
@@ -1155,6 +1164,14 @@ const ExamSimulationPage = () => {
       initializedRef.current = true;
       setSelectedOptionMap(storedAnswers);
       setConfirmedOptionMap(serverAnswerMap);
+      // A locally-restored answer (from localStorage or the just-fetched backend
+      // snapshot) hasn't been re-validated against the *live* backend during this
+      // mount yet — another client could have changed things since this snapshot
+      // was taken. Require one fresh, real submission before letting a matching
+      // re-click short-circuit straight to "next question".
+      Object.keys(storedAnswers).forEach((questionId) => {
+        reconciledOnlyQuestionsRef.current.add(questionId);
+      });
       dispatchAnswer({
         type: 'INIT_CONFIRMED_INTENT_SEQ',
         payload: {
@@ -1631,10 +1648,18 @@ const ExamSimulationPage = () => {
       // save already in-flight for this question - ignore the click
       return;
     }
-    if (selectedOptionMap[questionId] === answerIndex) {
+    if (
+      selectedOptionMap[questionId] === answerIndex &&
+      !reconciledOnlyQuestionsRef.current.has(questionId)
+    ) {
       goToNextQuestion();
       return;
     }
+
+    // Either a genuinely different answer, or the current value only came from
+    // mismatch-recovery reconciliation — either way this click needs a real,
+    // freshly-tracked submission, so clear the reconciled-only marker now.
+    reconciledOnlyQuestionsRef.current.delete(questionId);
 
     setSaveErrorByQuestion((prev) => {
       if (!prev[questionId]) return prev;
