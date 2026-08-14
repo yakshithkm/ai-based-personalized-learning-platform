@@ -1738,11 +1738,12 @@ const ExamSimulationPage = () => {
           <div className="exam-setup-grid">
             <label>
               Exam Type
-              <select value={examType} onChange={(e) => setExamType(e.target.value)}>
-                <option value="NEET">NEET</option>
-                <option value="CET">CET</option>
-                <option value="JEE">JEE</option>
+              <select value={examType} disabled aria-describedby="exam-type-locked-note">
+                <option value={userExam}>{userExam}</option>
               </select>
+              <small id="exam-type-locked-note" className="exam-setup-note">
+                Matched to your enrolled exam
+              </small>
             </label>
 
             <label>

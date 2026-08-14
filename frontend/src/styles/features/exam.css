@@ -16,6 +16,18 @@
   font-size: 0.9rem;
 }
 
+.exam-setup-grid select:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.exam-setup-note {
+  color: #7c8db5;
+  font-size: 0.76rem;
+  font-weight: 400;
+}
+
 .exam-toggle-row {
   display: inline-flex;
   align-items: center;
