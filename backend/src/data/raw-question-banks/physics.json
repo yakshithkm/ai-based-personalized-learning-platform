@@ -1,0 +1,1697 @@
+[
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 1,
+    "question_text": "In an electrolyte 3.2 × 10^18 bivalent positive ions drift to the right per second while 3.6 × 10^18 monovalent negative ions drift to the left in one second. Then the electric current is",
+    "options": {
+      "a": "1.6 A to the left",
+      "b": "1.6 A to the right",
+      "c": "0.45 A to the right",
+      "d": "0.45 A to the left"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 2,
+    "question_text": "In a hydrogen atom, the electron makes 6.6 × 10^15 revolutions s⁻¹, in an orbit of radius 0.5 × 10⁻¹⁰ m. The equivalent current is nearly",
+    "options": {
+      "a": "10⁻¹ A",
+      "b": "10⁻³ A",
+      "c": "10⁻⁶ A",
+      "d": "10⁻¹⁹ A"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 3,
+    "question_text": "An electron gun in a TV shoots out a beam of electrons. The beam current is 10µA. The charge that strikes the screen in 1 minute is",
+    "options": {
+      "a": "+600 µC",
+      "b": "−600 µC",
+      "c": "+10 µC",
+      "d": "−10 µC"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 4,
+    "question_text": "A metallic block has no potential difference applied across it, then the mean velocity of free electrons is",
+    "options": {
+      "a": "proportional to T",
+      "b": "proportional to √T",
+      "c": "finite but independent of temperature",
+      "d": "zero"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 5,
+    "question_text": "If the specific resistance of a potentiometer wire is 10⁻⁷ Ωm and current flow through it is 0.1 amp, cross-sectional area of wire is 10⁻⁶ m², then potential gradient will be",
+    "options": {
+      "a": "10⁻² volt/meter",
+      "b": "10⁻⁴ volt/meter",
+      "c": "10⁻⁶ volt/meter",
+      "d": "10⁻⁸ volt/meter"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 6,
+    "question_text": "There is current of 20A in a copper wire of 10⁻⁶ m² cross-sectional area. If number of free electrons per cubic metre is 10²⁹, then the drift velocity is",
+    "options": {
+      "a": "125 × 10⁻³ ms⁻¹",
+      "b": "12.5 × 10⁻³ ms⁻¹",
+      "c": "1.25 × 10⁻³ ms⁻¹",
+      "d": "1.25 × 10⁻⁴ ms⁻¹"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 7,
+    "question_text": "The number of free electrons per unit volume in copper is n. The electrons, each of charge q, are flowing systematically along the length of the wire with velocity V. If the area of cross-section of the wire is A, then the current density in the wire is",
+    "options": {
+      "a": "nAq/V",
+      "b": "nqV",
+      "c": "nAqV",
+      "d": "nq/V"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 8,
+    "question_text": "In an electrical arrangement as shown the equivalent resistance between X and Y will be:",
+    "options": {
+      "a": "158.75 Ω",
+      "b": "118.75 Ω",
+      "c": "218.75 Ω",
+      "d": "318.75 Ω"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 9,
+    "question_text": "In a circuit two cells of 1.5 V and 2.0 V e.m.f. having internal resistance 1Ω and 2Ω respectively are connected in parallel so as to send the current in the same direction through external resistance of 5Ω. The current is",
+    "options": {
+      "a": "17/5 amp",
+      "b": "5/17 amp",
+      "c": "12/5 amp",
+      "d": "5/12 amp"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 10,
+    "question_text": "A letter A is constructed out of a uniform wire of resistance 1 ohm per cm. The sides of the letter are 20 cm each with cross piece of 10 cm and angle at the apex is 60°. The resistance between its two legs is",
+    "options": {
+      "a": "20 Ω",
+      "b": "40/3 Ω",
+      "c": "80/3 Ω",
+      "d": "20/3 Ω"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 11,
+    "question_text": "The e.m.f. of a battery is 3 volts and internal resistance is 0.125Ω. The difference of potential at the terminals of battery when connected across an external resistance of 1Ω is",
+    "options": {
+      "a": "1.67 volt",
+      "b": "0.67 volt",
+      "c": "2.67 volt",
+      "d": "3.67 volt"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 12,
+    "question_text": "A copper wire (resistivity = 1.7 × 10⁻⁸ ohm metre and density = 8900 kgm⁻³) and an aluminium wire (resistivity = 2.8 × 10⁻⁸ ohm metre and density = 2700 kgm⁻³) have the same mass per unit length. The ratio of the resistance per unit length of aluminium and copper wire is nearly",
+    "options": {
+      "a": "1 : √2",
+      "b": "2 : √3",
+      "c": "2 : 3",
+      "d": "1 : 2"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 13,
+    "question_text": "A square aluminium rod is 1 m long and 5 mm on edge. What must be the radius of another aluminium rod whose length is 1 m and which has the same resistance as that of the square aluminium rod?",
+    "options": {
+      "a": "1.4 mm",
+      "b": "2.8 mm",
+      "c": "4.2 mm",
+      "d": "5.0 mm"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 14,
+    "question_text": "A 20 cm long copper tube has an inner diameter of 0.85 cm and an outer diameter of 1.10 cm. When used lengthwise, the resistance of the tube is (Given ρ for copper is 1.7 × 10⁻⁸ Ωm.)",
+    "options": {
+      "a": "89 µΩ",
+      "b": "89 Ω",
+      "c": "8.9 Ω",
+      "d": "infinite"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 15,
+    "question_text": "Specific resistances of copper, constantin and silver are 1.78 × 10⁻⁶ ohm cm, 39.1 × 10⁻⁶ ohm cm and 10⁻⁶ ohm cm respectively. Which of these is the best conductor of heat and electricity?",
+    "options": {
+      "a": "Copper",
+      "b": "Constantin",
+      "c": "Silver",
+      "d": "Copper for heat, silver for electricity"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 16,
+    "question_text": "A car battery of e.m.f. 12V and internal resistance 5 × 10⁻² Ω receives a current of 60 amp from external source, then terminal path difference of battery is",
+    "options": {
+      "a": "12V",
+      "b": "9V",
+      "c": "15V",
+      "d": "20V"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 17,
+    "question_text": "A 4 cm long conductor is made of a material of resistivity x. What will be the effect on the conductivity of the material if the length of the conductor is reduced by 1 cm?",
+    "options": {
+      "a": "x/2",
+      "b": "2x",
+      "c": "3x/2",
+      "d": "No effect"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 18,
+    "question_text": "N identical current sources with an e.m.f. of E and internal resistance of R0 and the same number of identical resistors with the resistance R form a closed circuit of N units as shown. Find the potential difference between points A and B dividing the circuit into n and N-n units. Neglect the resistance of connecting wires.",
+    "options": {
+      "a": "NE",
+      "b": "(N − n) × E",
+      "c": "nE",
+      "d": "zero"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 19,
+    "question_text": "The resistance of a wire is 1Ω at 300 K. At what temperature the resistance of the wire will be 2 Ω? Given temperature coefficient of resistance = 0.00125° C⁻¹.",
+    "options": {
+      "a": "1127 K",
+      "b": "1100 K",
+      "c": "1400 K",
+      "d": "1457 K"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 20,
+    "question_text": "Two similar cells whether joined in series or in parallel have the same current through an external resistance of 2Ω. The internal resistance of each cell is:",
+    "options": {
+      "a": "1 Ω",
+      "b": "2 Ω",
+      "c": "0.5 Ω",
+      "d": "none of the above"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 21,
+    "question_text": "A current of 2A enters at A in wheatstone bridge ABCD as shown. The potential difference between B and D is",
+    "options": {
+      "a": "+2 V",
+      "b": "+1 V",
+      "c": "−2 V",
+      "d": "−1 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 22,
+    "question_text": "A wire of resistance 4Ω is stretched to twice its original length. The resistance of the wire now is",
+    "options": {
+      "a": "1 Ω",
+      "b": "4 Ω",
+      "c": "2 Ω",
+      "d": "16 Ω"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 23,
+    "question_text": "Four resistances are connected to a 5V battery of negligible internal resistance as shown. What is the potential across 2Ω?",
+    "options": {
+      "a": "0.5 V",
+      "b": "1.5 V",
+      "c": "1.0 V",
+      "d": "2.0 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 24,
+    "question_text": "An unknown resistance is connected in parallel with a 15 Ω resistance and a 12V battery. What is the value of the unknown resistance if the current in the circuit is 2 ampere?",
+    "options": {
+      "a": "10 Ω",
+      "b": "20 Ω",
+      "c": "30 Ω",
+      "d": "40 Ω"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 25,
+    "question_text": "Five 3 ohm resistances are arranged in a polygon (five sides). What is resistance between any two corners?",
+    "options": {
+      "a": "2.4 ohm",
+      "b": "3 ohm",
+      "c": "9 ohm",
+      "d": "5 ohm"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 26,
+    "question_text": "In the circuit shown below the electrical resistance between points A and B is",
+    "options": {
+      "a": "24 Ω",
+      "b": "12 Ω",
+      "c": "18 Ω",
+      "d": "9 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 27,
+    "question_text": "How many 160 ohm resistors in parallel are required to carry a current of 5A on a 100 V line?",
+    "options": {
+      "a": "2",
+      "b": "4",
+      "c": "6",
+      "d": "8"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 28,
+    "question_text": "A potential has 4 meter long wire of 10Ω resistance, connected to it. This wire is also connected with a cell of 2 volt e.m.f. The potential difference of unit length of the wire will be",
+    "options": {
+      "a": "0.5 volt/meter",
+      "b": "2 volt/meter",
+      "c": "5 volt/meter",
+      "d": "10 volt/meter"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 29,
+    "question_text": "Two resistances of 10 K ohms and 90 K ohms are joined in series with a 200 volts emf generator. Considering the internal resistance of generator as negligible, the potential difference across 10 K ohms resistance will be",
+    "options": {
+      "a": "180 volts",
+      "b": "20 volts",
+      "c": "2 volts",
+      "d": "2 milli-volts"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 30,
+    "question_text": "In an experiment with potentiometer, when the galvanometer deflection is zero, then no current flows in",
+    "options": {
+      "a": "the wire of potentiometer",
+      "b": "the primary circuit",
+      "c": "the galavanometer circuit",
+      "d": "accumulate or cell"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 31,
+    "question_text": "The potential difference across the terminals of a cell varies with the current drawn from the cell according to the graph",
+    "options": {
+      "a": "graph a",
+      "b": "graph b",
+      "c": "graph c",
+      "d": "graph d"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 32,
+    "question_text": "The potential gradient of the potentiometer wire depends on",
+    "options": {
+      "a": "only on the current that flows",
+      "b": "only on the resistance per unit length of the wire",
+      "c": "both the above mentioned",
+      "d": "none of the above"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 33,
+    "question_text": "In a circuit, as shown, a battery of e.m.f. 10 volts and negligible resistance is connected across two resistances of 500 ohms in series. A voltmeter of 1000 ohms resistance is connected across one resistance. What is the reading of the voltmeter?",
+    "options": {
+      "a": "4.0 volt",
+      "b": "2.0 volt",
+      "c": "3.0 volt",
+      "d": "1.0 volt"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 34,
+    "question_text": "Six cells each of e.m.f. 2V and internal resistance 0.1 Ω are connected to three resistances as shown. The reading of a low resistance ammeter 'A' in the circuit is",
+    "options": {
+      "a": "2.1 A",
+      "b": "3.0 A",
+      "c": "1.2 A",
+      "d": "1.5 A"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 35,
+    "question_text": "Kirchoff's first law, i.e., Σi = 0 at a junction, deals with the conservation of",
+    "options": {
+      "a": "charge",
+      "b": "energy",
+      "c": "momentum",
+      "d": "angular momentum"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 36,
+    "question_text": "If in the given figure, the deflection in the galvanometer in a potentiometer circuit is zero, then",
+    "options": {
+      "a": "E1 > E2",
+      "b": "E2 > E1",
+      "c": "E1 = E2",
+      "d": "E1 + E2 = E"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 37,
+    "question_text": "Two similar cells are connected first in series and then in parallel, the ratio of balancing length in the potentiometer wire will be",
+    "options": {
+      "a": "1 : 2",
+      "b": "2 : 1",
+      "c": "1 : 4",
+      "d": "4 : 1"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 38,
+    "question_text": "In an experiment with a potentiometer, two resistances R1 and R2 are joined in series. When the current flows through them, the balancing lengths for the potential difference developed at the resistances are l1 and l2 respectively. The value of resistance R1 will be",
+    "options": {
+      "a": "l2R2/l1",
+      "b": "l1R2/l2",
+      "c": "(l1 − l2)R/l1",
+      "d": "(l1 − l2)R/l2"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 39,
+    "question_text": "In a meter bridge experiment, the value of unknown resistance is 2Ω. To get the balancing point at 40 cm distance from the same end, the resistance in the resistance box will be",
+    "options": {
+      "a": "0.5 Ω",
+      "b": "3 Ω",
+      "c": "20 Ω",
+      "d": "80 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 40,
+    "question_text": "The current in the given circuit is",
+    "options": {
+      "a": "1/8 A",
+      "b": "2/9 A",
+      "c": "2/3 A",
+      "d": "1 A"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 41,
+    "question_text": "A, B, C and D are four coils of resistance 2, 2, 2 and 3 Ω respectively and are used to form a Wheatstone bridge. The coil D is short-circuited with a resistance R in order to get the bridge balanced. The value of R will be",
+    "options": {
+      "a": "6 Ω",
+      "b": "60 Ω",
+      "c": "3 Ω",
+      "d": "30 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 42,
+    "question_text": "A cell having e.m.f of 2.2 volts and an internal resistance of 0.2 ohm is connected to a circuit comprising an ammeter and a resistance of 4 ohms in series with a combination of two resistance of 0.4 ohms each in parallel. What will be the reading of the ammeter?",
+    "options": {
+      "a": "1.5 A",
+      "b": "2.5 A",
+      "c": "0.5 A",
+      "d": "1.0 A"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 43,
+    "question_text": "A battery of e.m.f. 2 volts and an internal resistance 0.5 ohm is connected to a circuit comprising of a resistance of 5 ohms and a galvanometer of resistance 15 ohms connected in series. What is the current through the galvonometer when a resistance of 3 ohms is connected across its terminals?",
+    "options": {
+      "a": "0.04 A",
+      "b": "1.40 A",
+      "c": "0.40 A",
+      "d": "4.1 A"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 44,
+    "question_text": "A potential difference is applied across the ends of a metallic wire. If the potential difference is doubled, the drift velocity",
+    "options": {
+      "a": "will be doubled.",
+      "b": "will be halved.",
+      "c": "will be quadrupled.",
+      "d": "will remain unchanged."
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 45,
+    "question_text": "The maximum current that flows in the fuse wire, before it blows out, varies with the radius r as",
+    "options": {
+      "a": "r^(3/2)",
+      "b": "r",
+      "c": "r^(2/3)",
+      "d": "r^(1/2)"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 46,
+    "question_text": "The masses of three wires of copper are in the ratio of 1 : 3 : 5 and their lengths are in the ratio 5 : 3 : 1. The ratio of their electrical resistances is",
+    "options": {
+      "a": "1 : 3 : 5",
+      "b": "5 : 3 : 1",
+      "c": "1 : 15 : 125",
+      "d": "125 : 15 : 1"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 47,
+    "question_text": "A man wants to test his ammeter whose range is 0-1 Ampere. He connects it to a 12V storage battery and a carbon resistance of 48 ohm 0.5 watt. Which of the following is most likely to happen?",
+    "options": {
+      "a": "the reading remains at 0.25 A",
+      "b": "the reading remains at 0.5 A",
+      "c": "the resistor burns immediately",
+      "d": "the meter would read 0.25 A but after some time the resistor melts."
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 48,
+    "question_text": "A torch bulb rated as 4.5 W, 1.5 V is connected in a circuit as shown in figure. In order to make the bulb glow with full intensity, the cell must have e.m.f. of value.",
+    "options": {
+      "a": "13.5 V",
+      "b": "2.67 V",
+      "c": "4.5 V",
+      "d": "1.5 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 49,
+    "question_text": "When the key K is pressed at time t = 0, then which of the following statements about the current I in the resistor AB of the given circuit is true?",
+    "options": {
+      "a": "I = 1 mA at all times",
+      "b": "I = 2 mA at all times",
+      "c": "I oscillates between 1 mA and 2 mA",
+      "d": "at t = 0, I = 2 mA and with time it goes to 1 mA"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 50,
+    "question_text": "A battery of internal resistance 4 Ω is connected to the network of resistances as shown. In order to give the maximum power to the network, the value of R in ohm should be",
+    "options": {
+      "a": "4/9",
+      "b": "8/9",
+      "c": "2",
+      "d": "18"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 51,
+    "question_text": "An ammeter with internal resistance 90 ohm reads 1.85 amp when connected in a circuit containing a battery and two resistances of 700 ohm and 410 ohm in series. Actual current will be",
+    "options": {
+      "a": "1.85 amp",
+      "b": "> 1.85 amp",
+      "c": "< 1.85 amp",
+      "d": "none of these"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 52,
+    "question_text": "In the given circuit, the reading of voltmeter is",
+    "options": {
+      "a": "2.0 V",
+      "b": "0.8 V",
+      "c": "1.33 V",
+      "d": "1.6 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 53,
+    "question_text": "A cell of e.m.f. 5V and negligible internal resistance is connected in a circuit as shown in fig. The resistance of ammeter A is also negligible. The reading of the ammeter will be",
+    "options": {
+      "a": "400 mA",
+      "b": "40 mA",
+      "c": "zero",
+      "d": "200 mA"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 54,
+    "question_text": "In a Wheatstone's bridge shown in the following figure, the conventional current between B and D",
+    "options": {
+      "a": "is from B to D",
+      "b": "is from D to B",
+      "c": "is zero",
+      "d": "is indeterminate"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 55,
+    "question_text": "Wires of the same material and area are connected along the sides and the diagonal AC of a square as shown in the figure. If the resistance between the points B and D is R, the resistance of the length of the wire between A and D is",
+    "options": {
+      "a": "R/(4 + √2)",
+      "b": "R",
+      "c": "R/√2",
+      "d": "√2 R"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 56,
+    "question_text": "Resistance between the points A and B in the given figure is",
+    "options": {
+      "a": "9 Ω",
+      "b": "2 Ω",
+      "c": "3 Ω",
+      "d": "6 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 57,
+    "question_text": "In a Wheatstone's bridge (shown in the given figure) X = Y and A > B. The direction of the current between a and b will be",
+    "options": {
+      "a": "from a to b",
+      "b": "from b to a",
+      "c": "from b to a through c",
+      "d": "from a to b through c"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 58,
+    "question_text": "In the circuit shown in the given figure, the cells E1 and E2 have emfs 4 V and 8 V and internal resistance 0.5 ohm and 1 ohm respectively. Then the potential difference across cell E1 and E2 will be",
+    "options": {
+      "a": "3.75V, 7.5 V",
+      "b": "4.25 V, 7.5 V",
+      "c": "3.75 V, 3.75 V",
+      "d": "4.25 V, 4.25 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 59,
+    "question_text": "In the given figure, a fuse in one of the bulbs causes all the other to go out. Which bulb has fused?",
+    "options": {
+      "a": "1",
+      "b": "2",
+      "c": "3",
+      "d": "4",
+      "e": "5"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 60,
+    "question_text": "In the circuit shown in the figure, ammeter A reads 0.5 A. Bulbs L1 and L2 are brightly lit, but L3 is not lit. What is the reason for L3 not being lit?",
+    "options": {
+      "a": "The ammeter is faulty",
+      "b": "The filament of L3 is broken",
+      "c": "The resistance of L3 is much lower than that of L1 and L2",
+      "d": "There is a break in the connecting wire between L2 and L3"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 61,
+    "question_text": "In the following circuit if R1 + R2 = 13.5 Ω at any instant, then reading of the ammeter is",
+    "options": {
+      "a": "1 A",
+      "b": "13.5 A",
+      "c": "1.5 A",
+      "d": "15 A"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 62,
+    "question_text": "An infinite ladder network of resistance is constructed with 1Ω and 2Ω resistance as shown in the figure. The effective resistance between A and B is",
+    "options": {
+      "a": "2 Ω",
+      "b": "3 Ω",
+      "c": "4 Ω",
+      "d": "5 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 63,
+    "question_text": "The equivalent resistance between A and B will be",
+    "options": {
+      "a": "8/3 Ω",
+      "b": "25/4 Ω",
+      "c": "16 Ω",
+      "d": "3/20 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 64,
+    "question_text": "In the following, circuit the current through 2Ω resistor is",
+    "options": {
+      "a": "1.0 A",
+      "b": "1.9 A",
+      "c": "0.9 A",
+      "d": "1.6 A"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 65,
+    "question_text": "The equivalent resistance between A and B in given figure is",
+    "options": {
+      "a": "15 Ω",
+      "b": "7.5 Ω",
+      "c": "25 Ω",
+      "d": "30 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 66,
+    "question_text": "The equivalent resistance of the network shown in the given figure, between points X and Y is",
+    "options": {
+      "a": "23 Ω",
+      "b": "53 Ω",
+      "c": "32 Ω",
+      "d": "35 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 67,
+    "question_text": "In the circuit shown in the figure, the value of E is",
+    "options": {
+      "a": "R = 15 Ω",
+      "b": "R = 30 Ω",
+      "c": "E = 36 V",
+      "d": "E = 180 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 68,
+    "question_text": "In the circuit given in the figure, the potential of the point D is",
+    "options": {
+      "a": "zero",
+      "b": "−8 V",
+      "c": "−4/3 V",
+      "d": "4/3 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 69,
+    "question_text": "If the resistance R2 = R1 is connected in parallel with the resistance R1 in the circuit, the current through R1 will",
+    "options": {
+      "a": "R becomes I/3",
+      "b": "2 R remains I",
+      "c": "2 R remains I/3",
+      "d": "R becomes I/2"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 70,
+    "question_text": "A flow of 10^7 electrons per second in a conducting wire constitutes a current of",
+    "options": {
+      "a": "1.6 × 10⁻²⁶ A",
+      "b": "1.6 × 10⁻¹² A",
+      "c": "1.6 × 10⁻¹² A",
+      "d": "1.6 × 10⁻²⁶ A"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 71,
+    "question_text": "The current in the heater circuit of diodle valve is 2.0 amp in section CB and 2.2 amp in section BA as shown in the figure. Then the plate current i is",
+    "options": {
+      "a": "0.1 amp",
+      "b": "0.2 amp",
+      "c": "1.7 amp",
+      "d": "3.4 amp"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 72,
+    "question_text": "Kirchoff's two laws for electrical circuits are manifestations of the conservation laws of",
+    "options": {
+      "a": "electric charge only",
+      "b": "both energy and momentum",
+      "c": "energy only",
+      "d": "both charge and energy"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 73,
+    "question_text": "Five identical lamps, each of resistance 100 ohm are connected to 220 volt as shown in the given figure. The reading of an ideal ammeter A is",
+    "options": {
+      "a": "1A",
+      "b": "3/5 A",
+      "c": "1/5 A",
+      "d": "2/5 A"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 74,
+    "question_text": "What will be the equivalent resistance between two points A and D?",
+    "options": {
+      "a": "10 Ω",
+      "b": "20 Ω",
+      "c": "30 Ω",
+      "d": "27.5 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 75,
+    "question_text": "Resistance of 6Ω each are connected in the manner shown in the given figure. The potential difference VP − VQ is",
+    "options": {
+      "a": "3.6 V",
+      "b": "6.0 V",
+      "c": "3.0 V",
+      "d": "7.2 V"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Current Electricity",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 76,
+    "question_text": "In cosmic ray shower, 0.15 proton/cm² per second are entering the earth atmosphere. If radius of earth is 6400 km, the current received by earth in form of cosmic rays is nearly",
+    "options": {
+      "a": "0.12 A",
+      "b": "1.2 A",
+      "c": "12 A",
+      "d": "120 A"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 1,
+    "question_text": "If a car at rest accelerates uniformly to a speed of 144 km/h in 20 sec, it covers a distance of",
+    "options": {
+      "a": "20 m",
+      "b": "400 m",
+      "c": "1440 m",
+      "d": "2980 m"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 2,
+    "question_text": "The position x of a particle varies with time (t) as x = at² − bt³. The acceleration at time t of the particle will be equal to zero, where t is equal to",
+    "options": {
+      "a": "2a/3b",
+      "b": "a/b",
+      "c": "a/3b",
+      "d": "zero"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 3,
+    "question_text": "A particle is thrown vertically upward. If its velocity at half of the height is 10 m/s, then maximum height attained by it (g = 10 m/s²) is",
+    "options": {
+      "a": "8 m",
+      "b": "20 m",
+      "c": "10 m",
+      "d": "16 m"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 4,
+    "question_text": "A body moves on a circular path with uniform acceleration completes quarter of a circle. What are the values of displacement and distance travelled by the body?",
+    "options": {
+      "a": "Displacement = r; distance = πr",
+      "b": "Displacement = r√2; distance = πr/2",
+      "c": "Displacement = πr/2 and distance = 2r",
+      "d": "Displacement = zero; distance = πr/2"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 5,
+    "question_text": "A ball is dropped from a bridge 122.5 m high. After the ball been falling for 2 sec another is thrown straight downwards after it. The initial velocity of the ball is such that they strike the water together. This velocity is",
+    "options": {
+      "a": "9.8 ms⁻¹",
+      "b": "26.1 ms⁻¹",
+      "c": "49 ms⁻¹",
+      "d": "55 ms⁻¹"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 6,
+    "question_text": "When a person travels along a straight road for the first half time with a velocity v1 and the second half time with a velocity v2, then the mean velocity v̄ is given by",
+    "options": {
+      "a": "v̄ = (v1 + v2)/2",
+      "b": "2/v̄ = 1/v1 + 1/v2",
+      "c": "v̄ = √(v1 v2)",
+      "d": "v̄ = √(v2/v1)"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 7,
+    "question_text": "A body covers one-third of the distance with a velocity v1, the second one-third of the distance with a velocity v2 and the remaining distance with a velocity v3. The average velocity is",
+    "options": {
+      "a": "(v1 + v2 + v3)/3",
+      "b": "3v1v2v3/(v1v2 + v2v3 + v3v1)",
+      "c": "(v1v2 + v2v3 + v3v1)/3",
+      "d": "v1v2v3/3"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 8,
+    "question_text": "A body starts from rest and moves with uniform acceleration 'a'. The distance covered during nth second will be",
+    "options": {
+      "a": "a/2 (2n+1)",
+      "b": "a(n − 1/2)",
+      "c": "a(2n − 1)",
+      "d": "a(2n + 1)"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 9,
+    "question_text": "A train of 150 m length is going towards north direction at a speed of 10 ms⁻¹. A parrot flies at a speed of 5 ms⁻¹ towards south direction parallel to the railway track. The time taken by the parrot to cross the train is equal to",
+    "options": {
+      "a": "12 s",
+      "b": "8 s",
+      "c": "15 s",
+      "d": "10 s"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 10,
+    "question_text": "For a particle displacement-time relation is, t = √x + 3. Its displacement, when its velocity is zero, is",
+    "options": {
+      "a": "2 m",
+      "b": "4 m",
+      "c": "0",
+      "d": "none of these"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 11,
+    "question_text": "Two bodies of mass m1 and m2 are dropped from rest from heights h1. The ratio of their times to reach the ground are",
+    "options": {
+      "a": "h1 : h2",
+      "b": "√h1 : √h2",
+      "c": "m1√h1 : m2√h2",
+      "d": "m1h1 : m2h2"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 12,
+    "question_text": "Which of the following graphs represents motion with uniform speed?",
+    "options": {
+      "a": "graph a",
+      "b": "graph b",
+      "c": "graph c",
+      "d": "graph d"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 13,
+    "question_text": "A body is projected up with velocity v vertically. The distance travelled in nth second is",
+    "options": {
+      "a": "v − g/2 (2n − 1)",
+      "b": "v + g/2 (2n − 1)",
+      "c": "g + v/2 (2n − 2)",
+      "d": "v/2 (2n − 1) − g"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 14,
+    "question_text": "The displacement of the particle as a function of time is shown in the figure. It indicates that",
+    "options": {
+      "a": "the velocity of the particle is constant throughout",
+      "b": "the particle starts with a certain velocity but the motion is retarded till it stops",
+      "c": "the acceleration of particle is constant throughout",
+      "d": "the particle starts with cosntant velocity, gets accelerated and finally moves with constant velocity."
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 15,
+    "question_text": "A particle is moving with a constant speed along a straight line path. A force is not required to",
+    "options": {
+      "a": "increase the speed",
+      "b": "decrease the momentum",
+      "c": "change the direction",
+      "d": "keep it moving with uniform velocity."
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 16,
+    "question_text": "The displacement s of a particle is proportional to the second power of time t, i.e., s ∝ t². Then the initial velocity of the particle is",
+    "options": {
+      "a": "infinte",
+      "b": "zero",
+      "c": "positive finite value",
+      "d": "negative finite value"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 17,
+    "question_text": "A particle experiences constant acceleration for 20 secnds after starting from rest. If it travels a distance s1 in the first 10 seconds and distance s2 in the next 10 seconds, then",
+    "options": {
+      "a": "s2 = s1",
+      "b": "s2 = 2s1",
+      "c": "s2 = 3s1",
+      "d": "s2 = 4s1"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 18,
+    "question_text": "A car moving with a speed of 40 km/hour can be stopped by applying brakes in 2 meters. If the same car is moving with a speed of 80 km/hour, what is the minimum stopping distance?",
+    "options": {
+      "a": "8 m",
+      "b": "6 m",
+      "c": "4 m",
+      "d": "2 m"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 19,
+    "question_text": "A velocity time graph of a moving object is a straight line given by v = kt + c where k ≠ 0, the object is moving with",
+    "options": {
+      "a": "constant speed",
+      "b": "constant velocity",
+      "c": "variable velocity",
+      "d": "constant kinetic energy."
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 20,
+    "question_text": "The displacement time graphs of two particles are as shown. Their relative velocity is",
+    "options": {
+      "a": "zero",
+      "b": "contant but non-zero",
+      "c": "continuously decreasing",
+      "d": "continuously increasing"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 21,
+    "question_text": "An engine of a train moving with uniform acceleration passes an electric pole with velocity u and the last compartment with velocity v. The middle point of the train passes past the same pole with a velocity of",
+    "options": {
+      "a": "(u+v)/2",
+      "b": "(u²+v²)/2",
+      "c": "√((u²+v²)/2)",
+      "d": "√((v²−u²)/2)"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 22,
+    "question_text": "Two particles are moving with velocities v1 and v2 respectively parallel to each other, which one of the following statement is true for their relative velocity v12?",
+    "options": {
+      "a": "v12 cannot be greater than (v1+v2)",
+      "b": "v12 cannot be greater than (v1−v2)",
+      "c": "v12 ≥ v1 + v2",
+      "d": "v12 ≤ v1 − v2"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 23,
+    "question_text": "Two bodies are thrown up with initial velocities in the ratio of 2 : 5. The ratio of the maximum heights reached by them is",
+    "options": {
+      "a": "2 : 5",
+      "b": "5 : 2",
+      "c": "4 : 25",
+      "d": "1 : 2"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 24,
+    "question_text": "A particle moves along a straigth line such that its displacement at any time t is given by, s = t³ − 6t² + 3t + 4 metres. The velocity when the acceleration is zero, is",
+    "options": {
+      "a": "3 ms⁻¹",
+      "b": "−12 ms⁻¹",
+      "c": "42 ms⁻¹",
+      "d": "−9 ms⁻¹"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 25,
+    "question_text": "The acceleration of a particle, starting from rest, varies with time according to the relation, a = −sω² sin ωt. The displacement of this particle at a time t will be",
+    "options": {
+      "a": "s sin ωt",
+      "b": "sω cos ωt",
+      "c": "sω sin ωt",
+      "d": "(1/2)(sω² sin ωt)t²"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 26,
+    "question_text": "If an iron ball and a wooden ball of the same radius are released from a height h in vacuum, then time taken by both of them to reach ground will be",
+    "options": {
+      "a": "unequal",
+      "b": "exactly equal",
+      "c": "roughly equal",
+      "d": "zero"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 27,
+    "question_text": "A body is released from a certain height. Another is releasd from the same height one second later. The separation between the two bodies 2 second after the release of the second body is",
+    "options": {
+      "a": "24.5 m",
+      "b": "4.9 m",
+      "c": "9.8 m",
+      "d": "14.7 m"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 28,
+    "question_text": "The velocity time graph of a body is as follows. What is the displacement in 5 sec?",
+    "options": {
+      "a": "2 m",
+      "b": "3 m",
+      "c": "4 m",
+      "d": "5 m"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 29,
+    "question_text": "A body dropped from a height h with initial velocity zero, strikes the ground with velocity 3 m/s. Another body of same mass is dropped from the height h with an initial velocity of 4 m/s. Find the final velocity with which it strikes the ground.",
+    "options": {
+      "a": "3 m/s",
+      "b": "4 m/s",
+      "c": "5 m/s",
+      "d": "12 m/s"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 30,
+    "question_text": "The variation of velocity of a particle moving along straight line is shown in the figure. The distance traversed by the body in 4 seconds is",
+    "options": {
+      "a": "70 m",
+      "b": "60 m",
+      "c": "40 m",
+      "d": "55 m"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 31,
+    "question_text": "A point moves in a straight line so that its displacement x m at time t sec is given by, x² = 1 + t². Its acceleration in m/sec² at a time t sec is",
+    "options": {
+      "a": "1/x³",
+      "b": "−t/x³",
+      "c": "1/x − t²/x³",
+      "d": "1/x − 1/x²"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 32,
+    "question_text": "A car accelertes from rest at a constant rate α for some time after which it decelerates at a constant rate β to come to rest. If the total time elapsed is t, the maximum velocity acquired by the car is given by",
+    "options": {
+      "a": "((α²+β²)/αβ)t",
+      "b": "((α²−β²)/αβ)t",
+      "c": "((α+β)/αβ)t",
+      "d": "(αβ/(α+β))t"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 33,
+    "question_text": "The acceleration of a particle is increasing linearly with time t as bt. The particle starts from the origin with an initial velocity v0. The distance travelled by the particle in time t will be",
+    "options": {
+      "a": "v0t + (1/6)bt³",
+      "b": "v0t + (1/3)bt³",
+      "c": "v0t + (1/3)bt²",
+      "d": "v0t + (1/2)bt²"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 34,
+    "question_text": "A particle moving in S.H.M. has a displacement, x = 5 sin(4t − π/6). What is the velocity when displacement is 3 units?",
+    "options": {
+      "a": "0",
+      "b": "10",
+      "c": "20",
+      "d": "16"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 35,
+    "question_text": "A point moves with uniform acceleration and v1, v2 and v3 denote the average velocities in the three successive intervals of time t1, t2 and t3. Which of the following relations is correct?",
+    "options": {
+      "a": "(v1−v2)(v2−v3) = (t1−t2)(t2+t3)",
+      "b": "(v1−v2)(v2−v3) = (t1+t2)(t2+t3)",
+      "c": "(v1−v2)(v2−v3) = (t1−t2)(t1−t3)",
+      "d": "(v1−v2)(v2−v3) = (t1−t2)(t2−t3)"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 36,
+    "question_text": "The water drop falls at regular intervals from a tap 5 m above the ground. The third drop is leaving the tap at instant the first drop touches the ground. How far above the ground is the second drop at that instant",
+    "options": {
+      "a": "1.25 m",
+      "b": "2.50 m",
+      "c": "3.75 m",
+      "d": "4.00 m"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 37,
+    "question_text": "ABC is the v − t graph of a body. It shows that",
+    "options": {
+      "a": "at B the force is zero.",
+      "b": "at B the force acts towards directions of motion.",
+      "c": "at B the force acts opposite to direction of motion.",
+      "d": "infinite force is acting at B."
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 38,
+    "question_text": "A car moves a distance of 200 m covering first half at a speed of 40 km h⁻¹ and second half with speed v. The average speed is 48 km h⁻¹. What is the value of v?",
+    "options": {
+      "a": "56 km h⁻¹",
+      "b": "60 km h⁻¹",
+      "c": "50 km h⁻¹",
+      "d": "48 km h⁻¹"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 39,
+    "question_text": "A ball is thrown downwards with velocity v from the top of a tower and it reaches the ground with speed 3v. What is the height of the tower?",
+    "options": {
+      "a": "v²/g",
+      "b": "2v²/g",
+      "c": "4v²/g",
+      "d": "8v²/g"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 40,
+    "question_text": "A train 100 m long travelling at 40 m/s overtakes another train 200 m long travelling at 30 ms⁻¹. The time taken by the first train to pass the second train is",
+    "options": {
+      "a": "30 s",
+      "b": "40 s",
+      "c": "50 s",
+      "d": "60 s"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 41,
+    "question_text": "A train accelerates from rest at a constant rate α for distance x1 and time t1. After that it retards to rest at constant rate β for distance x2 and time t2. Which of the following relations is true?",
+    "options": {
+      "a": "x1/x2 = α/β = t1/t2",
+      "b": "x1/x2 = β/α = t1/t2",
+      "c": "x1/x2 = α/β = t2/t1",
+      "d": "x1/x2 = β/α = t2/t1"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 42,
+    "question_text": "A train starting from rest acquires a speed v with uniform acceleration α, then it comes to stop with uniform retardation β. What is the average velocity of the train?",
+    "options": {
+      "a": "αβ/(α+β)",
+      "b": "(α+β)/αβ",
+      "c": "v/2",
+      "d": "v"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 43,
+    "question_text": "A ball is dropped into a well in which the water level is at a depth h below the top. If the speed of sound be c, then the time after which the splash is heard will be given by",
+    "options": {
+      "a": "h[√(2/gh) + 1/c]",
+      "b": "h[√(2/gh) − 1/c]",
+      "c": "h[2/g + 1/c]",
+      "d": "h[2/g − 1/c]"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 44,
+    "question_text": "A car starts from rest and moves with constant acceleration. The ratio of the distance covered in the nth second to that covered in n seconds is",
+    "options": {
+      "a": "2/n² − 1/n",
+      "b": "2/n² + 1/n",
+      "c": "2/n − 1/n²",
+      "d": "2/n + 1/n²"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Motion in a Straight Line",
+    "source": "S.S.P.U. College Subrahmanya D.K. - C.E.T. Programme",
+    "question_number": 45,
+    "question_text": "A boat which has a speed of 5 km h⁻¹ in still water crosses a river 1 km wide along the shortest possible path in 15 minutes. The velocity of river water in km h⁻¹ is",
+    "options": {
+      "a": "3",
+      "b": "1",
+      "c": "4",
+      "d": "√14"
+    },
+    "marked_answer": "a"
+  }
+]

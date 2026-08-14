@@ -1,0 +1,3797 @@
+[
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2005",
+    "question_number": 111,
+    "question_text": "Tertiary alkyl halides are practically inert to substitution by SN2 mechanism because of",
+    "options": {
+      "1": "steric hindrance",
+      "2": "inductive effect",
+      "3": "instability",
+      "4": "insolubility"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2005",
+    "question_number": 112,
+    "question_text": "Elimination of bromine from 2-bromobutane results in the formation of",
+    "options": {
+      "1": "Predominantly-2-butyne",
+      "2": "predominantly 1-butene",
+      "3": "predominantly 2-butene",
+      "4": "equimolar mixture of 1 and 2-butene"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2003",
+    "question_number": 113,
+    "question_text": "Bottles containing C6H5I and C6H5CH2I lost their original labels. They were labelled A and B for testing. A and B were separately taken in a test tube and boiled with NaOH solution. The end solution in each tube was made acidic with dilute HNO3 and then some AgNO3 solution was added. Substance B gave a yellow precipitate. Which one of the following statements is true for this experiment?",
+    "options": {
+      "1": "A was C6H5I",
+      "2": "A was C6H5CH2I",
+      "3": "B was C6H5I",
+      "4": "Addition of HNO3 was unnecessary"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2005",
+    "question_number": 114,
+    "question_text": "Of the five isometric hexanes, the isomer which can give two monochlorinated compounds is",
+    "options": {
+      "1": "2-methylpentane",
+      "2": "2,2-dimethylbutane",
+      "3": "2,3-dimethylbutane",
+      "4": "n-hexane"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2006",
+    "question_number": 115,
+    "question_text": "Fluorobenzene (C6H5F) can be synthesised in the laboratory",
+    "options": {
+      "1": "by heating phenol wit HF and KF",
+      "2": "from aniline by diazotization followed by heating the diazonium salt with HBF4",
+      "3": "by direct fluorination of benzene with F2 gas",
+      "4": "by reacting bromobenzene with NaF solution"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2008",
+    "question_number": 116,
+    "question_text": "The organic chloro compound, which shows complete stereochemical inversion during a SN2 reaction is:",
+    "options": {
+      "1": "CH3Cl",
+      "2": "(C2H5)2CHCl",
+      "3": "(CH3)3CCl",
+      "4": "(CH3)2CHCl"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2006",
+    "question_number": 117,
+    "question_text": "CH3Br + Nu⁻ → CH3-Nu + Br⁻. The decreasing order of the rate of the above reaction with nucleophile (Nu⁻) A to D is: [Nu⁻ = (A) PhO⁻, (B) AcO⁻, (C) HO⁻, (D) CH3O⁻]",
+    "options": {
+      "1": "D > C > A > B",
+      "2": "D > C > B > A",
+      "3": "A > B > C > D",
+      "4": "B > D > C > A"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "AIEEE 2006",
+    "question_number": 118,
+    "question_text": "HBr reacts with CH2=CH-OCH3 under anhydrous conditions at room temperature to give:",
+    "options": {
+      "1": "CH3CHO and CH3Br",
+      "2": "BrCH2CHO and CH3OH",
+      "3": "BrCH2CH2OCH3",
+      "4": "H3C-CHBr-OCH3"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 1,
+    "question_text": "The best method for the conversion of an alcohol into an alkyl chloride is by treating the alcohol with",
+    "options": {
+      "1": "PCl3",
+      "2": "PCl5",
+      "3": "SOCl2 in presence of pyridine",
+      "4": "dry HCl in the presence of anhydrous ZnCl2"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 2,
+    "question_text": "Aniline is treated with Br2/OH⁻ to give X, then X is treated with NaNO2/HCl to give X, then X is treated with HBF4 and heat to give Z. The final product Z is",
+    "options": {
+      "1": "1,3,5-tribromo-2-fluorobenzene",
+      "2": "2-nitrofluorobenzene",
+      "3": "3-bromo-2-fluoro-... (Br,F substituted benzene)",
+      "4": "2-chloro... (Cl,Br substituted benzene)"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 3,
+    "question_text": "Of the isomeric hexanes, the isomers that give the minimum and maximum number of monochloro derivatives are respectively",
+    "options": {
+      "1": "3-methylpentane and 2,3-dimethylbutane",
+      "2": "2,3-dimethylbutane and n-hexane",
+      "3": "2,2-dimethylbutane and 2-methylpentane",
+      "4": "2,3-dimethylbutane and 2-methylpentane"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 4,
+    "question_text": "The alkyl halides that can be made by free radical halogenation of alkanes are",
+    "options": {
+      "1": "RCl and RBr but not RF or RI",
+      "2": "RF, RCl and RBr but not RI",
+      "3": "RF, RCl, RBr, RI",
+      "4": "RF, RCl and RI but not RBr"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 5,
+    "question_text": "The molecular formula of diphenyl methane (Ph-CH2-Ph) is C13H12. How many structural isomers are possible when one of the hydrogen is replaced by a chlorine atom?",
+    "options": {
+      "1": "6",
+      "2": "4",
+      "3": "8",
+      "4": "7"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 6,
+    "question_text": "The number of possible enantiomeric pairs that can be produced during mono-chlorination of 2-methyl butane is",
+    "options": {
+      "1": "3",
+      "2": "4",
+      "3": "1",
+      "4": "2"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 7,
+    "question_text": "Following is the substitution reaction in which -CN replaces -Cl. R-Cl + KCN(alcoholic) → R-CN + KCl. To obtain propanenitrile, R-Cl should be",
+    "options": {
+      "1": "chloroethane",
+      "2": "1-chloropropane",
+      "3": "chloromethane",
+      "4": "2-chloropropane"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 8,
+    "question_text": "Which one of the following is not true for the hydrolysis of t-butyl bromide with aqueous NaOH?",
+    "options": {
+      "1": "Reaction occurs through the SN1 mechanism.",
+      "2": "The intermediate formed is a carbocation.",
+      "3": "Rate of the reaction doubles when the concentration of alkali is doubled.",
+      "4": "Rate of the reaction doubles when the concentration of t-butyl bromide is doubled."
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 9,
+    "question_text": "9.65 C of electric charge is passed through fused anhydrous magnesium chloride. The magnesium metal thus obtained is completely converted into a Grignard reagent. The number of moles of Grignard reagent obtained is",
+    "options": {
+      "1": "5 x 10⁻⁴",
+      "2": "1 x 10⁻⁵",
+      "3": "5 x 10⁻⁵",
+      "4": "1 x 10⁻⁵"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 10,
+    "question_text": "Which one of the following forms propane nitrile as the major product?",
+    "options": {
+      "1": "Ethyl bromide + alcoholic KCN",
+      "2": "Propyl bromide + alcoholic KCN",
+      "3": "Propyl bromide + alcoholic AgCN",
+      "4": "Ethyl bromide + alcoholic AgCN"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 11,
+    "question_text": "The product of reaction between alcoholic silver nitrite with ethyl bromide is",
+    "options": {
+      "1": "ethene",
+      "2": "ethane",
+      "3": "ethyl nitrile",
+      "4": "nitro ethane"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 12,
+    "question_text": "An alkyl halide (RX) reacts with Na to form 4,5-diethyloctane. Compound RX is",
+    "options": {
+      "1": "CH3(CH2)3Br",
+      "2": "CH3(CH2)2CH(Br)CH2CH3",
+      "3": "CH3(CH2)3CH(Br)CH3",
+      "4": "CH3(CH2)5Br"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 13,
+    "question_text": "t-butyl chloride preferably undergo hydrolysis by",
+    "options": {
+      "1": "SN1 mechanism",
+      "2": "SN2 mechanism",
+      "3": "Any (1) and (2)",
+      "4": "None of the above"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 14,
+    "question_text": "1,2-dibromoethane reacts with alcoholic KOH to yield a product X. The hybridisation state of the carbons present in X respectively are",
+    "options": {
+      "1": "sp, sp",
+      "2": "sp3, sp3",
+      "3": "sp3, sp2",
+      "4": "sp2, sp2"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 15,
+    "question_text": "X + KCN → CH3CN, CH3CN + 2H2/Ni → CH3CH2NH2, what is X?",
+    "options": {
+      "1": "CH3CH2Cl",
+      "2": "CH3Cl",
+      "3": "CH3CH2CH2Cl",
+      "4": "(CH3)2CHCl"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 16,
+    "question_text": "An alkyl halide reacts with alcoholic ammonia in a sealed tube, the product formed will be",
+    "options": {
+      "1": "a primary amine",
+      "2": "a secondary amine",
+      "3": "a tertiary amine",
+      "4": "a mixture of all the three amines"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 17,
+    "question_text": "Maximum number of molecules of CH3I that can react with a molecule of CH3NH2 are",
+    "options": {
+      "1": "3",
+      "2": "4",
+      "3": "2",
+      "4": "1"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 18,
+    "question_text": "Match the following. Reactants: A.C2H5Cl, moist Ag2O; B.C2H5Cl, aqueous ethanolic AgCN; C.C2H5Cl, aqueous ethanolic AgNO2; D.C2H5Cl, ethanolic KOH. Products: (i)CH3CH2NO2; (ii)C2H4; (iii)CH3CH2OH; (iv)CH3CH2NC; (v)C2H6. The correct match is",
+    "options": {
+      "1": "A-v, B-iii, C-iv, D-i",
+      "2": "A-i, B-iii, C-iv, D-ii",
+      "3": "A-iii, B-iv, C-i, D-ii",
+      "4": "A-iv, B-i, C-ii, D-v"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 19,
+    "question_text": "1-chlorobutane on reaction with alcoholic potash gives",
+    "options": {
+      "1": "but-1-ene",
+      "2": "butan-1-ol",
+      "3": "but-2-ene",
+      "4": "butan-2-ol"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 20,
+    "question_text": "RX + A → RNC A is",
+    "options": {
+      "1": "AgCN",
+      "2": "KCN",
+      "3": "NaCN",
+      "4": "HCN"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 21,
+    "question_text": "Which of the following statements regarding the SN1 reaction shown by alkyl halide is not correct?",
+    "options": {
+      "1": "The added nucleophile plays no kinetic role in SN1 reaction.",
+      "2": "The SN1 reaction involves the inversion of configuration of the optically active substrate.",
+      "3": "The SN1 reaction on the chiral starting material ends up with racemization of the product.",
+      "4": "The more stable the carbocation intermediate the faster the SN1 reaction."
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 22,
+    "question_text": "On treating a mixture of two alkyl halides with sodium metal in dry ether, 2-methyl propane was obtained. The alkyl halides are",
+    "options": {
+      "1": "2-chloropropane and chloromethane",
+      "2": "2-chloropropane and chloroethane",
+      "3": "chloromethane and chloroethane",
+      "4": "chloromethane and 1-chloropropane"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 23,
+    "question_text": "Which of the following haloalkanes is most reactive?",
+    "options": {
+      "1": "1-chloropropane",
+      "2": "1-bromopropane",
+      "3": "2-chloropropane",
+      "4": "2-bromopropane"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 24,
+    "question_text": "Ethyl chloride on heating with AgCN forms a compound X. The functional isomer of X is",
+    "options": {
+      "1": "C2H5NC",
+      "2": "C2H5NH2",
+      "3": "C2H5CN",
+      "4": "None of these"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 25,
+    "question_text": "When 32.25 g of ethyl chloride is subjected to dehydrohalogenation reaction the yield of the alkene formed is 50%. The mass of the product formed is (atomic mass of chlorine is 35.5)",
+    "options": {
+      "1": "14 g",
+      "2": "28 g",
+      "3": "64.5 g",
+      "4": "7 g",
+      "5": "7 g"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 26,
+    "question_text": "Compound 'A' reacts with alcoholic KOH to yield compound 'B' which on ozonolysis followed by reaction with Zn/H2O gives methanal and propanal. Compound 'A' is",
+    "options": {
+      "1": "1-propanol",
+      "2": "1-butanol",
+      "3": "1-chlorobutane",
+      "4": "1-chloropentane"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 27,
+    "question_text": "A bromoalkane 'X' reacts with magnesium in dry ether to form compound 'Y'. The reaction of 'Y' with methanal followed by hydrolysis yield an alcohol having molecular formula C4H10O. The compound 'X' is",
+    "options": {
+      "1": "bromoethane",
+      "2": "bromomethane",
+      "3": "1-bromopropane",
+      "4": "2-bromopropane"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 28,
+    "question_text": "The metal used for the de-bromination reaction of 1,2-dibromoethane is",
+    "options": {
+      "1": "Na",
+      "2": "Zn",
+      "3": "Mg",
+      "4": "Li"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 29,
+    "question_text": "Identify A and B in the following reaction: C2H5Cl -A-> C2H5OH <-B- C2H5Cl",
+    "options": {
+      "1": "A = aqueous KOH; B = AgOH",
+      "2": "A = alcoholic KOH/Δ; B = aqueous NaOH",
+      "3": "A = aqueous NaOH; B = AgNO2",
+      "4": "A = AgNO2; B = KNO2"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 30,
+    "question_text": "Wurtz's reaction involves the reaction of alkyl halide with",
+    "options": {
+      "1": "HI",
+      "2": "Zn/Cu couple",
+      "3": "Na in ether",
+      "4": "Zn in an inert solvent"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 31,
+    "question_text": "In the reaction sequence, C2H5Cl + KCN -C2H5OH-> X -H3O+/Δ-> Y. What is the molecular formula of Y?",
+    "options": {
+      "1": "C3H6O2",
+      "2": "C3H6O2",
+      "3": "C2H4O2",
+      "4": "C2H6O"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 32,
+    "question_text": "In the preparation of chlorobenzene from aniline, the most suitable reagent is",
+    "options": {
+      "1": "chlorine in the presence of ultraviolet light",
+      "2": "chlorine in the presence of AlCl3",
+      "3": "nitrous acid followed by heating with Cu2Cl2",
+      "4": "HCl and Cu2Cl2"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 33,
+    "question_text": "Among the following which one has weakest carbon-halogen bond?",
+    "options": {
+      "1": "Benzyl bromide",
+      "2": "Bromobenzene",
+      "3": "Vinyl bromide",
+      "4": "Benzyl chloride"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 34,
+    "question_text": "Decomposition of benzene diazonium chloride by using Cu2Cl2/HCl to form chlorobenzene is",
+    "options": {
+      "1": "Raschig's reaction",
+      "2": "Sandmeyer's reaction",
+      "3": "Kolbe's reaction",
+      "4": "Cannizaro's reaction"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 35,
+    "question_text": "X -AgNO3/HNO3-> Yellow or white ppt. Which of the following cannot be X?",
+    "options": {
+      "1": "bromobenzene derivative (Br)",
+      "2": "(CH3)2CHCl",
+      "3": "benzyl bromide derivative (CH2Br)",
+      "4": "benzene diazonium chloride derivative (N2+Cl-)"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 36,
+    "question_text": "Which of the following statements about benzyl chloride is incorrect?",
+    "options": {
+      "1": "It is less reactive then alkyl halides",
+      "2": "It can be oxidised to benzaldehyde by boiling with copper nitrate solution",
+      "3": "It is a lachrymatory liquid and answers Beilstein's test",
+      "4": "It gives a white precipitate and answers alcoholic silver nitrate"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 37,
+    "question_text": "Chlorination of toluene in presence of light and heat followed by treatment with aqueous NaOH gives",
+    "options": {
+      "1": "o-cresol",
+      "2": "p-cresol",
+      "3": "mixture of o-cresol and p-cresol",
+      "4": "benzoic acid"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 38,
+    "question_text": "Compound with CCl3 group reacts with 1 equivalent of Br2/Fe. Compound A is",
+    "options": {
+      "1": "CCl3 substituted benzene option 1",
+      "2": "CCl3 substituted benzene option 2",
+      "3": "CCl3 substituted benzene option 3",
+      "4": "CCl3 substituted benzene option 4"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 39,
+    "question_text": "Reaction of alkyl halides with aromatic compound in presence of anhydrous AlCl3 in known as",
+    "options": {
+      "1": "Friedel-Craft's reaction",
+      "2": "Hofmann degradation",
+      "3": "Kolbe's synthesis",
+      "4": "Beckmann rearrangement"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 40,
+    "question_text": "In order to covert aniline into chlorobenzene the reagent used is",
+    "options": {
+      "1": "NaNO2/HCl, CuCl",
+      "2": "Cl2/CCl4",
+      "3": "Cl2/AlCl3",
+      "4": "CuCl2"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 41,
+    "question_text": "Which one of the following compound reacts with chlorobenzene to produce DDT?",
+    "options": {
+      "1": "Acetaldehyde",
+      "2": "Nirobenzene",
+      "3": "m-chloroacetaldehyde",
+      "4": "Trichloroacetaldehyde"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 42,
+    "question_text": "Which of the following compounds is not formed in iodoform reaction of acetone?",
+    "options": {
+      "1": "CH3COCH2I",
+      "2": "ICH2COCH2I",
+      "3": "CH3COCHI2",
+      "4": "CH3COCI3"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 43,
+    "question_text": "Which of the compounds when brominated turns to meso 2,3-dibromobutane?",
+    "options": {
+      "1": "Cis-2-butene",
+      "2": "Iso-butane",
+      "3": "Butane",
+      "4": "Trans-2-butene"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 44,
+    "question_text": "Which of the following does not answer iodoform test?",
+    "options": {
+      "1": "n-butyl alcohol",
+      "2": "Acetophenone",
+      "3": "Acetaldehyde",
+      "4": "Ethylmethyl ketone"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 45,
+    "question_text": "When tetrahydrofuran is treated with excess HI, the product formed is",
+    "options": {
+      "1": "1,4-diiodobutane",
+      "2": "1,4-butanediol",
+      "3": "2-iodotetrahydrofuran",
+      "4": "4-iodo-1-butanol"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 46,
+    "question_text": "Ethyl ortho formate is formed by heating ............ with sodium ethoxide.",
+    "options": {
+      "1": "CHCl3",
+      "2": "C2H5OH",
+      "3": "HCOOH",
+      "4": "CH3CHO"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 47,
+    "question_text": "Iodoform is obtained when ethanol is heated with",
+    "options": {
+      "1": "KI and aq. KOH",
+      "2": "I2 and aq. KOH",
+      "3": "I2/aq KI",
+      "4": "HI and HIO3"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 48,
+    "question_text": "What happens if CCl4 is treated with AgNO3?",
+    "options": {
+      "1": "A white ppt. of AgCl will form.",
+      "2": "NO2 will be evolved.",
+      "3": "CCl4 will be dissolved in AgNO3.",
+      "4": "Nothing will happen."
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 49,
+    "question_text": "Chloroform gives a trichloro derivative of an alcohol on reaction with",
+    "options": {
+      "1": "conc. nitric acid",
+      "2": "aq. Alkali",
+      "3": "acetone and alkali",
+      "4": "a primary amine and an alkali"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 50,
+    "question_text": "Which of the following ketones will not respond to iodoform test?",
+    "options": {
+      "1": "Methyl isopropyl ketone",
+      "2": "Ethyl isopropyl ketone",
+      "3": "Dimethyl ketone",
+      "4": "2-hexanone"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 51,
+    "question_text": "Which of the following does not answer iodoform test?",
+    "options": {
+      "1": "n-Butyl alcohol",
+      "2": "Sec-butyl alcohol",
+      "3": "Acetophenone",
+      "4": "Acetaldehyde"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 52,
+    "question_text": "CaOCl2 + H2O → Ca(OH)2 + X; X + CH3CHO → Y; Y + Ca(OH)2 → CHCl3. What is 'Y'?",
+    "options": {
+      "1": "CH3CH(OH)2",
+      "2": "CH2Cl2",
+      "3": "CCl3CHO",
+      "4": "CCl3COOH"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 53,
+    "question_text": "Which of the following will not form a yellow precipitate on heating with an alkaline solution of iodine?",
+    "options": {
+      "1": "CH3CH(OH)CH3",
+      "2": "CH3CH2CH(OH)CH3",
+      "3": "CH3OH",
+      "4": "CH3CH2OH"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 54,
+    "question_text": "Iodoform test is not given by",
+    "options": {
+      "1": "HCHO",
+      "2": "CH3CHO",
+      "3": "CH3COCH3",
+      "4": "C2H5OH"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 55,
+    "question_text": "What is the product A in the following? Cl-cyclopropane-Cl + Mg → A",
+    "options": {
+      "1": "Grignard reagent (cyclic)",
+      "2": "Cl-Mg-cyclopropane-Mg-Cl",
+      "3": "Both (1) and (2)",
+      "4": "None of the above"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 56,
+    "question_text": "Which of the following is added to chloroform to slow down its aerial oxidation in presence of light?",
+    "options": {
+      "1": "Carbonyl chloride",
+      "2": "Ethyl alcohol",
+      "3": "Sodium hydroxide",
+      "4": "Nitric acid"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 57,
+    "question_text": "Which of the following gives iodoform test?",
+    "options": {
+      "1": "CH3-CH2OH",
+      "2": "C2H5CHO",
+      "3": "(CH2OH)2",
+      "4": "None of the above"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 58,
+    "question_text": "The reaction in which phenol differs from alcohol is",
+    "options": {
+      "1": "it undergoes esterification with carboxylic acid",
+      "2": "it reacts with ammonia",
+      "3": "it forms yellow crystals of iodoform",
+      "4": "it liberates H2 with Na metal"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 59,
+    "question_text": "In the reaction sequence, X -Cl2/FeCl3-> Y (CCl3) -H2SO4-> compound with CCl3 and Cl groups, compound 'X' is",
+    "options": {
+      "1": "chlorobenzene",
+      "2": "benzene",
+      "3": "toluene",
+      "4": "biphenyl methane"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 60,
+    "question_text": "Which of the following compounds gives trichloromethane on distilling with bleaching powder?",
+    "options": {
+      "1": "Methanal",
+      "2": "Phenol",
+      "3": "Ethanol",
+      "4": "Methanol"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 61,
+    "question_text": "The chemical formula 'tear gas' is",
+    "options": {
+      "1": "COCl2",
+      "2": "CO2",
+      "3": "Cl2",
+      "4": "CCl2NO2"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 62,
+    "question_text": "Which of the following is not inflammable?",
+    "options": {
+      "1": "CHCl3",
+      "2": "Benzene",
+      "3": "Toluene",
+      "4": "Carbon tetrachloride"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 63,
+    "question_text": "Which one of the isomers of cyclohexane hexachloride is strong pesticide?",
+    "options": {
+      "1": "α",
+      "2": "β",
+      "3": "γ",
+      "4": "δ"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 64,
+    "question_text": "When chloroform is exposed to air and sunlight it gives the poisonous gas:",
+    "options": {
+      "1": "CH2Cl2",
+      "2": "COCl2",
+      "3": "CH3Cl",
+      "4": "CH2O"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 65,
+    "question_text": "C2H5Br -KCN-> (A) -Hydrolysis/HCl-> (B). The compound (B) in above reaction is:",
+    "options": {
+      "1": "ethylene chloride",
+      "2": "acetic acid",
+      "3": "propionic acid",
+      "4": "propan-2-ol"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 66,
+    "question_text": "Trichloroacetaldehyde, CCl3CHO reacts with chlorobenzene in presence of Sulphuric acid produces:",
+    "options": {
+      "1": "a compound with two chlorobenzene rings and CCl3, CH groups",
+      "2": "a compound with HO-C(diaryl)-Cl and CCl3",
+      "3": "a compound with CCl3, CH linking two chlorobenzenes",
+      "4": "a compound with CH2Cl and diaryl-C-Cl"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 67,
+    "question_text": "The correct order of increasing reactivity of C-X bond towards nucleophile in the following compound is: I (X on benzene), II (X-NO2 benzene), III ((CH3)3C-X), IV ((CH3)2HC-X)",
+    "options": {
+      "1": "I < II < IV < III",
+      "2": "II < III < I < IV",
+      "3": "IV < III < I < II",
+      "4": "III < II < I < IV"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 68,
+    "question_text": "The major product obtained of the monobromination (with Br2/FeBr3) of the following compound (A) [OCH3, CH3 substituted benzene] is:",
+    "options": {
+      "1": "OCH3, Br, CH3 substituted benzene option 1",
+      "2": "OCH3, Br, CH3 substituted benzene option 2",
+      "3": "OCH3, Br, CH3 substituted benzene option 3",
+      "4": "OCH3, Br, CH3 substituted benzene option 4"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 69,
+    "question_text": "The major product in the following reaction is: CH3CH(Cl)CH2CH2OH -aq.KOH->",
+    "options": {
+      "1": "CH3CH=CHCH2OH",
+      "2": "CH2=CHCH2CH2OH",
+      "3": "cyclic ether (oxetane type)",
+      "4": "CH3CH(OH)CH2CH2OH"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 70,
+    "question_text": "3-Phenyl propene on reaction with HBr gives (as a major product):",
+    "options": {
+      "1": "C6H5CH2CH(Br)CH3",
+      "2": "C6H5CH(Br)CH2CH3",
+      "3": "C6H5CH2CH2CH2Br",
+      "4": "C6H5CH(Br)CH=CH2"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 71,
+    "question_text": "The major product obtained on treatment of CH3CH2CH(F)CH3 with CH3O⁻/CH3OH is:",
+    "options": {
+      "1": "CH3CH2CH(OCH3)CH3",
+      "2": "CH3CH=CHCH3",
+      "3": "CH3CH2CH=CH2",
+      "4": "CH3CH2CH2CH2OCH3"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 72,
+    "question_text": "The major product formed in the following reaction is: (CH3)3C-CH2Br -CH3O⁻/CH3OH->",
+    "options": {
+      "1": "CH3-C(CH3)2-CH2OCH3 with H",
+      "2": "CH3-CH(CH3)-CH2CH3 with OCH3",
+      "3": "CH3-C(CH3)=CH2",
+      "4": "CH3-C(CH3)2-CH3 with OCH3"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 73,
+    "question_text": "The reactivity order of halides for dehydrohalogenation is:",
+    "options": {
+      "1": "R-F > R-Cl > R-Br > R-I",
+      "2": "R-I > R-Br > R-Cl > R-F",
+      "3": "R-I > R-Cl > R-Br > R-F",
+      "4": "R-F > R-I > R-Cl > R-Br"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 74,
+    "question_text": "Which of the following statements are correct with respect to the effect of trifluoromethyl group (-CF3) on an electrophilic aromatic substitution? (i) The CF3 group will deactivate the ring (ii) The CF3 group will activate the ring (iii) The CF3 group will be an ortho, para director (iv) The CF3 group will be a meta director",
+    "options": {
+      "1": "(i) and (ii)",
+      "2": "(i) and (iii)",
+      "3": "(i) and (iv)",
+      "4": "(ii) and (iii)"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 75,
+    "question_text": "The IUPAC name of crotyl bromide CH3-CH=CH-CH2Br (E configuration) is",
+    "options": {
+      "1": "E-1-bromobut-2-ene",
+      "2": "E-4-bromobut-2-ene",
+      "3": "Z-1-bromobut-2-ene",
+      "4": "Z-4-bromobut-2-ene"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 76,
+    "question_text": "In order to prepare 1-chloropropane which of the following reactants can be employed?",
+    "options": {
+      "1": "Propene and HCl in presence of peroxide",
+      "2": "Propene and Cl2 followed by treatment with aq. KOH",
+      "3": "Propanol-1 and SOCl2/pyridine",
+      "4": "Any of the above can used"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 77,
+    "question_text": "Allylic bromination is carried out with",
+    "options": {
+      "1": "HBr/H2O2",
+      "2": "HOBr",
+      "3": "Br2/CS2",
+      "4": "NBS"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 78,
+    "question_text": "The reaction of toluene with Cl2 in presence of FeCl3 gives X and reaction in presence of light gives Y. Thus, X and Y are",
+    "options": {
+      "1": "X = benzyl chloride, Y = m-chlorotoluene",
+      "2": "X = benzal chloride, Y = o-chlorotoluene",
+      "3": "X = m-chlorotoluene, Y = p-chlorotoluene",
+      "4": "X = o- and p-chlorotoluene, Y = trichloromethyl-benzene"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 79,
+    "question_text": "Arrange the following compounds in increasing order of their boiling points. I. CH3CH2CH2Br II. CH3CH2CH2CH2Br III. (CH3)2CHCH2Br IV. (CH3)3CBr",
+    "options": {
+      "1": "II < I < III < IV",
+      "2": "III < I < IV < II",
+      "3": "IV < III < II < I",
+      "4": "I < IV < III < II"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 80,
+    "question_text": "What is the order of reactivity of the following compounds towards nucleophilic substitution? I (Cl-benzene), II (Cl-toluene), III (Cl-nitrobenzene), IV (Cl-methoxybenzene)",
+    "options": {
+      "1": "IV < III < II < I",
+      "2": "IV < I < II < III",
+      "3": "III < IV < II < I",
+      "4": "II < IV < III < I"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 81,
+    "question_text": "Butanenitrile is formed by reaction of KCN with",
+    "options": {
+      "1": "propyl alcohol",
+      "2": "butyl chloride",
+      "3": "butyl alcohol",
+      "4": "propyl chloride"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 82,
+    "question_text": "The structure of the major product formed in the following reaction: chlorobenzene with CH2I substituent -NaCN/DMF->",
+    "options": {
+      "1": "CN substituted at both positions (CH2CN, CN on ring)",
+      "2": "NC-ring with CH2Cl",
+      "3": "ring with Cl and CN",
+      "4": "ring with Cl and CH2CN"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 83,
+    "question_text": "Which of the following is most nucleophilic but least basic species?",
+    "options": {
+      "1": "F⁻",
+      "2": "Cl⁻",
+      "3": "Br⁻",
+      "4": "I⁻"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 84,
+    "question_text": "The order of decreasing nucleophilicity is",
+    "options": {
+      "1": "H2O > OH⁻ > CH3COO⁻ > CH3O⁻",
+      "2": "CH3COO⁻ > CH3O⁻ > HO⁻ > H2O",
+      "3": "HO⁻ > CH3O⁻ > CH3COO⁻ > H2O",
+      "4": "CH3O⁻ > OH⁻ > CH3COO⁻ > H2O"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 85,
+    "question_text": "The decreasing order of nucleophilicity among the nucleophiles: (a) CH3-C(=O)-O⁻, (b) CH3O⁻, (c) CN⁻, (d) H3C-C6H4-SO2-O⁻",
+    "options": {
+      "1": "(a),(b),(c),(d)",
+      "2": "(d),(c),(b),(a)",
+      "3": "(b),(c),(a),(d)",
+      "4": "(c),(b),(a),(d)"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 86,
+    "question_text": "CH3-Br + Nu⁻ → CH3-Nu + Br⁻. The decreasing order of the rate of the above reaction with nucleophiles (Nu⁻) A to D is [Nu⁻ = (A) PhO⁻, (B) AcO⁻, (C) HO⁻, (D) CH3O⁻]",
+    "options": {
+      "1": "D < C > A > B",
+      "2": "D > C > B > A",
+      "3": "A > B > C > D",
+      "4": "B > D > C > A"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 87,
+    "question_text": "Consider the following nucleophiles: CF3-SO3⁻ (I), C6H5SO3⁻ (II), C6H5O⁻ (III), CH3CO2⁻ (IV). When attached to sp3-hybridized carbon their leaving group ability in nucleophilic substitution reactions decreases in the order:",
+    "options": {
+      "1": "II > I > IV > III",
+      "2": "I > II > IV > III",
+      "3": "IV > I > II > III",
+      "4": "III > I > II > IV"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 88,
+    "question_text": "Consider the following bromides: A (Me-Br chain), B (Me-Br allylic branched), C (Me-Br branched). The correct order of SN1 reactivity is",
+    "options": {
+      "1": "C > B > A",
+      "2": "A > B > C",
+      "3": "B > C > A",
+      "4": "B > A > C"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 89,
+    "question_text": "An alkyl bromide produces a single alkene when it reacts with sodium ethoxide and ethanol. This alkene on hydrogenation produces 2-methylbutane. What is the identity of the alkyl halide?",
+    "options": {
+      "1": "1-Bromo-2,2-dimethylpropane",
+      "2": "1-Bromobutane",
+      "3": "1-Bromo-2-methylbutane",
+      "4": "2-Bromo-2-methylbutane"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 90,
+    "question_text": "Which of the following compounds undergo nucleophilic substitution reaction most readily?",
+    "options": {
+      "1": "Cl-nitrobenzene",
+      "2": "Cl-methylbenzene",
+      "3": "Cl-methoxybenzene",
+      "4": "Cl-benzene"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 91,
+    "question_text": "Identify Z in the following reaction sequence, CH2=CH2 -HBr-> X -Ag,NaOH-> Y -Na2CO3/Excess I2-> Z",
+    "options": {
+      "1": "CH3CH2I",
+      "2": "CH3CH2OH",
+      "3": "CHI3",
+      "4": "CH3CHO"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 92,
+    "question_text": "Which of the following cannot react with sodium hypoiodite?",
+    "options": {
+      "1": "Methanol",
+      "2": "Benzyl alcohol",
+      "3": "2-Phenylethanol",
+      "4": "All the three"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 93,
+    "question_text": "H3C-CH(CH3)-CH=CH2 + HBr → A. A (predominantly) is",
+    "options": {
+      "1": "CH3CH2-CH(CH3)-CH2Br",
+      "2": "CH3-CH(Br)-CH(CH3)-CH3",
+      "3": "CH3-CH(CH3)-CH2-CH2Br",
+      "4": "CH3-C(Br)(CH3)-CH2CH3"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 94,
+    "question_text": "The compound C7H8 -3Cl2/Δ-> A -Br2/Fe-> B -Zn/HCl-> C. The compound C is",
+    "options": {
+      "1": "o-bromotoluene",
+      "2": "m-bromotoluene",
+      "3": "p-bromotoluene",
+      "4": "3-bromo-2,4,6-trichlorotoluene"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 95,
+    "question_text": "What is the major product of the following reaction? H2C=CH-CH2OH -HBr(excess)-> Product",
+    "options": {
+      "1": "CH3-CHBr-CH2Br",
+      "2": "H2C=CH-CH2Br",
+      "3": "CH3-CHBr-CH2OH",
+      "4": "CH3-CHOH-CH2OH"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 96,
+    "question_text": "In the reaction given below, HO-C(CH3)(H)(CH2CH3)+PCl5 → Product. The product formed is",
+    "options": {
+      "1": "CH3-C(Cl)(H)-CH2CH3",
+      "2": "H-C(Cl)(CH3)-CH2CH3 (inverted)",
+      "3": "CH3-C(CH3)=CH-H (alkene cis)",
+      "4": "CH3-C(H)=CH-CH3 (alkene trans)"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 97,
+    "question_text": "What will be the product in the following reaction? Cyclohexene with CH2 substituent -NBS->",
+    "options": {
+      "1": "Br,CH3 substituted cyclohexane",
+      "2": "CH3 substituted cyclohexene",
+      "3": "CH2Br substituted cyclohexene",
+      "4": "Br,CH3 substituted cyclohexane variant"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 98,
+    "question_text": "The order of decreasing nucleophilicity of the following is",
+    "options": {
+      "1": "CH3COO⁻ > CH3S⁻ > CH3O⁻ > CH3OH",
+      "2": "CH3S⁻ > CH3O⁻ > CH3COO⁻ > CH3OH",
+      "3": "CH3O⁻ > CH3OH > CH3COO⁻ > CH3S⁻",
+      "4": "CH3OH > CH3S⁻ > CH3COO⁻ > CH3O⁻"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 99,
+    "question_text": "The increasing order of reactivity towards SN2 reactivity is",
+    "options": {
+      "1": "CH3Cl > CH3Br > CH3CH2Cl > (CH3)3CHCl",
+      "2": "CH3Br > CH3Cl > (CH3)2CHCl > CH3CH2Cl",
+      "3": "CH3CH2Cl < (CH3)2CHCl < CH3Br < CH3Cl",
+      "4": "(CH3)2CHCl < CH3CH2Cl < CH3Cl < CH3Br"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 100,
+    "question_text": "Which of the following reaction will go faster if the concentration of the nucleophile is increased?",
+    "options": {
+      "1": "tertiary alkyl bromide + H2O → alcohol + HBr",
+      "2": "Ph2CHBr + H2O → Ph2CHOH + HBr",
+      "3": "benzyl bromide + CH3COONa → ester + NaBr",
+      "4": "alkyl bromide + KCN -C2H5OH-> nitrile + KBr"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 101,
+    "question_text": "In the following reaction, cyclohexane with Br,H,H3C substituents + KOH -H2O, SN2-> the product formed is",
+    "options": {
+      "1": "(1R,3R)-cis-3-methylcyclohexanol",
+      "2": "(1R,3S)-cis-3-methylcyclohexanol",
+      "3": "(1S,3R)-trans-3-methylcyclohexanol",
+      "4": "(1S,3S)-trans-3-methylcyclohexanol"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 102,
+    "question_text": "Which of the following compounds is inert towards E2 elimination?",
+    "options": {
+      "1": "CH3-CH(Br)-CH2CH3",
+      "2": "bromocyclopentane",
+      "3": "(CH3)3C-CH2Br",
+      "4": "(CH3)3C-CH(Br)-CH3"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 103,
+    "question_text": "Identify the rate of reaction of given compounds in E2 reactions. I (Iodocyclohexane), II (Bromocyclohexane), III (Chlorocyclohexane), IV (Fluorocyclohexane)",
+    "options": {
+      "1": "I > II > III > IV",
+      "2": "I > III > II > IV",
+      "3": "II > I > III > IV",
+      "4": "II > IV > I > III"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 104,
+    "question_text": "Arrange the following in decreasing rate of E2 reaction. Cyclohexanes with CH3/Br substituents in different positions I, II, III",
+    "options": {
+      "1": "I > II > III",
+      "2": "III > I > II",
+      "3": "III > II > I",
+      "4": "II > I > III"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 105,
+    "question_text": "An alkyl halide with molecular formula C6H13Br on treatment with alcoholic KOH gives two isomeric alkenes, A and B. Reductive ozonolysis of the mixture gave the following compounds: CH3COCH3, CH3CHO, CH3CH2CHO and (CH3)2CHCHO. The alkyl halide is",
+    "options": {
+      "1": "2-bromohexane",
+      "2": "3-bromo-2-methylpentane",
+      "3": "2,2-dimethyl-1-bromobutane",
+      "4": "2-bromo-2,3-dimethylbutane"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 106,
+    "question_text": "Which of the following will form a Grignard reagent on treatment with Mg in dry ether?",
+    "options": {
+      "1": "BrCH2CH2CH2Br",
+      "2": "BrCH2CH2CH2CH2Br",
+      "3": "BrCH2CH2CH2CH2CH2Br",
+      "4": "All the three above"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 107,
+    "question_text": "Which of the following will give yellow ppt. on shaking with an aqueous solution of AgNO3 solution followed by acidification with dil. HNO3 and addition of AgNO3 solution?",
+    "options": {
+      "1": "C2H4",
+      "2": "I-C6H4-CH2Cl (para)",
+      "3": "C6H4(CH2I)(Cl)",
+      "4": "CH3-C6H4-Br (para)"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 108,
+    "question_text": "The reaction of 4-bromobenzyl chloride with NaCN in ethanol leads to",
+    "options": {
+      "1": "4-bromobenzyl cyanide",
+      "2": "4-cyanobenzyl cyanide",
+      "3": "4-cyanobenzyl chloride",
+      "4": "4-bromo-2-cyanobenzyl chloride"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 109,
+    "question_text": "Isopropyl alcohol is heated with a suspension of bleaching power (CaOCl2) in water. The products are",
+    "options": {
+      "1": "ethene and propyne",
+      "2": "ethane and propene",
+      "3": "trichloromethane and calcium acetate",
+      "4": "carbon tetrachloride"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Haloalkanes & Haloarenes",
+    "source": "MCQ Multiple Choice Questions - Haloalkanes & Haloarenes",
+    "question_number": 110,
+    "question_text": "Identify 'Y' in the following reaction sequence: CH2=CHCl -Cl2-> X -Ca(OH)2, 363K-> Y",
+    "options": {
+      "1": "1,1,2-Trichloroethane",
+      "2": "1,1-Dichloroethane",
+      "3": "1,2-Dichloroethane",
+      "4": "Chloroethylene"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 1,
+    "question_text": "Which of the following modes of expressing concentration is independent of temperature?",
+    "options": {
+      "1": "Molarity",
+      "2": "Molality",
+      "3": "Formality",
+      "4": "Normality"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 2,
+    "question_text": "The aqueous solution that has the lowest vapour pressure at a given temperature is",
+    "options": {
+      "1": "0.1 molal sodium phosphate",
+      "2": "0.1 molal barium chloride",
+      "3": "0.1 molal sodium chloride",
+      "4": "0.1 molal glucose"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 3,
+    "question_text": "Insulin dissolved in a medium shows osmotic pressure of π, when the concentration is 'C' g lt⁻¹, at 300 K. the slope of a plot of π versus C is 4 x 10⁻³. Molecular mass of insulin is about",
+    "options": {
+      "1": "3 x 10³",
+      "2": "6 x 10⁵",
+      "3": "3 x 10⁶",
+      "4": "6 x 10⁵"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 4,
+    "question_text": "The freezing point of 1 percent solution of lead nitrate in water will be",
+    "options": {
+      "1": "Below 0° C",
+      "2": "0° C",
+      "3": "1° C",
+      "4": "2° C"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 5,
+    "question_text": "One molal solution of Ca(NO3)2 has freezing point",
+    "options": {
+      "1": "0° C",
+      "2": "−5.5° C",
+      "3": "−3.7° C",
+      "4": "None of these"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 6,
+    "question_text": "The vapour pressure of a liquid in a closed container depends upon",
+    "options": {
+      "1": "Amount of liquid",
+      "2": "Surface area of the container",
+      "3": "Temperature",
+      "4": "None of these"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 7,
+    "question_text": "Ten ml of acetone is mixed with 100 ml of H2O. The vapour pressure of water in above solution is",
+    "options": {
+      "1": "Equal to vapour pressure of pure water",
+      "2": "Equal to vapour pressure of the solution",
+      "3": "Less than vapour pressure of pure water",
+      "4": "More than vapour pressure of pure water"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 8,
+    "question_text": "Azeotropic mixtures are",
+    "options": {
+      "1": "Constant boiling mixtures",
+      "2": "Those which boil at different temperatures",
+      "3": "Mixture of two solids",
+      "4": "None of the above"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 9,
+    "question_text": "A mixture of two completely miscible non-ideal liquids which distill as such without change in its composition at a constant temperature though it were a pure liquid. This mixture is known as",
+    "options": {
+      "1": "binary liquid mixture",
+      "2": "azeotropic mixture",
+      "3": "eutectic mixture",
+      "4": "ideal mixture"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 10,
+    "question_text": "When equimolar aqueous solutions of glucose, sodium chloride and barium nitrate are compared, the relative lowering of vapour pressure will be in the following order",
+    "options": {
+      "1": "Glucose > NaCl > Ba(NO3)2",
+      "2": "Glucose = NaCl = Ba(NO3)2",
+      "3": "Ba(NO3)2 > NaCl > Glucose",
+      "4": "NaCl > Ba(NO3)2 > Glucose"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 11,
+    "question_text": "Solutions which distil without change in composition are called",
+    "options": {
+      "1": "Amorphous",
+      "2": "Azeotropic mixture",
+      "3": "Ideal",
+      "4": "Supersaturated"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 12,
+    "question_text": "The azeotropic mixture of water (b.p. 100°C) and HCl (b.p. 85°C) boils at 108.5° C. When this mixture is distilled it is possible to obtain",
+    "options": {
+      "1": "Pure HCl",
+      "2": "Pure water",
+      "3": "Pure water as well as pure HCl",
+      "4": "Neither HCl nor H2O in their pure states"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 13,
+    "question_text": "Colligative properties of the solution depend on",
+    "options": {
+      "1": "Nature of solute",
+      "2": "Nature of solvent",
+      "3": "Number of particles present in the solution",
+      "4": "Number of moles of solvent only"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 14,
+    "question_text": "Vapour pressure of pure water is 3100 Pa. Vapour pressure of a solution prepared by dissolving 30g urea in 81g water is about",
+    "options": {
+      "1": "2790 K",
+      "2": "2890 K",
+      "3": "2900 K",
+      "4": "2700 K"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 15,
+    "question_text": "Which is not a colligative property?",
+    "options": {
+      "1": "Osmotic pressure",
+      "2": "Vapour pressure",
+      "3": "Depression of freezing point",
+      "4": "Elevation of boiling point"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 16,
+    "question_text": "At a given temperature if P is the vapour pressure of a solution and P° is that of its pure solvent, the relative lowering to vapour pressure of the solution is given by",
+    "options": {
+      "1": "(P°−P)/P°",
+      "2": "(P−P°)/P°",
+      "3": "P°/P",
+      "4": "P/P°"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 17,
+    "question_text": "For a dilute solution, Raoult's law state that: 1) the lowering of vapour pressure is equal to the molar fraction of the solute. 2) the relative lowering of vapour pressure is equal to the mole fraction of the solute. 3) the relative lowering of vapour pressure is proportional to the amount of solute in the solution. 4) the vapour pressure of the solution is equal to the mole fraction of the solvent",
+    "options": {
+      "1": "statement 1",
+      "2": "statement 2",
+      "3": "statement 3",
+      "4": "statement 4"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 18,
+    "question_text": "A solution that obeys Raoult's law is",
+    "options": {
+      "1": "Normal",
+      "2": "Molar",
+      "3": "Ideal",
+      "4": "Saturated"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 19,
+    "question_text": "The relative lowering of vapour pressure is equal to the ratio between the number of",
+    "options": {
+      "1": "solute molecules to the solvent molecules",
+      "2": "solute molecules to the total molecules in the solution",
+      "3": "solvent molecules to the total molecules in the solution",
+      "4": "solvent molecules to the total number of ions in the solute."
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 20,
+    "question_text": "Vapour pressure of a solution is",
+    "options": {
+      "1": "directly proportional to the mole fraction of the solvent",
+      "2": "directly proportional to the mole fraction of the solute",
+      "3": "inversely proportional to the mole fraction of the solvent",
+      "4": "inversely proportional to the mole fraction of the solute"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 21,
+    "question_text": "100 ml of a liquid A is mixed with 25 ml of a liquid B to give a non-ideal solution of A-B mixture. The volume of this mixture would be",
+    "options": {
+      "1": "75 ml",
+      "2": "125 ml",
+      "3": "close to 125 ml",
+      "4": "Just more than 125 ml"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 22,
+    "question_text": "Vapour pressure of CCl4 at 25° C is 143 mm of Hg. 0.5 g of a non-volatile solute (mol. mass 65) is dissolved in 100 ml of CCl4. Find the vapour pressure of the solution (Density of CCl4 = 1.58 g/cm³)",
+    "options": {
+      "1": "141.93 mm",
+      "2": "94.09 mm",
+      "3": "199.34 mm",
+      "4": "143.99 mm"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 23,
+    "question_text": "12 g of a urea is dissolved in 1 litre of water and 68.4 g of sucrose is dissolved in 1 litre of water. The lowering of vapour pressure of first case is",
+    "options": {
+      "1": "equal to second",
+      "2": "greater than second",
+      "3": "less than second",
+      "4": "double that of second"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 24,
+    "question_text": "Ideal solution is formed when its components",
+    "options": {
+      "1": "Have only zero heat of mixing",
+      "2": "Have only zero volume change",
+      "3": "Have both zero heat of mixing as well as zero volume change",
+      "4": "can be converted into ideal gases"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 25,
+    "question_text": "A mixture of benzene and toluene forms",
+    "options": {
+      "1": "An ideal solution",
+      "2": "Non-ideal solution",
+      "3": "Suspension",
+      "4": "Emulsion"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 26,
+    "question_text": "Which of the following pairs will not be forming ideal solutions?",
+    "options": {
+      "1": "C6H6 and CCl4",
+      "2": "C6H6 and C6H5CH3",
+      "3": "C6H5Br and C2H5I",
+      "4": "(CH3)2CO and CCl4"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 27,
+    "question_text": "The solutions which show positive or negative deviation from Raoult's law are called",
+    "options": {
+      "1": "Ideal solutions",
+      "2": "True solutions",
+      "3": "Real solutions",
+      "4": "Non-ideal solutions"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 28,
+    "question_text": "Which of the following liquid pairs show a positive deviation from Raoult's law?",
+    "options": {
+      "1": "Water − HCl",
+      "2": "Water−Nitric acid",
+      "3": "Acetone − chloroform",
+      "4": "Benzene−methanol"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 29,
+    "question_text": "Which of the following shows a positive deviation from Raoult's law?",
+    "options": {
+      "1": "Water − HCl",
+      "2": "Cyclohexane − ethanol",
+      "3": "Chloroform − benzene",
+      "4": "Acetone−chloroform"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 30,
+    "question_text": "Which of the following shows a negative deviation from Raoult's law?",
+    "options": {
+      "1": "Acetone − benzene",
+      "2": "Acetone − ethanol",
+      "3": "Acetone − chloroform",
+      "4": "Benzene − methanol"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 31,
+    "question_text": "Which of the following pairs can be separated by fractional distillation?",
+    "options": {
+      "1": "Benzene − toluene",
+      "2": "Benzene − methanol",
+      "3": "Ethanol − water",
+      "4": "HNO3 − water"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 32,
+    "question_text": "An azeotropic solution of two liquids has a boiling point lower than either of them when it",
+    "options": {
+      "1": "Shows a negative deviation from Raoult's law",
+      "2": "Shows no deviation for Raoult's law",
+      "3": "Shows a positive deviation from Raoult's law",
+      "4": "Is saturated"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 33,
+    "question_text": "An azeotropic solution of two liquids has a boiling point higher than either, when it",
+    "options": {
+      "1": "Shows a negative deviation from Raoult's law",
+      "2": "Shows no deviation for Raoult's law",
+      "3": "Shows a positive deviation from Raoult's law",
+      "4": "Is saturated"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 34,
+    "question_text": "Molecular weight of non-volatile solute can be determined by",
+    "options": {
+      "1": "Victor-Meyer's method",
+      "2": "Graham's law of diffusion",
+      "3": "Gay Lussac's law",
+      "4": "Raoult's law"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 35,
+    "question_text": "Vapour pressure of a solution of non-volatile solute is",
+    "options": {
+      "1": "More than vapour pressure of the solvent",
+      "2": "Less than vapour pressure of the solvent",
+      "3": "Equal to the vapour pressure of the solvent",
+      "4": "None of these"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 36,
+    "question_text": "Vapour pressure of a solution of 5g of non-electrolyte in 100g of water at a particular temperature is 2985 N/m². The vapour pressure of pure water at that temperature is 3000 N/m², the molecular weight of the solute is",
+    "options": {
+      "1": "60",
+      "2": "120",
+      "3": "180",
+      "4": "380"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 37,
+    "question_text": "The relative lowering of vapour pressure of a solution of 6g of urea in 90g of water is close to",
+    "options": {
+      "1": "0.02",
+      "2": "0.04",
+      "3": "0.06",
+      "4": "0.03"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 38,
+    "question_text": "The elevation of boiling point of a solution is",
+    "options": {
+      "1": "Directly proportional to molal concentration",
+      "2": "Inversely proportional to molal concentration",
+      "3": "Directly proportional to molarity of the solution",
+      "4": "Directly proportional to normality"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 39,
+    "question_text": "The molal elevation constant is the ratio of the elevation of B.P. to the",
+    "options": {
+      "1": "Molarity",
+      "2": "Molality",
+      "3": "Mole fraction of solute",
+      "4": "Mole fraction of solvent"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 40,
+    "question_text": "Which of the following solution should produce maximum elevation in B.P.?",
+    "options": {
+      "1": "0.1 M glucose",
+      "2": "0.2 M sucrose",
+      "3": "0.1 M BaCl2",
+      "4": "0.1 M MgSO4"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 41,
+    "question_text": "Which one of the following aqueous solutions will have the lowest freezing point?",
+    "options": {
+      "1": "0.1 molal solution of urea",
+      "2": "0.1 molal solution of sucrose",
+      "3": "0.1 molal solution of acetic acid",
+      "4": "0.1 molal solution of calcium chloride"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 42,
+    "question_text": "Elevation of boiling point was 0.52° C. When 6g of compound X was dissolved in 100 g of water, molecular weight of X is (kb of water is 5.2° C per 100 g of water)",
+    "options": {
+      "1": "120",
+      "2": "60",
+      "3": "600",
+      "4": "180"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 43,
+    "question_text": "The molal boiling point constant for water is 0.513° kg⁻¹. When 0.1 mole of sugar is dissolved in 200 g water, the solution boils under a pressure of 1 atm at",
+    "options": {
+      "1": "100.513°C",
+      "2": "100.0513°C",
+      "3": "100.256°C",
+      "4": "101.025°C"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 44,
+    "question_text": "When a substance is dissolved in a solvent the vapour pressure of the solvent is decreased. This results in",
+    "options": {
+      "1": "An increase in the b.p. of the solution",
+      "2": "A decrease in the b.p. of the solvent",
+      "3": "The solution having a higher freezing point than the solvent",
+      "4": "The solution having a lower osmotic pressure than the solvent"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 45,
+    "question_text": "If 2 moles of sugar are dissolved in 1000 g of water, the B.P. of the resulting solution is",
+    "options": {
+      "1": "100° C",
+      "2": "1.52° C",
+      "3": "1.04° C",
+      "4": "101.04° C"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 46,
+    "question_text": "The latent heat of vapourisation of water is 9700 cal mol⁻¹ and if the b.p. is 100° C, the ebullioscopic constant of water is",
+    "options": {
+      "1": "0.513° C",
+      "2": "1.026° C",
+      "3": "10.26° C",
+      "4": "1.832° C"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 47,
+    "question_text": "The rise in the boiling point of a solution containing 1.8g of glucose in 100g of a solvent is 0.1° C. The molal elevation constant of the liquid is",
+    "options": {
+      "1": "1 Kkg mol⁻¹",
+      "2": "10 Kkg mol⁻¹",
+      "3": "0.01 Kkg mol⁻¹",
+      "4": "0.1 Kkg mol⁻¹"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 48,
+    "question_text": "Arrange the following aqueous solutions in the order of their increasing boiling points (i) 10⁻⁴ M NaCl (ii) 10⁻⁴ M Urea (iii) 10⁻³ M NaCl (iv) 10⁻² M KCl",
+    "options": {
+      "1": "(i) < (ii) < (iv) < (iii)",
+      "2": "(ii) < (i) = (iii) < (iv)",
+      "3": "(ii) < (i) < (iii) < (iv)",
+      "4": "(iv) < (iii) < (i) < (ii)"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 49,
+    "question_text": "When common salt is dissolved in water",
+    "options": {
+      "1": "M.P. of the solution increases",
+      "2": "B.P. of the solution increases",
+      "3": "B.P. of the solution decreases",
+      "4": "Both M.P. and B.P. decreases"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 50,
+    "question_text": "Which one has the highest B.P.?",
+    "options": {
+      "1": "0.1 N MgSO4",
+      "2": "0.1 N Na2SO4",
+      "3": "0.1 M Al2(SO4)3",
+      "4": "0.1 M BaSO4"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 51,
+    "question_text": "Which of the following aqueous solutions will have the highest osmotic pressure?",
+    "options": {
+      "1": "1% glucose",
+      "2": "1% sucrose",
+      "3": "1% NaCl",
+      "4": "1% CaCl2"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 52,
+    "question_text": "The molal elevation constant of water = 0.52°C. The boiling point of 1.0 molal aqueous KCl solution (assuming complete dissociation of KCl) should be",
+    "options": {
+      "1": "100° C",
+      "2": "1.52° C",
+      "3": "1.04° C",
+      "4": "101.04° C"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 53,
+    "question_text": "Osmotic pressure of one molar urea solution at 300 K is about",
+    "options": {
+      "1": "250 atm",
+      "2": "2.5 x 10⁵ Pa",
+      "3": "2500 kPa",
+      "4": "2500 Pa"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 54,
+    "question_text": "When glycerine is added to a litre of water, which of the following behaviour is observed?",
+    "options": {
+      "1": "water evaporates more easily",
+      "2": "the temperature of water increases",
+      "3": "The freezing point of water is lowered",
+      "4": "The viscosity of water is lowered"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 55,
+    "question_text": "The molal freezing point constant for water is 1.86 Kkg mol⁻¹. If 342 gm of cane sugar (C12H22O11) is dissolved in 1000 g of water, the solution will freeze at",
+    "options": {
+      "1": "−1.86°C",
+      "2": "1.86°C",
+      "3": "−3.92°C",
+      "4": "2.42°C"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 56,
+    "question_text": "The freezing point of 0.05 molal solution of a non-electrolyte in water is",
+    "options": {
+      "1": "−1.86°C",
+      "2": "−0.93°C",
+      "3": "−0.093°C",
+      "4": "0.93°C"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 57,
+    "question_text": "The freezing point of equimolal aqueous solution will be maximum for",
+    "options": {
+      "1": "C6H5NH3Cl (aniline hydrochloride)",
+      "2": "Ca(NO3)2",
+      "3": "La(NO3)3",
+      "4": "C6H12O6 (glucose)"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 58,
+    "question_text": "The boiling point of a solution of 0.11g of a substance in 15g of ether was found to be that of pure ether. The molecular weight of the substance will be (Kb=2.16, for ether)",
+    "options": {
+      "1": "148",
+      "2": "158",
+      "3": "168",
+      "4": "178"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 59,
+    "question_text": "An aqueous solution freezes at −0.186°C, what is the elevation in boiling point? (kf=1.86, kb=0.512)",
+    "options": {
+      "1": "0.186",
+      "2": "0.512",
+      "3": "0.0512",
+      "4": "0.86"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 60,
+    "question_text": "The freezing point of 1 molal NaCl solution, assuming NaCl to be 100% dissociated in water is",
+    "options": {
+      "1": "−1.86°C",
+      "2": "−3.72°C",
+      "3": "+1.86°C",
+      "4": "+3.72°C"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 61,
+    "question_text": "0.01 M solution each of urea, common salt and Na2SO4 are taken, the ratio of depression of freezing point is",
+    "options": {
+      "1": "1:1:1",
+      "2": "1:2:1",
+      "3": "1:2:3",
+      "4": "2:2:2"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 62,
+    "question_text": "Which of the equimolal aqueous solution shows depression in freezing point?",
+    "options": {
+      "1": "NaCl",
+      "2": "BaCl2",
+      "3": "C6H5NH3+Cl",
+      "4": "FeCl3"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 63,
+    "question_text": "A solution of 1.25 g of a certain non-electrolyte in 20g of water freezes at 271.94 K. The molecular mass of the solute (kf=1.86 Kkg mol⁻¹) will be",
+    "options": {
+      "1": "119.68g",
+      "2": "109.6 g",
+      "3": "115 g",
+      "4": "106 g"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 64,
+    "question_text": "When a solution is separated from a solvent by a semipermeable membrane, then phenomenon taking place is called",
+    "options": {
+      "1": "Osmosis",
+      "2": "Diffusion",
+      "3": "Cataphoresis",
+      "4": "Plasmolysis"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 65,
+    "question_text": "Semipermeable membrane is that which permits the passage of",
+    "options": {
+      "1": "Solute molecules only",
+      "2": "Solvent molecules only",
+      "3": "Solute an solvent molecules both",
+      "4": "Neither solute nor solvent molecules"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 66,
+    "question_text": "Which inorganic precipitate acts as semipermeable membrane?",
+    "options": {
+      "1": "Calcium sulphate",
+      "2": "Barium oxalate",
+      "3": "Nickel phosphate",
+      "4": "Copper ferrocyanide"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 67,
+    "question_text": "As a result of osmosis the column of the solution",
+    "options": {
+      "1": "Gradually decreases",
+      "2": "Gradually increases",
+      "3": "Is not affected",
+      "4": "Any of the three"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 68,
+    "question_text": "The pressure applied to prevent osmosis is called",
+    "options": {
+      "1": "Osmotic pressure",
+      "2": "Partial pressure",
+      "3": "Vapour pressure",
+      "4": "Preventive pressure"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 69,
+    "question_text": "Osmotic pressure is measured quickly and accurately by",
+    "options": {
+      "1": "Berkeley and Hartley Method",
+      "2": "Morse's Method",
+      "3": "Pfeffer's method",
+      "4": "Dr. Varies method"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 70,
+    "question_text": "The osmotic pressure of a solution is given by the relation",
+    "options": {
+      "1": "π=ST/C",
+      "2": "π=CT/S",
+      "3": "π=SC/T",
+      "4": "π/C=ST"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 71,
+    "question_text": "Osmotic pressure of a dilute solution is given by",
+    "options": {
+      "1": "P=Patm",
+      "2": "πV=nRT",
+      "3": "π=VRT",
+      "4": "None"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 72,
+    "question_text": "If 3g of glucose (mol. wt. 180) is dissolved in 60g of water at 15°C, the osmotic pressure of the solution will be",
+    "options": {
+      "1": "3.4 atm",
+      "2": "0.65 atm",
+      "3": "6.57 atm",
+      "4": "5.57 atm"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 73,
+    "question_text": "The osmotic pressure of a 5% solution of cane sugar at 15° C is (Mol. wt. of cane sugar is 342)",
+    "options": {
+      "1": "4 atm",
+      "2": "3.55 atm",
+      "3": "3.45 atm",
+      "4": "2.45 atm"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 74,
+    "question_text": "The relationship between osmotic pressure at 273 K (π1), 10g urea (π2), and 10 g sucrose (π3), are dissolved in 250 ml of water is",
+    "options": {
+      "1": "π1 > π2 > π3",
+      "2": "π2 > π1 > π3",
+      "3": "π2 > π1 > π3",
+      "4": "π2 > π3 > π1"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 75,
+    "question_text": "Osmotic pressure of a sugar solution at 24° C is 2.5 atmospheres. The concentration of the solution in gram molecule per litre is",
+    "options": {
+      "1": "10.25",
+      "2": "1.025",
+      "3": "102.5",
+      "4": "0.1025"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 76,
+    "question_text": "0.6g of a solute in 125 kPa atm at 27° C. The molecular weight of the substance is",
+    "options": {
+      "1": "149.5 g",
+      "2": "120 g",
+      "3": "149.5 g",
+      "4": "None"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 77,
+    "question_text": "The osmotic pressure in pascal of 10% solution of cane sugar at 69°C is",
+    "options": {
+      "1": "7.3 x 10⁵",
+      "2": "8.315 x 10⁵",
+      "3": "8.314",
+      "4": "730"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 78,
+    "question_text": "The osmotic pressure of a solution at 273 K is 2 atm. What will be its osmotic pressure at 546 K under similar conditions?",
+    "options": {
+      "1": "0.5 atm",
+      "2": "2 atm",
+      "3": "4 atm",
+      "4": "4 atm"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 79,
+    "question_text": "At 25°C, the highest osmotic pressure is exhibited by 0.1 M solution of",
+    "options": {
+      "1": "CaCl2",
+      "2": "KCl",
+      "3": "Glucose",
+      "4": "Urea"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 80,
+    "question_text": "Solutions with same osmotic pressures are called",
+    "options": {
+      "1": "hypertonic",
+      "2": "Hypotonic",
+      "3": "Isotonic",
+      "4": "Normal"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 81,
+    "question_text": "The osmotic pressure of 1 M solution at 27° C",
+    "options": {
+      "1": "2.46 atm",
+      "2": "24.6 atm",
+      "3": "1.23 atm",
+      "4": "12.3 atm"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 82,
+    "question_text": "1% aqueous solution (mass/volume) of a certain substance is isotonic with a 3% solution of dextrose (molar mass 180) at a given temperature. The molar mass of the substance is",
+    "options": {
+      "1": "60",
+      "2": "120",
+      "3": "180",
+      "4": "340"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 83,
+    "question_text": "A plant cell shrinks when it is kept in",
+    "options": {
+      "1": "Hypotonic solution",
+      "2": "A hypertonic solution",
+      "3": "A solution isotonic with cell sap",
+      "4": "Water"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 84,
+    "question_text": "Camphor is often used in molecular mass determination because",
+    "options": {
+      "1": "it is solvent for organic substances",
+      "2": "it is readily available",
+      "3": "it has a very high cryoscopic constant",
+      "4": "it is volatile"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 85,
+    "question_text": "Which of the following will exhibit highest boiling point?",
+    "options": {
+      "1": "0.01 M KNO3 (aq)",
+      "2": "0.01 M Na2SO4 (aq)",
+      "3": "0.015 M glucose (aq)",
+      "4": "0.015 M urea (aq)"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 86,
+    "question_text": "Which of the following can be measured by the Ostwald-Walker dynamic method?",
+    "options": {
+      "1": "Vapour pressure of the solvent",
+      "2": "Relative lowering of vapour pressure",
+      "3": "Lowering of vapour pressure",
+      "4": "All of the above"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 87,
+    "question_text": "Cryoscopic constant is the depression in the freezing point produced by:",
+    "options": {
+      "1": "1% solution",
+      "2": "1 molar solution",
+      "3": "1 molal solution",
+      "4": "1N solution"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 88,
+    "question_text": "3g urea is dissolved in 45g of water. The relative lowering of vapour pressure is:",
+    "options": {
+      "1": "0.55",
+      "2": "0.04",
+      "3": "0.02",
+      "4": "0.01"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 89,
+    "question_text": "The minimum elevation of boiling point is given by a solution of:",
+    "options": {
+      "1": "0.1 M urea",
+      "2": "0.1 M NaCl",
+      "3": "0.1 M MgCl2",
+      "4": "0.1 M Al2(SO4)3"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 90,
+    "question_text": "4g of a non-volatile solute dissolved in 36g water produces lowering of vapour pressure of 0.1. The molecular mass of the solute is:",
+    "options": {
+      "1": "10",
+      "2": "20",
+      "3": "80",
+      "4": "100"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 91,
+    "question_text": "A solution boils at a temperature more than the boiling point of either of them. Hence the binary solution shows",
+    "options": {
+      "1": "positive deviation from Raoult's law",
+      "2": "negative deviation from Raoult's law",
+      "3": "positive or negative deviation from Raoult's law depending upon the composition",
+      "4": "no deviation from Raoult's law"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 92,
+    "question_text": "Vapour pressure of pure 'A' is 70 mm of Hg at 25°C. It forms an ideal solution with 'B' in which mole fraction of A is 0.8. If the vapour pressure of the solution is 84 mm of Hg at 25°C, the vapour pressure of pure 'B' is",
+    "options": {
+      "1": "56 mm",
+      "2": "70 mm",
+      "3": "140 mm",
+      "4": "28 mm"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 93,
+    "question_text": "A 6% solution of urea is isotonic with",
+    "options": {
+      "1": "0.05 M solution of glucose",
+      "2": "6% solution of Glucose",
+      "3": "25% solution of Glucose",
+      "4": "1 M solution of Glucose"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 94,
+    "question_text": "In countries nearer to polar region, the roads are sprinkled with CaCl2. This is",
+    "options": {
+      "1": "to minimize the snow collected",
+      "2": "to minimize pollution",
+      "3": "to minimize the accumulation of dust on the road",
+      "4": "to minimize the wear and tear of the roads"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 95,
+    "question_text": "Cooking is fast in a pressure cooker, because",
+    "options": {
+      "1": "water boils at higher temperature inside the pressure cooker",
+      "2": "food is cooked at constant volume",
+      "3": "loss of heat due to radiation is minimum",
+      "4": "food particles are effectively smashed"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 96,
+    "question_text": "The mass of a non-volatile solute of molar mass 40 g mol⁻¹ that should be dissolved in 114 g of octane to lower its vapour pressure by 20% is",
+    "options": {
+      "1": "10 g",
+      "2": "11.4 g",
+      "3": "9.8 g",
+      "4": "12.8 g"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 97,
+    "question_text": "The vapour pressures of two liquids A and B in their pure states are in the ratio 1:2. A binary solution of A and B contains A and B in the mole proportion of 1:2. The mole fraction of A in the vapour phase of the solution will be",
+    "options": {
+      "1": "0.33",
+      "2": "0.2",
+      "3": "0.25",
+      "4": "0.52"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 98,
+    "question_text": "3 gms of urea is dissolved in 45 gms of H2O. The relative lowering in vapour pressure of aqueous solutions will exhibit highest boiling point?",
+    "options": {
+      "1": "0.05",
+      "2": "0.04",
+      "3": "0.02",
+      "4": "0.01"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 99,
+    "question_text": "Which of the following aqueous solutions will exhibit highest boiling point?",
+    "options": {
+      "1": "0.01 M urea",
+      "2": "0.01 M Na2SO4",
+      "3": "0.01 M CaCl2",
+      "4": "0.015M C6H12O6"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 100,
+    "question_text": "Dissolution of a solute is an exothermic process if:",
+    "options": {
+      "1": "hydration energy > lattice energy",
+      "2": "hydration energy < lattice energy",
+      "3": "hydration energy = lattice energy",
+      "4": "none of the above"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 101,
+    "question_text": "The boiling point of an azeotropic mixture of water and ethyl alcohol is less than that of theoretical value of water and alcohol mixture. Hence, the mixture shows:",
+    "options": {
+      "1": "that the solution is highly saturated",
+      "2": "positive deviation form Raoult's law",
+      "3": "negative deviation form Raoult's law",
+      "4": "nothing can be said"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 102,
+    "question_text": "On mixing 10 mL of acetone with 40 mL of chloroform, the total volume of the solution is:",
+    "options": {
+      "1": "< 50 mL",
+      "2": "> 50 mL",
+      "3": "= 50 mL",
+      "4": "cannot be predicted"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 103,
+    "question_text": "On mixing 10 mL of carbon tetrachloride with 10 mL of benzene the total volume of the solution is:",
+    "options": {
+      "1": "> 20 mL",
+      "2": "< 20 mL",
+      "3": "= 20 mL",
+      "4": "cannot be predicted"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 104,
+    "question_text": "The factor ΔTb/kb represents:",
+    "options": {
+      "1": "molarity",
+      "2": "formality",
+      "3": "normality",
+      "4": "molality"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 105,
+    "question_text": "Camphor is used as solvent to determine mol. wt. of non-volatile solute by Rast method because of camphor:",
+    "options": {
+      "1": "it is readily available",
+      "2": "it is volatile",
+      "3": "molal depression constant is high",
+      "4": "it is solvent for organic substances"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 106,
+    "question_text": "The correct relationship between the boiling points of very dilute solutions of AlCl3(T1) and CaCl2(T2), having the same molar concentration, is:",
+    "options": {
+      "1": "T1=T2",
+      "2": "T1>T2",
+      "3": "T2>T1",
+      "4": "T2≥T1"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 107,
+    "question_text": "What will be the molecular weight of NaCl determined experimentally observed by elevation in the boiling point or depression in freezing point or osmotic pressure method?",
+    "options": {
+      "1": "<58.5",
+      "2": ">58.5",
+      "3": "=58.5",
+      "4": "None of these"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 108,
+    "question_text": "The molecular weight of benzoic acid in benzene as determined by depression in freezing point method corresponds to:",
+    "options": {
+      "1": "ionization of benzoic acid",
+      "2": "dimerization of benzoic acid",
+      "3": "trimerization of benzoic acid",
+      "4": "solvation of benzoic acid"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 109,
+    "question_text": "A pressure cooker reduces cooking time because:",
+    "options": {
+      "1": "heat is more evenly distributed",
+      "2": "boiling point of water inside the cooker is increased",
+      "3": "the high pressure tenderizes the food",
+      "4": "all of the above"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 110,
+    "question_text": "A liquid in equilibrium with its vapours at its boiling point. On the average the molecules in the two phases have equal",
+    "options": {
+      "1": "potential energy",
+      "2": "total energy",
+      "3": "kinetic energy",
+      "4": "intermolecular forces"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 111,
+    "question_text": "Which solution will have the highest boiling point?",
+    "options": {
+      "1": "1% glucose in water",
+      "2": "1% sucrose in water",
+      "3": "1% NaCl in water",
+      "4": "1% CaCl2 in water"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 112,
+    "question_text": "A substance is completely trimerised on dissolution in a solvent. The van't Hoff's factor (i) for such change is:",
+    "options": {
+      "1": "3",
+      "2": "2",
+      "3": "3",
+      "4": "1/3"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 113,
+    "question_text": "The freezing point of equimolal aqueous solution will be highest for:",
+    "options": {
+      "1": "C6H5NH3Cl",
+      "2": "Ca(NO3)2",
+      "3": "La(NO3)3",
+      "4": "C6H12O6"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 114,
+    "question_text": "The depression in f.pt of equimolal aqueous solution of urea, potassium chloride and sodium sulphate is in the ratio:",
+    "options": {
+      "1": "1:1:1",
+      "2": "1:2:3",
+      "3": "1:2:4",
+      "4": "2:2:3"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 115,
+    "question_text": "Aqueous solution of 0.004 M Na2SO4 and 0.01 M glucose are isotonic. The degree of dissociation of Na2SO4 is:",
+    "options": {
+      "1": "25%",
+      "2": "60%",
+      "3": "75%",
+      "4": "85%"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 116,
+    "question_text": "The van't Hoff's factor for 0.1 M Ba(NO3)2 solution is 2.64. The degree of dissociation is:",
+    "options": {
+      "1": "91.3%",
+      "2": "82%",
+      "3": "100%",
+      "4": "64%"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 117,
+    "question_text": "The plant cell will shrink when placed in:",
+    "options": {
+      "1": "isotonic solution",
+      "2": "hypertonic solution",
+      "3": "hypotonic solution",
+      "4": "water"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 118,
+    "question_text": "Which of the following liquid pairs shows a positive deviation from Raoult's law?",
+    "options": {
+      "1": "Acetone — chloroform",
+      "2": "Benzene — methanol",
+      "3": "Water — nitric acid",
+      "4": "Water — sulphuric acid"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 119,
+    "question_text": "The Henry's law constant for the solubility of N2 in water is 1 x 10^5 atm. The mole fraction of N2 in air is 0.8. The no. of moles of N2 dissolved in 10 moles of water at 5 atm is",
+    "options": {
+      "1": "4 x 10⁻⁴",
+      "2": "4 x 10⁻⁵",
+      "3": "5 x 10⁻⁴",
+      "4": "4 x 10⁻⁶"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 120,
+    "question_text": "A colligative property of a solution depends on the",
+    "options": {
+      "1": "arrangement of atoms in solute molecule",
+      "2": "total number of molecules of solute and solvent",
+      "3": "number of molecules of solute unit amount of solution",
+      "4": "mass of solute molecules."
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 121,
+    "question_text": "When 0.6 g of urea is dissolved in 100 g of the water the water will boil at (Kb of water = 0.52 kJ mol⁻¹ and normal boiling point of water = 100°C)",
+    "options": {
+      "1": "373.052 K",
+      "2": "373.52 K",
+      "3": "372.48 K",
+      "4": "273.052 K"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 122,
+    "question_text": "A 2% solution of glucose has the same elevation in boiling point as that of 5% solution of a non-volatile solute. The molar mass of solution is",
+    "options": {
+      "1": "180",
+      "2": "450",
+      "3": "72",
+      "4": "18"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 123,
+    "question_text": "The boiling point of the solution is higher that water because",
+    "options": {
+      "1": "glucose forms extensive hydrogen bonding with water.",
+      "2": "glucose does not dissociate with water.",
+      "3": "its vapour pressure is higher than that of water at a given temperature.",
+      "4": "its vapour pressure is lower than that of water at a given temperature."
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 124,
+    "question_text": "The freezing point depression of 0.110 mol kg⁻¹ aqueous solution of formic acid is -0.21°C. If kf (water) is 1.86 K/kg, the degree of dissociation of formic acid in the solution would be",
+    "options": {
+      "1": "0.0132",
+      "2": "0.0264",
+      "3": "0.0396",
+      "4": "0.0528"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 125,
+    "question_text": "Ten grams of a sample of starch in 1 litre of aqueous solution produces osmotic pressure of 0.5 kPa at 25°C. The average number of glucose units in the sample is",
+    "options": {
+      "1": "100",
+      "2": "200",
+      "3": "300",
+      "4": "400"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 126,
+    "question_text": "In a 0.2 molal aqueous solution of a weak acid HX the degree of ionization is 0.3. Taking kf for water as 1.85, the freezing point of the solution will be nearest to",
+    "options": {
+      "1": "0.480°C",
+      "2": "−0.480°C",
+      "3": "−0.360°C",
+      "4": "−0.260°C"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 127,
+    "question_text": "If liquids A and B form an ideal solution",
+    "options": {
+      "1": "the free energy as well as the entropy of mixing are each zero",
+      "2": "the enthalpy of mixing is zero",
+      "3": "the entropy of mixing is zero",
+      "4": "the free energy of mixing is zero"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 128,
+    "question_text": "Which one of the following aqueous solutions will exhibit highest boiling point?",
+    "options": {
+      "1": "0.01M Na2SO4",
+      "2": "0.01M KNO3",
+      "3": "0.01M urea",
+      "4": "0.015M glucose"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 129,
+    "question_text": "Which one of the following statements is false?",
+    "options": {
+      "1": "Raoult's law states that the vapour pressure of a component in a binary solution is proportional to its mole fraction",
+      "2": "The osmotic pressure (π) of a solution is given by π=mRT, where m is the molality of the solution.",
+      "3": "The correct order of osmotic pressure for 0.01M aqueous solution of each compound is BaCl2 > KCl > CH3COOH > sucrose",
+      "4": "Two sucrose solutions of same molarity prepared in different solvents will have the same freezing point depression"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 130,
+    "question_text": "When mercuric iodide is added to an aqueous solution of potassium iodide, the",
+    "options": {
+      "1": "freezing point is raised",
+      "2": "freezing point is lowered",
+      "3": "freezing point does not change",
+      "4": "boiling point does not change"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 131,
+    "question_text": "A sugar syrup of weight 214.2g contains 34.2g sugar. The molal concentration is",
+    "options": {
+      "1": "0.55",
+      "2": "5.5",
+      "3": "55",
+      "4": "0.1"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 132,
+    "question_text": "At 100°C and 1 atm, if the density of a liquid is 1.0 g cm⁻³ and that of water vapour is 0.0006g cm⁻³, then the volume occupied by water molecules in 1 litre of steam at that temperature is",
+    "options": {
+      "1": "6 cm³",
+      "2": "60 cm³",
+      "3": "0.6 cm³",
+      "4": "0.06 cm³"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 133,
+    "question_text": "During depression of freezing point in a solution, the following are in equilibrium",
+    "options": {
+      "1": "Liquid solvent, solid solvent",
+      "2": "Liquid solute, solid solute",
+      "3": "Liquid solute, solid solute",
+      "4": "Liquid solute, solid solute"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 134,
+    "question_text": "0.004M Na2SO4 is isotonic with 0.01M glucose. Degree of dissociation of Na2SO4 is",
+    "options": {
+      "1": "75%",
+      "2": "50%",
+      "3": "25%",
+      "4": "85%"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 135,
+    "question_text": "A 5.25% solution of a substance is isotonic with a 1.5% solution of urea (molar mass = 60g mol⁻¹) in the same solvent. If the densities of both the solutions are equal to 1.0 g cm⁻³, molar mass of the substance will be",
+    "options": {
+      "1": "115.0 g mol⁻¹",
+      "2": "105.0 g mol⁻¹",
+      "3": "210.0 g mol⁻¹",
+      "4": "90.0 g mol⁻¹"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "MCQ Multiple Choice Questions - Solutions",
+    "question_number": 136,
+    "question_text": "A mixture of ethyl alcohol and propyl alcohol has a vapour pressure of 290 mm at 300 K. The vapour pressure of propyl alcohol is 200 mm. If the mole fraction of ethyl alcohol is 0.6, its vapour pressure (in mm) at the same temperature will be",
+    "options": {
+      "1": "300",
+      "2": "700",
+      "3": "360",
+      "4": "350"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2004",
+    "question_number": 137,
+    "question_text": "At 80°C, the vapour pressure of pure liquid 'A' is 520 mm Hg and that of pure liquid 'B' is 1000 mm Hg. If a mixture solution of 'A' and 'B' boils at 80°C and 1 atm pressure, the amount of 'A' in the mixture is (1 atm = 760 mm Hg)",
+    "options": {
+      "1": "52 mol per cent",
+      "2": "34 mol per cent",
+      "3": "48 mol per cent",
+      "4": "50 mol per cent"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2008",
+    "question_number": 138,
+    "question_text": "The vapour pressure of water at 20°C is 17.5 mm Hg. If 18g of glucose (C6H12O6) is added to 178.2g of water at 20°C, the vapour pressure of the resulting solution will be",
+    "options": {
+      "1": "17.675 mm Hg",
+      "2": "15.750 mm HG",
+      "3": "16.500 mm Hg",
+      "4": "17.325 mm Hg"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "IIT JEE 2011",
+    "question_number": 139,
+    "question_text": "The freezing point (in °C) of a solution containing 0.1 g of K3[Fe(CN)6] (Mol. Wt. 329) in 100 g of water (Kf=1.86 K kg mol⁻¹) is",
+    "options": {
+      "1": "−2.3 x 10⁻²",
+      "2": "−5.7 x 10⁻²",
+      "3": "−5.7 x 10⁻³",
+      "4": "−1.2 x 10⁻²"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "IIT JEE 2012",
+    "question_number": 140,
+    "question_text": "For a dilute solution containing 2.5 g of a non-electrolyte solute in 100 g of water, the elevation in boiling point at 1 atm pressure is 2°C. Assuming concentration of solute is much lower than the concentration of solvent, the vapour pressure (mm of Hg) of the solution is (take Kb=0.76 K kg mol⁻¹)",
+    "options": {
+      "1": "724",
+      "2": "740",
+      "3": "736",
+      "4": "718"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2009",
+    "question_number": 141,
+    "question_text": "Two liquids X and Y form an ideal solution. At 300K, vapour pressure of the solution containing 1 mole of X and 3 mole of Y is 550 mm Hg. At the same temperature, if 1 mole of Y is further added to this solution, vapour pressure of the solution increases by 10 mm of Hg. Vapour pressure (in mm Hg) of X and Y in their pure states will be respectively",
+    "options": {
+      "1": "200 and 300",
+      "2": "300 and 400",
+      "3": "400 and 600",
+      "4": "500 and 600"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2009",
+    "question_number": 142,
+    "question_text": "A binary liquid solution is prepared by mixing n-heptane and ethanol. Which one of the following statements is correct regarding the behaviour of the solution?",
+    "options": {
+      "1": "The solution forms ideal solution",
+      "2": "The solution is non-ideal showing +ve deviation from Raoult's law.",
+      "3": "The solution is non-ideal showing –ve deviation from Raoult's law",
+      "4": "n-heptane shows +ve deviation whereas ethanol shows –ve deviation from Raoult's law"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2010",
+    "question_number": 143,
+    "question_text": "If sodium sulphate is considered to be completely dissociated into cations and anions in aqueous solution, the change in freezing point of water, when 0.01 mol sodium sulphate is dissolved in 1 kg of water is (kf=1.86 K kg mol⁻¹)",
+    "options": {
+      "1": "0.0186 K",
+      "2": "0.0372 K",
+      "3": "0.0558 K",
+      "4": "0.0744 K"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2004",
+    "question_number": 144,
+    "question_text": "On mixing, heptane and octane form an ideal solution. At 373K, the vapour pressures of the two liquid components (heptane and octane) are 105 kPa and 45 kPa respectively. Vapour pressure of the solution obtained by mixing 25.0g of heptane and 35g octane will be (molar mass of heptane = 100, and octane = 114 g mol⁻¹ respectively)",
+    "options": {
+      "1": "96.2 kPa",
+      "2": "144.5 kPa",
+      "3": "72.0 kPa",
+      "4": "36.1 kPa"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2002",
+    "question_number": 145,
+    "question_text": "For an aqueous solution, freezing point is -0.18°C. Elevation of the boiling point of the same solution is (kf=1.86° mol⁻¹ kg and kb=0.512° mol⁻¹ kg)",
+    "options": {
+      "1": "0.186°",
+      "2": "0.0512°",
+      "3": "1.86°",
+      "4": "5.12°"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2002",
+    "question_number": 146,
+    "question_text": "In a mixture of A and B, components show negative deviation when",
+    "options": {
+      "1": "A – B interaction is stronger than A – A and B – B interaction",
+      "2": "A – B interaction is weaker than A – A and B – B interaction",
+      "3": "ΔVmix > 0, ΔSmix > 0",
+      "4": "ΔVmix = 0, ΔSmix > 0"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2002",
+    "question_number": 147,
+    "question_text": "Which of the following concentration factor is affected by change in temperature?",
+    "options": {
+      "1": "Molarity",
+      "2": "Molality",
+      "3": "Mole fraction",
+      "4": "Weight fraction"
+    },
+    "marked_answer": "1"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2003",
+    "question_number": 148,
+    "question_text": "A pressure cooker reduces cooking time for food because",
+    "options": {
+      "1": "heat is more evenly distributed in the cooking space",
+      "2": "boiling point of water involved in cooking is increased",
+      "3": "the higher pressure inside the cooker crushes the food material",
+      "4": "cooking involves chemical reactions helped by a rise in temperature"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2004",
+    "question_number": 149,
+    "question_text": "To neutralise completely 20 mL of 0.1 M aqueous solution of phosphorous acid (H3PO3), the volume of 0.1 M aqueous KOH solution required is",
+    "options": {
+      "1": "10 mL",
+      "2": "20 mL",
+      "3": "30 mL",
+      "4": "60 mL"
+    },
+    "marked_answer": "3"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2004",
+    "question_number": 150,
+    "question_text": "6.02 x 10^20 molecules of urea are present in 100 mL of its solution. The concentration of urea solution is (Avogadro constant, NA = 6.02 x 10^23)",
+    "options": {
+      "1": "0.001 M",
+      "2": "0.01 M",
+      "3": "0.02 M",
+      "4": "0.01 M"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2005",
+    "question_number": 151,
+    "question_text": "If α is the degree of dissociation of Na2SO4, the van't Hoff factor (i) used for calculating the molecular mass is",
+    "options": {
+      "1": "1 − 2α",
+      "2": "1 + 2α",
+      "3": "1 − α",
+      "4": "1 + α"
+    },
+    "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2005",
+    "question_number": 152,
+    "question_text": "Benzene and toluene form nearly ideal solutions. At 20°C, the vapour pressure of benzene is 75 Torr and that of toluene is 22 Torr. The partial vapour pressure of benzene at 20°C for a solution containing 78 g of benzene and 46 g of toluene in Torr is",
+    "options": {
+      "1": "53.5",
+      "2": "37.5",
+      "3": "25",
+      "4": "50"
+    },
+    "marked_answer": "4"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Solutions",
+    "source": "AIEEE 2005",
+    "question_number": 153,
+    "question_text": "Equimolar solutions in the same solvent have",
+    "options": {
+      "1": "different boiling point and different freezing point",
+      "2": "same boiling point and same freezing point",
+      "3": "same freezing point but different boiling point",
+      "4": "same boiling point but different freezing point"
+    },
+    "marked_answer": "2"
+  }
+]

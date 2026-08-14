@@ -1,0 +1,1766 @@
+[
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 1,
+    "question_text": "The set of all natural numbers 'x' such that 4x + 9 < 30 is equal to",
+    "options": {
+      "a": "{2, 3, 4, 5}",
+      "b": "{1, 2, 3, 4, 5}",
+      "c": "{1, 2, 3, 4, 5, 6}",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 2,
+    "question_text": "The set of all integers 'x' such that |x − 3| < 2 is equal to",
+    "options": {
+      "a": "{1, 2, 3, 4, 5}",
+      "b": "{1, 2, 3, 4}",
+      "c": "{2, 3, 4}",
+      "d": "{−4, −3, −2}"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 3,
+    "question_text": "Which of the following is a singleton set?",
+    "options": {
+      "a": "{x : |x| = 5, x ∈ N}",
+      "b": "{x : |x| = 6, x ∈ Z}",
+      "c": "{x : x² + 2x + 1 = 0, x ∈ N}",
+      "d": "{x : x² = 7, x ∈ N}"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 4,
+    "question_text": "Which of the following is a set?",
+    "options": {
+      "a": "The collection of all the months of a year beginning with the letter J.",
+      "b": "The collection of ten most talented writers of India.",
+      "c": "A team of eleven best cricket batsman of the world.",
+      "d": "A collection of most dangerous animals of the world."
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 5,
+    "question_text": "The set builder form of given set A = {3, 6, 9, 12} and B = {1, 4, 9, ..., 100} is",
+    "options": {
+      "a": "A = {x : x = 3n, n∈N and 1≤n≤5}, B = {x : x = n², n∈N and 1≤n≤10}",
+      "b": "A = {x : x = 3n, n∈N and 1≤n≤4}, B = {x : x = n², n∈N and 1≤n≤10}",
+      "c": "A = {x : x = 3n, n∈N and 1≤n≤4}, B = {x : x = n², n∈N and 1<n<10}",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 6,
+    "question_text": "Which of the following sets are empty sets?",
+    "options": {
+      "a": "A = {x∈N : 2x+5=6}",
+      "b": "B = {x : x∈N, 1<x≤2}",
+      "c": "E = {x : x is an even prime}",
+      "d": "G = {x : x∈Q, 1<x<2}"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 7,
+    "question_text": "Which of the following is not a null set?",
+    "options": {
+      "a": "Set of odd natural numbers divisible by 2",
+      "b": "Set of even prime numbers",
+      "c": "{x : x is a natural number, x<5 and x>7}",
+      "d": "{y : y is a point common to any two parallel lines}"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 8,
+    "question_text": "Which of the following is a singleton set?",
+    "options": {
+      "a": "{x : |x| < 1, x∈I}",
+      "b": "{x : |x| = 5, x∈I}",
+      "c": "{x : x² = 1, x∈I}",
+      "d": "{x : x² + x + 1 = 0, x∈R}"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 9,
+    "question_text": "Which of the following is not an empty set?",
+    "options": {
+      "a": "Set of natural numbers < 1",
+      "b": "Natural number between 3 and 4",
+      "c": "The set of integers between −2 and −3",
+      "d": "The set A = {x : x²=2 ∀x∈R}"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 10,
+    "question_text": "Which of the following is a finite set?",
+    "options": {
+      "a": "Set of natural numbers N",
+      "b": "Set of rational numbers Q",
+      "c": "Number of days in a week",
+      "d": "Set of concentric circles"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 11,
+    "question_text": "Which of the following sets is a finite set?",
+    "options": {
+      "a": "A = {x : x∈Z and x²−5x+6=0}",
+      "b": "B = {x : x∈Z and x² is even}",
+      "c": "D = {x : x∈Z and x>−10}",
+      "d": "All of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 12,
+    "question_text": "Which of the following sets is an infinite set?",
+    "options": {
+      "a": "Set of concentric circles in a plane",
+      "b": "Set of letters of the english alphabets",
+      "c": "{x∈N : x<200}",
+      "d": "All of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 13,
+    "question_text": "Which of the following is a finite set?",
+    "options": {
+      "a": "Set of all points in a plane",
+      "b": "Set of all lines in a plane",
+      "c": "{x : x∈R and 0<x<1}",
+      "d": "Set of all persons on the earth"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 14,
+    "question_text": "Which of the following is an equal set?",
+    "options": {
+      "a": "A = {a, b, c, d}, B = {d, c, b, a}",
+      "b": "A = {4, 8, 12, 16}, B = {8, 4, 16, 18}",
+      "c": "A = {x : x is a multiple of 10}, B = {10, 15, 20, 25, 30, ...}",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 15,
+    "question_text": "Which of the following sets are equal? (i) A={1,2,3} (ii) B={x∈R : x²−2x+1=0} (iii) C={1,2,3} (iv) D={x∈R : x³−6x²+11x−6=0}",
+    "options": {
+      "a": "A = B = C",
+      "b": "A = C = D",
+      "c": "A = B = D",
+      "d": "B = C = D"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 16,
+    "question_text": "Which of the following sets are equal? A={x:x∈N, x<3}, B={1,2}, C={3,1}, D={x:x∈N, x is odd, x<5}, E={1,2,1,1}, F={1,1,3}",
+    "options": {
+      "a": "A = C = D",
+      "b": "A = B = E",
+      "c": "C = D = E",
+      "d": "Both (b) and (c)"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 17,
+    "question_text": "Which of the following has only one subset?",
+    "options": {
+      "a": "{ }",
+      "b": "{4}",
+      "c": "{4, 5}",
+      "d": "{0}"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 18,
+    "question_text": "Let A = {1, 2, 3, 4}, B = {2, 4, 6}. Then the number of sets C such that A∩B ⊆ C ⊆ A∪B is",
+    "options": {
+      "a": "6",
+      "b": "9",
+      "c": "8",
+      "d": "10"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 19,
+    "question_text": "Two finite sets have m and n elements, respectively. The total number of subsets of the first set is 56 more than the total number of subsets of second set. What are the values of m and n respectively?",
+    "options": {
+      "a": "7, 6",
+      "b": "6, 3",
+      "c": "5, 1",
+      "d": "8, 7"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 20,
+    "question_text": "If A = {x : x = 4n+1, 2≤n≤5}, then number of subsets of A is",
+    "options": {
+      "a": "8",
+      "b": "15",
+      "c": "4",
+      "d": "16"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 21,
+    "question_text": "If A = {x : x = n², n = 1, 2, 3}, then number of proper subsets is",
+    "options": {
+      "a": "3",
+      "b": "8",
+      "c": "7",
+      "d": "4"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 22,
+    "question_text": "Let A = {(1,2), (3,4), 5} then which of the following is incorrect?",
+    "options": {
+      "a": "{3,4} ⊄ A as (3,4) is an element of A",
+      "b": "{5}, {(3,4)} are subsets of A but not elements of A",
+      "c": "{1,2}, {5} are subsets of A",
+      "d": "{(1,2), (3,4), 5} are subset of A"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 23,
+    "question_text": "Which one of the following have same sense w.r.t. open and closed intervals?",
+    "options": {
+      "a": "A=[2,3] and B={x:x∈R, 2≤x≤3}",
+      "b": "A=[−3,5] and B={x:x∈R, −3<x≤5}",
+      "c": "A=[−15,−2] and B={x:x∈R, −15<x<−2}",
+      "d": "A=(−1,2) and B={x:x∈R, −1≤x≤2}"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 24,
+    "question_text": "Let A={1,3,5,7,9,11}, then number of subsets of A are equal to",
+    "options": {
+      "a": "6²",
+      "b": "2⁶",
+      "c": "6",
+      "d": "3⁶"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 25,
+    "question_text": "Let A={(x,y):y=e^(2x), x∈R} and B={(x,y):y=e^(−2x) ∀x∈R} then A∩B is",
+    "options": {
+      "a": "Not a set",
+      "b": "Singleton set",
+      "c": "Empty set",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 26,
+    "question_text": "Let A={x:x∈R, |x|<2}, B={x:x∈R, |x−2|≥2} and A∪B=R−C, then the set C equals",
+    "options": {
+      "a": "{x:−2<x≤2}",
+      "b": "{x:−2≤x≤4}",
+      "c": "{x:2≤x<4}",
+      "d": "None of these"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 27,
+    "question_text": "A set contains k elements. The power set of this set contains ______ elements.",
+    "options": {
+      "a": "k",
+      "b": "2^k − 2",
+      "c": "2^k",
+      "d": "k²"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 28,
+    "question_text": "If the set A contains 5 elements, then the number of elements in the power set P(A) is",
+    "options": {
+      "a": "32",
+      "b": "25",
+      "c": "16",
+      "d": "8"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 29,
+    "question_text": "If set A={1,3,5}, then number of elements in P{P(A)} is",
+    "options": {
+      "a": "8",
+      "b": "256",
+      "c": "248",
+      "d": "250"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 30,
+    "question_text": "Consider A={1,2} and B={2,3} then which of the following options is correct?",
+    "options": {
+      "a": "P(A∪B) ≠ P(A)∪P(B)",
+      "b": "P(A∪B) = P(A)∪P(B)",
+      "c": "P(A∪B) = P(A)∩P(B)",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 31,
+    "question_text": "If A and B are non-empty sets, then P(A)∪P(B) is equal to",
+    "options": {
+      "a": "P(A∪B)",
+      "b": "P(A∩B)",
+      "c": "P(A) = P(B)",
+      "d": "None of these"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 32,
+    "question_text": "If A is the void set φ, then P(A) has just one element i.e. P(φ)={φ}. So number of elements of P[P(P(φ))] is",
+    "options": {
+      "a": "4",
+      "b": "3",
+      "c": "5",
+      "d": "2⁴"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 33,
+    "question_text": "If A={a,{b}}, then find P(A).",
+    "options": {
+      "a": "{φ,{a},{{b}},{a,{b}}}",
+      "b": "{φ,{a}}",
+      "c": "{{a},{b},φ}",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 34,
+    "question_text": "Which of the following is a universal set?",
+    "options": {
+      "a": "Set of all points in xy-plane",
+      "b": "Set R of real numbers",
+      "c": "Set N of natural numbers",
+      "d": "All of these"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 35,
+    "question_text": "The shaded region in the figure represents",
+    "options": {
+      "a": "A∩B",
+      "b": "A∪B",
+      "c": "B−A",
+      "d": "(A−B)∪(B−A)"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 36,
+    "question_text": "The shaded region in the given figure is",
+    "options": {
+      "a": "B∩(A∪C)",
+      "b": "B∪(A∩C)",
+      "c": "B∩(A−C)",
+      "d": "B−(A∪C)"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 37,
+    "question_text": "Let A, B and C are subsets of universal set U. If A={2,4,6,8,12,20}, B={3,6,9,12,15}, C={5,10,15,20} and U is the set of all whole numbers. Then, the correct Venn diagram is",
+    "options": {
+      "a": "diagram a",
+      "b": "diagram b",
+      "c": "diagram c",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 38,
+    "question_text": "Let U be the set of all boys and girls in school. G be the set of all girls in the school, B be the set of all boys in the school and S be the set of all students in the school who take swimming. Some but not all students in the school take swimming.",
+    "options": {
+      "a": "diagram a",
+      "b": "diagram b",
+      "c": "diagram c",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 39,
+    "question_text": "If Y is the smallest set such that Y∪{1,2}={1,2,3,5,9}, then Y is equal to",
+    "options": {
+      "a": "{1,2,3,5,9}",
+      "b": "{3,5,9}",
+      "c": "{1,2}",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 40,
+    "question_text": "If A={x:x=3^n, n≤6, n∈N} and B={x:x=9^n, n≤4, n∈N}, then which of the following is incorrect?",
+    "options": {
+      "a": "A∪B={3,9,27,81,243,729,6561}",
+      "b": "A∩B={9,81,729,6561}",
+      "c": "A−B={3,27,243}",
+      "d": "AΔB={3,27,243}"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 41,
+    "question_text": "Let A={x∈N : x is a multiple of 3} and B={x∈N : x is a multiple of 6}, then A−B is equal to",
+    "options": {
+      "a": "{6,12,18,.....}",
+      "b": "{3,6,9,12,.....}",
+      "c": "{3,9,15,21,.....}",
+      "d": "None of these"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 42,
+    "question_text": "If A={x:x is a multiple of 3} and B={x:x is a multiple of 5}, then A−B is equal to",
+    "options": {
+      "a": "Ā∩B",
+      "b": "A∩B̄",
+      "c": "Ā∩B̄",
+      "d": "A∩B"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 43,
+    "question_text": "If A, B and C are three sets such that A∩B=A∩C and A∪B=A∪C, then",
+    "options": {
+      "a": "A = C",
+      "b": "B = C",
+      "c": "A∩B = φ",
+      "d": "A = B"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 44,
+    "question_text": "Let X and Y be the sets of all positive divisors of 400 and 1000 respectively (including 1 and the number), then n(X∩Y) =",
+    "options": {
+      "a": "4",
+      "b": "6",
+      "c": "8",
+      "d": "12"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 45,
+    "question_text": "Let Z denote the set of all integers where A={(a,b):a²+3b²=28, a,b∈Z} and B={(a,b):a>b, a,b∈Z}, then the number of elements in A∩B is",
+    "options": {
+      "a": "2",
+      "b": "6",
+      "c": "4",
+      "d": "5"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 46,
+    "question_text": "If A={7,8,9} and B={9,5} then (A∪B)×(A∩B) is",
+    "options": {
+      "a": "{(7,9),(7,5),(8,9),(8,5),(9,9),(9,5)}",
+      "b": "{(5,9),(7,9),(8,9),(9,9)}",
+      "c": "{(9,5),(9,7),(9,8),(9,9)}",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 47,
+    "question_text": "If A={3,5,7,9,11}, B={7,9,11,13}, C={11,13,15} and D={15,17}, then (A∪D)∩(B∪C) is equal to",
+    "options": {
+      "a": "{5,7,9,11,15}",
+      "b": "{7,9,11,15}",
+      "c": "{7,9,11,13,15}",
+      "d": "{7,9,11}"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 48,
+    "question_text": "If A={x:x²=1} and B={x:x⁴=1}, then AΔB is equal to",
+    "options": {
+      "a": "{i,−i}",
+      "b": "{−1,1}",
+      "c": "{−1,1,i,−i}",
+      "d": "{φ}"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 49,
+    "question_text": "Consider the following relations I. A−B=A−(A∩B) II. A=(A∩B)∪(A−B) III. A−(B∪C)=(A−B)∪(A−C). Which of these is/are correct?",
+    "options": {
+      "a": "Both I and III",
+      "b": "Only II",
+      "c": "Both II and III",
+      "d": "Both I and II"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 50,
+    "question_text": "If A, B, C are three sets, then A∩(B∪C) is equal to",
+    "options": {
+      "a": "(A∪B)∩(A∪C)",
+      "b": "(A∩B)∩(A∩C)",
+      "c": "(A∩B)∪(A∪C)",
+      "d": "(A∩B)∪(A∩C)"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 51,
+    "question_text": "If A and B are two sets, then (A−B)∪(B−A)∪(A∩B) is equal to",
+    "options": {
+      "a": "only A",
+      "b": "A∪B",
+      "c": "(A∪B)'",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 52,
+    "question_text": "If U be the universal set and A, B are subsets of U such that n(U)=25, n(A)=15, n(A∪B)'=8, n(A∩B)=6 then n(B) and n(B−A) are respectively given by the ordered pairs",
+    "options": {
+      "a": "(6, 2)",
+      "b": "(8, 2)",
+      "c": "(8, 8)",
+      "d": "(16, 8)"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 53,
+    "question_text": "If X={x:x∈N}, Y={2x:x∈N} and Z={5x:x∈N} then X∩Y∩Z is equal to",
+    "options": {
+      "a": "{x:x∈N}",
+      "b": "{5x:x∈N}",
+      "c": "{10x:x∈N}",
+      "d": "{2x:x∈N}"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 54,
+    "question_text": "If A={8,9,10} and B={1,2,3,4,5}, then the number of elements in A×A×B are",
+    "options": {
+      "a": "15",
+      "b": "30",
+      "c": "45",
+      "d": "75"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 55,
+    "question_text": "If A={x:x²=16} and B={x:x⁴=256}, then AΔB is equal to",
+    "options": {
+      "a": "{−4i,4i}",
+      "b": "{−4,4}",
+      "c": "{−4,4,4i,−4i}",
+      "d": "{φ}"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 56,
+    "question_text": "If Na={an, n∈N}, then N3∩N5 is equal to",
+    "options": {
+      "a": "N8",
+      "b": "N5",
+      "c": "N3",
+      "d": "N15"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 57,
+    "question_text": "If two sets A and B have 16 elements in common, then number of elements common to each of the sets A×B and B×A are",
+    "options": {
+      "a": "2^16",
+      "b": "2^8",
+      "c": "2^(16×16)",
+      "d": "2^32"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 58,
+    "question_text": "If A={(x,y):x²+y²=25} and B={(x,y):x²+16y²=144} then A∩B contain",
+    "options": {
+      "a": "one point",
+      "b": "two points",
+      "c": "three points",
+      "d": "four points"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 59,
+    "question_text": "In a survey of 100 students, the number of students studying various languages were found to be: English only 18, English but not Hindi 23, English and Sanskrit 8, English 26, Sanskrit 48, Sanskrit and Hindi 8, no language 24. How many students were studying Hindi?",
+    "options": {
+      "a": "18",
+      "b": "15",
+      "c": "16",
+      "d": "14"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 60,
+    "question_text": "How many students were studying English and Hindi?",
+    "options": {
+      "a": "2",
+      "b": "5",
+      "c": "4",
+      "d": "3"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 61,
+    "question_text": "If A and B be any two sets, then A∩(A∪B)' is equal to",
+    "options": {
+      "a": "A",
+      "b": "B",
+      "c": "φ",
+      "d": "None of these"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 62,
+    "question_text": "If n(A)=12, n(B)=8, n(A∩B)=4, then n(A∪B) is equal to",
+    "options": {
+      "a": "20",
+      "b": "12",
+      "c": "16",
+      "d": "18"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 63,
+    "question_text": "If n(A)=115, n(B)=326, n(A−B)=47, then n(A∪B) is equal to",
+    "options": {
+      "a": "373",
+      "b": "165",
+      "c": "370",
+      "d": "389"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 64,
+    "question_text": "If A⊆B, then B'−A' is equal to",
+    "options": {
+      "a": "A'",
+      "b": "B'",
+      "c": "A−B",
+      "d": "φ"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 65,
+    "question_text": "Let U=R. If A={x∈R:0<x<2}, B={x∈R:1<x≤3}, which of the following is incorrect?",
+    "options": {
+      "a": "A'={x∈R:x≤0 or x≥2}",
+      "b": "B'={x∈R:x≤1 or x>3}",
+      "c": "A∪B={x∈R:0≤x≤3}",
+      "d": "A∩B={x∈R:1<x<2}"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 66,
+    "question_text": "If A={2,3,4,8,10}, B={3,4,5,10,12} and C={4,5,6,12,14}, then (A∪B)∩(A∪C) is equal to",
+    "options": {
+      "a": "{2,3,4,5,10,12}",
+      "b": "{2,3,4,5,8,10,12}",
+      "c": "{2,3,4,10,12}",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 67,
+    "question_text": "Which one of the following is (A−B)∪(B−A)?",
+    "options": {
+      "a": "(A∪B)∪(A−B)",
+      "b": "(A∪B)∪(A∩B)",
+      "c": "(A∪B)−(A∩B)",
+      "d": "(A−B)∩(B−A)"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Sets",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 68,
+    "question_text": "The set (A∪B∪C)∩(A∩B'∩C')'∩C' is equal to",
+    "options": {
+      "a": "B∩C'",
+      "b": "A∩C",
+      "c": "B'∩C",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 1,
+    "question_text": "If A=[a_ij]2x2 where a_ij = i+j, then A is equal to",
+    "options": {
+      "a": "[[1,2],[3,4]]",
+      "b": "[[2,3],[3,4]]",
+      "c": "[[1,1],[2,2]]",
+      "d": "[[1,2],[1,2]]"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 2,
+    "question_text": "The number of all possible matrices of order 3 x 3 with each entry 0 or 1 is",
+    "options": {
+      "a": "18",
+      "b": "512",
+      "c": "81",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 3,
+    "question_text": "The order of the single matrix obtained from [[1,-1],[0,2],[2,3]]{[[-1,0,2],[2,0,1]]-[[0,1,21],[1,0,21]]} is",
+    "options": {
+      "a": "2x3",
+      "b": "2x2",
+      "c": "3x2",
+      "d": "3x3"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 4,
+    "question_text": "A square matrix A=[a_ij]nxn is called a diagonal matrix if a_ij=0 for",
+    "options": {
+      "a": "i=j",
+      "b": "i<j",
+      "c": "i>j",
+      "d": "i≠j"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 5,
+    "question_text": "A square matrix A=[a_ij]nxn is called a lower triangular matrix if a_ij=0 for",
+    "options": {
+      "a": "i=j",
+      "b": "i<j",
+      "c": "i>j",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 6,
+    "question_text": "The matrix A=[[0,1],[1,0]] is a",
+    "options": {
+      "a": "unit matrix",
+      "b": "diagonal matrix",
+      "c": "symmetric matrix",
+      "d": "skew-symmetric matrix"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 7,
+    "question_text": "If [[x+y,2x+z],[x-y,2z+w]]=[[4,7],[0,10]], then the values of x, y, z and w respectively are",
+    "options": {
+      "a": "2, 2, 3, 4",
+      "b": "2, 3, 1, 2",
+      "c": "3, 3, 0, 1",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 8,
+    "question_text": "If [[x-y,2x+z],[2x-y,3z+w]]=[[-1,5],[0,13]], then the value of w is",
+    "options": {
+      "a": "1",
+      "b": "2",
+      "c": "3",
+      "d": "4"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 9,
+    "question_text": "If A=[a_ij]2x2, where a_ij=(i+2j)²/2, then A is equal to",
+    "options": {
+      "a": "[[9,25],[8,18]]",
+      "b": "[[9/2,25/2],[8,18]]",
+      "c": "[[9,25],[4,9]]",
+      "d": "[[9/2,15/2],[4,9]]"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 10,
+    "question_text": "Find x, y, z and w respectively such that [[x-y,2z+w],[2x-y,2x+w]]=[[5,3],[12,15]]",
+    "options": {
+      "a": "7, 2, 1, 1",
+      "b": "7, 5, 3, 8",
+      "c": "1, 2, 5, 6",
+      "d": "6, 3, 2, 1"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 11,
+    "question_text": "If [[a+b,2],[5,ab]]=[[6,2],[5,8]], then find the values of a and b respectively",
+    "options": {
+      "a": "2, 4",
+      "b": "4, 2",
+      "c": "Both (a) & (b)",
+      "d": "None of these"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 12,
+    "question_text": "For what values of x and y are the following matrices equal A=[[2x+1,3y],[0,y²-5y]], B=[[x+3,y²+2],[0,-6]]",
+    "options": {
+      "a": "2, 3",
+      "b": "3, 4",
+      "c": "2, 2",
+      "d": "3, 3"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 13,
+    "question_text": "If A=[a_ij]4x3 where a_ij=(i-j)/(i+j), then find A",
+    "options": {
+      "a": "matrix option a",
+      "b": "matrix option b",
+      "c": "matrix option c",
+      "d": "matrix option d"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 14,
+    "question_text": "If [[x+3,z+4,2y-7],[4x+6,a-1,0],[b-3,3b,z+2c]] = [[0,6,3y-2],[2x,-3,2c+2],[2b+4,-21,0]] then, find the values of a, b, c, x, y and z respectively",
+    "options": {
+      "a": "-2, -7, -1, -3, -5, 2",
+      "b": "2, 7, 1, 3, 5, -2",
+      "c": "1, 3, 4, 2, 8, 9",
+      "d": "-1, 3, -2, -7, 4, 5"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 15,
+    "question_text": "Find the values of a, b, c and d respectively if [[2a+b,a-2b],[5c-d,4c+3d]]=[[4,-3],[11,24]]",
+    "options": {
+      "a": "1, 3, 9, 8",
+      "b": "2, 3, 4, 5",
+      "c": "1, 4, 8, 10",
+      "d": "1, 5, 6, 7"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 16,
+    "question_text": "If A=[[α,0],[1,1]] and B=[[1,0],[5,1]], then find value of α for which A²=B is",
+    "options": {
+      "a": "1",
+      "b": "-1",
+      "c": "4",
+      "d": "No real values"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 17,
+    "question_text": "If P=[[i,0,-i],[0,-i,i],[-i,i,0]] and Q=[[-i,i],[0,0],[i,-i]], then PQ is equal to",
+    "options": {
+      "a": "[[-2,2],[1,-1],[1,-1]]",
+      "b": "[[2,-2],[-1,1],[-1,1]]",
+      "c": "[[2,-2],[-1,1]]",
+      "d": "[[1,0,0],[0,1,0],[0,0,1]]"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 18,
+    "question_text": "Let A=[[cos²θ,sinθcosθ],[cosθsinθ,sin²θ]] and B=[[cos²φ,sinφcosφ],[cosφsinφ,sin²φ]], then AB=O, if",
+    "options": {
+      "a": "θ=nφ, n=0,1,2,.....",
+      "b": "θ+φ=nπ, n=0,1,2,.....",
+      "c": "θ=φ+(2n+1)π/2, n=0,1,2,.....",
+      "d": "θ=φ+nπ/2, n=0,1,2,....."
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 19,
+    "question_text": "[1 x 1][[1,3,2],[2,5,1],[15,3,2]][[1],[2],[x]]=0, if x=",
+    "options": {
+      "a": "-7",
+      "b": "-11",
+      "c": "-2",
+      "d": "14"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 20,
+    "question_text": "If A=[[1,-1],[2,-1]], B=[[x,1],[y,-1]] and (A+B)²=A²+B², then x+y=",
+    "options": {
+      "a": "2",
+      "b": "3",
+      "c": "4",
+      "d": "5"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 21,
+    "question_text": "If A=[[4,1,0],[1,-2,2]], B=[[2,0,-1],[3,1,x]], C=[[1],[2],[1]] and D=[[15+x],[1]] such that (2A-3B)C=D, then x=",
+    "options": {
+      "a": "3",
+      "b": "-4",
+      "c": "-6",
+      "d": "6"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 22,
+    "question_text": "If AB=A and BA=B, then",
+    "options": {
+      "a": "B=I",
+      "b": "A=I",
+      "c": "A²=A",
+      "d": "B²=I"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 23,
+    "question_text": "If A=[[1,0,0],[0,1,0],[a,b,-1]], then (A-I)(A+I)=O for",
+    "options": {
+      "a": "a=b=0 only",
+      "b": "a=0 only",
+      "c": "b=0 only",
+      "d": "any a and b"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 24,
+    "question_text": "If A=[[1,1],[0,2]], then A⁸-2⁸(A-I)=",
+    "options": {
+      "a": "I-A",
+      "b": "2I-A",
+      "c": "I+A",
+      "d": "A-2I"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 25,
+    "question_text": "If A=[[2,2,1],[1,3,1],[1,2,2]], then A³-7A²+10A=",
+    "options": {
+      "a": "5I+A",
+      "b": "5I-A",
+      "c": "5I",
+      "d": "6I"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 26,
+    "question_text": "If A is a m x n matrix such that AB and BA are both defined, then B is an",
+    "options": {
+      "a": "m x n matrix",
+      "b": "n x m matrix",
+      "c": "n x n matrix",
+      "d": "m x m matrix"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 27,
+    "question_text": "If A=[[1,2],[3,4]], then A²-5A is equal to",
+    "options": {
+      "a": "2I",
+      "b": "3I",
+      "c": "-2I",
+      "d": "null matrix"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 28,
+    "question_text": "If A=[[2,1],[-1,2]], B=[[1,-2],[2,1]], C=[[1,-3],[2,1]], then",
+    "options": {
+      "a": "A+B=B+A and A+(B+C)=(A+B)+C",
+      "b": "A+B=B+A and AC=BC",
+      "c": "A+B=B+A and AB=BC",
+      "d": "AC=BC and A=BC"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 29,
+    "question_text": "If A=[[-2,4],[-1,2]], then A² is",
+    "options": {
+      "a": "null matrix",
+      "b": "unit matrix",
+      "c": "[[1,0],[0,0]]",
+      "d": "[[0,0],[0,1]]"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 30,
+    "question_text": "If A=[[a,b],[b,a]] and A²=[[α,β],[β,α]], then",
+    "options": {
+      "a": "α=a²+b², β=ab",
+      "b": "α=a²+b², β=2ab",
+      "c": "α=a²+b², β=a²-b²",
+      "d": "α=2ab, β=a²+b²"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 31,
+    "question_text": "If A and B are 2x2 matrices, then which of the following is true?",
+    "options": {
+      "a": "(A+B)²=A²+B²+2AB",
+      "b": "(A-B)²=A²+B²-2AB",
+      "c": "(A-B)(A+B)=A²+AB-BA-B²",
+      "d": "(A+B)(A-B)=A²-B²"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 32,
+    "question_text": "If A=[[1,2,x],[0,1,0],[0,0,1]] and B=[[1,-2,y],[0,1,0],[0,0,1]] and AB=I3, then x+y equals",
+    "options": {
+      "a": "0",
+      "b": "-1",
+      "c": "2",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 33,
+    "question_text": "If A is a square matrix such that A²=A, then (I+A)³-7A is equal to",
+    "options": {
+      "a": "A",
+      "b": "I-A",
+      "c": "I",
+      "d": "3A"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 34,
+    "question_text": "If A=[[i,0],[0,i]], n∈N, then A^(4n) equals",
+    "options": {
+      "a": "[[i,0],[0,i]]",
+      "b": "[[0,0],[0,0]]",
+      "c": "[[1,0],[0,1]]",
+      "d": "[[0,i],[i,0]]"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 35,
+    "question_text": "If [[x],[y],[z]]=(1/40)[[5,10,-5],[-5,-2,13],[10,-4,6]][[5],[0],[5]], then the value of x+y+z is",
+    "options": {
+      "a": "3",
+      "b": "0",
+      "c": "2",
+      "d": "1"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 36,
+    "question_text": "If A=[[1,2],[2,1]] and f(x)=(1+x)(1-x), then f(A) is",
+    "options": {
+      "a": "-4[[1,1],[1,1]]",
+      "b": "-8[[1,1],[1,1]]",
+      "c": "4[[1,1],[1,1]]",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 37,
+    "question_text": "If A=[[1,2,-1],[3,0,2],[4,5,0]], B=[[1,0,0],[2,1,0],[0,1,3]], then AB is equal to",
+    "options": {
+      "a": "[[5,1,-3],[3,2,6],[14,5,0]]",
+      "b": "[[11,4,3],[1,2,3],[0,3,3]]",
+      "c": "[[1,8,4],[2,9,6],[0,2,0]]",
+      "d": "[[0,1,2],[5,4,3],[1,8,2]]"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 38,
+    "question_text": "[[7,1,2],[9,2,1]][[3],[4],[5]]+2[[4],[2]] is equal to",
+    "options": {
+      "a": "[[43],[44]]",
+      "b": "[[43],[45]]",
+      "c": "[[45],[44]]",
+      "d": "[[44],[45]]"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 39,
+    "question_text": "If A=[[1,-2,1],[2,1,3]] and B=[[2,1],[3,2],[1,1]], then (AB)^T is equal to",
+    "options": {
+      "a": "[[-3,-2],[10,7]]",
+      "b": "[[-3,10],[-2,7]]",
+      "c": "[[-3,7],[10,2]]",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 40,
+    "question_text": "For any square matrix A, AA^T is a",
+    "options": {
+      "a": "unit matrix",
+      "b": "symmetric matrix",
+      "c": "skew-symmetric matrix",
+      "d": "diagonal matrix"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 41,
+    "question_text": "If matrix A=[[a,b,c],[b,c,a],[c,a,b]] where a, b, c are real positive numbers, abc=1 and A^T A=I, then the value of a³+b³+c³ is",
+    "options": {
+      "a": "1",
+      "b": "2",
+      "c": "3",
+      "d": "4"
+    },
+    "marked_answer": "d"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 42,
+    "question_text": "If A=[[2,4,-1],[-1,0,2]], B=[[3,4],[-1,2],[2,1]], then find (AB)^T.",
+    "options": {
+      "a": "[[0,1],[15,-2]]",
+      "b": "[[15,2],[13,1]]",
+      "c": "(1/6)[[1,2],[3,4]]",
+      "d": "None of these"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 43,
+    "question_text": "If A=[[1,2,2],[2,1,-2],[a,2,b]] is a matrix satisfying AA^T=9I3, then find the values of a and b respectively.",
+    "options": {
+      "a": "1, 2",
+      "b": "-2, -1",
+      "c": "-1, 2",
+      "d": "-2, 1"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 44,
+    "question_text": "Find the values of x, y, z respectively if the matrix A=[[0,2y,z],[x,y,-z],[x,-y,z]] satisfy the equation A^T A=I3.",
+    "options": {
+      "a": "values a",
+      "b": "values b",
+      "c": "values c",
+      "d": "values d"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 45,
+    "question_text": "If A=[[5,x],[y,0]] and A=A^T, then",
+    "options": {
+      "a": "x=0, y=5",
+      "b": "x+y=5",
+      "c": "x=y",
+      "d": "x=0, y=9"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 46,
+    "question_text": "If A=[[cosθ,-sinθ],[sinθ,cosθ]], then A^T+A=I2, if",
+    "options": {
+      "a": "θ=nπ, n∈Z",
+      "b": "θ=(2n+1)π/2, n∈Z",
+      "c": "θ=2nπ+π/3, n∈Z",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 47,
+    "question_text": "If A=[[cosx,-sinx],[sinx,cosx]], find AA^T.",
+    "options": {
+      "a": "Zero matrix",
+      "b": "I2",
+      "c": "[[1,1],[1,1]]",
+      "d": "None of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 48,
+    "question_text": "If A=[[1,1],[1,1]] satisfies A⁴=kA^T, then find the value of k.",
+    "options": {
+      "a": "1",
+      "b": "4",
+      "c": "8",
+      "d": "10"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 49,
+    "question_text": "If P=[[√3/2,1/2],[-1/2,√3/2]], A=[[1,1],[0,1]] and Q=PAP^T, then P^T Q^2005 P is",
+    "options": {
+      "a": "[[1,2005],[0,1]]",
+      "b": "[[1,2005],[2005,1]]",
+      "c": "[[1,0],[2005,1]]",
+      "d": "[[1,0],[0,1]]"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 50,
+    "question_text": "If A=[[1],[-4],[3]] and B=[[-1,2,1]], then (AB)' is equal to",
+    "options": {
+      "a": "[[-1,4,-3],[2,-8,6],[1,-4,3]]",
+      "b": "[[-1,2,1],[4,-8,-4],[-3,6,3]]",
+      "c": "[[1,4,-3],[2,-8,6],[1,4,3]]",
+      "d": "[[-1,4,-3],[2,8,6],[1,-4,3]]"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 51,
+    "question_text": "If A^T=[[3,4],[-1,2],[0,1]] and B=[[-1,2,1],[1,2,3]], then find A^T-B^T.",
+    "options": {
+      "a": "[[4,3],[-3,0],[-1,-2]]",
+      "b": "[[4,3],[-3,0],[-1,-2]]",
+      "c": "[[4,3],[-3,0],[-1,-2]]",
+      "d": "[[4,3],[-3,0],[-1,-2]]"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 52,
+    "question_text": "If A=[[0,-1,2],[1,0,3],[-2,-3,0]], then A+2A^T equals",
+    "options": {
+      "a": "A",
+      "b": "-A^T",
+      "c": "A^T",
+      "d": "2A²"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 53,
+    "question_text": "If A and B are square matrices of same order and A' denotes the transpose of A, then",
+    "options": {
+      "a": "(AB)'=B'A'",
+      "b": "(AB)'=A'B'",
+      "c": "AB=0⟹|A|=0 and |B|=0",
+      "d": "AB=O⟹A=O or B=O"
+    },
+    "marked_answer": "a"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 54,
+    "question_text": "If A=[[0,2,-3],[-2,0,-1],[3,1,0]], then A is a",
+    "options": {
+      "a": "symmetric matrix",
+      "b": "skew-symmetric matrix",
+      "c": "diagonal matrix",
+      "d": "none of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 55,
+    "question_text": "If A and B are symmetric matrices of the same order, then",
+    "options": {
+      "a": "AB is a symmetric matrix",
+      "b": "A-B is a skew-symmetric matrix",
+      "c": "AB+BA is a symmetric matrix",
+      "d": "AB-BA is a symmteric matrix"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 56,
+    "question_text": "If A=[[3,x-1],[2x+3,x+2]] is a symmetric matrix, then x=",
+    "options": {
+      "a": "4",
+      "b": "3",
+      "c": "-4",
+      "d": "-3"
+    },
+    "marked_answer": "c"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 57,
+    "question_text": "If A is a square matrix, then A-A' is a",
+    "options": {
+      "a": "diagonal matrix",
+      "b": "skew-symmetric matrix",
+      "c": "symmetric matrix",
+      "d": "none of these"
+    },
+    "marked_answer": "b"
+  },
+  {
+    "subject": "Mathematics",
+    "topic": "Matrices",
+    "source": "MTG Objective NCERT - MCQs Corner",
+    "question_number": 58,
+    "question_text": "Each diagonal element of a skew-symmetric matrix is",
+    "options": {
+      "a": "zero",
+      "b": "positive",
+      "c": "non-real",
+      "d": "negative"
+    },
+    "marked_answer": "a"
+  }
+]
