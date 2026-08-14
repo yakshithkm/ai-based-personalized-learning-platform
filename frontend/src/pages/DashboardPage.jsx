@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import { trackProductEvent } from '../utils/productEvents';
+import { useToast } from '../context/ToastContext';
 
 const StatIcon = ({ kind }) => {
   if (kind === 'attempts') {
@@ -88,22 +89,33 @@ const DashboardPage = () => {
   const [analytics, setAnalytics] = useState(null);
   const [recommendationPayload, setRecommendationPayload] = useState(null);
   const [error, setError] = useState('');
+  const toast = useToast();
+  const hadErrorRef = useRef(false);
+
+  const load = async () => {
+    setError('');
+    try {
+      const [aRes, rRes] = await Promise.all([
+        api.get('/analytics/me'),
+        api.get('/recommendations/me'),
+      ]);
+      setAnalytics(aRes.data);
+      setRecommendationPayload(rRes.data);
+      // Only celebrate recovering from a real failure — a toast on every
+      // silent background load would just be noise.
+      if (hadErrorRef.current) {
+        toast?.showToast('Dashboard loaded successfully', { type: 'success' });
+        hadErrorRef.current = false;
+      }
+    } catch (err) {
+      hadErrorRef.current = true;
+      setError(err?.response?.data?.message || 'Failed to load dashboard');
+    }
+  };
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const [aRes, rRes] = await Promise.all([
-          api.get('/analytics/me'),
-          api.get('/recommendations/me'),
-        ]);
-        setAnalytics(aRes.data);
-        setRecommendationPayload(rRes.data);
-      } catch (err) {
-        setError(err?.response?.data?.message || 'Failed to load dashboard');
-      }
-    };
-
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const perf = analytics?.performance;
@@ -183,6 +195,43 @@ const DashboardPage = () => {
     });
     navigate('/practice?mode=focus');
   };
+
+  // Never show a blank/zeroed dashboard while the first load is in flight —
+  // skeleton placeholders instead, using the shared shimmer classes.
+  if (isLoading && !error) {
+    return (
+      <div className="page-grid">
+        <section className="panel hero-panel mentor-hero-panel" aria-busy="true" aria-label="Loading dashboard">
+          <div className="skeleton-chip" style={{ width: '180px', marginBottom: '0.8rem' }} />
+          <div className="skeleton-block" style={{ marginBottom: '0.8rem' }} />
+          <div className="skeleton-chip" />
+        </section>
+        <div className="dashboard-skeleton-row">
+          <div className="skeleton-block" />
+          <div className="skeleton-block" />
+          <div className="skeleton-block" />
+        </div>
+        <section className="panel">
+          <div className="skeleton-chip" style={{ width: '140px', marginBottom: '0.7rem' }} />
+          <div className="skeleton-block" />
+        </section>
+      </div>
+    );
+  }
+
+  if (error && isLoading) {
+    return (
+      <div className="page-grid">
+        <section className="panel error-state-card">
+          <h3>Couldn't load your dashboard</h3>
+          <p>{error}</p>
+          <button type="button" className="solid-btn" onClick={load}>
+            Try again
+          </button>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="page-grid">

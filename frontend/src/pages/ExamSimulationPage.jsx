@@ -1776,7 +1776,7 @@ const ExamSimulationPage = () => {
               <span className="exam-toggle-label">Enable strict navigation</span>
             </label>
 
-            <button className="solid-btn" onClick={startSimulation}>Start Exam Simulation</button>
+            <button className="solid-btn exam-start-btn" onClick={startSimulation}>Start Exam Simulation</button>
           </div>
         )}
       </section>

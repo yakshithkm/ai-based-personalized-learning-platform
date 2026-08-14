@@ -3,12 +3,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
-import Hero3DCanvas from '../components/Hero3DCanvas';
 import Footer from '../components/Footer';
 import Reveal from '../components/landing/Reveal';
 import DashboardPreview from '../components/landing/DashboardPreview';
+import PriceCounter from '../components/landing/PriceCounter';
+import RecommendationCard from '../components/landing/RecommendationCard';
 import FaqAccordion from '../components/landing/FaqAccordion';
-import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon } from '../components/landing/icons';
+import AiNetworkHero from '../components/landing/AiNetworkHero';
+import { useCountUp } from '../hooks/useScrollReveal';
+import { useMagneticHover } from '../hooks/useMagneticHover';
+import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, ArrowRightIcon } from '../components/landing/icons';
 
 const navLinks = [
   { label: 'Why TutorMind', href: 'why-tutormind' },
@@ -109,7 +113,7 @@ const testimonials = [
 const pricingPlans = [
   {
     name: 'Free',
-    price: '₹0',
+    priceValue: 0,
     period: 'forever',
     tagline: 'Get started and see how adaptive practice feels.',
     features: ['Daily practice sets', 'Basic performance tracking', '1 exam simulation / month'],
@@ -118,7 +122,7 @@ const pricingPlans = [
   },
   {
     name: 'Pro',
-    price: '₹499',
+    priceValue: 499,
     period: '/ month',
     tagline: 'For students actively preparing for an upcoming exam.',
     features: [
@@ -132,7 +136,7 @@ const pricingPlans = [
   },
   {
     name: 'Premium',
-    price: '₹999',
+    priceValue: 999,
     period: '/ month',
     tagline: 'Maximum support for the final exam stretch.',
     features: ['Everything in Pro', 'Deep-dive performance reports', 'Custom revision roadmap'],
@@ -173,6 +177,10 @@ const HomePage = () => {
   const isAuthOpen = authMode === 'login' || authMode === 'register';
 
   const [busy, setBusy] = useState(false);
+  const heroAccuracyValue = useCountUp(18, { duration: 1500 });
+  const heroReadinessValue = useCountUp(78, { duration: 1700 });
+  const heroCtaRef = useMagneticHover();
+  const finalCtaRef = useMagneticHover();
   const [error, setError] = useState('');
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [registerForm, setRegisterForm] = useState({
@@ -214,6 +222,17 @@ const HomePage = () => {
     }
   };
 
+  // Clicking the logo while already on "/" is otherwise a no-op for
+  // react-router (same path, no navigation) — so it needs its own handler
+  // to actually take you back to the very top of the hero.
+  const scrollToTop = (event) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.history?.pushState) {
+      window.history.pushState(null, '', '/');
+    }
+  };
+
   // Deep-link support: if someone lands on /#pricing-section directly
   // (shared link, refresh, back/forward), scroll to that section.
   useEffect(() => {
@@ -223,6 +242,54 @@ const HomePage = () => {
     if (node) {
       node.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }, []);
+
+  // Navbar scroll-shadow + active-section highlighting, driven by one
+  // shared scroll listener (rAF-throttled).
+  //
+  // The active section is picked as the LAST nav-linked section (in
+  // document order) whose top edge has scrolled above the navbar — the
+  // standard, height-agnostic scroll-spy algorithm. An earlier version used
+  // a thin IntersectionObserver trigger band in the middle of the viewport,
+  // which broke on short sections: scrolling to "Subjects" (a short
+  // section) immediately filled that band with the next section's
+  // ("How It Works") content, so the nav highlighted the wrong link.
+  const [isNavScrolled, setIsNavScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  useEffect(() => {
+    const sectionIds = navLinks.map((link) => link.href);
+    const NAV_OFFSET = 96; // sticky navbar height + a little breathing room
+    let frame = null;
+
+    const measure = () => {
+      frame = null;
+      setIsNavScrolled(window.scrollY > 24);
+
+      let current = '';
+      for (const id of sectionIds) {
+        const node = document.getElementById(id);
+        if (!node) continue;
+        if (node.getBoundingClientRect().top - NAV_OFFSET <= 0) {
+          current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+
+    const handleScroll = () => {
+      if (frame === null) {
+        frame = requestAnimationFrame(measure);
+      }
+    };
+
+    measure();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, []);
 
   const onLoginSubmit = async (event) => {
@@ -255,14 +322,16 @@ const HomePage = () => {
 
   return (
     <div className="landing-page">
-      <header className="landing-topbar">
-        <BrandLogo className="landing-logo" to="/" />
+      <div className="landing-noise" aria-hidden="true" />
+      <header className={`landing-topbar ${isNavScrolled ? 'is-scrolled' : ''}`}>
+        <BrandLogo className="landing-logo" to="/" onClick={scrollToTop} />
 
         <nav className="landing-nav">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={`#${link.href}`}
+              className={activeSection === link.href ? 'is-active' : ''}
               onClick={(event) => {
                 event.preventDefault();
                 scrollToSection(link.href);
@@ -286,9 +355,11 @@ const HomePage = () => {
       <section className="landing-hero">
         <div className="hero-aurora" aria-hidden="true" />
         <div className="hero-grid-lines" aria-hidden="true" />
-
-        <div className="hero-3d-stage" aria-hidden="true">
-          <Hero3DCanvas />
+        <div className="hero-vignette" aria-hidden="true" />
+        <div className="hero-dust" aria-hidden="true">
+          {Array.from({ length: 7 }).map((_, index) => (
+            <span key={index} className="hero-dust-mote" />
+          ))}
         </div>
 
         <div className="hero-content centered">
@@ -301,8 +372,14 @@ const HomePage = () => {
           </p>
 
           <div className="hero-cta-row">
-            <button className="solid-btn magnetic-btn" type="button" onClick={() => openAuth('register')}>
+            <button
+              ref={heroCtaRef}
+              className="solid-btn magnetic-btn btn-with-arrow"
+              type="button"
+              onClick={() => openAuth('register')}
+            >
               Start Practicing
+              <ArrowRightIcon className="btn-arrow" />
             </button>
             <button className="outline-btn" type="button" onClick={() => scrollToSection('how-it-works')}>
               See how it works
@@ -317,6 +394,10 @@ const HomePage = () => {
               </li>
             ))}
           </ul>
+
+          <div className="hero-3d-stage" aria-hidden="true">
+            <AiNetworkHero />
+          </div>
         </div>
 
         <div className="hero-float-card hero-float-card-1" aria-hidden="true">
@@ -325,12 +406,13 @@ const HomePage = () => {
         </div>
         <div className="hero-float-card hero-float-card-2" aria-hidden="true">
           <span className="hero-float-label">Accuracy this week</span>
-          <span className="hero-float-value hero-float-value-up">+18%</span>
+          <span className="hero-float-value hero-float-value-up">+{heroAccuracyValue}%</span>
         </div>
         <div className="hero-float-card hero-float-card-3" aria-hidden="true">
           <span className="hero-float-label">Exam readiness</span>
-          <span className="hero-float-value">78 / 100</span>
+          <span className="hero-float-value">{heroReadinessValue} / 100</span>
         </div>
+        <RecommendationCard />
       </section>
 
       <section className="landing-section" id="why-tutormind">
@@ -406,10 +488,23 @@ const HomePage = () => {
         <div className="testimonial-grid">
           {testimonials.map((item, index) => (
             <Reveal as="figure" className="testimonial-card" key={item.name} delay={index * 90}>
+              <div className="testimonial-stars" aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, starIndex) => (
+                  <StarIcon key={starIndex} />
+                ))}
+              </div>
               <blockquote>&ldquo;{item.quote}&rdquo;</blockquote>
               <figcaption>
-                <strong>{item.name}</strong>
-                <span>{item.role}</span>
+                <span className="testimonial-avatar" aria-hidden="true">
+                  {item.name
+                    .split(' ')
+                    .map((part) => part[0])
+                    .join('')}
+                </span>
+                <span className="testimonial-meta">
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </span>
               </figcaption>
             </Reveal>
           ))}
@@ -432,7 +527,7 @@ const HomePage = () => {
               {plan.highlighted && <span className="pricing-badge">Most popular</span>}
               <h3>{plan.name}</h3>
               <p className="pricing-price">
-                {plan.price}
+                <PriceCounter value={plan.priceValue} />
                 <span>{plan.period}</span>
               </p>
               <p className="pricing-tagline">{plan.tagline}</p>
@@ -466,8 +561,14 @@ const HomePage = () => {
         <p className="landing-section-subtext">
           Join TutorMind and let your practice sessions tell you exactly what to study next.
         </p>
-        <button className="solid-btn magnetic-btn" type="button" onClick={() => openAuth('register')}>
+        <button
+          ref={finalCtaRef}
+          className="solid-btn magnetic-btn cta-pulse-btn btn-with-arrow"
+          type="button"
+          onClick={() => openAuth('register')}
+        >
           Get Started Free
+          <ArrowRightIcon className="btn-arrow" />
         </button>
       </Reveal>
 

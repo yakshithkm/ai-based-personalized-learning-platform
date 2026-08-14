@@ -135,6 +135,7 @@
 
 .exam-timer strong {
   font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .exam-timer {
@@ -303,7 +304,7 @@
   gap: 0.12rem;
   justify-items: center;
   align-content: center;
-  transition: transform 150ms ease, border-color 200ms ease, box-shadow 200ms ease;
+  transition: transform 150ms ease, border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
 }
 
 .palette-btn:hover {
@@ -421,4 +422,27 @@
   margin-top: 0.3rem;
   color: #93c5fd;
   font-size: 0.84rem;
+}
+
+/* A brief glow every few seconds, with a long rest between pulses, so it
+   reads as "occasional" rather than a constantly-animating button. */
+.exam-start-btn {
+  animation: examStartPulse 4.5s ease-in-out infinite;
+}
+
+@keyframes examStartPulse {
+  0%,
+  85%,
+  100% {
+    box-shadow: none;
+  }
+  90% {
+    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.18), 0 0 16px rgba(96, 165, 250, 0.3);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exam-start-btn {
+    animation: none;
+  }
 }

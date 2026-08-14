@@ -1,4 +1,5 @@
 import BrandLogo from './BrandLogo';
+import Reveal from './landing/Reveal';
 
 const footerColumns = [
   {
@@ -82,7 +83,7 @@ const Footer = ({ variant = 'full' }) => {
   return (
     <footer className="app-footer">
       <div className="app-footer-grid">
-        <div className="app-footer-brand">
+        <Reveal as="div" className="app-footer-brand">
           <BrandLogo className="footer-brand" to="/dashboard" />
           <p>
             AI-powered personalized learning for NEET, JEE, and CET aspirants — practice smarter,
@@ -95,17 +96,17 @@ const Footer = ({ variant = 'full' }) => {
               </a>
             ))}
           </div>
-        </div>
+        </Reveal>
 
-        {footerColumns.map((column) => (
-          <div className="app-footer-col" key={column.title}>
+        {footerColumns.map((column, index) => (
+          <Reveal as="div" className="app-footer-col" key={column.title} delay={(index + 1) * 80}>
             <h5>{column.title}</h5>
             {column.links.map((link) => (
               <a key={link.label} href={link.href}>
                 {link.label}
               </a>
             ))}
-          </div>
+          </Reveal>
         ))}
       </div>
 

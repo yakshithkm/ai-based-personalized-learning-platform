@@ -3,6 +3,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api/client';
 import { trackProductEvent } from '../utils/productEvents';
 import { useAuth } from '../context/AuthContext';
+import { useToast } from '../context/ToastContext';
+import EmptyState from '../components/EmptyState';
 
 const makeSessionId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -14,6 +16,7 @@ const makeSessionId = () => {
 const PracticePage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const toast = useToast();
   const [searchParams] = useSearchParams();
   const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState('');
@@ -30,6 +33,7 @@ const PracticePage = () => {
   const [sessionMeta, setSessionMeta] = useState(null);
   const [xpPulse, setXpPulse] = useState(0);
   const [sessionId, setSessionId] = useState('');
+  const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
 
   useEffect(() => {
     const loadSubjects = async () => {
@@ -132,6 +136,7 @@ const PracticePage = () => {
     setRecommendedMode(false);
     setFocusMode(false);
     setSessionResults([]);
+    setIsLoadingQuestions(true);
 
     try {
       const exam = (user?.targetExam || user?.exam || '').trim().toUpperCase();
@@ -157,6 +162,8 @@ const PracticePage = () => {
       });
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to load questions');
+    } finally {
+      setIsLoadingQuestions(false);
     }
   };
 
@@ -335,8 +342,19 @@ const PracticePage = () => {
             ))}
           </select>
 
-          <button className="solid-btn" onClick={loadQuestions}>
-            Load Questions
+          <button
+            className={`solid-btn ${isLoadingQuestions ? 'btn-loading-pulse' : ''}`}
+            onClick={loadQuestions}
+            disabled={isLoadingQuestions}
+          >
+            {isLoadingQuestions ? (
+              <>
+                <span className="btn-spinner" aria-hidden="true" />
+                Loading...
+              </>
+            ) : (
+              'Load Questions'
+            )}
           </button>
         </div>
       </section>
@@ -344,7 +362,7 @@ const PracticePage = () => {
       {error && <section className="panel error-text">{error}</section>}
 
       {!!question && (
-        <section className="panel">
+        <section className="panel question-card" key={question._id || `${sessionId}-${currentIndex}`}>
           <div className="progress-head">
             <h3>
               Question {currentIndex + 1} / {questions.length}
@@ -435,9 +453,11 @@ const PracticePage = () => {
       )}
 
       {!question && questions.length === 0 && (
-        <section className="panel">
-          <p>No question loaded yet. Use filters and click Load Questions.</p>
-        </section>
+        <EmptyState
+          icon="practice"
+          title="No questions loaded yet"
+          description="Pick a subject and topic above, then load questions to begin."
+        />
       )}
     </div>
   );

@@ -64,3 +64,16 @@ export const TrendUpIcon = (props) => (
     <path d="M15 6.5h5.5V12" />
   </svg>
 );
+
+export const ArrowRightIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M4 12h15" />
+    <path d="m13 5 7 7-7 7" />
+  </svg>
+);
+
+export const StarIcon = (props) => (
+  <svg {...base} fill="currentColor" stroke="none" {...props} aria-hidden="true">
+    <path d="M12 2.7l2.7 5.85 6.3.63-4.75 4.35 1.32 6.17L12 16.9l-5.57 2.8 1.32-6.17-4.75-4.35 6.3-.63L12 2.7z" />
+  </svg>
+);

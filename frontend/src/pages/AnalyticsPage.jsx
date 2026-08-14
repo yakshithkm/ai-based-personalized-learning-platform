@@ -12,6 +12,8 @@ import {
   YAxis,
 } from 'recharts';
 import api from '../api/client';
+import EmptyState from '../components/EmptyState';
+import { useCountUp } from '../hooks/useScrollReveal';
 
 const chartTooltipStyle = {
   backgroundColor: '#111827',
@@ -25,23 +27,26 @@ const AnalyticsPage = () => {
   const [payload, setPayload] = useState(null);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const { data } = await api.get('/analytics/me');
-        setPayload(data);
-      } catch (err) {
-        setError(err?.response?.data?.message || 'Failed to load analytics');
-      }
-    };
+  const load = async () => {
+    setError('');
+    try {
+      const { data } = await api.get('/analytics/me');
+      setPayload(data);
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Failed to load analytics');
+    }
+  };
 
+  useEffect(() => {
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const bySubject = payload?.attemptsBySubject || [];
   const weakTopicPriority = payload?.weakTopicPriority || [];
   const weeklyImprovement = payload?.weeklyImprovement || [];
   const habit = payload?.habit || {};
+  const streakCountUp = useCountUp(habit.currentStreak || 0, { duration: 1200 });
   const topicMastery = payload?.topicMastery || [];
   const focusSuggestion = payload?.suggestedFocusTopic || '';
   const accuracyTrend = payload?.accuracyTrend || 'stable';
@@ -63,6 +68,51 @@ const AnalyticsPage = () => {
       : accuracyTrend === 'declining'
         ? 'Declining'
         : 'Stable';
+
+  if (!payload && !error) {
+    return (
+      <div className="page-grid">
+        <section className="panel" aria-busy="true" aria-label="Loading analytics">
+          <div className="skeleton-chip" style={{ width: '160px', marginBottom: '0.7rem' }} />
+          <div className="skeleton-chip" style={{ width: '320px' }} />
+        </section>
+        <div className="dashboard-skeleton-row">
+          <div className="skeleton-block" />
+          <div className="skeleton-block" />
+          <div className="skeleton-block" />
+        </div>
+        <section className="panel">
+          <div className="skeleton-block" style={{ minHeight: '220px' }} />
+        </section>
+      </div>
+    );
+  }
+
+  if (error && !payload) {
+    return (
+      <div className="page-grid">
+        <section className="panel error-state-card">
+          <h3>Couldn't load your analytics</h3>
+          <p>{error}</p>
+          <button type="button" className="solid-btn" onClick={load}>
+            Try again
+          </button>
+        </section>
+      </div>
+    );
+  }
+
+  if (payload && bySubject.length === 0 && trend.length === 0) {
+    return (
+      <div className="page-grid">
+        <EmptyState
+          icon="analytics"
+          title="No attempts yet"
+          description="Solve a few practice questions or run an exam simulation and your accuracy, timing, and weak-topic trends will show up here."
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="page-grid">
@@ -89,7 +139,7 @@ const AnalyticsPage = () => {
         </div>
         <div className="metric-card metric-neutral">
           <h4>Current Streak</h4>
-          <strong>{habit.currentStreak || 0} days</strong>
+          <strong>{streakCountUp} days</strong>
           <p>Daily goal: {habit.dailyGoal || 10}, today: {habit.todayCompleted || 0}</p>
         </div>
       </section>

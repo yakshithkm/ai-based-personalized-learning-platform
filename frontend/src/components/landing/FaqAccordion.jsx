@@ -22,17 +22,24 @@ const FaqAccordion = ({ items }) => {
             >
               {item.question}
               <span className="faq-icon" aria-hidden="true">
-                {isOpen ? '−' : '+'}
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path
+                    d="M5 12h14M12 5v14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </span>
             </button>
-            <div
-              id={panelId}
-              role="region"
-              aria-labelledby={buttonId}
-              className="faq-answer"
-              hidden={!isOpen}
-            >
-              <p>{item.answer}</p>
+            {/* CSS grid-template-rows 0fr -> 1fr trick: animates height smoothly
+                without measuring scrollHeight in JS, and naturally handles
+                content of any length (including reflow on resize). */}
+            <div className="faq-answer-collapse" aria-hidden={!isOpen}>
+              <div id={panelId} role="region" aria-labelledby={buttonId} className="faq-answer">
+                <p>{item.answer}</p>
+              </div>
             </div>
           </div>
         );
