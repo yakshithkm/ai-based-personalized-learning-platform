@@ -1,0 +1,226 @@
+/* Sidebar additions */
+
+/* Keep the sidebar scrollable but hide the scrollbar chrome — the raw
+   browser scrollbar looked out of place against the rest of the UI. */
+.sidebar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, modern Edge */
+}
+
+.sidebar-subtitle {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+.user-block-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-block-info .user-name,
+.user-block-info .user-email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-exam {
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+
+.user-block-chevron {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: var(--muted);
+  transition: transform var(--duration-base) var(--ease-out), color var(--duration-base) ease;
+}
+
+.user-block-chevron svg {
+  width: 100%;
+  height: 100%;
+}
+
+.user-block-link:hover .user-block-chevron {
+  transform: translateX(2px);
+  color: var(--text);
+}
+
+.sidebar-bottom {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+.upgrade-card {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(167, 139, 250, 0.35);
+  background: radial-gradient(220px 120px at 15% 0%, rgba(167, 139, 250, 0.22), transparent),
+    linear-gradient(180deg, rgba(76, 29, 149, 0.28), rgba(15, 23, 42, 0.6));
+  overflow: hidden;
+}
+
+.upgrade-card-icon {
+  width: 1.9rem;
+  height: 1.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.22);
+  color: #ddd6fe;
+  margin-bottom: 0.2rem;
+}
+
+.upgrade-card-icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: currentColor;
+}
+
+.upgrade-card strong {
+  color: var(--text);
+  font-size: 0.92rem;
+}
+
+.upgrade-card p {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: #cbd5e1;
+}
+
+.upgrade-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  text-decoration: none;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.84rem;
+  background: linear-gradient(180deg, #818cf8, #6366f1);
+}
+
+.upgrade-cta svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: none;
+}
+
+.sidebar-logout {
+  width: 100%;
+}
+
+/* Header additions */
+
+.header-search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 420px;
+}
+
+.header-search-wrap .header-search {
+  max-width: none;
+  width: 100%;
+}
+
+.search-kbd {
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: 0.68rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.1rem 0.4rem;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.search-dropdown {
+  left: 0;
+  right: auto;
+  top: calc(100% + 0.5rem);
+  width: 100%;
+  min-width: 260px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.search-suggestion-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.search-suggestion-item small {
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+.streak-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(251, 146, 60, 0.4);
+  background: rgba(251, 146, 60, 0.14);
+  color: #fdba74;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.streak-pill svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: currentColor;
+}
+
+.notif-count {
+  position: absolute;
+  top: -0.2rem;
+  right: -0.2rem;
+  width: auto;
+  min-width: 1.05rem;
+  height: 1.05rem;
+  padding: 0 0.2rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.62rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #fff;
+}
+
+.notification-title {
+  display: block;
+  margin-bottom: 0.1rem;
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .header-search-wrap {
+    max-width: none;
+  }
+
+  .search-kbd {
+    display: none;
+  }
+
+  .streak-pill span {
+    display: none;
+  }
+}

@@ -16,6 +16,11 @@ const SessionSummaryPage = lazy(() => import('./pages/SessionSummaryPage'));
 const AdminAnalyticsPage = lazy(() => import('./pages/AdminAnalyticsPage'));
 const ExamSimulationPage = lazy(() => import('./pages/ExamSimulationPage'));
 const ExamSimulationResultPage = lazy(() => import('./pages/ExamSimulationResultPage'));
+const WeakTopicsPage = lazy(() => import('./pages/WeakTopicsPage'));
+const StudyPlanPage = lazy(() => import('./pages/StudyPlanPage'));
+const MistakeBankPage = lazy(() => import('./pages/MistakeBankPage'));
+const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
+const AchievementsPage = lazy(() => import('./pages/AchievementsPage'));
 
 const PageFallback = () => <div className="center-screen">Loading...</div>;
 
@@ -99,6 +104,61 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <SessionSummaryPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/weak-topics"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <WeakTopicsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/study-plan"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <StudyPlanPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/mistake-bank"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <MistakeBankPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/flashcards"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <FlashcardsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/achievements"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <AchievementsPage />
             </Layout>
           </ProtectedRoute>
         }

@@ -1,0 +1,259 @@
+/* --- Subject filter chips (Weak Topics page) --- */
+
+.subject-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.subject-filter-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-0);
+  color: var(--muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: border-color var(--duration-base) ease, color var(--duration-base) ease;
+}
+
+.subject-filter-chip.active {
+  border-color: var(--primary);
+  color: var(--text);
+  background: rgba(96, 165, 250, 0.12);
+}
+
+/* --- Weak topics full list --- */
+
+.weak-topics-table {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.weak-topics-row-v2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.5);
+  flex-wrap: wrap;
+}
+
+.weak-topics-info {
+  flex: 1;
+  min-width: 160px;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.weak-topics-info small {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.weak-topics-metric {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 180px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.weak-topics-metric .subject-bar-track {
+  width: 100px;
+  flex: 0 0 auto;
+}
+
+.severity-badge {
+  padding: 0.22rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex: 0 0 auto;
+}
+
+.severity-critical { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
+.severity-weak { background: rgba(245, 158, 11, 0.18); color: #fcd34d; }
+.severity-moderate { background: rgba(96, 165, 250, 0.18); color: #93c5fd; }
+
+/* --- Study Plan page --- */
+
+.time-allocation-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.time-allocation-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.time-allocation-subject {
+  width: 6rem;
+  flex: 0 0 auto;
+  font-size: 0.85rem;
+}
+
+.time-allocation-row .subject-bar-track {
+  flex: 1;
+  min-width: 100px;
+}
+
+.time-allocation-pct {
+  width: 2.4rem;
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+.time-allocation-reason {
+  width: 100%;
+  color: var(--muted);
+  font-size: 0.76rem;
+  padding-left: calc(0.5rem + 6rem + 0.6rem);
+}
+
+.session-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.session-row {
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.session-row strong {
+  display: block;
+  font-size: 0.86rem;
+  margin-bottom: 0.15rem;
+  color: #93c5fd;
+}
+
+.session-row p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #e2e8f0;
+}
+
+/* --- Mistake Bank page --- */
+
+.repeated-mistake-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.repeated-mistake-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.5);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.repeated-mistake-info {
+  flex: 1;
+  display: grid;
+  gap: 0.05rem;
+}
+
+.repeated-mistake-info small {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.mistake-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.mistake-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.5);
+  flex-wrap: wrap;
+}
+
+.mistake-info {
+  flex: 1;
+  min-width: 160px;
+  display: grid;
+  gap: 0.1rem;
+}
+
+.mistake-info small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-transform: capitalize;
+}
+
+.mistake-time {
+  font-size: 0.74rem;
+  color: var(--muted);
+  flex: 0 0 auto;
+}
+
+/* --- Achievements page --- */
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+.achievement-grid-card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.achievement-grid-card strong {
+  font-size: 0.92rem;
+}
+
+.achievement-grid-card p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.achievement-grid-card small {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.achievement-grid-card.locked {
+  opacity: 0.6;
+}
+
+.achievement-icon-locked {
+  background: rgba(148, 163, 184, 0.16);
+  color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+  .time-allocation-reason {
+    padding-left: 0;
+  }
+}

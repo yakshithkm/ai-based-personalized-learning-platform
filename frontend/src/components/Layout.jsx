@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import api from '../api/client';
 import BrandLogo from './BrandLogo';
 import Footer from './Footer';
 
@@ -34,7 +35,7 @@ const menuItems = [
   },
   {
     to: '/exam-simulation',
-    label: 'Exam Sim',
+    label: 'Exam Simulation',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 3h14l4 4v14H4V3zm2 2v14h14V8h-4V5H6zm2 6h8v2H8v-2zm0 4h8v2H8v-2zm0-8h5v2H8V7z" />
@@ -42,11 +43,47 @@ const menuItems = [
     ),
   },
   {
-    to: '/profile',
-    label: 'Profile',
+    to: '/weak-topics',
+    label: 'Weak Topics',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.4 0-9 2.2-9 5v2h18v-2c0-2.8-4.6-5-9-5z" />
+        <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0119 12a7 7 0 11-3.41-6.01l-1.46 1.46A5 5 0 1017 12a4.93 4.93 0 00-1.59-3.66l1.42-1.42A6.95 6.95 0 0118.83 12 7 7 0 015 12a6.92 6.92 0 012.59-5.41L6.17 5.17A9 9 0 1021 12a8.94 8.94 0 00-3.17-6.83z" />
+      </svg>
+    ),
+  },
+  {
+    to: '/study-plan',
+    label: 'Study Plan',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7 2h10a1 1 0 011 1v18a1 1 0 01-1 1H7a1 1 0 01-1-1V3a1 1 0 011-1zm1 2v16h8V4H8zm1 3h6v2H9V7zm0 4h6v2H9v-2zm0 4h4v2H9v-2z" />
+      </svg>
+    ),
+  },
+  {
+    to: '/mistake-bank',
+    label: 'Mistake Bank',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+      </svg>
+    ),
+  },
+  {
+    to: '/flashcards',
+    label: 'Flashcards',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3 5h14v12H3V5zm2 2v8h10V7H5zm4 12h14V7h-2v10H9v2z" />
+      </svg>
+    ),
+  },
+  {
+    to: '/achievements',
+    label: 'Achievements',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 1l9 4v6c0 5.5-3.8 10.7-9 12-5.2-1.3-9-6.5-9-12V5l9-4zm-1 12l6-6-1.4-1.4L11 10.2 8.8 8 7.4 9.4 11 13z" />
       </svg>
     ),
   },
@@ -83,11 +120,30 @@ const MenuIcon = () => (
   </svg>
 );
 
-const notifications = [
-  { id: 1, tone: 'warning', text: 'Your daily goal resets in 3 hours — 4 questions left.' },
-  { id: 2, tone: 'success', text: 'New weak-topic drill unlocked for Organic Chemistry.' },
-  { id: 3, tone: 'info', text: 'Mock test results from your last attempt are ready to review.' },
-];
+const FlameIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2c2.5 3 4 5.7 4 8.2A4 4 0 0112 14a4 4 0 01-4-3.8C8 7.7 9.5 5 12 2zm0 20a7 7 0 01-7-7c0-1.9.9-3.4 2-4.7.1 1.6 1.1 2.7 2.3 2.7.9 0 1.4-.6 1.4-1.4 0-.6-.3-1-.6-1.5.9.2 1.9 1.4 1.9 3 0 .8-.3 1.4-.6 2 .9-.1 1.6-1 1.6-2.3 0-.9-.4-1.6-.8-2.3C15.3 10 17 12 17 15a5 5 0 01-5 7z" />
+  </svg>
+);
+
+const ChevronIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const CrownIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8zm2.7 12h12.6v2H5.7v-2z" />
+  </svg>
+);
+
+const toneToClass = (tone) => {
+  if (tone === 'danger') return 'notification-danger';
+  if (tone === 'warning') return 'notification-warning';
+  if (tone === 'success') return 'notification-success';
+  return 'notification-info';
+};
 
 const Layout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -98,8 +154,16 @@ const Layout = ({ children }) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [headerScrolled, setHeaderScrolled] = useState(false);
 
+  const [notifications, setNotifications] = useState([]);
+  const [streak, setStreak] = useState(0);
+  const [subjectTopics, setSubjectTopics] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+
   const notifRef = useRef(null);
   const profileRef = useRef(null);
+  const searchRef = useRef(null);
+  const searchInputRef = useRef(null);
 
   useEffect(() => {
     const onClickAway = (event) => {
@@ -108,6 +172,9 @@ const Layout = ({ children }) => {
       }
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setProfileOpen(false);
+      }
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchOpen(false);
       }
     };
     document.addEventListener('mousedown', onClickAway);
@@ -120,20 +187,85 @@ const Layout = ({ children }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Global Ctrl/Cmd+K shortcut to focus the header search, matching the
+  // "Ctrl + K" hint shown next to the search field.
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadHeaderData = async () => {
+      try {
+        const [analyticsRes, subjectsRes] = await Promise.all([
+          api.get('/analytics/me'),
+          api.get('/questions/subjects-topics'),
+        ]);
+        if (cancelled) return;
+        setNotifications(analyticsRes?.data?.notifications || []);
+        setStreak(analyticsRes?.data?.habit?.currentStreak || 0);
+        setSubjectTopics(subjectsRes?.data?.subjects || []);
+      } catch (error) {
+        // Header chrome degrades gracefully — an empty streak/notification
+        // state is a fine fallback if analytics hasn't loaded yet.
+      }
+    };
+    loadHeaderData();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   const onLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const searchSuggestions = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    if (!query) return [];
+    const results = [];
+    subjectTopics.forEach((entry) => {
+      if (entry.subject?.toLowerCase().includes(query)) {
+        results.push({ label: entry.subject, kind: 'Subject', topic: `${entry.subject}` });
+      }
+      (entry.topics || []).forEach((topic) => {
+        if (topic?.toLowerCase().includes(query)) {
+          results.push({ label: topic, kind: entry.subject, topic: `${entry.subject} - ${topic}` });
+        }
+      });
+    });
+    return results.slice(0, 8);
+  }, [searchTerm, subjectTopics]);
+
+  const goToSuggestion = (suggestion) => {
+    setSearchOpen(false);
+    setSearchTerm('');
+    navigate(`/practice?topic=${encodeURIComponent(suggestion.topic)}`);
+  };
+
   const onSearchSubmit = (event) => {
     event.preventDefault();
-    const query = new FormData(event.target).get('q');
+    if (searchSuggestions.length > 0) {
+      goToSuggestion(searchSuggestions[0]);
+      return;
+    }
+    const query = searchTerm.trim();
     if (query) {
+      setSearchOpen(false);
       navigate(`/practice?search=${encodeURIComponent(query)}`);
     }
   };
 
   const visibleMenuItems = user?.isAdmin ? [...menuItems, adminMenuItem] : menuItems;
+  const initials = (user?.name || 'U').charAt(0).toUpperCase();
 
   return (
     <div className="app-shell">
@@ -145,8 +277,8 @@ const Layout = ({ children }) => {
 
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="brand-wrap">
-          <BrandLogo className="sidebar-brand" to="/" />
-          <p className="nav-badge">{user?.targetExam} Prep</p>
+          <BrandLogo className="sidebar-brand" to="/dashboard" />
+          <p className="sidebar-subtitle">AI-Powered Learning</p>
         </div>
 
         <button
@@ -158,11 +290,12 @@ const Layout = ({ children }) => {
           }}
           aria-label="View profile"
         >
-          <span className="user-avatar">{(user?.name || 'U').charAt(0).toUpperCase()}</span>
-          <div>
+          <span className="user-avatar">{initials}</span>
+          <div className="user-block-info">
             <p className="user-name">{user?.name}</p>
-            <p className="user-email">{user?.email}</p>
+            <p className="user-email sidebar-user-exam">{user?.targetExam} Aspirant</p>
           </div>
+          <span className="user-block-chevron"><ChevronIcon /></span>
         </button>
 
         <nav className="nav-menu">
@@ -174,9 +307,21 @@ const Layout = ({ children }) => {
           ))}
         </nav>
 
-        <button className="outline-btn" onClick={onLogout}>
-          Logout
-        </button>
+        <div className="sidebar-bottom">
+          <div className="upgrade-card">
+            <span className="upgrade-card-icon"><CrownIcon /></span>
+            <strong>Unlock Your Potential</strong>
+            <p>Get unlimited access to AI insights, mocks &amp; more.</p>
+            <a className="solid-btn upgrade-cta" href="/#pricing-section">
+              Upgrade to Pro
+              <ChevronIcon />
+            </a>
+          </div>
+
+          <button className="outline-btn sidebar-logout" onClick={onLogout}>
+            Logout
+          </button>
+        </div>
       </aside>
 
       <header className={`app-header ${headerScrolled ? 'scrolled' : ''}`}>
@@ -189,12 +334,48 @@ const Layout = ({ children }) => {
           <MenuIcon />
         </button>
 
-        <form className="header-search" role="search" onSubmit={onSearchSubmit}>
-          <SearchIcon />
-          <input type="search" name="q" placeholder="Search topics, questions, subjects..." aria-label="Search" />
-        </form>
+        <div className="header-search-wrap" ref={searchRef}>
+          <form className="header-search" role="search" onSubmit={onSearchSubmit}>
+            <SearchIcon />
+            <input
+              ref={searchInputRef}
+              type="search"
+              name="q"
+              placeholder="Search topics, questions, subjects..."
+              aria-label="Search"
+              value={searchTerm}
+              onChange={(event) => {
+                setSearchTerm(event.target.value);
+                setSearchOpen(true);
+              }}
+              onFocus={() => setSearchOpen(true)}
+            />
+            <kbd className="search-kbd">Ctrl + K</kbd>
+          </form>
+
+          {searchOpen && searchSuggestions.length > 0 && (
+            <div className="header-dropdown search-dropdown" role="listbox">
+              {searchSuggestions.map((suggestion) => (
+                <button
+                  type="button"
+                  key={`${suggestion.kind}-${suggestion.label}`}
+                  className="header-dropdown-item search-suggestion-item"
+                  onClick={() => goToSuggestion(suggestion)}
+                >
+                  <span>{suggestion.label}</span>
+                  <small>{suggestion.kind}</small>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
         <div className="header-actions">
+          <span className="streak-pill" title={`${streak} day streak`}>
+            <FlameIcon />
+            {streak} day streak
+          </span>
+
           <div className="header-profile" ref={notifRef}>
             <button
               type="button"
@@ -203,7 +384,7 @@ const Layout = ({ children }) => {
               onClick={() => setNotifOpen((open) => !open)}
             >
               <BellIcon />
-              {notifications.length > 0 && <span className="badge-dot" />}
+              {notifications.length > 0 && <span className="badge-dot notif-count">{notifications.length}</span>}
             </button>
 
             {notifOpen && (
@@ -211,11 +392,21 @@ const Layout = ({ children }) => {
                 <div className="header-dropdown-head">
                   <strong>Notifications</strong>
                 </div>
-                {notifications.map((note) => (
-                  <div key={note.id} className={`header-dropdown-item notification-item notification-${note.tone}`}>
-                    <span>{note.text}</span>
+                {notifications.length ? (
+                  notifications.map((note) => (
+                    <div key={note.type} className={`header-dropdown-item notification-item ${toneToClass(note.tone)}`}>
+                      <span>
+                        <strong className="notification-title">{note.title}</strong>
+                        <br />
+                        {note.text}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="header-dropdown-item notification-item">
+                    <span>You&apos;re all caught up — nothing needs your attention right now.</span>
                   </div>
-                ))}
+                )}
               </div>
             )}
           </div>
@@ -227,7 +418,7 @@ const Layout = ({ children }) => {
               onClick={() => setProfileOpen((open) => !open)}
               aria-label="Open profile menu"
             >
-              <span className="user-avatar">{(user?.name || 'U').charAt(0).toUpperCase()}</span>
+              <span className="user-avatar">{initials}</span>
             </button>
 
             {profileOpen && (

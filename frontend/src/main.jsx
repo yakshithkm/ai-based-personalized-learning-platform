@@ -12,6 +12,9 @@ import './styles/features/exam.css';
 import './styles/features/practice.css';
 import './styles/features/landing.css';
 import './styles/features/profile.css';
+import './styles/features/app-shell.css';
+import './styles/features/dashboard.css';
+import './styles/features/subpages.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
