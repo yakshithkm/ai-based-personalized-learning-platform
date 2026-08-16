@@ -92,6 +92,7 @@ const performanceSchema = new mongoose.Schema(
     dailyGoal: { type: Number, default: 10 },
     currentStreak: { type: Number, default: 0 },
     longestStreak: { type: Number, default: 0 },
+    totalActiveDays: { type: Number, default: 0 },
     todayCompleted: { type: Number, default: 0 },
     lastPracticeDate: { type: Date, default: null },
     streakDays: [
@@ -99,6 +100,15 @@ const performanceSchema = new mongoose.Schema(
         day: { type: String, required: true },
         practiced: { type: Boolean, default: false },
         attempts: { type: Number, default: 0 },
+      },
+    ],
+    // 365-day submission calendar - fixed-size (capped by HEATMAP_WINDOW_DAYS in
+    // analysisService), so this never grows unbounded on the document.
+    heatmap: [
+      {
+        _id: false,
+        day: { type: String, required: true },
+        count: { type: Number, default: 0 },
       },
     ],
     weeklyTrend: [

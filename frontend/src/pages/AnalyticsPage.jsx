@@ -13,7 +13,6 @@ import {
 } from 'recharts';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
-import { useCountUp } from '../hooks/useScrollReveal';
 
 const chartTooltipStyle = {
   backgroundColor: '#111827',
@@ -45,8 +44,6 @@ const AnalyticsPage = () => {
   const bySubject = payload?.attemptsBySubject || [];
   const weakTopicPriority = payload?.weakTopicPriority || [];
   const weeklyImprovement = payload?.weeklyImprovement || [];
-  const habit = payload?.habit || {};
-  const streakCountUp = useCountUp(habit.currentStreak || 0, { duration: 1200 });
   const topicMastery = payload?.topicMastery || [];
   const focusSuggestion = payload?.suggestedFocusTopic || '';
   const accuracyTrend = payload?.accuracyTrend || 'stable';
@@ -137,11 +134,6 @@ const AnalyticsPage = () => {
           <strong className="focus-line">{focusSuggestion || 'Keep practicing'}</strong>
           <p>Next best topic selected by adaptive engine.</p>
         </div>
-        <div className="metric-card metric-neutral">
-          <h4>Current Streak</h4>
-          <strong>{streakCountUp} days</strong>
-          <p>Daily goal: {habit.dailyGoal || 10}, today: {habit.todayCompleted || 0}</p>
-        </div>
       </section>
 
       <section className="panel chart-panel">
@@ -166,18 +158,6 @@ const AnalyticsPage = () => {
             />
           </LineChart>
         </ResponsiveContainer>
-      </section>
-
-      <section className="panel">
-        <h3>Streak Visualization</h3>
-        <div className="streak-grid">
-          {(habit.streakDays || []).map((day) => (
-            <article key={day.day} className={`streak-cell ${day.practiced ? 'streak-on' : 'streak-off'}`}>
-              <strong>{day.day.slice(5)}</strong>
-              <small>{day.attempts} attempts</small>
-            </article>
-          ))}
-        </div>
       </section>
 
       {error && <section className="panel error-text">{error}</section>}

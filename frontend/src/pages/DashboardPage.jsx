@@ -126,7 +126,7 @@ const DashboardPage = () => {
   const focusSuggestion = analytics?.suggestedFocusTopic || perf?.suggestedFocusTopic || '';
   const difficultyPlan = recommendationPayload?.difficultyPlan || {};
   const nextAction = analytics?.nextAction || null;
-  const habit = analytics?.habit || { dailyGoal: 10, todayCompleted: 0, currentStreak: 0, remainingToday: 10 };
+  const habit = analytics?.habit || { dailyGoal: 10, todayCompleted: 0, remainingToday: 10 };
   const urgency = analytics?.urgency || { alerts: [] };
   const readiness = analytics?.readiness || { status: 'yellow', value: 50 };
   const examReadiness = analytics?.examReadiness || { score: 0, breakdown: {} };
@@ -243,10 +243,6 @@ const DashboardPage = () => {
           <span className="progress-tag">
             <span className="nav-icon"><StatIcon kind="attempts" /></span>
             Daily Goal: {habit.todayCompleted}/{habit.dailyGoal}
-          </span>
-          <span className="progress-tag">
-            <span className="nav-icon"><StatIcon kind="streak" /></span>
-            Streak: {habit.currentStreak} day{habit.currentStreak === 1 ? '' : 's'}
           </span>
           <span className="progress-tag">Remaining Today: {habit.remainingToday}</span>
           <span className="progress-tag">

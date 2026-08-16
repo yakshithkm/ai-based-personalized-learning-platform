@@ -41,6 +41,15 @@ const menuItems = [
       </svg>
     ),
   },
+  {
+    to: '/profile',
+    label: 'Profile',
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.4 0-9 2.2-9 5v2h18v-2c0-2.8-4.6-5-9-5z" />
+      </svg>
+    ),
+  },
 ];
 
 // Only ever shown to admins — added conditionally in the component body,
@@ -140,13 +149,21 @@ const Layout = ({ children }) => {
           <p className="nav-badge">{user?.targetExam} Prep</p>
         </div>
 
-        <div className="user-block">
+        <button
+          type="button"
+          className="user-block user-block-link"
+          onClick={() => {
+            setSidebarOpen(false);
+            navigate('/profile');
+          }}
+          aria-label="View profile"
+        >
           <span className="user-avatar">{(user?.name || 'U').charAt(0).toUpperCase()}</span>
           <div>
             <p className="user-name">{user?.name}</p>
             <p className="user-email">{user?.email}</p>
           </div>
-        </div>
+        </button>
 
         <nav className="nav-menu">
           {visibleMenuItems.map((item) => (
@@ -219,7 +236,24 @@ const Layout = ({ children }) => {
                   <p className="user-name">{user?.name}</p>
                   <p className="user-email">{user?.email}</p>
                 </div>
-                <button type="button" className="header-dropdown-item" onClick={() => navigate('/dashboard')}>
+                <button
+                  type="button"
+                  className="header-dropdown-item"
+                  onClick={() => {
+                    setProfileOpen(false);
+                    navigate('/profile');
+                  }}
+                >
+                  View Profile
+                </button>
+                <button
+                  type="button"
+                  className="header-dropdown-item"
+                  onClick={() => {
+                    setProfileOpen(false);
+                    navigate('/dashboard');
+                  }}
+                >
                   Dashboard
                 </button>
                 <button type="button" className="header-dropdown-item danger" onClick={onLogout}>

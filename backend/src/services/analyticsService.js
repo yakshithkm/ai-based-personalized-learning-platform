@@ -1,5 +1,7 @@
 const Attempt = require('../models/Attempt');
 const Mistake = require('../models/Mistake');
+const Question = require('../models/Question');
+const { getAllowedSubjectsForExam } = require('../config/examSubjectMap');
 const { rebuildPerformanceForUser } = require('./performanceService');
 const { getMistakeBankForUser } = require('./progressTracker');
 const {
@@ -14,6 +16,18 @@ const {
 
 const round = (value, digits = 1) => Number(value.toFixed(digits));
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+// Builds a "YYYY-MM-DD" key from the LOCAL calendar date of the given
+// instant - see analysisService.js's dayKey for why toISOString() is
+// deliberately avoided (it rolls the date back a day for any timezone
+// ahead of UTC, e.g. IST).
+const localDayKey = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
@@ -236,11 +250,11 @@ const buildBehaviorAnalysis = (attempts = [], now = Date.now()) => {
 
 const buildConsistencyScore = ({ attempts = [], topicStats = [], now = Date.now() }) => {
   const last14 = attempts.filter((entry) => new Date(entry.createdAt).getTime() >= now - 14 * DAY_MS);
-  const activeDaySet = new Set(last14.map((entry) => new Date(entry.createdAt).toISOString().slice(0, 10)));
+  const activeDaySet = new Set(last14.map((entry) => localDayKey(entry.createdAt)));
   const usageScore = clamp((activeDaySet.size / 14) * 100, 0, 100);
 
   const byDay = last14.reduce((acc, entry) => {
-    const dayKey = new Date(entry.createdAt).toISOString().slice(0, 10);
+    const dayKey = localDayKey(entry.createdAt);
     if (!acc[dayKey]) acc[dayKey] = [];
     acc[dayKey].push(entry);
     return acc;
@@ -608,10 +622,11 @@ const calculateXpSummary = (attempts = []) => {
   };
 };
 
-const getAdaptiveAnalytics = async (userId) => {
+const getAdaptiveAnalytics = async (userId, targetExam) => {
   const now = new Date();
+  const allowedSubjects = getAllowedSubjectsForExam(targetExam);
 
-  const [performance, recentAttempts, allAttempts, mistakeBank, dueMistakeCount] = await Promise.all([
+  const [performance, recentAttempts, allAttempts, mistakeBank, dueMistakeCount, totalQuestions, solvedQuestionIds, attemptedQuestionIds] = await Promise.all([
     rebuildPerformanceForUser(userId),
     Attempt.find({ user: userId })
       .sort({ createdAt: -1 })
@@ -623,7 +638,20 @@ const getAdaptiveAnalytics = async (userId) => {
       .select('subject topic subtopic isCorrect timeTakenSec createdAt'),
     getMistakeBankForUser(userId),
     Mistake.countDocuments({ user: userId, resolved: false, nextReviewAt: { $lte: now } }),
+    Question.countDocuments({ subject: { $in: allowedSubjects } }),
+    Attempt.distinct('question', { user: userId, isCorrect: true }),
+    Attempt.distinct('question', { user: userId }),
   ]);
+
+  const uniqueSolved = (solvedQuestionIds || []).length;
+  const solvedSummary = {
+    uniqueSolved,
+    totalQuestions,
+    // Questions the user has attempted at least once but never answered
+    // correctly yet - mirrors LeetCode's "Attempting" count on the solved-
+    // problems ring.
+    attempting: Math.max((attemptedQuestionIds || []).length - uniqueSolved, 0),
+  };
 
   const attemptsBySubject = performance?.subjectStats || [];
   const totalAttempts = (allAttempts || []).length;
@@ -638,7 +666,9 @@ const getAdaptiveAnalytics = async (userId) => {
     remainingToday: Math.max((performance?.dailyGoal || 10) - (performance?.todayCompleted || 0), 0),
     currentStreak: performance?.currentStreak || 0,
     longestStreak: performance?.longestStreak || 0,
+    totalActiveDays: performance?.totalActiveDays || 0,
     streakDays: performance?.streakDays || [],
+    heatmap: performance?.heatmap || [],
   };
 
   const examReadiness = computeExamReadiness({
@@ -719,6 +749,7 @@ const getAdaptiveAnalytics = async (userId) => {
     performance,
     recentAttempts,
     attemptsBySubject,
+    solvedSummary,
     weakTopicPriority: performance?.weakTopicPriority || [],
     suggestedFocusTopic: performance?.suggestedFocusTopic || '',
     accuracyTrend: performance?.accuracyTrend || 'stable',

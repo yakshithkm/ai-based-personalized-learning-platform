@@ -15,7 +15,17 @@ const startOfDay = (date) => {
   return d;
 };
 
-const dayKey = (date) => startOfDay(date).toISOString().slice(0, 10);
+// Builds a "YYYY-MM-DD" key from the LOCAL calendar date of the given
+// instant - see analysisService.js's dayKey for why toISOString() is
+// deliberately avoided (it rolls the date back a day for any timezone
+// ahead of UTC, e.g. IST).
+const dayKey = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 const daysBetween = (a, b) => Math.round((startOfDay(b).getTime() - startOfDay(a).getTime()) / (24 * 60 * 60 * 1000));
 

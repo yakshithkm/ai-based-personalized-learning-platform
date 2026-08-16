@@ -49,7 +49,23 @@ const startOfDay = (date) => {
   return d;
 };
 
-const dayKey = (date) => startOfDay(date).toISOString().slice(0, 10);
+// Builds a "YYYY-MM-DD" key from the LOCAL calendar date of the given
+// instant. Deliberately avoids toISOString() here: converting a local
+// midnight through toISOString() re-expresses it in UTC, which rolls the
+// date back a day for any timezone ahead of UTC (e.g. IST, UTC+5:30) -
+// today's attempts would get bucketed under yesterday, and the most
+// recent heatmap cell would silently disappear.
+const dayKey = (date) => {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+// How many trailing days the activity heatmap covers - matches the "past one
+// year" submission calendar convention (365 days including today).
+const HEATMAP_WINDOW_DAYS = 365;
 
 const habitMetricsFromAttempts = (attempts, dailyGoal = 10) => {
   if (!attempts.length) {
@@ -59,8 +75,10 @@ const habitMetricsFromAttempts = (attempts, dailyGoal = 10) => {
       remainingToday: dailyGoal,
       currentStreak: 0,
       longestStreak: 0,
+      totalActiveDays: 0,
       lastPracticeDate: null,
       streakDays: [],
+      heatmap: [],
     };
   }
 
@@ -108,14 +126,27 @@ const habitMetricsFromAttempts = (attempts, dailyGoal = 10) => {
     };
   });
 
+  // Reuses the same byDay map already built above for currentStreak/longestStreak -
+  // no extra pass over the raw attempts, just a bounded 365-entry walk.
+  const heatmap = Array.from({ length: HEATMAP_WINDOW_DAYS }).map((_, index) => {
+    const d = new Date(today.getTime() - (HEATMAP_WINDOW_DAYS - 1 - index) * 24 * 60 * 60 * 1000);
+    const key = dayKey(d);
+    return {
+      day: key,
+      count: byDay.get(key) || 0,
+    };
+  });
+
   return {
     dailyGoal,
     todayCompleted,
     remainingToday: Math.max(dailyGoal - todayCompleted, 0),
     currentStreak,
     longestStreak,
+    totalActiveDays: byDay.size,
     lastPracticeDate: sortedDays.length ? new Date(sortedDays[sortedDays.length - 1]) : null,
     streakDays,
+    heatmap,
   };
 };
 
@@ -167,8 +198,10 @@ const analyzePerformance = async (userId) => {
       todayCompleted: 0,
       currentStreak: 0,
       longestStreak: 0,
+      totalActiveDays: 0,
       lastPracticeDate: null,
       streakDays: [],
+      heatmap: [],
       weeklyTrend: [],
     };
   }
@@ -426,8 +459,10 @@ const analyzePerformance = async (userId) => {
     todayCompleted: habit.todayCompleted,
     currentStreak: habit.currentStreak,
     longestStreak: habit.longestStreak,
+    totalActiveDays: habit.totalActiveDays,
     lastPracticeDate: habit.lastPracticeDate,
     streakDays: habit.streakDays,
+    heatmap: habit.heatmap,
     weeklyTrend,
   };
 };

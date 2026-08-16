@@ -8,7 +8,7 @@ const {
 
 const getMyAnalytics = async (req, res, next) => {
   try {
-    const analytics = await getAdaptiveAnalytics(req.user._id);
+    const analytics = await getAdaptiveAnalytics(req.user._id, req.user.targetExam);
     return res.json(analytics);
   } catch (error) {
     return next(error);

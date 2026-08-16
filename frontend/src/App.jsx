@@ -11,6 +11,7 @@ import HomePage from './pages/HomePage';
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const PracticePage = lazy(() => import('./pages/PracticePage'));
 const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
 const SessionSummaryPage = lazy(() => import('./pages/SessionSummaryPage'));
 const AdminAnalyticsPage = lazy(() => import('./pages/AdminAnalyticsPage'));
 const ExamSimulationPage = lazy(() => import('./pages/ExamSimulationPage'));
@@ -54,6 +55,17 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <AnalyticsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <ProfilePage />
             </Layout>
           </ProtectedRoute>
         }
