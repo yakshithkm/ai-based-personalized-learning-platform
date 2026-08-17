@@ -11,8 +11,34 @@
   border-radius: var(--radius-lg);
   padding: 1.25rem;
   box-shadow: var(--elevation-1), inset 0 0 0 1px rgba(96, 165, 250, 0.06);
-  animation: rise 0.45s var(--ease-out) both;
+  animation: rise 0.6s var(--ease-out) both;
 }
+
+/* Staggered cascade so cards settle in one after another instead of all
+   popping in at the same instant — a graceful "loading" feel rather than
+   a rushed one. Mirrors the same delay ladder used for .panel/.page-grid
+   so the whole app reads consistently. */
+.dash-grid > .dash-card:nth-child(1),
+.dash-main-grid > .dash-card:nth-child(1) { animation-delay: 0ms; }
+.dash-grid > .dash-card:nth-child(2),
+.dash-main-grid > .dash-card:nth-child(2) { animation-delay: 70ms; }
+.dash-grid > .dash-card:nth-child(3),
+.dash-main-grid > .dash-card:nth-child(3) { animation-delay: 140ms; }
+.dash-grid > .dash-card:nth-child(4),
+.dash-main-grid > .dash-card:nth-child(4) { animation-delay: 210ms; }
+.dash-grid > .dash-card:nth-child(5),
+.dash-main-grid > .dash-card:nth-child(5) { animation-delay: 280ms; }
+.dash-grid > .dash-card:nth-child(n+6),
+.dash-main-grid > .dash-card:nth-child(n+6) { animation-delay: 350ms; }
+
+/* .dash-metric-row summary cards cascade a little faster than full-size
+   cards since there are usually more of them in a single row. */
+.dash-metric-row > .dash-card:nth-child(1) { animation-delay: 0ms; }
+.dash-metric-row > .dash-card:nth-child(2) { animation-delay: 45ms; }
+.dash-metric-row > .dash-card:nth-child(3) { animation-delay: 90ms; }
+.dash-metric-row > .dash-card:nth-child(4) { animation-delay: 135ms; }
+.dash-metric-row > .dash-card:nth-child(5) { animation-delay: 180ms; }
+.dash-metric-row > .dash-card:nth-child(n+6) { animation-delay: 225ms; }
 
 @media (prefers-reduced-motion: reduce) {
   .dash-card {

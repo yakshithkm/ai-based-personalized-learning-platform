@@ -1,0 +1,67 @@
+/* Analytics feature stylesheet — insight rows, subject attempt counts,
+   and weak-topic action rows. Built on shared dashboard/global tokens. */
+
+.subject-attempts {
+  font-size: 0.72rem;
+  color: var(--muted);
+  flex: 0 0 auto;
+  width: 5.6rem;
+  text-align: right;
+}
+
+.weak-topics-row-v2 {
+  align-items: center;
+}
+
+.weak-topics-row-v2 .dash-small-btn {
+  flex: 0 0 auto;
+}
+
+.insight-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.insight-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.insight-row p {
+  margin: 0;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.insight-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  margin-top: 0.35rem;
+  flex: 0 0 auto;
+}
+
+.insight-good .insight-dot { background: #4ade80; }
+.insight-good { border-color: rgba(34, 197, 94, 0.3); }
+
+.insight-mid .insight-dot { background: #fbbf24; }
+.insight-mid { border-color: rgba(245, 158, 11, 0.3); }
+
+.insight-bad .insight-dot { background: #f87171; }
+.insight-bad { border-color: rgba(239, 68, 68, 0.3); }
+
+@media (max-width: 640px) {
+  .weak-topics-row-v2 {
+    align-items: flex-start;
+  }
+
+  .subject-attempts {
+    width: auto;
+    text-align: left;
+  }
+}

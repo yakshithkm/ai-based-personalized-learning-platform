@@ -5,10 +5,76 @@
 .sidebar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* legacy Edge/IE */
+
+  /* Scroll hint: a soft edge fade that only appears while there is more
+     nav content to reveal above/below, and disappears once you reach
+     that edge — a subtle affordance that the list scrolls, without
+     bringing back a visible scrollbar. Pure CSS "scroll shadow" trick:
+     two flat "cover" layers scroll WITH the content (background-attachment:
+     local) and mask the fixed shadow layers underneath except right at
+     the edges where there's more to reveal. */
+  background:
+    linear-gradient(rgba(2, 6, 23, 0.92), rgba(2, 6, 23, 0.92)) center top,
+    linear-gradient(rgba(2, 6, 23, 0.92), rgba(2, 6, 23, 0.92)) center bottom,
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)) center top,
+    linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)) center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 26px, 100% 26px, 100% 42px, 100% 42px;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .sidebar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, modern Edge */
+}
+
+/* "More below" scroll hint: a small floating badge pinned to the bottom
+   of the sidebar's own box (not the scrolled content), so it stays put
+   as you scroll and only renders at all when JS has confirmed there is
+   real overflow below. Uses the accent blue so it reads clearly against
+   the sidebar's near-black background — a plain dark shadow was
+   invisible there. */
+.sidebar-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 0.6rem;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: rgba(96, 165, 250, 0.18);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.55);
+  color: #93c5fd;
+  pointer-events: none;
+  z-index: 2;
+  animation: sidebarHintBounce 1.6s ease-in-out infinite;
+}
+
+.sidebar-scroll-hint svg {
+  width: 1rem;
+  height: 1rem;
+  transform: rotate(90deg);
+}
+
+@keyframes sidebarHintBounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateX(-50%) translateY(4px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-scroll-hint {
+    animation: none;
+  }
 }
 
 .sidebar-subtitle {
@@ -222,5 +288,65 @@
 
   .streak-pill span {
     display: none;
+  }
+}
+
+/* Page switch transition: a quick fade + slight upward motion applied to
+   the whole routed content area, retriggered on every navigation because
+   the wrapper is keyed by location.pathname (a key change forces React to
+   remount it). Deliberately just an entrance animation — no exit/leave
+   transition — to keep navigation feeling snappy rather than slow. */
+.page-transition {
+  animation: pageTransitionIn 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageTransitionIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
+}
+
+/* Localized loading state for the main content area only, shown while a
+   lazy-loaded page chunk downloads (kept inside Layout's own Suspense
+   boundary so the sidebar/header never disappear). */
+.page-content-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 40vh;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.page-content-spinner {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  border: 2px solid rgba(96, 165, 250, 0.25);
+  border-top-color: #60a5fa;
+  animation: pageContentSpin 0.7s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-content-spinner {
+    animation: none;
+  }
+}
+
+@keyframes pageContentSpin {
+  to {
+    transform: rotate(360deg);
   }
 }

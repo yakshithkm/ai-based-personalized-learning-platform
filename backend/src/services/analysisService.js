@@ -109,6 +109,13 @@ const habitMetricsFromAttempts = (attempts, dailyGoal = 10) => {
 
   let currentStreak = 0;
   let cursor = new Date(today);
+  if (!byDay.has(dayKey(cursor))) {
+    // Not having practiced yet today shouldn't zero out an active streak -
+    // give it a one-day grace period and start the walk from yesterday
+    // instead. If yesterday is also missing, the loop below simply breaks
+    // immediately and the streak correctly reports 0.
+    cursor = new Date(cursor.getTime() - 24 * 60 * 60 * 1000);
+  }
   while (true) {
     const key = dayKey(cursor);
     if (!byDay.has(key)) break;

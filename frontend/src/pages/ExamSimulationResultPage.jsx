@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import api from '../api/client';
+import { emitAttemptSubmitted } from '../utils/appEvents';
+
+const formatDuration = (totalSeconds = 0) => {
+  const seconds = Math.max(0, Math.round(totalSeconds));
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}m ${s}s`;
+};
 
 const ExamSimulationResultPage = () => {
   const location = useLocation();
@@ -32,6 +40,16 @@ const ExamSimulationResultPage = () => {
     fetchResultSummary();
   }, [sessionId]);
 
+  // Notify the app shell once a result is showing (whether it arrived via
+  // navigation state right after finishing the exam, or via the fetch
+  // above) so the header streak pill refreshes immediately instead of
+  // waiting for the next full page load.
+  useEffect(() => {
+    if (result) {
+      emitAttemptSubmitted({ source: 'exam-simulation' });
+    }
+  }, [result]);
+
   if (!result && !sessionId) {
     return <Navigate to="/exam-simulation" replace />;
   }
@@ -55,6 +73,17 @@ const ExamSimulationResultPage = () => {
   const weakTopics = (result.postTestAnalysis?.topMistakes || []).slice(0, 5);
   const mistakePatterns = (result.postTestAnalysis?.topMistakes || []).slice(0, 5);
   const nextActions = result.adaptiveFollowUp?.nextPracticePlan || [];
+  const accuracyPerSubject = result.postTestAnalysis?.accuracyPerSubject || [];
+  const timeSpentPerSubject = result.postTestAnalysis?.timeSpentPerSubject || [];
+  const { correct = 0, wrong = 0, unattempted = 0 } = result.scoreSummary || {};
+  const attemptedTotal = correct + wrong;
+  const examAccuracy = attemptedTotal ? (correct / attemptedTotal) * 100 : 0;
+  const totalTimeSpentSec = timeSpentPerSubject.reduce((sum, row) => sum + Number(row.timeSpentSec || 0), 0);
+
+  const goPracticeWeakSubject = () => {
+    const target = result.postTestAnalysis?.weakSubjects?.[0]?.subject;
+    navigate(target ? `/practice?topic=${encodeURIComponent(`${target} - `)}` : '/practice');
+  };
 
   return (
     <div className="page-grid">
@@ -71,6 +100,28 @@ const ExamSimulationResultPage = () => {
             <strong>{result.scoreSummary.totalScore} / {result.scoreSummary.maxScore}</strong>
           </div>
           <div className="score-box">
+            <span>Accuracy</span>
+            <strong>{examAccuracy.toFixed(1)}%</strong>
+          </div>
+          <div className="score-box">
+            <span>Correct</span>
+            <strong>{correct}</strong>
+          </div>
+          <div className="score-box">
+            <span>Incorrect</span>
+            <strong>{wrong}</strong>
+          </div>
+          <div className="score-box">
+            <span>Unanswered</span>
+            <strong>{unattempted}</strong>
+          </div>
+          {totalTimeSpentSec > 0 && (
+            <div className="score-box">
+              <span>Time Taken</span>
+              <strong>{formatDuration(totalTimeSpentSec)}</strong>
+            </div>
+          )}
+          <div className="score-box">
             <span>Percentile Estimate</span>
             <strong>{result.scoreSummary.percentileEstimate}%</strong>
           </div>
@@ -81,6 +132,21 @@ const ExamSimulationResultPage = () => {
             </strong>
           </div>
         </div>
+
+        {!!accuracyPerSubject.length && (
+          <div className="exam-interpretation-box">
+            <h4>Performance by Subject</h4>
+            <div className="mistake-grid">
+              {accuracyPerSubject.map((row) => (
+                <div className="score-box" key={row.subject}>
+                  <span>{row.subject}</span>
+                  <strong>{Number(row.accuracy || 0).toFixed(0)}%</strong>
+                  <small>{row.attempted}/{row.total} attempted</small>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="exam-interpretation-box">
           <h4>Score Interpretation</h4>
@@ -124,8 +190,13 @@ const ExamSimulationResultPage = () => {
         </div>
 
         <div className="exam-action-row">
+          {!!result.postTestAnalysis?.weakSubjects?.length && (
+            <button className="outline-btn" onClick={goPracticeWeakSubject}>
+              Practice Weak Topics
+            </button>
+          )}
           <button className="outline-btn" onClick={() => navigate('/exam-simulation')}>
-            Start New Simulation
+            Take Another Exam
           </button>
           <button className="solid-btn" onClick={() => navigate('/dashboard')}>
             Back to Dashboard

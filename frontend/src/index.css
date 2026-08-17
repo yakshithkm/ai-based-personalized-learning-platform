@@ -720,11 +720,11 @@ button:focus-visible {
 }
 
 .page-grid > .panel:nth-child(1) { animation-delay: 0ms; }
-.page-grid > .panel:nth-child(2) { animation-delay: 40ms; }
-.page-grid > .panel:nth-child(3) { animation-delay: 80ms; }
-.page-grid > .panel:nth-child(4) { animation-delay: 120ms; }
-.page-grid > .panel:nth-child(5) { animation-delay: 160ms; }
-.page-grid > .panel:nth-child(n+6) { animation-delay: 200ms; }
+.page-grid > .panel:nth-child(2) { animation-delay: 70ms; }
+.page-grid > .panel:nth-child(3) { animation-delay: 140ms; }
+.page-grid > .panel:nth-child(4) { animation-delay: 210ms; }
+.page-grid > .panel:nth-child(5) { animation-delay: 280ms; }
+.page-grid > .panel:nth-child(n+6) { animation-delay: 350ms; }
 
 /* --- App footer (shown beneath the routed page content) --- */
 .app-footer {
@@ -848,7 +848,7 @@ button:focus-visible {
   border-radius: var(--radius-lg);
   padding: 1.15rem;
   box-shadow: var(--elevation-1), inset 0 0 0 1px rgba(96, 165, 250, 0.06);
-  animation: rise 0.45s var(--ease-out) both;
+  animation: rise 0.6s var(--ease-out) both;
   transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) ease,
     box-shadow var(--duration-base) ease;
 }
@@ -862,7 +862,7 @@ button:focus-visible {
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
     filter: blur(2px);
   }
 

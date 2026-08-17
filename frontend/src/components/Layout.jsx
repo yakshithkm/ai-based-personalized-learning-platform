@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/client';
+import { onAttemptSubmitted } from '../utils/appEvents';
 import BrandLogo from './BrandLogo';
 import Footer from './Footer';
 
@@ -132,6 +133,19 @@ const ChevronIcon = () => (
   </svg>
 );
 
+// Localized fallback for the routed page area only — shown while a
+// not-yet-loaded page chunk downloads. Keeping this inside Layout's own
+// Suspense boundary (instead of relying on the top-level one in App.jsx)
+// means the sidebar/header stay mounted and visible instead of the whole
+// app flashing to a blank "Loading..." screen on first navigation to a
+// route.
+const PageContentFallback = () => (
+  <div className="page-content-fallback" role="status" aria-live="polite">
+    <span className="page-content-spinner" aria-hidden="true" />
+    <span>Loading...</span>
+  </div>
+);
+
 const CrownIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M3 8l4 3 5-6 5 6 4-3-2 11H5L3 8zm2.7 12h12.6v2H5.7v-2z" />
@@ -148,6 +162,7 @@ const toneToClass = (tone) => {
 const Layout = ({ children }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -157,6 +172,7 @@ const Layout = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const [streak, setStreak] = useState(0);
   const [subjectTopics, setSubjectTopics] = useState([]);
+  const [sidebarHasMoreBelow, setSidebarHasMoreBelow] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -164,6 +180,7 @@ const Layout = ({ children }) => {
   const profileRef = useRef(null);
   const searchRef = useRef(null);
   const searchInputRef = useRef(null);
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     const onClickAway = (event) => {
@@ -186,6 +203,34 @@ const Layout = ({ children }) => {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Sidebar "more below" hint: only show a scroll cue when the nav list
+  // actually overflows its visible height AND hasn't been scrolled all
+  // the way down yet — a real signal, not a decorative always-on icon.
+  useEffect(() => {
+    const el = sidebarRef.current;
+    if (!el) return undefined;
+
+    const updateHint = () => {
+      const hasOverflow = el.scrollHeight > el.clientHeight + 4;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 4;
+      setSidebarHasMoreBelow(hasOverflow && !atBottom);
+    };
+
+    updateHint();
+    el.addEventListener('scroll', updateHint, { passive: true });
+    window.addEventListener('resize', updateHint);
+
+    // Menu length is fixed at runtime, but fonts/images can still shift
+    // layout height after mount, so also recheck shortly after paint.
+    const raf = requestAnimationFrame(updateHint);
+
+    return () => {
+      el.removeEventListener('scroll', updateHint);
+      window.removeEventListener('resize', updateHint);
+      cancelAnimationFrame(raf);
+    };
+  }, [sidebarOpen]);
 
   // Global Ctrl/Cmd+K shortcut to focus the header search, matching the
   // "Ctrl + K" hint shown next to the search field.
@@ -218,8 +263,17 @@ const Layout = ({ children }) => {
       }
     };
     loadHeaderData();
+
+    // Re-run the same fetch whenever any page reports that an attempt was
+    // just submitted, so the streak pill updates immediately on a first
+    // solve today instead of waiting for the next full page load.
+    const unsubscribe = onAttemptSubmitted(() => {
+      loadHeaderData();
+    });
+
     return () => {
       cancelled = true;
+      unsubscribe();
     };
   }, []);
 
@@ -275,7 +329,7 @@ const Layout = ({ children }) => {
         <div className="header-backdrop" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
       )}
 
-      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} ref={sidebarRef}>
         <div className="brand-wrap">
           <BrandLogo className="sidebar-brand" to="/dashboard" />
           <p className="sidebar-subtitle">AI-Powered Learning</p>
@@ -322,6 +376,12 @@ const Layout = ({ children }) => {
             Logout
           </button>
         </div>
+
+        {sidebarHasMoreBelow && (
+          <span className="sidebar-scroll-hint" aria-hidden="true">
+            <ChevronIcon />
+          </span>
+        )}
       </aside>
 
       <header className={`app-header ${headerScrolled ? 'scrolled' : ''}`}>
@@ -371,9 +431,9 @@ const Layout = ({ children }) => {
         </div>
 
         <div className="header-actions">
-          <span className="streak-pill" title={`${streak} day streak`}>
+          <span className="streak-pill" title={`${streak} day ${streak === 1 ? 'streak' : 'streaks'}`}>
             <FlameIcon />
-            {streak} day streak
+            {streak} day {streak === 1 ? 'streak' : 'streaks'}
           </span>
 
           <div className="header-profile" ref={notifRef}>
@@ -457,7 +517,9 @@ const Layout = ({ children }) => {
       </header>
 
       <main className="main-content">
-        {children}
+        <div className="page-transition" key={location.pathname}>
+          <Suspense fallback={<PageContentFallback />}>{children}</Suspense>
+        </div>
         <Footer variant="minimal" />
       </main>
     </div>

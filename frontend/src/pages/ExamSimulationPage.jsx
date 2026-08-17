@@ -1729,8 +1729,8 @@ const ExamSimulationPage = () => {
     : 0;
 
   return (
-    <div className="page-grid">
-      <section className="panel">
+    <div className="page-grid exam-page-grid">
+      <section className="panel exam-setup-panel">
         <h2>Exam Simulation</h2>
         <p>Real exam environment with timer, palette, strict test flow, and post-test analysis.</p>
 
@@ -1797,7 +1797,7 @@ const ExamSimulationPage = () => {
 
       {session && (
         <>
-          <section className="panel exam-live-header">
+          <section className="panel exam-live-header exam-live-header-accent">
             <div>
               <h3>
                 {session.mode === 'full-length' ? 'Full-Length Mock Test' : `${session.sectionSubject} Section Test`}
@@ -1813,7 +1813,8 @@ const ExamSimulationPage = () => {
 
           {/* Debug panel removed */}
 
-          <section className="panel">
+          <div className="exam-live-grid">
+          <section className="panel exam-question-panel">
             <div className="exam-meta-row">
               <span>Question {navigationState.currentIndex + 1} / {session.questionCount}</span>
               <span className="progress-pill">Question {navigationState.currentIndex + 1} / {questions.length || session.questionCount}</span>
@@ -1912,7 +1913,7 @@ const ExamSimulationPage = () => {
             </div>
           </section>
 
-          <section className="panel">
+          <section className="panel exam-palette-panel">
             <h3>Question Palette</h3>
             <QuestionPalette
               questions={questions}
@@ -1926,6 +1927,7 @@ const ExamSimulationPage = () => {
               onSelect={goToQuestion}
             />
           </section>
+          </div>
         </>
       )}
     </div>
