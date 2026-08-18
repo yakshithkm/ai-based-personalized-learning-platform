@@ -13,6 +13,7 @@ const sanitizeUser = (user) => ({
   email: user.email,
   targetExam: user.targetExam,
   isAdmin: Boolean(user.isAdmin),
+  isDemo: Boolean(user.isDemo),
 });
 
 const registerUser = async (req, res, next) => {

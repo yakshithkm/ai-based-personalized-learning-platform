@@ -3,6 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
 
+const DEMO_ACCOUNTS = [
+  { label: 'NEET Demo', email: 'neet@learning.com', password: 'neet@123' },
+  { label: 'CET Demo', email: 'cet@learning.com', password: 'cet@123' },
+  { label: 'JEE Demo', email: 'jee@learning.com', password: 'jee@123' },
+];
+
 const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -12,6 +18,11 @@ const LoginPage = () => {
 
   const onChange = (event) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  };
+
+  const fillDemoAccount = (account) => {
+    setError('');
+    setForm({ email: account.email, password: account.password });
   };
 
   const onSubmit = async (event) => {
@@ -55,11 +66,19 @@ const LoginPage = () => {
             <h3>Login</h3>
             <p>Continue where you left off.</p>
 
-            <input name="email" type="email" placeholder="Email" onChange={onChange} required />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={onChange}
+              required
+            />
             <input
               name="password"
               type="password"
               placeholder="Password"
+              value={form.password}
               onChange={onChange}
               required
             />
@@ -73,6 +92,22 @@ const LoginPage = () => {
             <small>
               New user? <Link to="/register">Create account</Link>
             </small>
+
+            <div className="auth-demo-row">
+              <small>Try Demo Account</small>
+              <div className="chip-wrap">
+                {DEMO_ACCOUNTS.map((account) => (
+                  <button
+                    key={account.email}
+                    type="button"
+                    className="outline-btn outline-btn-sm"
+                    onClick={() => fillDemoAccount(account)}
+                  >
+                    {account.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </form>
         </div>
       </div>

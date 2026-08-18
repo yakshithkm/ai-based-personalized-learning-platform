@@ -346,7 +346,10 @@ const Layout = ({ children }) => {
         >
           <span className="user-avatar">{initials}</span>
           <div className="user-block-info">
-            <p className="user-name">{user?.name}</p>
+            <p className="user-name user-name-row">
+              <span className="user-name-text">{user?.name}</span>
+              {user?.isDemo && <span className="chip demo-account-chip">Demo Account</span>}
+            </p>
             <p className="user-email sidebar-user-exam">{user?.targetExam} Aspirant</p>
           </div>
           <span className="user-block-chevron"><ChevronIcon /></span>

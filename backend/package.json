@@ -8,6 +8,8 @@
     "start": "node src/server.js",
     "seed": "node seedQuestions.js",
     "seed:questions": "node seedQuestions.js",
+    "seed:demo": "node seedDemo.js",
+    "reset:demo": "node resetDemo.js",
     "test": "cross-env NODE_ENV=test jest --runInBand"
   },
   "dependencies": {
