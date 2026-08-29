@@ -137,7 +137,7 @@
       "3": "3-bromo-2-fluoro-... (Br,F substituted benzene)",
       "4": "2-chloro... (Cl,Br substituted benzene)"
     },
-    "marked_answer": null
+    "marked_answer": "1"
   },
   {
     "subject": "Chemistry",
@@ -460,7 +460,7 @@
       "4": "7 g",
       "5": "7 g"
     },
-    "marked_answer": null
+    "marked_answer": "4"
   },
   {
     "subject": "Chemistry",
@@ -2518,7 +2518,7 @@
       "3": "C6H5NH3+Cl",
       "4": "FeCl3"
     },
-    "marked_answer": null
+    "marked_answer": "4"
   },
   {
     "subject": "Chemistry",
@@ -3793,5 +3793,845 @@
       "4": "same boiling point but different freezing point"
     },
     "marked_answer": "2"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 1,
+    "question_text": "A 30% solution of hydrogen peroxide is",
+    "options": {
+      "A": "'10 volume' hydrogen peroxide",
+      "B": "'100 volume' hydrogen peroxide",
+      "C": "'50 volume' hydrogen peroxide",
+      "D": "'30 volume' hydrogen peroxide"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 2,
+    "question_text": "A pair of amphoteric oxides is",
+    "options": {
+      "A": "BeO, BO3",
+      "B": "BeO, ZnO",
+      "C": "BeO, MgO",
+      "D": "Al2O3, Li2O"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 3,
+    "question_text": "The composition of water gas is",
+    "options": {
+      "A": "CH4(g)",
+      "B": "CO(g) + H2(g)",
+      "C": "CO(g) + H2O(g)",
+      "D": "CO(g) + N2(g)"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 4,
+    "question_text": "IUPAC name of the compound (CH3)2C=C(CH3)2 is",
+    "options": {
+      "A": "2,3-dimethyl butyne",
+      "B": "2,3-dimethyl butene",
+      "C": "1,1,2,2-tetra methylethene",
+      "D": "2,3-dimethylbut-2-ene"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 5,
+    "question_text": "Among the following (benzene, naphthalene, cyclopentadienyl-like structures I-V), the set which represents aromatic species is",
+    "options": {
+      "A": "III, IV and V",
+      "B": "I, II and IV",
+      "C": "II and III",
+      "D": "I, II and III"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 6,
+    "question_text": "Which one of the following gases converts haemoglobin into carboxy haemoglobin?",
+    "options": {
+      "A": "O2",
+      "B": "CO2",
+      "C": "NO",
+      "D": "CO"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 7,
+    "question_text": "What is the oxidation number of S in H2S2O8?",
+    "options": {
+      "A": "+4",
+      "B": "+6",
+      "C": "+7",
+      "D": "+5"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 8,
+    "question_text": "A metal crystallises in a body centered cubic lattice with the metallic radius √3 Å. The volume of the unit cell in m³ is",
+    "options": {
+      "A": "4 × 10^-29",
+      "B": "4 × 10^-10",
+      "C": "6.4 × 10^-29",
+      "D": "64 × 10^-29"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 9,
+    "question_text": "If 'a' stands for the edge length of the cubic systems - The ratio of radii in simple cubic, body centered cubic and face centered cubic unit cells is",
+    "options": {
+      "A": "(1/2)a : (√3/4)a : (1/2√2)a",
+      "B": "(1/2)a : √3a : (1/√2)a",
+      "C": "(1/2)a : (√3/2)a : (√2/2)a",
+      "D": "1a : √3a : √2a"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 10,
+    "question_text": "Dimerisation of solute molecules in low dielectric constant solvent is due to:",
+    "options": {
+      "A": "Covalent bond",
+      "B": "Ionic bond",
+      "C": "Co-ordinate bond",
+      "D": "Hydrogen bond"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 11,
+    "question_text": "The swelling in feet and ankles of an aged person due to sitting continuously for long hours during travel, is reduced by soaking the feet in warm salt water. This is because of:",
+    "options": {
+      "A": "Osmosis",
+      "B": "Diffusion",
+      "C": "Edema",
+      "D": "Reverse Osmosis"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 12,
+    "question_text": "A sample of water is found to contain 5.85% (w/w) of AB (molecular mass 58.5) and 9.50% (w/w) XY2 (molecular mass 95). Assuming 80% ionisation of AB and 60% ionisation of XY2, the freezing point of water sample is [Given: Kf for water 1.86 K kg mol⁻¹, Freezing point of pure water is 273 K and A, B and Y are monovalent ions]",
+    "options": {
+      "A": "265.56 K",
+      "B": "281.75 K",
+      "C": "280.44 K",
+      "D": "264.25 K"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 13,
+    "question_text": "Match the column A (type of crystalline solid) with the column B (example for each type): P.Molecular Solid Q.Ionic Solid R.Metallic Solid S.Network Solid / i.SiC ii.Mg iii.H2O iv.MgO",
+    "options": {
+      "A": "P-iv, Q-iii, R-ii, S-i",
+      "B": "P-iii, Q-iv, R-ii, S-i",
+      "C": "P-ii, Q-iv, R-iii, S-i",
+      "D": "P-iii, Q-i, R-ii, S-iv"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 14,
+    "question_text": "Consider the following 4 electrodes A:Ag+(0.0001 M)/Ag(s); B:Ag+(0.1 M)/Ag(s); C:Ag+(0.01 M)/Ag(s); D:Ag+(0.001 M)/Ag(s); E°Ag+/Ag = +0.80 V. Then reduction potential in volts of the electrodes in the order",
+    "options": {
+      "A": "C > D > A > B",
+      "B": "A > B > C > D",
+      "C": "A > D > C > B",
+      "D": "B > C > D > A"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 15,
+    "question_text": "The resistance of 0.1 M weak acid HA in a conductivity cell is 2 × 10^3 Ohm. The cell constant of the cell is 0.78 C m⁻¹ and λ°m of acid HA is 390 S cm² mol⁻¹. The pH of the solution is",
+    "options": {
+      "A": "4.2",
+      "B": "3",
+      "C": "5",
+      "D": "3.3"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 16,
+    "question_text": "In which one of the following reactions, rate constant has the unit mol L⁻¹ s⁻¹?",
+    "options": {
+      "A": "CHCl3 + Cl2 → CCl4 + HCl",
+      "B": "Decomposition of HI on the surface of Gold",
+      "C": "2NO(g) + O2(g) → 2NO2(g)",
+      "D": "Acid catalysed hydrolysis of CH3COOCH3"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 17,
+    "question_text": "For a reaction, the value of rate constant at 300 K is 6.0 × 10^5 s⁻¹. The value of Arrhenius factor A at infinitely high temperature is:",
+    "options": {
+      "A": "e^(−Ea/300R)",
+      "B": "6 × 10^5",
+      "C": "(6 × 10^-5)/300",
+      "D": "6 × 10^5 × e^(−Ea/300R)"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 18,
+    "question_text": "The rate constants k1 and k2 for two different reactions are 10^16 × e^(−2000/T) and 10^15 × e^(−1000/T) respectively. The temperature at which k1 = k2 is:",
+    "options": {
+      "A": "2000 K",
+      "B": "1000 K",
+      "C": "1000/2.303 K",
+      "D": "2000/2.303 K"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 19,
+    "question_text": "During the electrolysis of brine, by using inert electrodes,",
+    "options": {
+      "A": "H2 liberates at anode",
+      "B": "Cl2 liberates at anode",
+      "C": "Na deposits on cathode",
+      "D": "O2 liberates at anode"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 20,
+    "question_text": "For Freundlich adsorption isotherm, a graph of log(x/m) Vs. log(P) gives a straight line. The slope of line and its Y-axis intercept respectively are",
+    "options": {
+      "A": "1/n, log K",
+      "B": "1/n, K",
+      "C": "log(1/n), log K",
+      "D": "log(1/n), K"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 21,
+    "question_text": "When FeCl3 is added to excess of hot water gives a sol 'X'. When FeCl3 is added to NaOH(aq) solution, gives sol 'Y'. X and Y formed in the above processes respectively are",
+    "options": {
+      "A": "Fe2O3·xH2O/H+ and Fe2O3·xH2O/Na+",
+      "B": "Fe2O3·xH2O/Fe3+ and Fe2O3·xH2O/OH-",
+      "C": "Fe2O3·xH2O/Cl- and Fe2O3·xH2O/OH-",
+      "D": "Fe2O3·xH2O/OH- and Fe2O3·xH2O/Fe3+"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 22,
+    "question_text": "The reducing agent in the given equations: 4Ag(s) + 8CN⁻(aq) + 2H2O(aq) + O2(g) → 4[Ag(CN)2]⁻(aq) + 4OH⁻(aq); 2[Ag(CN)2]⁻(aq) + Zn(s) → [Zn(CN)4]²⁻(aq) + 2Ag(s)",
+    "options": {
+      "A": "O2",
+      "B": "CN⁻",
+      "C": "H2O",
+      "D": "Zn"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 23,
+    "question_text": "For the formation of which compound in Ellingham diagram ΔG° becomes more and more negative with increase in temperature?",
+    "options": {
+      "A": "FeO",
+      "B": "Cu2O",
+      "C": "ZnO",
+      "D": "CO"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 24,
+    "question_text": "Which of the following compound does not give dinitrogen on heating?",
+    "options": {
+      "A": "NH4NO2",
+      "B": "(NH4)2Cr2O7",
+      "C": "NH4NO3",
+      "D": "Ba(N3)2"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 25,
+    "question_text": "Aqueous solution of raw sugar when passed over beds of animal charcoal, it becomes colourless. Pick the correct set of terminologies that can be used for the above example.",
+    "options": {
+      "A": "Animal Charcoal / Solution of Sugar / Absorption",
+      "B": "Colouring Substance / Animal Charcoal / Adsorption",
+      "C": "Animal Charcoal / Colouring substance / Adsorption",
+      "D": "Solution of Sugar / Animal Charcoal / Sorption"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 26,
+    "question_text": "Which one of the following oxoacids of phosphorus can reduce AgNO3 to metallic silver?",
+    "options": {
+      "A": "H4P2O7",
+      "B": "H3PO4",
+      "C": "H4P2O6",
+      "D": "H3PO2"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 27,
+    "question_text": "In solid state, PCl5 is a/an",
+    "options": {
+      "A": "Ionic solid with [PCl6]+ and [PCl4]-",
+      "B": "Covalent solid present in the form of P2Cl10",
+      "C": "Ionic solid with [PCl4]+ and [PCl6]-",
+      "D": "Octahedral structure"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 28,
+    "question_text": "In which one of the following pairs, both the elements does not have (n-1)d10ns2 configuration in its elementary state?",
+    "options": {
+      "A": "Cd, Hg",
+      "B": "Cu, Zn",
+      "C": "Hg, Cn",
+      "D": "Zn, Cd"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 29,
+    "question_text": "Which of the following is CORRECT with respect to melting point of a transition element?",
+    "options": {
+      "A": "Cr > Mn",
+      "B": "Ti > V",
+      "C": "Mn > Fe",
+      "D": "V > Cr"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 30,
+    "question_text": "aMnO4⁻ + bS2O3²⁻ + H2O → xMnO2 + ySO4²⁻ + zOH⁻. a and y respectively are",
+    "options": {
+      "A": "8; 6",
+      "B": "8; 8",
+      "C": "3; 6",
+      "D": "8; 3"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 31,
+    "question_text": "Which formula and name combination is INCORRECT?",
+    "options": {
+      "A": "[Pt(NH3)2Cl(NO2)] - Diamminechloridonitrito-N-platinum(II)",
+      "B": "[Co(NH3)4(H2O)Cl]Cl2 - Tetraammineaquachloridocobalt(III) chloride",
+      "C": "[CoCl2(en)2]Cl - Dichloridodiethylenediammine cobalt(II) chloride",
+      "D": "K3[Al(C2O4)3] - Potassium trioxalatoaluminate(III)"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 32,
+    "question_text": "Which of the following system in an octahedral complex has maximum unpaired electrons?",
+    "options": {
+      "A": "d6 (low spin)",
+      "B": "d7 (high spin)",
+      "C": "d4 (low spin)",
+      "D": "d9 (high spin)"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 33,
+    "question_text": "The correct decreasing order of basicity of hydrides of Group-15 elements is",
+    "options": {
+      "A": "PH3 > AsH3 > SbH3 > NH3",
+      "B": "NH3 > PH3 > AsH3 > SbH3",
+      "C": "AsH3 > SbH3 > NH3 > PH3",
+      "D": "SbH3 > AsH3 > PH3 > NH3"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 34,
+    "question_text": "Which of the following is an organometallic compound?",
+    "options": {
+      "A": "CH3CH2MgBr",
+      "B": "CH3ONa",
+      "C": "(CH3COO)2Ca",
+      "D": "CH3COONa"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 35,
+    "question_text": "A pair of compounds having the same boiling points are",
+    "options": {
+      "A": "n-hexane and neo-hexane",
+      "B": "(+) butan-2-ol and (−) butan-2-ol",
+      "C": "benzene and naphthalene",
+      "D": "cis but-2-ene and trans but-2-ene"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 36,
+    "question_text": "Identify A, B and C in the sequence: CH3CH2Br --KCN(alc)--> A --LiAlH4--> B --HNO2(0°C)--> C",
+    "options": {
+      "A": "CH3CH2NC, CH3CH2OH, CH3CH2CH2NH2",
+      "B": "CH3CH2CN, CH3CH2NH2, C2H5OH",
+      "C": "CH3CH2CN, C2H5OH, C2H5N2Cl",
+      "D": "CH3CH2CN, CH3CH2CH2NH2, CH3CH2CH2OH"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 37,
+    "question_text": "CH3-CH=CH-CH2OH --PCC--> CH3-CH=CH-CHO. Hybridisation change involved at C-1 in the above reaction",
+    "options": {
+      "A": "sp3 to sp2",
+      "B": "sp to sp2",
+      "C": "sp2 to sp3",
+      "D": "sp3 to sp"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 38,
+    "question_text": "If a didentate ligand ethane-1,2-diamine is progressively added in the molar ratio en:Ni::1:1, 2:1, 3:1 to [Ni(H2O)6]2+ aq solution, following co-ordination entities are formed. I.[Ni(H2O)4en]2+(aq) - pale blue II.[Ni(H2O)2(en)2]2+(aq) - blue/purple III.[Ni(en)3]2+(aq) - violet. The wavelength in nm of light absorbed in case of I and III are respectively",
+    "options": {
+      "A": "300 nm and 475 nm",
+      "B": "600 nm and 535 nm",
+      "C": "310 nm and 500 nm",
+      "D": "475 nm and 310 nm"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 39,
+    "question_text": "Phenol --NaOH--> A --(i)CO2 (ii)H+--> B --(i)(CH3CO)2O (ii)H+--> Y (Major product). Y in the above reaction is",
+    "options": {
+      "A": "Aspirin",
+      "B": "Picric acid",
+      "C": "Cumene",
+      "D": "Salicylaldehyde"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 40,
+    "question_text": "A better reagent to oxidize primary alcohols into aldehyde is:",
+    "options": {
+      "A": "Alkaline KMnO4",
+      "B": "CrO3",
+      "C": "Acidified K2Cr2O7",
+      "D": "PCC"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 41,
+    "question_text": "In the reaction: C6H5CN --(i)SnCl2+HCl (ii)H3O+--> X --con.KOH--> Y + Z. Formation of X, formation of Y and Z are known by",
+    "options": {
+      "A": "Clemmensen reduction, Sandmeyer reaction.",
+      "B": "Stephen reaction, Cannizaro reaction.",
+      "C": "Wolff-Kishner reduction, Wurtz reaction.",
+      "D": "Rosenmund reduction, Cannizaro reaction."
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 42,
+    "question_text": "Compounds P and R in the following reaction are: CH3CHO --(i)CH3MgBr (ii)H3O+--> P --conc.H2SO4/heat--> Q --(i)B2H6 (ii)H2O2/OH---> R",
+    "options": {
+      "A": "Functional isomers",
+      "B": "Identical",
+      "C": "Metamers",
+      "D": "Position isomers"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 43,
+    "question_text": "Aniline does not undergo",
+    "options": {
+      "A": "Sulphonation",
+      "B": "Bromination",
+      "C": "Friedel-Craft reaction",
+      "D": "Nitration"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 44,
+    "question_text": "The heating of phenyl methyl ether with HI produces an aromatic compound A which on treatment with con. HNO3 gives B. A and B respectively are,",
+    "options": {
+      "A": "Picric acid, Phenol",
+      "B": "Phenol, Picric acid",
+      "C": "Iodobenzene, 1-Iodo-4-nitrobenzene",
+      "D": "Methanol, Ethanoic acid"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 45,
+    "question_text": "Thyroxine produced in the thyroid gland is an iodinated derivative of _____.",
+    "options": {
+      "A": "lysine",
+      "B": "tryptophan",
+      "C": "tyrosine",
+      "D": "threonine"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 46,
+    "question_text": "Sucrose is dextrorotatory but after hydrolysis the mixture show laevorotation, this is because of",
+    "options": {
+      "A": "Sucrose is a non-reducing sugar.",
+      "B": "Laevorotation of fructose is more than dextrorotation of glucose.",
+      "C": "Recemic mixture is formed.",
+      "D": "Laevorotation of glucose is more than dextrorotation of fructose."
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 47,
+    "question_text": "The correct order of match between column X and column Y is: I.Vitamin A/i.Muscular weakness II.Vitamin D/ii.Increased blood clotting time III.Vitamin E/iii.Night-blindness IV.Vitamin K/iv.Osteomalacia",
+    "options": {
+      "A": "I-ii, II-i, III-iii, IV-iv",
+      "B": "I-iii, II-iv, III-i, IV-ii",
+      "C": "I-iii, II-ii, III-iv, IV-i",
+      "D": "I-iv, II-iii, III-ii, IV-i"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 48,
+    "question_text": "In the reaction: aniline --P--> benzenediazonium chloride --Q--> N2BF4 salt --R--> nitrobenzene. P, Q and R respectively are:",
+    "options": {
+      "A": "NaNO2 + con.HCl, F2, Cu + NaNO3",
+      "B": "NaNO3 + dil. HCl, F2, Cu + NaNO3",
+      "C": "NaNO2 + dil.HCl, BF3, Cu + NaNO2",
+      "D": "NaNO2 + dil. HCl, HBF4, Cu + NaNO2"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 49,
+    "question_text": "Match the List-I with List-II: 1.Caprolactum 2.Vinyl chloride 3.Styrene 4.Propene / (a)-(CH2-CH(CH3))n- (b)-(CH2-CH(C6H5))n- (c)-(CH2-CH(Cl))n- (d)-(C(=O)(CH2)5NH)n-",
+    "options": {
+      "A": "1-a, 2-d, 3-c, 4-b",
+      "B": "1-d, 2-c, 3-b, 4-a",
+      "C": "1-d, 2-c, 3-a, 4-b",
+      "D": "1-c, 2-d, 3-a, 4-b"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 50,
+    "question_text": "Which one of the following is a non-narcotic analgesic?",
+    "options": {
+      "A": "Codeine",
+      "B": "Morphine",
+      "C": "Aspirin",
+      "D": "Heroin"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 51,
+    "question_text": "Receptors are proteins and crucial to body communication process. These receptors are embedded in",
+    "options": {
+      "A": "Protein",
+      "B": "Chromosomes",
+      "C": "Endocrine gland",
+      "D": "Cell membrane"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 52,
+    "question_text": "Which of the following monomers form biodegradable polymers?",
+    "options": {
+      "A": "Caprolactum and 1,3-Butadiene",
+      "B": "3-hydroxybutanoic acid and 3-hydroxypentanoic acid",
+      "C": "Phenol and formaldehyde",
+      "D": "Ethylene glycol and pthalic acid"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 53,
+    "question_text": "The number of protons, neutrons and electrons in the ion ¹⁶³²S²⁻ respectively are",
+    "options": {
+      "A": "16, 16, 18",
+      "B": "16, 16, 16",
+      "C": "18, 16, 16",
+      "D": "16, 18, 16"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 54,
+    "question_text": "The correct order of first ionisation enthalpy of given elements is",
+    "options": {
+      "A": "Be < Li < B < C",
+      "B": "Li < Be < B < C",
+      "C": "C < B < Be < Li",
+      "D": "Li < B < Be < C"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 55,
+    "question_text": "Which of the following statement is INCORRECT?",
+    "options": {
+      "A": "Bond order of O2+ < Bond order of O2²⁻",
+      "B": "Bond order of O2 > Bond order of O2²⁻",
+      "C": "Bond length of O2 < Bond length of O2²⁻",
+      "D": "Bond length of O2 > Bond length of O2²⁺"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 56,
+    "question_text": "A gas at a pressure of 2 atm is heated from 25°C to 323°C and simultaneously compressed to 2/3rd of its original value. Then the final pressure is",
+    "options": {
+      "A": "6 atm",
+      "B": "4 atm",
+      "C": "2 atm",
+      "D": "1.33 atm"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 57,
+    "question_text": "Lattice enthalpy for NaCl is +788 kJ mol⁻¹ and ΔH°hyd = −784 kJ mol⁻¹. Enthalpy of solution of NaCl is",
+    "options": {
+      "A": "+4 kJ mol⁻¹",
+      "B": "−4 kJ mol⁻¹",
+      "C": "−572 kJ mol⁻¹",
+      "D": "+572 kJ mol⁻¹"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 58,
+    "question_text": "At 500 K, for a reversible reaction A2(g) + B2(g) ⇌ 2AB(g) in a closed container, KC = 2 × 10⁻⁵. In the presence of catalyst, the equilibrium is attaining 10 times faster. The equilibrium constant KC in the presence of catalyst at the same temperature is",
+    "options": {
+      "A": "2 × 10⁻⁶",
+      "B": "2 × 10⁻⁵",
+      "C": "2 × 10⁻¹⁰",
+      "D": "2 × 10⁻⁴"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 59,
+    "question_text": "A weak acid with pKa 5.9 and weak base with pKb 5.8 are mixed in equal proportions. pH of the resulting solution is",
+    "options": {
+      "A": "7.5",
+      "B": "7.05",
+      "C": "7",
+      "D": "7.005"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Chemistry",
+    "topic": "Full Syllabus",
+    "source": "CET Chemistry Question Paper (2C0521K23) C",
+    "question_number": 60,
+    "question_text": "Temperature of 25°C in Fahrenheit and Kelvin scale respectively are",
+    "options": {
+      "A": "17°F and 298.15 K",
+      "B": "47°F and 312.15 K",
+      "C": "45°F and 260.15 K",
+      "D": "77°F and 298.15 K"
+    },
+    "marked_answer": "D"
   }
 ]

@@ -193,7 +193,7 @@
       "c": "8.9 Ω",
       "d": "infinite"
     },
-    "marked_answer": null
+    "marked_answer": "a"
   },
   {
     "subject": "Physics",
@@ -207,7 +207,7 @@
       "c": "Silver",
       "d": "Copper for heat, silver for electricity"
     },
-    "marked_answer": null
+    "marked_answer": "c"
   },
   {
     "subject": "Physics",
@@ -263,7 +263,7 @@
       "c": "1400 K",
       "d": "1457 K"
     },
-    "marked_answer": null
+    "marked_answer": "b"
   },
   {
     "subject": "Physics",
@@ -277,7 +277,7 @@
       "c": "0.5 Ω",
       "d": "none of the above"
     },
-    "marked_answer": null
+    "marked_answer": "b"
   },
   {
     "subject": "Physics",
@@ -417,7 +417,7 @@
       "c": "the galavanometer circuit",
       "d": "accumulate or cell"
     },
-    "marked_answer": null
+    "marked_answer": "c"
   },
   {
     "subject": "Physics",
@@ -543,7 +543,7 @@
       "c": "20 Ω",
       "d": "80 Ω"
     },
-    "marked_answer": null
+    "marked_answer": "b"
   },
   {
     "subject": "Physics",
@@ -571,7 +571,7 @@
       "c": "3 Ω",
       "d": "30 Ω"
     },
-    "marked_answer": null
+    "marked_answer": "a"
   },
   {
     "subject": "Physics",
@@ -599,7 +599,7 @@
       "c": "0.40 A",
       "d": "4.1 A"
     },
-    "marked_answer": null
+    "marked_answer": "a"
   },
   {
     "subject": "Physics",
@@ -627,7 +627,7 @@
       "c": "r^(2/3)",
       "d": "r^(1/2)"
     },
-    "marked_answer": null
+    "marked_answer": "a"
   },
   {
     "subject": "Physics",
@@ -641,7 +641,7 @@
       "c": "1 : 15 : 125",
       "d": "125 : 15 : 1"
     },
-    "marked_answer": null
+    "marked_answer": "d"
   },
   {
     "subject": "Physics",
@@ -655,7 +655,7 @@
       "c": "the resistor burns immediately",
       "d": "the meter would read 0.25 A but after some time the resistor melts."
     },
-    "marked_answer": null
+    "marked_answer": "d"
   },
   {
     "subject": "Physics",
@@ -711,7 +711,7 @@
       "c": "< 1.85 amp",
       "d": "none of these"
     },
-    "marked_answer": null
+    "marked_answer": "b"
   },
   {
     "subject": "Physics",
@@ -1062,7 +1062,7 @@
       "c": "12 A",
       "d": "120 A"
     },
-    "marked_answer": null
+    "marked_answer": "a"
   },
   {
     "subject": "Physics",
@@ -1244,7 +1244,7 @@
       "c": "g + v/2 (2n − 2)",
       "d": "v/2 (2n − 1) − g"
     },
-    "marked_answer": null
+    "marked_answer": "a"
   },
   {
     "subject": "Physics",
@@ -1693,5 +1693,845 @@
       "d": "√14"
     },
     "marked_answer": "a"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 1,
+    "question_text": "A stretched wire of a material whose Young's modulus Y = 2 × 10^11 Nm^-2 has Poisson's ratio 0.25. Its lateral strain εl = 10^-3. The elastic energy density of the wire is",
+    "options": {
+      "A": "1 × 10^5 Jm^-3",
+      "B": "8 × 10^5 Jm^-3",
+      "C": "4 × 10^5 Jm^-3",
+      "D": "16 × 10^5 Jm^-3"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 2,
+    "question_text": "A closed water tank has cross-sectional area A. It has a small hole at a depth of h from the free surface of water. The radius of the hole is r so that r << √(A/π). If Po is the pressure inside the tank above water level, and Pa is the atmospheric pressure, the rate of flow of the water coming out of the hole is [ρ is the density of water]",
+    "options": {
+      "A": "πr²√(2gh + 2(Po−Pa)/ρ)",
+      "B": "πr²√(gh + 2(Po−Pa)/ρ)",
+      "C": "πr²√(2gH)",
+      "D": "πr²√(2gh)"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 3,
+    "question_text": "100 g of ice at 0°C is mixed with 100 g of water at 100°C. The final temperature of the mixture is [Take Lf = 3.36 × 10^5 J kg^-1 and Sw = 4.2 × 10^3 J kg^-1 k^-1]",
+    "options": {
+      "A": "10°C",
+      "B": "1°C",
+      "C": "50°C",
+      "D": "40°C"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 4,
+    "question_text": "The P-V diagram of a Carnot's engine is shown in the graph below. The engine uses 1 mole of an ideal gas as working substance. From the graph, the area enclosed by the P-V diagram is [The heat supplied to the gas is 8000 J]",
+    "options": {
+      "A": "2000 J",
+      "B": "1000 J",
+      "C": "3000 J",
+      "D": "1200 J"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 5,
+    "question_text": "When a planet revolves around the Sun, in general, for the planet",
+    "options": {
+      "A": "linear momentum and aerial velocity are constant.",
+      "B": "angular momentum about the Sun and aerial velocity of the planet are constant.",
+      "C": "kinetic and potential energy of the planet are constant.",
+      "D": "linear momentum and linear velocity are constant."
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 6,
+    "question_text": "A block of mass m is connected to a light spring of force constant k. The system is placed inside a damping medium of damping constant b. The instantaneous values of displacement, acceleration and energy of the block are x, a and E respectively. The initial amplitude of oscillation is A and ω' is the angular frequency of oscillations. The incorrect expression related to the damped oscillations is",
+    "options": {
+      "A": "ω' = √(k/m − b²/4m²)",
+      "B": "m(d²x/dt²) + b(dx/dt) + kx = 0",
+      "C": "E = (1/2)kA²e^(−bt/m)",
+      "D": "x = Ae^(−bt/m) cos(ω't + φ)"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 7,
+    "question_text": "The speed of sound in an ideal gas at a given temperature T is v. The rms speed of gas molecules at that temperature is vrms. The ratio of the velocities v and vrms for helium and oxygen gases are X and X' respectively. Then X/X' is equal to",
+    "options": {
+      "A": "5/√21",
+      "B": "21/5",
+      "C": "√(5/21)",
+      "D": "21/√5"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 8,
+    "question_text": "A positively charged glass rod is brought near uncharged metal sphere, which is mounted on an insulated stand. If the glass rod is removed, the net charge on the metal sphere is",
+    "options": {
+      "A": "Zero",
+      "B": "Positive charge",
+      "C": "1.6 × 10^-19 C",
+      "D": "Negative charge"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 9,
+    "question_text": "In the situation shown in the diagram, magnitude of q << |Q| and r >> a. The net force on the free charge −q and net torque on it about O at the instant shown are respectively [p = 2aQ is the dipole moment]",
+    "options": {
+      "A": "(1/4πε0)(pq/r²)k̂, (1/4πε0)(pq/r³)î",
+      "B": "(1/4πε0)(pq/r³)î, +(1/4πε0)(pq/r²)k̂",
+      "C": "−(1/4πε0)(pq/r²)k̂, −(1/4πε0)(pq/r³)î",
+      "D": "(1/4πε0)(pq/r³)î, −(1/4πε0)(pq/r²)k̂"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 10,
+    "question_text": "Pressure of ideal gas at constant volume is proportional to _____.",
+    "options": {
+      "A": "average potential energy of the molecules",
+      "B": "average kinetic energy of the molecules",
+      "C": "total energy of the gas",
+      "D": "force between the molecules"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 11,
+    "question_text": "Electric field at a distance 'r' from an infinitely long uniformly charged straight conductor, having linear charge density λ is E1. Another uniformly charged conductor having same linear charge density λ is bent into a semicircle of radius 'r'. The electric field at its centre is E2. Then",
+    "options": {
+      "A": "E2 = E1/r",
+      "B": "E1 = πrE2",
+      "C": "E1 = E2",
+      "D": "E2 = πrE1"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 12,
+    "question_text": "Five capacitors each of value 1µF are connected as shown in the figure. The equivalent capacitance between A and B is",
+    "options": {
+      "A": "1 µF",
+      "B": "5 µF",
+      "C": "2 µF",
+      "D": "3 µF"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 13,
+    "question_text": "A uniform electric field vector E exists along horizontal direction as shown. The electric potential at A is VA. A small point charge q is slowly taken from A to B along the curved path as shown. The potential energy of the charge when it is at point B is",
+    "options": {
+      "A": "q[VA + Ex]",
+      "B": "qEx",
+      "C": "q[Ex − VA]",
+      "D": "q[VA − Ex]"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 14,
+    "question_text": "A parallel plate capacitor of capacitance C1 with a dielectric slab in between its plates is connected to a battery. It has a potential difference V1 across its plates. When the dielectric slab is removed, keeping the capacitor connected to the battery, the new capacitance and potential difference are C2 and V2 respectively. Then,",
+    "options": {
+      "A": "V1>V2, C1>C2",
+      "B": "V1=V2, C1>C2",
+      "C": "V1<V2, C1>C2",
+      "D": "V1=V2, C1<C2"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 15,
+    "question_text": "A cubical Gaussian surface has side of length a = 10 cm. Electric field lines are parallel to x-axis as shown. The magnitudes of electric fields through surfaces ABCD and EFGH are 6kNC^-1 and 9kNC^-1 respectively. Then the total charge enclosed by the cube is [Take ε0 = 9 × 10^-12 Fm^-1]",
+    "options": {
+      "A": "1.35 nC",
+      "B": "0.27 nC",
+      "C": "−1.35 nC",
+      "D": "−0.27 nC"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 16,
+    "question_text": "The four bands of a colour coded resistor are of the colours gray, red, gold and gold. The value of the resistance of the resistor is",
+    "options": {
+      "A": "82Ω ± 10%",
+      "B": "82Ω ± 5%",
+      "C": "8.2Ω ± 5%",
+      "D": "5.2Ω ± 5%"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 17,
+    "question_text": "A wire of resistance R is connected across a cell of emf ε and internal resistance r. The current through the circuit is I. In time t, the work done by the battery to establish the current I is",
+    "options": {
+      "A": "ε²t/R",
+      "B": "I²Rt",
+      "C": "IRt",
+      "D": "εIt"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 18,
+    "question_text": "For a given electric current the drift velocity of conduction electrons in a copper wire is vd and their mobility is µ. When the current is increased at constant temperature",
+    "options": {
+      "A": "vd remains the same, µ increases",
+      "B": "vd remains the same, µ decreases",
+      "C": "vd decreases, µ remains the same",
+      "D": "vd increases, µ remains the same"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 19,
+    "question_text": "Ten identical cells each emf 2 V and internal resistance 1Ω are connected in series with two cells wrongly connected. A resistor of 10Ω is connected to the combination. What is the current through the resistor?",
+    "options": {
+      "A": "2.4 A",
+      "B": "1.2 A",
+      "C": "0.6 A",
+      "D": "1.8 A"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 20,
+    "question_text": "The equivalent resistance between the points A and B in the following circuit is",
+    "options": {
+      "A": "5.5 Ω",
+      "B": "5 Ω",
+      "C": "0.05 Ω",
+      "D": "0.5 Ω"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 21,
+    "question_text": "A charged particle is subjected to acceleration in a cyclotron as shown. The charged particle undergoes increase in its speed",
+    "options": {
+      "A": "Only inside D2",
+      "B": "Only inside D1",
+      "C": "Inside D1, D2 and the gaps",
+      "D": "Only in the gap between D1 and D2"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 22,
+    "question_text": "The resistance of a carbon resistor is 4.7 kΩ ± 5%. The colour of the third band is",
+    "options": {
+      "A": "red",
+      "B": "orange",
+      "C": "violet",
+      "D": "gold"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 23,
+    "question_text": "A moving coil galvanometer is converted into an ammeter of range 0 to 5 mA. The galvanometer resistance is 90 Ω and the shunt resistance has a value of 10 Ω. If there are 50 divisions in the galvanometer-turned-ammeter on either sides of zero, its current sensitivity is",
+    "options": {
+      "A": "1 × 10^5 A/div",
+      "B": "1 × 10^5 div/A",
+      "C": "2 × 10^4 A/div",
+      "D": "2 × 10^4 div/A"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 24,
+    "question_text": "A positively charged particle of mass m is passed through a velocity selector. It moves horizontally rightward without deviation along the line y = 2mv/qB with a speed v. The electric field is vertically downwards and magnetic field is into the plane of the paper. Now, the electric field is switched off at t = 0. The angular momentum of the charged particle about origin O at t = πm/qB is",
+    "options": {
+      "A": "2mE²/qB³",
+      "B": "mE³/qB²",
+      "C": "zero",
+      "D": "mE²/qB³"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 25,
+    "question_text": "The Curie temperatures of Cobalt and iron are 1400 K and 1000 K respectively. At T = 1600 K, the ratio of magnetic susceptibility of Cobalt to that of iron is",
+    "options": {
+      "A": "3",
+      "B": "5/7",
+      "C": "7/5",
+      "D": "1/3"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 26,
+    "question_text": "The torque acting on a magnetic dipole placed in uniform magnetic field is zero, when the angle between the dipole axis and the magnetic field is _____.",
+    "options": {
+      "A": "45°",
+      "B": "90°",
+      "C": "60°",
+      "D": "zero"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 27,
+    "question_text": "The horizontal component of Earth's magnetic field at a place is 3 × 10^-5 T. If the dip at that place is 45°, the resultant magnetic field at that place is",
+    "options": {
+      "A": "(3/√2) × 10^-5 T",
+      "B": "3√2 × 10^-5 T",
+      "C": "(3/2)√3 × 10^-5 T",
+      "D": "3 × 10^-5 T"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 28,
+    "question_text": "A proton and an alpha-particle moving with the same velocity enter a uniform magnetic field with their velocities perpendicular to the magnetic field. The ratio of radii of their circular paths is",
+    "options": {
+      "A": "1:4",
+      "B": "1:2",
+      "C": "4:1",
+      "D": "2:1"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 29,
+    "question_text": "A metallic rod of length 1 m held along east-west direction is allowed to fall down freely. Given horizontal component of earth's magnetic field BH = 3 × 10^-5 T. The emf induced in the rod at an instant t = 2s after it is released is (Take g = 10 ms^-2)",
+    "options": {
+      "A": "3 × 10^-3 V",
+      "B": "6 × 10^-3 V",
+      "C": "3 × 10^-4 V",
+      "D": "6 × 10^-4 V"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 30,
+    "question_text": "A square loop of side 2 cm enters a magnetic field with a constant speed of 2 cm s^-1 as shown. The front edge enters the field at t = 0s. Which of the following graph correctly depicts the induced emf in the loop? (Take clockwise direction positive)",
+    "options": {
+      "A": "graph A",
+      "B": "graph B",
+      "C": "graph C",
+      "D": "graph D"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 31,
+    "question_text": "In series LCR circuit at resonance, the phase difference between voltage and current is",
+    "options": {
+      "A": "π",
+      "B": "π/2",
+      "C": "π/4",
+      "D": "zero"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 32,
+    "question_text": "An ideal transformer has a turns ratio of 10. When the primary is connected to 220 V, 50 Hz ac source, the power output is",
+    "options": {
+      "A": "1/10th the power input",
+      "B": "zero",
+      "C": "equal to power input",
+      "D": "10 times the power input"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 33,
+    "question_text": "The current in a coil changes from 2A to 5A in 0.3s. The magnitude of emf induced in the coil is 1.0 V. The value of self-inductance of the coil is",
+    "options": {
+      "A": "100 mH",
+      "B": "10 mH",
+      "C": "0.1 mH",
+      "D": "1.0 mH"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 34,
+    "question_text": "The ratio of the magnitudes of electric field to the magnetic field of an electromagnetic wave is of the order of",
+    "options": {
+      "A": "10^5 ms^-1",
+      "B": "10^8 ms^-1",
+      "C": "10^-5 ms^-1",
+      "D": "10^-8 ms^-1"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 35,
+    "question_text": "For a point object, which of the following always produces virtual image in air?",
+    "options": {
+      "A": "Plano-convex lens",
+      "B": "Biconvex lens",
+      "C": "Convex mirror",
+      "D": "Concave mirror"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 36,
+    "question_text": "For a given pair of transparent media, the critical angle for which colour is maximum?",
+    "options": {
+      "A": "Red",
+      "B": "Violet",
+      "C": "Blue",
+      "D": "Green"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 37,
+    "question_text": "An equiconvex lens made of glass of refractive index 3/2 has focal length f in air. It is completely immersed in water of refractive index 4/3. The percentage change in the focal length is",
+    "options": {
+      "A": "300% decrease",
+      "B": "300% increase",
+      "C": "400% decrease",
+      "D": "400% increase"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 38,
+    "question_text": "A point object is moving at a constant speed of 1 ms^-1 along the principal axis of a convex lens of focal length 10 cm. The speed of the image is also 1 ms^-1, when the object is at _____ cm from the optic centre of the lens.",
+    "options": {
+      "A": "15",
+      "B": "5",
+      "C": "20",
+      "D": "10"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 39,
+    "question_text": "When light propagates through a given homogeneous medium, the velocities of",
+    "options": {
+      "A": "primary wavefronts are lesser than those of secondary wavelets.",
+      "B": "primary wavefront and wavelets are equal.",
+      "C": "primary wavefronts are greater than or equal to those of secondary wavelets.",
+      "D": "primary wavefront are larger than those of secondary wavelets."
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 40,
+    "question_text": "Total impedance of a series LCR circuit varies with angular frequency of the AC source connected to it as shown in the graph. The quality factor Q of the series LCR circuit is",
+    "options": {
+      "A": "2.5",
+      "B": "1",
+      "C": "5",
+      "D": "0.4"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 41,
+    "question_text": "In the Young's double slit experiment, the intensity of light passing through each of the two double slits is 2 × 10^-2 Wm^-2. The screen-slit distance is very large in comparison with slit-slit distance. The fringe width is β. The distance between the central maximum and a point P on the screen is x = β/3. Then the total light intensity at that point is",
+    "options": {
+      "A": "4 × 10^-2 Wm^-2",
+      "B": "16 × 10^-2 Wm^-2",
+      "C": "2 × 10^-2 Wm^-2",
+      "D": "8 × 10^-2 Wm^-2"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 42,
+    "question_text": "A 60 W source emits monochromatic light of wavelength 662.5 nm. The number of photons emitted per second is",
+    "options": {
+      "A": "2 × 10^20",
+      "B": "2 × 10^29",
+      "C": "5 × 10^26",
+      "D": "5 × 10^17"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 43,
+    "question_text": "In an experiment to study photo-electric effect the observed variation of stopping potential with frequency of incident radiation is as shown in the figure. The slope and y-intercept are respectively",
+    "options": {
+      "A": "hv/e, v0",
+      "B": "hv, −hv0",
+      "C": "h/e, −h/e",
+      "D": "h/e, −hv0/e"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 44,
+    "question_text": "In the Rutherford's alpha scattering experiment, as the impact parameter increases, the scattering angle of the alpha particle",
+    "options": {
+      "A": "is always 90°",
+      "B": "increases",
+      "C": "decreases",
+      "D": "remains the same"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 45,
+    "question_text": "Three energy levels of hydrogen atom and the corresponding wavelength of the emitted radiation due to different electron transition are as shown. Then.",
+    "options": {
+      "A": "λ1 = λ2λ3/(λ2+λ3)",
+      "B": "λ2 = λ1λ3/(λ1+λ3)",
+      "C": "λ2 = λ1 + λ3",
+      "D": "λ3 = λ1λ2/(λ1+λ2)"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 46,
+    "question_text": "An unpolarised light of intensity I is passed through two polaroids kept one after the other with their planes parallel to each other. The intensity of light emerging from second polaroid is I/4. The angle between the pass axes of the polaroids is",
+    "options": {
+      "A": "0°",
+      "B": "30°",
+      "C": "60°",
+      "D": "45°"
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 47,
+    "question_text": "A nucleus with mass number 220 initially at rest emits an alpha particle. If the Q value of reaction is 5.5 MeV, calculate the value of kinetic energy of alpha particle.",
+    "options": {
+      "A": "5.4 MeV",
+      "B": "4.5 MeV",
+      "C": "7.4 MeV",
+      "D": "6.5 MeV"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 48,
+    "question_text": "A radioactive sample has half-life of 3 years. The time required for the activity of the sample to reduce to 1/5th of its initial value is about",
+    "options": {
+      "A": "7 years",
+      "B": "5 years",
+      "C": "15 years",
+      "D": "10 years"
+    },
+    "marked_answer": "A"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 49,
+    "question_text": "When a p-n junction diode is in forward bias, which type of charge carriers flows in the connecting wire?",
+    "options": {
+      "A": "Ions",
+      "B": "Holes",
+      "C": "Protons",
+      "D": "Free electrons"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 50,
+    "question_text": "A full-wave rectifier with diodes D1 and D2 is used to rectify 50 Hz alternating voltage. The diode D1 conducts _____ times in one second.",
+    "options": {
+      "A": "25",
+      "B": "50",
+      "C": "75",
+      "D": "100"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 51,
+    "question_text": "The truth table for the given circuit is",
+    "options": {
+      "A": "table A",
+      "B": "table B",
+      "C": "table C",
+      "D": "table D"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 52,
+    "question_text": "The energy gap of an LED is 2.4 eV. When the LED is switched 'ON', the momentum of the emitted photons is",
+    "options": {
+      "A": "2.56 × 10^-27 kg.m.s^-1",
+      "B": "0.64 × 10^-27 kg.m.s^-1",
+      "C": "1.28 × 10^-11 kg.m.s^-1",
+      "D": "1.28 × 10^-27 kg.m.s^-1"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 53,
+    "question_text": "In the following equation representing β⁻ decay, the number of neutrons in the nucleus X is: ²¹⁰₈₃Bi → X + e⁻¹ + ν̄",
+    "options": {
+      "A": "127",
+      "B": "84",
+      "C": "125",
+      "D": "126"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 54,
+    "question_text": "A body is moving along a straight line with initial velocity v0. Its acceleration a is constant. After t seconds, its velocity becomes v. The average velocity of the body over the given time interval is",
+    "options": {
+      "A": "v̄ = (v²+v0²)/2at",
+      "B": "v̄ = (v²−v0²)/2at",
+      "C": "v̄ = (v²+v0²)/at",
+      "D": "v̄ = (v²−v0²)/at"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 55,
+    "question_text": "A particle is in uniform circular motion. Related to one complete revolution of the particle, which among the statements is incorrect?",
+    "options": {
+      "A": "Displacement of the particle is zero.",
+      "B": "Average velocity of the particle is zero.",
+      "C": "Average speed of the particle is zero.",
+      "D": "Average acceleration of the particle is zero."
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 56,
+    "question_text": "A body of mass 10 kg is kept on a horizontal surface. The coefficient of kinetic friction between the body and the surface is 0.5. A horizontal force of 60 N is applied on the body. The resulting acceleration of the body is about",
+    "options": {
+      "A": "5 ms^-2",
+      "B": "zero",
+      "C": "6 ms^-2",
+      "D": "1 ms^-2"
+    },
+    "marked_answer": "D"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 57,
+    "question_text": "A ball of mass 0.2 kg is thrown vertically down from a height of 10 m. It collides with the floor and loses 50% of its energy and then rises back to the same height. The value of its initial velocity is",
+    "options": {
+      "A": "14 ms^-1",
+      "B": "20 ms^-1",
+      "C": "196 ms^-1",
+      "D": "zero"
+    },
+    "marked_answer": "B"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 58,
+    "question_text": "The moment of inertia of a rigid body about an axis",
+    "options": {
+      "A": "does not depend on its shape.",
+      "B": "does not depend on its size.",
+      "C": "depends on the position of axis of rotation.",
+      "D": "does not depend on its mass."
+    },
+    "marked_answer": "C"
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 59,
+    "question_text": "Seven identical discs are arranged in a planar pattern, so as to touch each other as shown in the figure. Each disc has mass 'm' radius R. What is the moment of inertia of system of six discs about an axis passing through the centre of central disc and normal to plane of all discs?",
+    "options": {
+      "A": "100 mR²",
+      "B": "85 mR²/2",
+      "C": "55 mR²/2",
+      "D": "27 mR²"
+    },
+    "marked_answer": null
+  },
+  {
+    "subject": "Physics",
+    "topic": "Full Syllabus",
+    "source": "CET Physics Question Paper (2P0521K23) P",
+    "question_number": 60,
+    "question_text": "The true length of a wire is 3.678 cm. When the length of this wire is measured using instrument A, the length of the wire is 3.5 cm. When the length of the wire is measured using instrument B, it is found to have length 3.38 cm. Then the",
+    "options": {
+      "A": "measurement with A is more accurate while measurement with B is more precise.",
+      "B": "measurement with A is more precise while measurement with B is more accurate.",
+      "C": "measurement with B is more accurate and precise.",
+      "D": "measurement with A is more accurate and precise."
+    },
+    "marked_answer": "B"
   }
 ]
