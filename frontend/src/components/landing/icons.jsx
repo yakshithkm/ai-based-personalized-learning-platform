@@ -65,10 +65,38 @@ export const TrendUpIcon = (props) => (
   </svg>
 );
 
+export const ArrowLeftIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M20 12H5" />
+    <path d="m11 5-7 7 7 7" />
+  </svg>
+);
+
 export const ArrowRightIcon = (props) => (
   <svg {...base} {...props} aria-hidden="true">
     <path d="M4 12h15" />
     <path d="m13 5 7 7-7 7" />
+  </svg>
+);
+
+export const CheckIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="m4.5 12.5 4.6 4.6L19.5 6.5" />
+  </svg>
+);
+
+export const EyeIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M2.5 12S5.8 5.5 12 5.5 21.5 12 21.5 12 18.2 18.5 12 18.5 2.5 12 2.5 12Z" />
+    <circle cx="12" cy="12" r="3.1" />
+  </svg>
+);
+
+export const EyeOffIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M3.5 3.5l17 17" />
+    <path d="M10.6 5.68A10.6 10.6 0 0 1 12 5.5c6.2 0 9.5 6.5 9.5 6.5a13.4 13.4 0 0 1-3.28 3.98M6.9 6.9C4.4 8.55 2.5 12 2.5 12s3.3 6.5 9.5 6.5a9.9 9.9 0 0 0 3.15-.52" />
+    <path d="M9.6 9.6a3.1 3.1 0 0 0 4.36 4.36" />
   </svg>
 );
 

@@ -2,11 +2,20 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
+import PasswordField from '../components/PasswordField';
+import { BrainIcon, SearchIcon, ChartIcon, ClockIcon, ArrowLeftIcon } from '../components/landing/icons';
 
 const DEMO_ACCOUNTS = [
-  { label: 'NEET Demo', email: 'neet@learning.com', password: 'neet@123' },
-  { label: 'CET Demo', email: 'cet@learning.com', password: 'cet@123' },
-  { label: 'JEE Demo', email: 'jee@learning.com', password: 'jee@123' },
+  { label: 'Use NEET Demo', tag: 'NEET', email: 'neet@learning.com', password: 'neet@123' },
+  { label: 'Use CET Demo', tag: 'CET', email: 'cet@learning.com', password: 'cet@123' },
+  { label: 'Use JEE Demo', tag: 'JEE', email: 'jee@learning.com', password: 'jee@123' },
+];
+
+const FEATURES = [
+  { text: 'AI-powered personalized study plans', Icon: BrainIcon },
+  { text: 'Adaptive practice based on performance', Icon: ChartIcon },
+  { text: 'Performance analytics and weak-topic detection', Icon: SearchIcon },
+  { text: 'Realistic exam simulations', Icon: ClockIcon },
 ];
 
 const LoginPage = () => {
@@ -42,46 +51,69 @@ const LoginPage = () => {
 
   return (
     <div className="auth-page">
-      <div className="auth-shell">
-        <header className="auth-brandbar">
+      <section className="auth-left">
+        <div className="auth-left-glow" aria-hidden="true" />
+        <div className="auth-left-content">
           <BrandLogo className="landing-logo" to="/" />
-        </header>
+          <span className="auth-eyebrow">AI-Powered Learning</span>
+          <h1 className="auth-headline">
+            Learn Smarter.
+            <br />
+            Prepare Better.
+          </h1>
+          <p className="auth-subtext">
+            TutorMind gives you personalized preparation for NEET, JEE and CET — powered by
+            performance analytics, adaptive practice, study recommendations, and realistic exam
+            simulation.
+          </p>
+          <ul className="auth-feature-list">
+            {FEATURES.map(({ text, Icon }) => (
+              <li key={text}>
+                <span className="auth-feature-icon">
+                  <Icon />
+                </span>
+                {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-        <div className="auth-grid">
-          <section className="auth-feature-card">
-            <p className="hero-eyebrow">Smart Competitive Exam Prep</p>
-            <h2>Welcome Back</h2>
-            <p>
-              Continue your AI-assisted preparation with adaptive practice, weak-topic insights,
-              and exam-focused analytics.
-            </p>
-            <div className="chip-wrap">
-              <span className="chip">NEET</span>
-              <span className="chip">JEE</span>
-              <span className="chip">CET</span>
-            </div>
-          </section>
+      <section className="auth-right">
+        <div className="auth-right-inner">
+          <Link to="/" className="auth-back-link">
+            <ArrowLeftIcon />
+            Back to Home
+          </Link>
 
-          <form className="auth-card auth-form-card" onSubmit={onSubmit}>
-            <h3>Login</h3>
-            <p>Continue where you left off.</p>
+          <form className="auth-card" onSubmit={onSubmit}>
+            <h3>Welcome back</h3>
+            <p>Sign in to continue your learning journey.</p>
 
-            <input
-              name="email"
-              type="email"
-              placeholder="Email"
-              value={form.email}
-              onChange={onChange}
-              required
-            />
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={onChange}
-              required
-            />
+            <label htmlFor="login-email">
+              Email
+              <input
+                id="login-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                value={form.email}
+                onChange={onChange}
+                required
+              />
+            </label>
+            <label htmlFor="login-password">
+              Password
+              <PasswordField
+                id="login-password"
+                name="password"
+                placeholder="••••••••"
+                value={form.password}
+                onChange={onChange}
+                autoComplete="current-password"
+                required
+              />
+            </label>
 
             {error && <div className="error-text">{error}</div>}
 
@@ -90,27 +122,32 @@ const LoginPage = () => {
             </button>
 
             <small>
-              New user? <Link to="/register">Create account</Link>
+              New to TutorMind? <Link to="/register">Create account</Link>
             </small>
+          </form>
 
-            <div className="auth-demo-row">
-              <small>Try Demo Account</small>
-              <div className="chip-wrap">
-                {DEMO_ACCOUNTS.map((account) => (
+          <div className="auth-demo-section">
+            <div className="auth-demo-title">Demo Accounts</div>
+            <div className="auth-demo-grid">
+              {DEMO_ACCOUNTS.map((account) => (
+                <div className="auth-demo-item" key={account.email}>
+                  <div className="auth-demo-item-label">
+                    <span className="auth-demo-item-tag">{account.tag}</span>
+                    <span className="auth-demo-item-email">{account.email}</span>
+                  </div>
                   <button
-                    key={account.email}
                     type="button"
                     className="outline-btn outline-btn-sm"
                     onClick={() => fillDemoAccount(account)}
                   >
                     {account.label}
                   </button>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

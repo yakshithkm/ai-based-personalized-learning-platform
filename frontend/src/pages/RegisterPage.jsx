@@ -2,6 +2,15 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
+import PasswordField from '../components/PasswordField';
+import { BrainIcon, SearchIcon, ChartIcon, ClockIcon, ArrowLeftIcon } from '../components/landing/icons';
+
+const FEATURES = [
+  { text: 'AI-powered personalized study plans', Icon: BrainIcon },
+  { text: 'Adaptive practice based on performance', Icon: ChartIcon },
+  { text: 'Performance analytics and weak-topic detection', Icon: SearchIcon },
+  { text: 'Realistic exam simulations', Icon: ClockIcon },
+];
 
 const RegisterPage = () => {
   const { register } = useAuth();
@@ -36,49 +45,93 @@ const RegisterPage = () => {
 
   return (
     <div className="auth-page">
-      <div className="auth-shell">
-        <header className="auth-brandbar">
+      <section className="auth-left">
+        <div className="auth-left-glow" aria-hidden="true" />
+        <div className="auth-left-content">
           <BrandLogo className="landing-logo" to="/" />
-        </header>
+          <span className="auth-eyebrow">AI-Powered Learning</span>
+          <h1 className="auth-headline">
+            Learn Smarter.
+            <br />
+            Prepare Better.
+          </h1>
+          <p className="auth-subtext">
+            TutorMind gives you personalized preparation for NEET, JEE and CET — powered by
+            performance analytics, adaptive practice, study recommendations, and realistic exam
+            simulation.
+          </p>
+          <ul className="auth-feature-list">
+            {FEATURES.map(({ text, Icon }) => (
+              <li key={text}>
+                <span className="auth-feature-icon">
+                  <Icon />
+                </span>
+                {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-        <div className="auth-grid">
-          <section className="auth-feature-card">
-            <p className="hero-eyebrow">Personalized Learning Starts Here</p>
-            <h2>Create Your Account</h2>
-            <p>
-              Get question recommendations, weak-topic alerts, and analytics tailored for your
-              target exam.
-            </p>
-            <div className="chip-wrap">
-              <span className="chip">Adaptive Recommendations</span>
-              <span className="chip">Performance Tracking</span>
-            </div>
-          </section>
+      <section className="auth-right">
+        <div className="auth-right-inner">
+          <Link to="/" className="auth-back-link">
+            <ArrowLeftIcon />
+            Back to Home
+          </Link>
 
-          <form className="auth-card auth-form-card" onSubmit={onSubmit}>
-            <h3>Register</h3>
-            <p>Set up your learning workspace in under a minute.</p>
+          <form className="auth-card" onSubmit={onSubmit}>
+            <h3>Create your account</h3>
+            <p>Start your personalized learning journey.</p>
 
-            <input name="name" placeholder="Full Name" onChange={onChange} required />
-            <input name="email" type="email" placeholder="Email" onChange={onChange} required />
-            <input
-              name="password"
-              type="password"
-              placeholder="Password (min 6 chars)"
-              onChange={onChange}
-              required
-            />
-
-            <select name="targetExam" value={form.targetExam} onChange={onChange}>
-              <option value="NEET">NEET</option>
-              <option value="JEE">JEE</option>
-              <option value="CET">CET</option>
-            </select>
+            <label htmlFor="register-name">
+              Full Name
+              <input
+                id="register-name"
+                name="name"
+                placeholder="Your full name"
+                value={form.name}
+                onChange={onChange}
+                required
+              />
+            </label>
+            <label htmlFor="register-email">
+              Email
+              <input
+                id="register-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                value={form.email}
+                onChange={onChange}
+                required
+              />
+            </label>
+            <label htmlFor="register-password">
+              Password
+              <PasswordField
+                id="register-password"
+                name="password"
+                placeholder="Min 6 characters"
+                value={form.password}
+                onChange={onChange}
+                autoComplete="new-password"
+                required
+              />
+            </label>
+            <label htmlFor="register-exam">
+              Exam / Goal
+              <select id="register-exam" name="targetExam" value={form.targetExam} onChange={onChange}>
+                <option value="NEET">NEET</option>
+                <option value="JEE">JEE</option>
+                <option value="CET">CET</option>
+              </select>
+            </label>
 
             {error && <div className="error-text">{error}</div>}
 
             <button className="solid-btn" type="submit" disabled={busy}>
-              {busy ? 'Registering...' : 'Register'}
+              {busy ? 'Creating account...' : 'Create Account'}
             </button>
 
             <small>
@@ -86,7 +139,7 @@ const RegisterPage = () => {
             </small>
           </form>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

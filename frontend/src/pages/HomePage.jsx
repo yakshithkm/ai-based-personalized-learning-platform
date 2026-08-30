@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BrandLogo from '../components/BrandLogo';
 import Footer from '../components/Footer';
 import Reveal from '../components/landing/Reveal';
@@ -169,45 +167,15 @@ const faqs = [
 ];
 
 const HomePage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { login, register } = useAuth();
 
-  const authMode = searchParams.get('auth');
-  const isAuthOpen = authMode === 'login' || authMode === 'register';
-
-  const [busy, setBusy] = useState(false);
   const heroAccuracyValue = useCountUp(18, { duration: 1500 });
   const heroReadinessValue = useCountUp(78, { duration: 1700 });
   const heroCtaRef = useMagneticHover();
   const finalCtaRef = useMagneticHover();
-  const [error, setError] = useState('');
-  const [loginForm, setLoginForm] = useState({ email: '', password: '' });
-  const [registerForm, setRegisterForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-    targetExam: 'JEE',
-  });
 
-  const modeTitle = useMemo(() => {
-    if (authMode === 'register') return 'Create your account';
-    return 'Welcome back';
-  }, [authMode]);
-
-  const openAuth = (mode) => {
-    const next = new URLSearchParams(searchParams);
-    next.set('auth', mode);
-    setSearchParams(next);
-    setError('');
-  };
-
-  const closeAuth = () => {
-    const next = new URLSearchParams(searchParams);
-    next.delete('auth');
-    setSearchParams(next);
-    setError('');
-  };
+  const goToLogin = () => navigate('/login');
+  const goToRegister = () => navigate('/register');
 
   const scrollToSection = (id) => {
     const node = document.getElementById(id);
@@ -292,34 +260,6 @@ const HomePage = () => {
     };
   }, []);
 
-  const onLoginSubmit = async (event) => {
-    event.preventDefault();
-    setBusy(true);
-    setError('');
-    try {
-      await login(loginForm);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err?.response?.data?.message || 'Login failed');
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const onRegisterSubmit = async (event) => {
-    event.preventDefault();
-    setBusy(true);
-    setError('');
-    try {
-      await register(registerForm);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err?.response?.data?.message || 'Registration failed');
-    } finally {
-      setBusy(false);
-    }
-  };
-
   return (
     <div className="landing-page">
       <div className="landing-noise" aria-hidden="true" />
@@ -343,10 +283,10 @@ const HomePage = () => {
         </nav>
 
         <div className="landing-actions">
-          <button className="outline-btn" type="button" onClick={() => openAuth('login')}>
+          <button className="outline-btn" type="button" onClick={() => goToLogin()}>
             Login
           </button>
-          <button className="solid-btn" type="button" onClick={() => openAuth('register')}>
+          <button className="solid-btn" type="button" onClick={() => goToRegister()}>
             Start free trial
           </button>
         </div>
@@ -376,7 +316,7 @@ const HomePage = () => {
               ref={heroCtaRef}
               className="solid-btn magnetic-btn btn-with-arrow"
               type="button"
-              onClick={() => openAuth('register')}
+              onClick={() => goToRegister()}
             >
               Start Practicing
               <ArrowRightIcon className="btn-arrow" />
@@ -539,7 +479,7 @@ const HomePage = () => {
               <button
                 type="button"
                 className={plan.highlighted ? 'solid-btn' : 'outline-btn'}
-                onClick={() => openAuth('register')}
+                onClick={() => goToRegister()}
               >
                 {plan.cta}
               </button>
@@ -565,7 +505,7 @@ const HomePage = () => {
           ref={finalCtaRef}
           className="solid-btn magnetic-btn cta-pulse-btn btn-with-arrow"
           type="button"
-          onClick={() => openAuth('register')}
+          onClick={() => goToRegister()}
         >
           Get Started Free
           <ArrowRightIcon className="btn-arrow" />
@@ -575,101 +515,6 @@ const HomePage = () => {
       <div className="landing-footer-wrap">
         <Footer />
       </div>
-
-      {isAuthOpen && (
-        <section className="auth-overlay" onClick={closeAuth}>
-          <div className="auth-modal" onClick={(event) => event.stopPropagation()}>
-            <div className="auth-modal-head">
-              <h3>{modeTitle}</h3>
-              <button type="button" className="outline-btn close-btn" onClick={closeAuth}>
-                Close
-              </button>
-            </div>
-
-            {authMode === 'login' ? (
-              <form className="auth-modal-form" onSubmit={onLoginSubmit}>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={loginForm.email}
-                  onChange={(event) =>
-                    setLoginForm((prev) => ({ ...prev, email: event.target.value }))
-                  }
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={loginForm.password}
-                  onChange={(event) =>
-                    setLoginForm((prev) => ({ ...prev, password: event.target.value }))
-                  }
-                  required
-                />
-                {error && <div className="error-text">{error}</div>}
-                <button className="solid-btn" type="submit" disabled={busy}>
-                  {busy ? 'Logging in...' : 'Login'}
-                </button>
-                <small>
-                  New user?{' '}
-                  <Link to="/?auth=register" onClick={() => openAuth('register')}>
-                    Create account
-                  </Link>
-                </small>
-              </form>
-            ) : (
-              <form className="auth-modal-form" onSubmit={onRegisterSubmit}>
-                <input
-                  placeholder="Full Name"
-                  value={registerForm.name}
-                  onChange={(event) =>
-                    setRegisterForm((prev) => ({ ...prev, name: event.target.value }))
-                  }
-                  required
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={registerForm.email}
-                  onChange={(event) =>
-                    setRegisterForm((prev) => ({ ...prev, email: event.target.value }))
-                  }
-                  required
-                />
-                <input
-                  type="password"
-                  placeholder="Password (min 6 chars)"
-                  value={registerForm.password}
-                  onChange={(event) =>
-                    setRegisterForm((prev) => ({ ...prev, password: event.target.value }))
-                  }
-                  required
-                />
-                <select
-                  value={registerForm.targetExam}
-                  onChange={(event) =>
-                    setRegisterForm((prev) => ({ ...prev, targetExam: event.target.value }))
-                  }
-                >
-                  <option value="NEET">NEET</option>
-                  <option value="JEE">JEE</option>
-                  <option value="CET">CET</option>
-                </select>
-                {error && <div className="error-text">{error}</div>}
-                <button className="solid-btn" type="submit" disabled={busy}>
-                  {busy ? 'Registering...' : 'Create Account'}
-                </button>
-                <small>
-                  Already have an account?{' '}
-                  <Link to="/?auth=login" onClick={() => openAuth('login')}>
-                    Login
-                  </Link>
-                </small>
-              </form>
-            )}
-          </div>
-        </section>
-      )}
     </div>
   );
 };

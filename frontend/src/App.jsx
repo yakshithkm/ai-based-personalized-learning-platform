@@ -4,10 +4,13 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import HomePage from './pages/HomePage';
 
-// Route-based code splitting: only HomePage (the public landing/login page every visitor
-// hits first) ships in the initial bundle. Everything behind auth loads on demand, so a
-// student who only ever uses /exam-simulation isn't downloading the admin analytics
-// dashboard, charts library, etc. up front.
+// Route-based code splitting: only HomePage (the public landing page every visitor
+// hits first) ships in the initial bundle. Everything else, including the dedicated
+// /login and /register screens, loads on demand, so a student who only ever uses
+// /exam-simulation isn't downloading the admin analytics dashboard, charts library,
+// etc. up front.
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
 const DashboardPage = lazy(() => import('./pages/DashboardPage'));
 const PracticePage = lazy(() => import('./pages/PracticePage'));
 const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
@@ -29,8 +32,8 @@ const App = () => {
     <Suspense fallback={<PageFallback />}>
       <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Navigate to="/?auth=login" replace />} />
-      <Route path="/register" element={<Navigate to="/?auth=register" replace />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
 
       <Route
         path="/dashboard"
