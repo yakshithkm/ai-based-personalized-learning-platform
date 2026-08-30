@@ -1,8 +1,3 @@
-# User Specified & Internal Documents
-code-review.md
-STATE_ARCHITECTURE_FIXES.md
-UI_REDESIGN_NOTES.md
-
 # Environment Variables & Sensitive Files
 .env
 .env.local
