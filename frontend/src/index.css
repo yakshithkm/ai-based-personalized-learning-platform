@@ -12,6 +12,20 @@ html,
 body {
   width: 100%;
   margin: 0;
+  /* Safety net: the authenticated app shell is composed of many
+     independently-responsive grids/flex layouts; this guarantees the page
+     itself never grows a horizontal scrollbar even if one nested piece
+     briefly miscalculates, without touching any intentional inner
+     .responsive-scroll containers (those scroll on their own axis).
+     Using "clip" rather than "hidden" matters here: per spec, giving an
+     element a non-visible overflow-x while overflow-y is still visible
+     forces overflow-y to compute as "auto" too — turning html/body into
+     their own scroll containers even though nothing actually scrolls
+     inside them. That silently breaks position: sticky for anything
+     inside (the sidebar's sticky containing-block calculation gets
+     anchored to the wrong box), which is exactly what "clip" avoids: it
+     clips the horizontal overflow without touching overflow-y at all. */
+  overflow-x: clip;
 }
 
 :root {
@@ -388,6 +402,7 @@ a:hover {
 
 .auth-demo-grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.55rem;
 }
 
@@ -516,6 +531,8 @@ select:focus {
   border-radius: var(--radius-sm);
   padding: 0.78rem 1rem;
   cursor: pointer;
+  overflow-wrap: break-word;
+  word-break: break-word;
   transition: transform var(--duration-fast) var(--ease-out), opacity var(--duration-base) ease,
     box-shadow var(--duration-base) ease, filter var(--duration-base) ease, background var(--duration-base) ease;
 }
@@ -659,7 +676,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  padding: 0.7rem 1.4rem;
+  padding: 0.7rem clamp(0.9rem, 2vw + 0.5rem, 1.4rem);
   background: var(--header-glass);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
@@ -688,6 +705,44 @@ button:focus-visible {
 .header-menu-btn svg {
   width: 1.15rem;
   height: 1.15rem;
+  fill: currentColor;
+}
+
+.header-menu-icon {
+  display: inline-flex;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.header-menu-btn.is-open .header-menu-icon {
+  transform: rotate(90deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-menu-icon {
+    transition: none;
+  }
+}
+
+/* Compact search entry point shown only once the inline bar no longer
+   fits (see the 780px breakpoint) — mirrors .header-menu-btn's styling so
+   it reads as part of the same control family. */
+.header-search-toggle-btn {
+  display: none;
+  border: 1px solid var(--border);
+  background: var(--surface-0);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  width: 2.2rem;
+  height: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.header-search-toggle-btn svg {
+  width: 1.05rem;
+  height: 1.05rem;
   fill: currentColor;
 }
 
@@ -1024,10 +1079,21 @@ button:focus-visible {
 
 .main-content {
   grid-area: main;
-  padding: 1.5rem;
+  padding: clamp(1rem, 1.5vw + 0.7rem, 1.5rem);
   display: flex;
   flex-direction: column;
   min-width: 0;
+}
+
+/* Utility for content that genuinely needs horizontal space at small
+   widths (wide calendars, dense tables) instead of squeezing it
+   unreadably or letting it push the whole page wider. */
+.responsive-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .main-content > .page-grid,
@@ -1530,6 +1596,7 @@ button:focus-visible {
 .notification-list {
   margin-top: 0.72rem;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.58rem;
 }
 
@@ -1969,12 +2036,14 @@ button:focus-visible {
 
 .question-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.78rem;
 }
 
 .priority-list {
   margin-top: 0.8rem;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.7rem;
 }
 
@@ -2063,6 +2132,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
@@ -2116,6 +2186,10 @@ button:focus-visible {
   display: grid;
   gap: 0.58rem;
   margin: 1rem 0;
+}
+
+.question-card {
+  min-width: 0;
 }
 
 .question-card .option-btn {
@@ -2181,6 +2255,8 @@ button:focus-visible {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.78rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
   transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
 }
 
@@ -2213,18 +2289,40 @@ button:focus-visible {
   border-radius: 12px;
   border: 1px solid var(--border);
   animation: feedbackReveal 0.4s var(--ease-out) both;
+  min-width: 0;
+}
+
+/* Every direct child is a grid item, which defaults to min-width: auto —
+   meaning a single long unbroken word or phrase in the AI-generated
+   explanation/tip/mistake text (feedback content is dynamic, unlike the
+   static question/option copy above it) can silently force this grid,
+   and everything above it up to the page, wider than the viewport. Both
+   halves of the fix are needed: min-width: 0 lets the grid track itself
+   shrink to the container's width, and overflow-wrap/word-break makes
+   sure the text actually wraps within it instead of visually spilling
+   out the side.
+*/
+.feedback-box > * {
+  min-width: 0;
+}
+
+.feedback-box p,
+.correct-answer-text,
+.improvement-tip,
+.why-wrong-text,
+.xp-pop {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 @keyframes feedbackReveal {
   from {
     opacity: 0;
     transform: translateY(-8px);
-    max-height: 0;
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    max-height: 800px;
   }
 }
 
@@ -2279,8 +2377,12 @@ button:focus-visible {
 
 .feedback-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.55rem;
+}
+
+.feedback-actions button {
+  width: 100%;
 }
 
 .feedback-correct {
@@ -2503,7 +2605,7 @@ button:focus-visible {
   margin: 0;
   padding: 0.9rem 2rem;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: 1rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.14);
@@ -2690,6 +2792,145 @@ button:focus-visible {
 .landing-actions .outline-btn,
 .landing-actions .solid-btn {
   text-decoration: none;
+}
+
+/* ---- Mobile nav: hamburger + dropdown panel ----
+   The desktop pill nav (.landing-nav) needs real room for five links plus
+   two CTAs; below 980px there isn't enough of it, so the links and the
+   secondary "Login" action move into a panel behind a hamburger button
+   instead of being squeezed or silently dropped. */
+.landing-menu-btn {
+  display: none;
+  grid-column: 4;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: var(--radius-sm);
+  background: rgba(15, 23, 42, 0.45);
+  color: #e2e8f0;
+  cursor: pointer;
+}
+
+.landing-menu-btn svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.landing-menu-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.landing-mobile-backdrop {
+  display: none;
+}
+
+.landing-mobile-menu {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .landing-nav,
+  .landing-actions {
+    display: none;
+  }
+
+  .landing-menu-btn {
+    display: inline-flex;
+  }
+
+  .landing-mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 28;
+    background: rgba(2, 6, 23, 0.6);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    animation: backdropIn var(--duration-base) ease both;
+  }
+
+  .landing-mobile-menu {
+    display: block;
+    position: fixed;
+    left: 0.75rem;
+    right: 0.75rem;
+    top: 4.5rem;
+    z-index: 29;
+    padding: 0.9rem;
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: var(--radius-lg);
+    background: rgba(9, 12, 32, 0.92);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    box-shadow: var(--elevation-3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity var(--duration-base) ease, transform var(--duration-base) var(--ease-out),
+      visibility var(--duration-base) ease;
+    max-height: calc(100vh - 5.5rem);
+    overflow-y: auto;
+  }
+
+  .landing-mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .landing-mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .landing-mobile-nav a {
+    color: #d1d5db;
+    text-decoration: none;
+    font-size: 0.95rem;
+    padding: 0.65rem 0.7rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .landing-mobile-nav a:hover,
+  .landing-mobile-nav a:focus-visible {
+    background: rgba(96, 165, 250, 0.14);
+    color: #f1f5f9;
+  }
+
+  .landing-mobile-nav a.is-active {
+    background: rgba(96, 165, 250, 0.22);
+    color: #f1f5f9;
+  }
+
+  .landing-mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+  }
+
+  .landing-mobile-actions .outline-btn,
+  .landing-mobile-actions .solid-btn {
+    width: 100%;
+    justify-content: center;
+    text-decoration: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-mobile-menu {
+    transition: none;
+  }
+
+  .landing-mobile-backdrop {
+    animation: none;
+  }
 }
 
 .landing-hero {
@@ -3053,7 +3294,12 @@ button:focus-visible {
   color: #cbd5e1;
 }
 
-@media (max-width: 900px) {
+/* --- Authenticated app shell: off-canvas sidebar for tablet + mobile ---
+   Kept as its own breakpoint (1024px) separate from the component-grid
+   breakpoint below (900px) so the sidebar/header behavior — which needs to
+   apply through the whole tablet range — isn't tied to spacing decisions
+   that only make sense for narrower phone-sized cards. */
+@media (max-width: 1024px) {
   .app-shell {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -3065,10 +3311,6 @@ button:focus-visible {
     display: inline-flex;
   }
 
-  .header-search {
-    display: none;
-  }
-
   .sidebar {
     position: fixed;
     z-index: 25;
@@ -3076,6 +3318,7 @@ button:focus-visible {
     top: 0;
     width: min(280px, 82vw);
     height: 100vh;
+    height: 100dvh;
     border-right: 1px solid var(--border);
     border-bottom: none;
     box-shadow: var(--elevation-3);
@@ -3086,6 +3329,45 @@ button:focus-visible {
     transform: translateX(0);
   }
 
+  /* Backdrop is mounted only while the drawer is open (see Layout.jsx),
+     so a plain opacity transition can't animate an exit — but combining a
+     real dim + blur with a quick entrance keyframe still reads as a
+     natural, non-jarring appearance rather than a hard cut. */
+  .header-backdrop {
+    background: rgba(2, 6, 23, 0.6);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    animation: backdropIn var(--duration-base) ease both;
+  }
+}
+
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-backdrop {
+    animation: none;
+  }
+}
+
+/* Header search collapses to an icon-triggered overlay once there's no
+   longer comfortable room for an inline bar next to the streak pill and
+   profile controls. Positioning/visibility overrides for
+   .header-search-wrap itself live in app-shell.css (loaded after this
+   file) so they aren't shadowed by that file's unconditional base rule. */
+@media (max-width: 780px) {
+  .header-search-toggle-btn {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 900px) {
   .app-footer-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.6rem 1rem;
@@ -3125,7 +3407,11 @@ button:focus-visible {
   }
 
   .landing-hero {
-    padding: 3rem 1rem 1.5rem;
+    padding: 1.75rem 1rem 1.5rem;
+  }
+
+  .hero-badge {
+    margin-bottom: 1.5rem;
   }
 
   .landing-section {
@@ -3140,11 +3426,33 @@ button:focus-visible {
 
 @media (max-width: 560px) {
   .app-header {
-    padding: 0.6rem 0.9rem;
+    padding: 0.6rem 0.7rem;
+    gap: 0.5rem;
   }
 
-  .header-notif-btn {
-    display: none;
+  /* Notifications stay reachable at every width (per design guidance) —
+     the header instead tightens its own spacing so everything still
+     fits: smaller action gap, a smaller streak pill, and a slightly
+     smaller profile avatar reclaim just enough room. */
+  .header-actions {
+    gap: 0.35rem;
+  }
+
+  .streak-pill {
+    padding: 0.35rem 0.55rem;
+  }
+
+  .icon-btn,
+  .header-menu-btn,
+  .header-search-toggle-btn {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+
+  .header-profile-trigger .user-avatar {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.85rem;
   }
 
   .app-footer-grid {
@@ -3153,5 +3461,89 @@ button:focus-visible {
 
   .palette-grid {
     grid-template-columns: repeat(8, minmax(32px, 1fr));
+  }
+}
+
+.streak-label-compact {
+  display: none;
+}
+
+@media (max-width: 400px) {
+  /* Below 400px, the full "N day streak(s)" phrase no longer fits
+     alongside the notification/profile controls — but the streak count
+     itself is meaningful, so it swaps to a compact "Nd" instead of
+     disappearing entirely (a bare flame icon with no number reads as
+     broken, not "still there"). */
+  .streak-pill .streak-label {
+    display: none;
+  }
+
+  .streak-pill .streak-label-compact {
+    display: inline;
+  }
+
+  .header-dropdown {
+    min-width: min(260px, calc(100vw - 1.5rem));
+  }
+}
+
+/* --- Cross-page: card padding / panel density on small screens ---
+   Applies to every .panel and .dash-card (Dashboard, Practice, Analytics,
+   Exam Simulation, all subpages) so content stops feeling cramped against
+   the screen edges without changing desktop density at all. */
+@media (max-width: 640px) {
+  .panel,
+  .dash-card {
+    padding: 1rem;
+  }
+
+  /* Simple stat cards (title + big value + caption, no icon row or
+     "view all" action) center up nicely once full-width on a phone —
+     used on the Profile stats row and Admin Analytics summary row. */
+  .stats-grid .metric-card {
+    text-align: center;
+    justify-items: center;
+  }
+
+  .stats-grid .metric-card > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 390px) {
+  .panel,
+  .dash-card {
+    padding: 0.85rem;
+  }
+}
+
+/* --- Button groups: never force multiple CTAs into one cramped row --- */
+@media (max-width: 480px) {
+  .exam-action-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .exam-action-row button {
+    width: 100%;
+  }
+
+  .dash-recommend-cta,
+  .practice-start-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 620px) {
+  .exam-live-header {
+    flex-wrap: wrap;
+  }
+
+  .exam-timer {
+    text-align: left;
   }
 }

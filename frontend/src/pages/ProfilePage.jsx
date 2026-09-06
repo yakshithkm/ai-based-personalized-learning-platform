@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
@@ -167,6 +167,8 @@ const ProfilePage = () => {
   // with the viewer's local timezone. The resulting `cells` array is
   // already in the row-then-column order CSS Grid's `grid-auto-flow:
   // column` expects, so no extra transposition is needed at render time.
+  const heatmapScrollRef = useRef(null);
+
   const heatmapCalendar = useMemo(() => {
     const days = habit.heatmap || [];
     if (!days.length) return { months: [], submissionsInYear: 0 };
@@ -200,6 +202,18 @@ const ProfilePage = () => {
 
     return { months, submissionsInYear };
   }, [habit.heatmap]);
+
+  // Default the heatmap's horizontal scroll position to the most recent
+  // months (right end) rather than the oldest (left end) — on a phone,
+  // where the calendar genuinely scrolls, the current streak is what
+  // matters most and shouldn't require a manual swipe to reach. Desktop
+  // never overflows its container, so this is a no-op there.
+  useEffect(() => {
+    const el = heatmapScrollRef.current;
+    if (el) {
+      el.scrollLeft = el.scrollWidth;
+    }
+  }, [heatmapCalendar]);
 
   const heatmapLevel = (count) => {
     if (!count) return 0;
@@ -450,13 +464,11 @@ const ProfilePage = () => {
         </div>
 
         {heatmapCalendar.months.length ? (
+          <div className="responsive-scroll profile-heatmap-scroll" ref={heatmapScrollRef}>
           <div className="profile-heatmap-grid">
             {heatmapCalendar.months.map((month) => (
-              <div key={month.key} className="profile-heatmap-month" style={{ flexGrow: month.weeks }}>
-                <div
-                  className="profile-heatmap-month-grid"
-                  style={{ gridTemplateColumns: `repeat(${month.weeks}, 1fr)` }}
-                >
+              <div key={month.key} className="profile-heatmap-month" style={{ '--month-weeks': month.weeks }}>
+                <div className="profile-heatmap-month-grid">
                   {month.cells.map((entry, index) =>
                     entry ? (
                       <span
@@ -472,6 +484,7 @@ const ProfilePage = () => {
                 <span className="profile-heatmap-month-label">{month.label}</span>
               </div>
             ))}
+          </div>
           </div>
         ) : (
           <p>No activity recorded yet.</p>

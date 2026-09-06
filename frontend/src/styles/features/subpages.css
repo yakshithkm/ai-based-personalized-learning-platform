@@ -27,12 +27,14 @@
 
 .weak-topics-table {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.75rem;
 }
 
 .weak-topics-row-v2 {
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: 0.75rem;
   padding: 0.7rem 0.85rem;
   border-radius: var(--radius-md);
@@ -83,12 +85,14 @@
 
 .time-allocation-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.65rem;
 }
 
 .time-allocation-row {
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: 0.6rem;
   flex-wrap: wrap;
 }
@@ -121,11 +125,13 @@
 
 .session-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.6rem;
 }
 
 .session-row {
   padding: 0.7rem 0.85rem;
+  min-width: 0;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   background: rgba(15, 23, 42, 0.5);
@@ -148,12 +154,14 @@
 
 .repeated-mistake-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.55rem;
 }
 
 .repeated-mistake-row {
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: 0.65rem;
   width: 100%;
   text-align: left;
@@ -178,12 +186,14 @@
 
 .mistake-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.6rem;
 }
 
 .mistake-row {
   display: flex;
   align-items: center;
+  min-width: 0;
   gap: 0.65rem;
   padding: 0.65rem 0.8rem;
   border-radius: var(--radius-md);
@@ -255,5 +265,19 @@
 @media (max-width: 640px) {
   .time-allocation-reason {
     padding-left: 0;
+  }
+
+  /* Icon + title + description cards (not data rows/lists) center up
+     nicely once they're full-width on a phone screen. */
+  .achievement-grid-card {
+    text-align: center;
+    justify-items: center;
+  }
+
+  .achievement-grid-card > * {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 }

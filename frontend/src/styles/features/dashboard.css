@@ -48,7 +48,7 @@
 
 .dash-greeting h1 {
   margin: 0 0 0.25rem;
-  font-size: 1.7rem;
+  font-size: clamp(1.35rem, 1vw + 1.1rem, 1.7rem);
 }
 
 .dash-greeting p {
@@ -259,6 +259,7 @@
 
 .study-plan-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.6rem;
 }
 
@@ -267,6 +268,7 @@
   align-items: center;
   gap: 0.75rem;
   width: 100%;
+  min-width: 0;
   text-align: left;
   background: rgba(15, 23, 42, 0.5);
   border: 1px solid var(--border);
@@ -443,6 +445,7 @@
 
 .weak-topic-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.7rem;
 }
 
@@ -451,6 +454,7 @@
   align-items: center;
   gap: 0.6rem;
   width: 100%;
+  min-width: 0;
   background: transparent;
   border: none;
   padding: 0.15rem 0;
@@ -488,6 +492,7 @@
 
 .achievement-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.85rem;
 }
 
@@ -495,6 +500,7 @@
   display: flex;
   align-items: flex-start;
   gap: 0.65rem;
+  min-width: 0;
 }
 
 .achievement-icon {
@@ -595,25 +601,25 @@
 
 @media (max-width: 1180px) {
   .dash-metric-row {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .dash-main-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .dash-second-row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
 @media (max-width: 760px) {
   .dash-metric-row {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .dash-second-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .dash-recommend-banner {
@@ -624,6 +630,40 @@
 
 @media (max-width: 480px) {
   .dash-metric-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  /* Simple stat cards (icon + label + value) center up nicely once
+     they're full/near-full width — unlike the data-heavy widgets above
+     (lists, charts), there's nothing here that needs left alignment. */
+  .metric-card-v2 {
+    text-align: center;
+    justify-items: center;
+  }
+
+  /* Same defensive pattern as .feedback-box: switching from the default
+     'stretch' to 'center' means these children now size to their own
+     content (fit-content) instead of the card's full width, so a longer
+     title/value/caption than expected could push past the card edge.
+     min-width: 0 lets them shrink back down to the card's width as a
+     ceiling, and break-word guarantees the text itself wraps rather than
+     spilling out if it's still wider than that. */
+  .metric-card-v2 > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .metric-title,
+  .metric-value,
+  .metric-caption {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .metric-card-head {
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }

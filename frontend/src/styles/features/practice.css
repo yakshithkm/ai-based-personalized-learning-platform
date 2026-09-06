@@ -5,7 +5,7 @@
 
 .practice-header h1 {
   margin: 0 0 0.25rem;
-  font-size: 1.7rem;
+  font-size: clamp(1.35rem, 1vw + 1.1rem, 1.7rem);
 }
 
 .practice-control-card .dash-card-head h3 {
@@ -93,10 +93,13 @@
   color: #dbeafe;
   font-size: 1.02rem;
   margin: 0.7rem 0 0.4rem;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .practice-side-stack {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
   align-content: start;
 }
@@ -168,6 +171,7 @@
 
 .recent-question-list {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.55rem;
 }
 
@@ -229,7 +233,7 @@
   }
 
   .practice-main-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 

@@ -67,10 +67,10 @@ const MistakeBankPage = () => {
           <h3>Repeated Patterns</h3>
           <p className="dash-card-subtitle">Topics where the same mistake keeps coming back.</p>
           <div className="repeated-mistake-list">
-            {repeatedMistakes.map((entry) => (
+            {repeatedMistakes.map((entry, index) => (
               <button
                 type="button"
-                key={`${entry.subject}-${entry.topic}`}
+                key={`${entry.subject}-${entry.topic}-${index}`}
                 className="repeated-mistake-row"
                 onClick={() => goPractice(entry.subject, entry.topic)}
               >

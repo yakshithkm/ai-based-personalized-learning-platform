@@ -121,6 +121,12 @@ const MenuIcon = () => (
   </svg>
 );
 
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6.4 4.98L4.98 6.4 10.59 12l-5.61 5.6 1.42 1.42L12 13.41l5.6 5.61 1.4-1.4-5.6-5.61L19 6.4l-1.4-1.42L12 10.59z" fill="currentColor" />
+  </svg>
+);
+
 const FlameIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 2c2.5 3 4 5.7 4 8.2A4 4 0 0112 14a4 4 0 01-4-3.8C8 7.7 9.5 5 12 2zm0 20a7 7 0 01-7-7c0-1.9.9-3.4 2-4.7.1 1.6 1.1 2.7 2.3 2.7.9 0 1.4-.6 1.4-1.4 0-.6-.3-1-.6-1.5.9.2 1.9 1.4 1.9 3 0 .8-.3 1.4-.6 2 .9-.1 1.6-1 1.6-2.3 0-.9-.4-1.6-.8-2.3C15.3 10 17 12 17 15a5 5 0 01-5 7z" />
@@ -175,12 +181,14 @@ const Layout = ({ children }) => {
   const [sidebarHasMoreBelow, setSidebarHasMoreBelow] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
 
   const notifRef = useRef(null);
   const profileRef = useRef(null);
   const searchRef = useRef(null);
   const searchInputRef = useRef(null);
   const sidebarRef = useRef(null);
+  const searchToggleRef = useRef(null);
 
   useEffect(() => {
     const onClickAway = (event) => {
@@ -190,8 +198,13 @@ const Layout = ({ children }) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setProfileOpen(false);
       }
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target) &&
+        !(searchToggleRef.current && searchToggleRef.current.contains(event.target))
+      ) {
         setSearchOpen(false);
+        setMobileSearchOpen(false);
       }
     };
     document.addEventListener('mousedown', onClickAway);
@@ -244,6 +257,41 @@ const Layout = ({ children }) => {
     document.addEventListener('keydown', onKeyDown);
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
+
+  // Escape closes whichever overlay is currently open — mobile nav drawer
+  // first, then the mobile search bar, then any open dropdown — so a
+  // keyboard user can always back out with one predictable key.
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key !== 'Escape') return;
+      if (sidebarOpen) {
+        setSidebarOpen(false);
+        return;
+      }
+      if (mobileSearchOpen) {
+        setMobileSearchOpen(false);
+        setSearchOpen(false);
+        return;
+      }
+      if (notifOpen) setNotifOpen(false);
+      if (profileOpen) setProfileOpen(false);
+      if (searchOpen) setSearchOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [sidebarOpen, mobileSearchOpen, notifOpen, profileOpen, searchOpen]);
+
+  // Lock body scroll while the mobile drawer is open so the page behind it
+  // can't be dragged around — the drawer's own content stays scrollable
+  // independently via the sidebar's own overflow-y.
+  useEffect(() => {
+    if (!sidebarOpen) return undefined;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [sidebarOpen]);
 
   useEffect(() => {
     let cancelled = false;
@@ -301,6 +349,7 @@ const Layout = ({ children }) => {
 
   const goToSuggestion = (suggestion) => {
     setSearchOpen(false);
+    setMobileSearchOpen(false);
     setSearchTerm('');
     navigate(`/practice?topic=${encodeURIComponent(suggestion.topic)}`);
   };
@@ -314,6 +363,7 @@ const Layout = ({ children }) => {
     const query = searchTerm.trim();
     if (query) {
       setSearchOpen(false);
+      setMobileSearchOpen(false);
       navigate(`/practice?search=${encodeURIComponent(query)}`);
     }
   };
@@ -390,14 +440,39 @@ const Layout = ({ children }) => {
       <header className={`app-header ${headerScrolled ? 'scrolled' : ''}`}>
         <button
           type="button"
-          className="header-menu-btn"
-          aria-label="Toggle navigation menu"
-          onClick={() => setSidebarOpen((open) => !open)}
+          className={`header-menu-btn ${sidebarOpen ? 'is-open' : ''}`}
+          aria-label={sidebarOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={sidebarOpen}
+          onClick={() => setSidebarOpen((open) => {
+            const next = !open;
+            if (next) setMobileSearchOpen(false);
+            return next;
+          })}
         >
-          <MenuIcon />
+          <span className="header-menu-icon">{sidebarOpen ? <CloseIcon /> : <MenuIcon />}</span>
         </button>
 
-        <div className="header-search-wrap" ref={searchRef}>
+        <button
+          type="button"
+          className="header-search-toggle-btn"
+          aria-label={mobileSearchOpen ? 'Close search' : 'Open search'}
+          aria-expanded={mobileSearchOpen}
+          ref={searchToggleRef}
+          onClick={() => {
+            setMobileSearchOpen((open) => {
+              const next = !open;
+              if (next) {
+                setSearchOpen(false);
+                requestAnimationFrame(() => searchInputRef.current?.focus());
+              }
+              return next;
+            });
+          }}
+        >
+          {mobileSearchOpen ? <CloseIcon /> : <SearchIcon />}
+        </button>
+
+        <div className={`header-search-wrap ${mobileSearchOpen ? 'mobile-search-open' : ''}`} ref={searchRef}>
           <form className="header-search" role="search" onSubmit={onSearchSubmit}>
             <SearchIcon />
             <input
@@ -436,7 +511,8 @@ const Layout = ({ children }) => {
         <div className="header-actions">
           <span className="streak-pill" title={`${streak} day ${streak === 1 ? 'streak' : 'streaks'}`}>
             <FlameIcon />
-            {streak} day {streak === 1 ? 'streak' : 'streaks'}
+            <span className="streak-label">{streak} day {streak === 1 ? 'streak' : 'streaks'}</span>
+            <span className="streak-label-compact">{streak}d</span>
           </span>
 
           <div className="header-profile" ref={notifRef}>

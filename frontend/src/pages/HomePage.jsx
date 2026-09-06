@@ -10,7 +10,7 @@ import FaqAccordion from '../components/landing/FaqAccordion';
 import AiNetworkHero from '../components/landing/AiNetworkHero';
 import { useCountUp } from '../hooks/useScrollReveal';
 import { useMagneticHover } from '../hooks/useMagneticHover';
-import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, ArrowRightIcon } from '../components/landing/icons';
+import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, ArrowRightIcon, MenuIcon, CloseIcon } from '../components/landing/icons';
 
 const navLinks = [
   { label: 'Why TutorMind', href: 'why-tutormind' },
@@ -173,11 +173,13 @@ const HomePage = () => {
   const heroReadinessValue = useCountUp(78, { duration: 1700 });
   const heroCtaRef = useMagneticHover();
   const finalCtaRef = useMagneticHover();
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   const goToLogin = () => navigate('/login');
   const goToRegister = () => navigate('/register');
 
   const scrollToSection = (id) => {
+    setMobileNavOpen(false);
     const node = document.getElementById(id);
     if (node) {
       node.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -195,6 +197,7 @@ const HomePage = () => {
   // to actually take you back to the very top of the hero.
   const scrollToTop = (event) => {
     event.preventDefault();
+    setMobileNavOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (window.history?.pushState) {
       window.history.pushState(null, '', '/');
@@ -210,6 +213,32 @@ const HomePage = () => {
     if (node) {
       node.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }, []);
+
+  // Mobile nav: Escape closes it, and it locks body scroll while open so
+  // the page behind the dropdown panel can't be dragged around.
+  useEffect(() => {
+    if (!mobileNavOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setMobileNavOpen(false);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileNavOpen]);
+
+  // Close the mobile menu automatically if the viewport grows back past
+  // the collapse breakpoint (e.g. rotating a tablet to landscape).
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 980) setMobileNavOpen(false);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
   // Navbar scroll-shadow + active-section highlighting, driven by one
@@ -290,7 +319,69 @@ const HomePage = () => {
             Start free trial
           </button>
         </div>
+
+        <button
+          type="button"
+          className={`landing-menu-btn ${mobileNavOpen ? 'is-open' : ''}`}
+          aria-label={mobileNavOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileNavOpen}
+          onClick={() => setMobileNavOpen((open) => !open)}
+        >
+          {mobileNavOpen ? <CloseIcon /> : <MenuIcon />}
+        </button>
       </header>
+
+      {mobileNavOpen && (
+        <div
+          className="landing-mobile-backdrop"
+          aria-hidden="true"
+          onClick={() => setMobileNavOpen(false)}
+        />
+      )}
+      <div
+        className={`landing-mobile-menu ${mobileNavOpen ? 'is-open' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+      >
+        <nav className="landing-mobile-nav">
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={`#${link.href}`}
+              className={activeSection === link.href ? 'is-active' : ''}
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection(link.href);
+              }}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <div className="landing-mobile-actions">
+          <button
+            className="outline-btn"
+            type="button"
+            onClick={() => {
+              setMobileNavOpen(false);
+              goToLogin();
+            }}
+          >
+            Login
+          </button>
+          <button
+            className="solid-btn"
+            type="button"
+            onClick={() => {
+              setMobileNavOpen(false);
+              goToRegister();
+            }}
+          >
+            Start free trial
+          </button>
+        </div>
+      </div>
 
       <section className="landing-hero">
         <div className="hero-aurora" aria-hidden="true" />
