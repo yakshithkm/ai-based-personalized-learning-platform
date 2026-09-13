@@ -63,6 +63,17 @@ const loginUser = async (req, res, next) => {
       throw new Error('Invalid email or password');
     }
 
+    // Admin accounts authenticate exclusively through POST /api/admin/login (see
+    // adminAuthController.js) - the credentials are valid, but this isn't the
+    // right door. Rejecting here (rather than letting the admin land inside the
+    // student app) keeps the two roles' auth flows genuinely separate, as required,
+    // and avoids the confusing state of an admin browsing as a fake "student" with
+    // no real practice history.
+    if (user.isAdmin) {
+      res.status(403);
+      throw new Error('This account is an admin account. Please sign in at /admin/login instead.');
+    }
+
     const normalizedExam = normalizeExamType(user.targetExam || user.exam || '');
 
     if (normalizedExam && user.targetExam !== normalizedExam) {

@@ -34,6 +34,16 @@ export const AuthProvider = ({ children }) => {
     setUser(data.user);
   };
 
+  // Dedicated admin login - hits the separate /api/admin/login endpoint (backend
+  // rejects non-admin credentials there), but stores the resulting token/user the
+  // same way as student login so the rest of the app (ProtectedRoute, api client's
+  // Authorization header) needs no special-casing for admin sessions.
+  const loginAdmin = async (payload) => {
+    const { data } = await api.post('/admin/login', payload);
+    localStorage.setItem('token', data.token);
+    setUser(data.user);
+  };
+
   const register = async (payload) => {
     const { data } = await api.post('/auth/register', payload);
     localStorage.setItem('token', data.token);
@@ -45,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
-  const value = useMemo(() => ({ user, loading, login, register, logout }), [user, loading]);
+  const value = useMemo(() => ({ user, loading, login, loginAdmin, register, logout }), [user, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

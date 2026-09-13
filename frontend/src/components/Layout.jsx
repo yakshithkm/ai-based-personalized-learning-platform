@@ -90,19 +90,6 @@ const menuItems = [
   },
 ];
 
-// Only ever shown to admins — added conditionally in the component body,
-// since clicking it as a non-admin previously bounced silently to "/"
-// (ProtectedRoute's requireAdmin guard) and looked like a broken link.
-const adminMenuItem = {
-  to: '/admin-analytics',
-  label: 'Admin',
-  icon: (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 1l9 4v6c0 5.5-3.8 10.7-9 12-5.2-1.3-9-6.5-9-12V5l9-4zm-1 12l6-6-1.4-1.4L11 10.2 8.8 8 7.4 9.4 11 13z" />
-    </svg>
-  ),
-};
-
 const SearchIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
     <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 5L20.49 19l-5-5zm-6 0a4.5 4.5 0 110-9 4.5 4.5 0 010 9z" />
@@ -368,7 +355,6 @@ const Layout = ({ children }) => {
     }
   };
 
-  const visibleMenuItems = user?.isAdmin ? [...menuItems, adminMenuItem] : menuItems;
   const initials = (user?.name || 'U').charAt(0).toUpperCase();
 
   return (
@@ -406,7 +392,7 @@ const Layout = ({ children }) => {
         </button>
 
         <nav className="nav-menu">
-          {visibleMenuItems.map((item) => (
+          {menuItems.map((item) => (
             <NavLink key={item.to} to={item.to} onClick={() => setSidebarOpen(false)}>
               <span className="nav-icon">{item.icon}</span>
               <span>{item.label}</span>

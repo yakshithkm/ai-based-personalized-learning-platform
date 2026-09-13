@@ -16,6 +16,7 @@ import './styles/features/app-shell.css';
 import './styles/features/dashboard.css';
 import './styles/features/subpages.css';
 import './styles/features/analytics.css';
+import './styles/features/admin.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

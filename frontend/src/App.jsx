@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
+import AdminLayout from './components/admin/AdminLayout';
 import HomePage from './pages/HomePage';
 
 // Route-based code splitting: only HomePage (the public landing page every visitor
@@ -24,6 +25,19 @@ const StudyPlanPage = lazy(() => import('./pages/StudyPlanPage'));
 const MistakeBankPage = lazy(() => import('./pages/MistakeBankPage'));
 const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
 const AchievementsPage = lazy(() => import('./pages/AchievementsPage'));
+
+// Admin portal - its own dedicated shell/sidebar (components/admin/AdminLayout),
+// loaded on demand so student-facing bundles never pull in admin-only code.
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
+const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage'));
+const AdminStudentsPage = lazy(() => import('./pages/admin/AdminStudentsPage'));
+const AdminStudentDetailPage = lazy(() => import('./pages/admin/AdminStudentDetailPage'));
+const AdminQuestionsPage = lazy(() => import('./pages/admin/AdminQuestionsPage'));
+const AdminSubjectsPage = lazy(() => import('./pages/admin/AdminSubjectsPage'));
+const AdminTopicsPage = lazy(() => import('./pages/admin/AdminTopicsPage'));
+const AdminExamsPage = lazy(() => import('./pages/admin/AdminExamsPage'));
+const AdminExamDetailPage = lazy(() => import('./pages/admin/AdminExamDetailPage'));
+const AdminAnalyticsSectionPage = lazy(() => import('./pages/admin/AdminAnalyticsSectionPage'));
 
 const PageFallback = () => <div className="center-screen">Loading...</div>;
 
@@ -174,6 +188,101 @@ const App = () => {
             <Layout>
               <AdminAnalyticsPage />
             </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Admin Portal: separate login + its own AdminLayout shell (dedicated
+          sidebar), entirely apart from the student Layout/routes above. */}
+      <Route path="/admin/login" element={<AdminLoginPage />} />
+
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminDashboardPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/students"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminStudentsPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/students/:id"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminStudentDetailPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/questions"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminQuestionsPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/subjects"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminSubjectsPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/topics"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminTopicsPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/exams"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminExamsPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/exams/:id"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminExamDetailPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/analytics"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminAnalyticsSectionPage />
+            </AdminLayout>
           </ProtectedRoute>
         }
       />
