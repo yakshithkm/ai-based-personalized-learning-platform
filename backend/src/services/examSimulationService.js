@@ -5,6 +5,7 @@ const ExamSession = require('../models/ExamSession');
 const ExamAuditLog = require('../models/ExamAuditLog');
 const { normalizeExamType, getAllowedSubjectsForExam, normalizeSubjectName } = require('../config/examSubjectMap');
 const { getExamConfig } = require('../config/examConfig');
+const { generateCertificateId } = require('../utils/generateCertificateId');
 
 const MOCK_BLUEPRINTS = {
   NEET: {
@@ -2382,8 +2383,11 @@ const submitExamSession = async ({ userId, sessionId }) => {
     }),
   };
 
+  const certificateId = generateCertificateId({ sessionId: session._id, examType: session.examType });
+
   const resultSummary = {
     sessionId: String(session._id),
+    certificateId,
     submittedAt: new Date(),
     scoreSummary: normalizedScoreSummary,
     postTestAnalysis: {
@@ -2412,6 +2416,7 @@ const submitExamSession = async ({ userId, sessionId }) => {
     session.status = getTimeLeftSec(session) === 0 ? 'expired' : 'submitted';
     session.submittedAt = new Date();
     session.resultSummary = resultSummary;
+    session.certificateId = certificateId;
     session.lastSubmitChecksum = computedChecksum;
     session.isSubmitting = false;
     session.lastActivityAt = new Date();

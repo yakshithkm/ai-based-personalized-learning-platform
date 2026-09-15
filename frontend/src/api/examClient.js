@@ -334,8 +334,77 @@ const submitExamSession = async ({ sessionId }) => {
 
 const getExamSession = async (sessionId) => refreshExamSession(sessionId);
 
+// Extracts a server-sent error message from a failed blob download. When the backend
+// responds with a JSON error body but the request was made with responseType: 'blob',
+// axios still hands back a Blob (not the parsed JSON) - so we have to read and parse it
+// ourselves before we can show the real message instead of a generic failure.
+const extractBlobErrorMessage = async (error, fallback) => {
+  const data = error?.response?.data;
+  if (data instanceof Blob) {
+    try {
+      const text = await data.text();
+      const parsed = JSON.parse(text);
+      if (parsed?.message) return parsed.message;
+    } catch (parseError) {
+      // fall through to fallback below - the blob wasn't JSON we could read
+    }
+  }
+  return error?.response?.data?.message || fallback;
+};
+
+const parseFilenameFromContentDisposition = (contentDisposition, fallbackFilename) => {
+  if (!contentDisposition) return fallbackFilename;
+  const match = /filename="?([^";]+)"?/i.exec(contentDisposition);
+  return match?.[1] || fallbackFilename;
+};
+
+const triggerBlobDownload = (blob, filename) => {
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+};
+
+// Downloads the exam report / certificate PDF for a submitted session and saves it via
+// the browser, without navigating away from the result page. These are independent of
+// the answer/submit request machinery above (no session token, versioning, or retry
+// semantics apply here - it's a plain authenticated GET returning a binary file).
+const downloadExamReport = async (sessionId) => {
+  try {
+    const response = await api.get(`/exams/sessions/${sessionId}/report`, { responseType: 'blob' });
+    const filename = parseFilenameFromContentDisposition(
+      response.headers['content-disposition'],
+      `TutorMind_Exam_Report_${sessionId}.pdf`
+    );
+    triggerBlobDownload(response.data, filename);
+  } catch (error) {
+    const message = await extractBlobErrorMessage(error, 'Unable to generate the exam report. Please try again.');
+    throw new Error(message);
+  }
+};
+
+const downloadExamCertificate = async (sessionId) => {
+  try {
+    const response = await api.get(`/exams/sessions/${sessionId}/certificate`, { responseType: 'blob' });
+    const filename = parseFilenameFromContentDisposition(
+      response.headers['content-disposition'],
+      `TutorMind_Certificate_${sessionId}.pdf`
+    );
+    triggerBlobDownload(response.data, filename);
+  } catch (error) {
+    const message = await extractBlobErrorMessage(error, 'Unable to generate the certificate. Please try again.');
+    throw new Error(message);
+  }
+};
+
 export {
   clearExamSessionAuth,
+  downloadExamCertificate,
+  downloadExamReport,
   getExamSession,
   setExamSessionAuth,
   setLatestVersion,

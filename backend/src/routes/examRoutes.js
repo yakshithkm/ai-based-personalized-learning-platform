@@ -8,6 +8,7 @@ const {
   submitSessionAnswer,
   finalizeExamSession,
 } = require('../controllers/examController');
+const { downloadExamReport, downloadExamCertificate } = require('../controllers/examReportController');
 
 const router = express.Router();
 const validateSessionId = validateObjectIdParam('sessionId');
@@ -17,5 +18,7 @@ router.get('/sessions/active/latest', protect, getLatestActiveSessionState);
 router.get('/sessions/:sessionId', protect, validateSessionId, getSessionState);
 router.patch('/sessions/:sessionId/answer', protect, validateSessionId, submitSessionAnswer);
 router.post('/sessions/:sessionId/submit', protect, validateSessionId, finalizeExamSession);
+router.get('/sessions/:sessionId/report', protect, validateSessionId, downloadExamReport);
+router.get('/sessions/:sessionId/certificate', protect, validateSessionId, downloadExamCertificate);
 
 module.exports = router;

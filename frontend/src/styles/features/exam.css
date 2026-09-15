@@ -336,6 +336,13 @@
   margin-top: 0.8rem;
 }
 
+.exam-action-row svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.4rem;
+  vertical-align: -3px;
+}
+
 .palette-grid {
   margin-top: 0.75rem;
   display: grid;
@@ -356,6 +363,13 @@
   gap: 0.12rem;
   justify-items: center;
   align-content: center;
+  /* Grid items default to min-width: auto, which lets an unbreakable word (e.g.
+     "Visited" in "Not Visited") force this button wider than its 42px grid track,
+     overflowing past the cell instead of wrapping inside it. min-width: 0 lets the
+     button actually shrink to the track width; overflow-wrap on .palette-state below
+     is the fallback for the rare label that still can't fit even after wrapping. */
+  min-width: 0;
+  overflow: hidden;
   transition: transform 150ms ease, border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
 }
 
@@ -374,6 +388,8 @@
 .palette-state {
   font-size: 0.62rem;
   color: #cbd5e1;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .palette-review-flag {

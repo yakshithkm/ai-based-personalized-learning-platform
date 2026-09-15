@@ -1,13 +1,13 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted recommendations and adaptive learning features.
+Full-stack personalized exam preparation platform with AI-assisted recommendations, adaptive learning features, and a dedicated admin portal.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
 | **Frontend** | React 18 + Vite + React Router v6 + Recharts |
-| **Backend** | Node.js + Express + MongoDB + Mongoose + JWT |
+| **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
 | **Testing** | Jest + Supertest + mongodb-memory-server (backend) · Vitest + Testing Library (frontend) |
 | **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs |
@@ -16,6 +16,7 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 
 ## Features
 
+### Student-Facing
 1. **User Authentication** — Register, login, profile via JWT (Bearer token)
 2. **Question Bank** — Exam-wise (NEET/JEE/CET), subject-topic hierarchical question sets
 3. **Practice Quiz Flow** — Per-question attempt submission with correctness and explanation feedback
@@ -26,15 +27,24 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 8. **Exam Simulation** — Full-length and section-wise mock tests with real-time answer saving
 9. **Exam Scoring** — NEET/JEE marking scheme (+4/−1/0), percentile estimate, rank range
 10. **Post-Exam Intelligence** — Adaptive follow-up study plan generated from exam results
-11. **Mistake Bank** — Persistent log of incorrect answers with spaced-repetition scheduling (3 stages)
-12. **Weak Topics Page** — Dedicated view of low-accuracy topics with drill-down
-13. **Study Plan Page** — AI-generated prioritised study schedule
-14. **Achievements Page** — Milestone and badge tracking
-15. **Flashcards** — Lightweight review interface
-16. **Session Summary** — Post-practice session breakdown
-17. **Profile Page** — User stats, target exam, and account settings
-18. **Admin Analytics** — Admin-only dashboard for question bank stats and exam subject breakdown
-19. **Product Event Tracking** — Internal telemetry for key user actions
+11. **Exam Report & Certificate Download** — PDF export of exam results and completion certificate
+12. **Mistake Bank** — Persistent log of incorrect answers with spaced-repetition scheduling (3 stages)
+13. **Weak Topics Page** — Dedicated view of low-accuracy topics with drill-down
+14. **Study Plan Page** — AI-generated prioritised study schedule
+15. **Achievements Page** — Milestone and badge tracking
+16. **Flashcards** — Lightweight review interface
+17. **Session Summary** — Post-practice session breakdown
+18. **Profile Page** — User stats, target exam, and account settings
+
+### Admin Portal
+19. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+20. **Admin Dashboard** — Platform-wide stats overview
+21. **Student Management** — List all students, drill into individual student detail
+22. **Question Bank CRUD** — Create, read, update, and delete questions
+23. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+24. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+25. **Admin Analytics** — Platform-wide analytics section
+26. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -44,37 +54,47 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 ai-based-personalized-learning-platform/
 ├── frontend/               # React + Vite SPA (dark responsive theme)
 │   └── src/
-│       ├── pages/          # Route-level page components (16 pages)
-│       ├── components/     # Layout, ProtectedRoute, landing sections
-│       ├── api/            # Axios API client
+│       ├── pages/          # Route-level page components
+│       │   ├── (16 student pages)
+│       │   └── admin/      # 10 admin portal pages
+│       ├── components/     # Layout, AdminLayout, ProtectedRoute, landing sections
+│       │   └── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
+│       │                   # FaqAccordion, PriceCounter, Reveal, icons
+│       ├── api/            # Axios API clients (client.js, examClient.js)
 │       ├── context/        # Auth context
-│       ├── hooks/          # Custom React hooks
-│       ├── styles/         # Additional style modules
+│       ├── hooks/          # useMagneticHover, useScrollReveal
+│       ├── styles/         # Additional style modules (features/, components.css, global.css)
 │       └── utils/          # Shared utilities
 ├── backend/                # Node.js REST API
-│   └── src/
-│       ├── controllers/    # Route handlers (auth, questions, attempts, analytics, exam, recommendations)
-│       ├── models/         # Mongoose models (8 models — see Database Models)
-│       ├── routes/         # Express routers (auth, questions, attempts, analytics, recommendations, exams, admin)
-│       ├── services/       # Business logic (11 service modules)
-│       ├── middleware/      # Auth guard, error handlers, rate limiters, ObjectId validation
-│       ├── config/         # DB connection
-│       └── utils/
+│   ├── src/
+│   │   ├── controllers/    # 14 route handlers (auth, questions, attempts, analytics,
+│   │   │                   # exam, examReport, recommendation, admin × 7)
+│   │   ├── models/         # 9 Mongoose models — see Database Models
+│   │   ├── routes/         # 7 Express routers (auth, questions, attempts, analytics,
+│   │   │                   # recommendations, exams, admin)
+│   │   ├── services/       # 12 service modules — see Service Layer
+│   │   ├── middleware/     # authMiddleware, errorMiddleware, validateObjectIdParam
+│   │   ├── config/         # DB connection
+│   │   ├── assets/         # Static backend assets
+│   │   ├── data/           # Seed/reference data
+│   │   └── utils/
+│   ├── seedQuestions.js    # Question bank seed script
+│   ├── seedDemo.js         # Demo user + data seed script
+│   ├── seedAdmin.js        # Admin user seed script
+│   └── resetDemo.js        # Demo data reset script
 ├── ml-service/             # Python Flask microservice
 │   ├── app.py              # /health + /analyze endpoints (port 8000)
 │   ├── services/
 │   │   └── analyzer.py     # scikit-learn weak-topic ranking
 │   └── requirements.txt
-├── package.json            # Monorepo root — concurrently dev script
-├── seedQuestions.js        # Question bank seed script
-└── seedDemo.js             # Demo user + data seed script
+└── package.json            # Monorepo root — concurrently dev script
 ```
 
 ---
 
 ## Quick Start (All Services)
 
-> Prerequisites: Node.js ≥ 18, MongoDB running locally, Python ≥ 3.10 with a virtual environment at `.venv/`
+> Prerequisites: Node.js ≥ 18, MongoDB running locally, Python ≥ 3.10 with a virtual environment
 
 ```bash
 # 1. Install root concurrently dependency
@@ -102,6 +122,8 @@ npm run dev:frontend   # Frontend only (port 5173)
 npm run dev:ml         # ML service only (port 8000)
 ```
 
+> **Note**: The `dev:ml` script uses a hardcoded `.venv` Python path in `package.json`. Update this to match your local virtual environment location, or activate your `.venv` manually and run `python ml-service/app.py` directly.
+
 ---
 
 ## Backend Setup
@@ -109,9 +131,12 @@ npm run dev:ml         # ML service only (port 8000)
 1. `cd backend`
 2. `npm install`
 3. Copy `.env.example` → `.env` and fill in values (see below)
-4. `npm run seed` — populate the question bank
+4. `npm run seed` or `npm run seed:questions` — populate the question bank
 5. `npm run seed:demo` — (optional) load a demo user with pre-built data
-6. `npm run dev` — start with nodemon
+6. `npm run seed:admin` — (optional) seed an admin account
+7. `npm run dev` — start with nodemon
+
+To reset demo data: `npm run reset:demo`
 
 ### Environment Variables (`backend/.env`)
 
@@ -135,9 +160,13 @@ npm run dev:ml         # ML service only (port 8000)
 
 ### Pages / Routes
 
+#### Student Routes
+
 | Route | Page | Auth |
 |---|---|---|
 | `/` | Home / Landing | Public |
+| `/login` | Login | Public |
+| `/register` | Register | Public |
 | `/dashboard` | Dashboard | ✅ |
 | `/practice` | Practice Quiz | ✅ |
 | `/analytics` | Analytics & Charts | ✅ |
@@ -150,9 +179,24 @@ npm run dev:ml         # ML service only (port 8000)
 | `/mistake-bank` | Mistake Bank | ✅ |
 | `/flashcards` | Flashcards | ✅ |
 | `/achievements` | Achievements | ✅ |
-| `/admin-analytics` | Admin Analytics | ✅ Admin only |
+| `/admin-analytics` | Admin Analytics (legacy) | ✅ Admin only |
 
-Route-based lazy loading is used for all authenticated pages — the public landing page is the only module in the initial bundle.
+#### Admin Portal Routes
+
+| Route | Page | Auth |
+|---|---|---|
+| `/admin/login` | Admin Login | Public |
+| `/admin` | Admin Dashboard | ✅ Admin only |
+| `/admin/students` | Student List | ✅ Admin only |
+| `/admin/students/:id` | Student Detail | ✅ Admin only |
+| `/admin/questions` | Question Bank | ✅ Admin only |
+| `/admin/subjects` | Subjects Overview | ✅ Admin only |
+| `/admin/topics` | Topics CRUD | ✅ Admin only |
+| `/admin/exams` | Exam Sessions | ✅ Admin only |
+| `/admin/exams/:id` | Exam Session Detail | ✅ Admin only |
+| `/admin/analytics` | Platform Analytics | ✅ Admin only |
+
+The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), completely separate from the student `Layout`. Route-based lazy loading is used for all pages — the public landing page is the only module in the initial bundle.
 
 ---
 
@@ -217,10 +261,30 @@ Route-based lazy loading is used for all authenticated pages — the public land
 | `GET` | `/sessions/:sessionId` | Get session state |
 | `PATCH` | `/sessions/:sessionId/answer` | Save an answer for a question |
 | `POST` | `/sessions/:sessionId/submit` | Finalise and score the exam |
+| `GET` | `/sessions/:sessionId/report` | Download exam report as PDF |
+| `GET` | `/sessions/:sessionId/certificate` | Download completion certificate as PDF |
 
 ### Admin (`/api/admin`) — admin role required
 | Method | Path | Description |
 |---|---|---|
+| `POST` | `/login` | Admin authentication |
+| `GET` | `/me` | Admin profile |
+| `GET` | `/dashboard` | Platform dashboard stats |
+| `GET` | `/students` | List all students |
+| `GET` | `/students/:id` | Student detail |
+| `GET` | `/questions` | List questions (filterable) |
+| `GET` | `/questions/:id` | Get single question |
+| `POST` | `/questions` | Create question |
+| `PUT` | `/questions/:id` | Update question |
+| `DELETE` | `/questions/:id` | Delete question |
+| `GET` | `/subjects` | Subjects overview |
+| `GET` | `/topics` | List topics |
+| `POST` | `/topics` | Create topic |
+| `PUT` | `/topics/:id` | Update topic |
+| `DELETE` | `/topics/:id` | Delete topic |
+| `GET` | `/exams` | List exam sessions |
+| `GET` | `/exams/:id` | Exam session detail |
+| `GET` | `/analytics` | Platform-wide analytics |
 | `GET` | `/question-stats` | Question bank statistics |
 | `GET` | `/exam-subjects` | Subject breakdown per exam type |
 
@@ -251,10 +315,30 @@ Route-based lazy loading is used for all authenticated pages — the public land
 | `Question` | Question bank — exam, subject, topic, options, answer, explanation |
 | `Attempt` | Individual practice attempt record |
 | `Performance` | Aggregated per-topic metrics (accuracy, attempts, avg time) |
+| `TopicMeta` | Topic catalog for admin management (subjects/topics metadata) |
 | `ExamSession` | Full mock exam state — questions, answers, timing, scoring |
 | `ExamAuditLog` | Immutable per-answer audit trail for exam integrity |
 | `Mistake` | Mistake bank with spaced-repetition fields (3 review stages) |
 | `ProductEvent` | Internal telemetry events |
+
+---
+
+## Service Layer
+
+| Service | Responsibility |
+|---|---|
+| `examSimulationService` | Core exam session lifecycle, scoring, state reconciliation |
+| `recommendationService` | ML-backed + rule-based topic recommendations |
+| `analyticsService` | Per-topic and platform analytics aggregation |
+| `analysisService` | Post-exam intelligence and adaptive study plan generation |
+| `feedbackService` | Practice attempt feedback and explanation delivery |
+| `performanceService` | Attempt-to-performance aggregation writes |
+| `progressTracker` | Milestone and achievement tracking |
+| `adaptiveDifficultyService` | Dynamic question difficulty adjustment |
+| `eventTrackingService` | Product event telemetry |
+| `productSignalsService` | Aggregated product signal computation |
+| `examDownloadService` | PDF report and certificate generation (PDFKit) |
+| `mlClient` | HTTP client for the Flask ML microservice |
 
 ---
 
@@ -282,6 +366,8 @@ npm run test:backend
 
 ```bash
 npm --prefix frontend run test
+# watch mode:
+npm --prefix frontend run test:watch
 ```
 
 ---
@@ -299,4 +385,6 @@ npm --prefix frontend run test
 - The ML layer uses classical scikit-learn models and heuristic scoring rather than deep learning — intentional for lightweight deployment.
 - Exam simulation includes full state-reconciliation on session restore (handles page refresh mid-exam).
 - The `ExamSimulationPage` uses an explicit `selectedOptionMap` / `confirmedOptionMap` / `cooldownMap` architecture to prevent selection corruption and infinite retry loops on rate-limited saves.
-- Route-based code splitting ensures the initial JS bundle only contains the public landing page.
+- Route-based code splitting ensures the initial JS bundle only contains the public landing page; the admin portal is entirely split from student-facing bundles.
+- The admin portal has its own separate authentication (`/admin/login`) and layout (`AdminLayout` with sidebar), isolated from the student shell.
+- PDF reports and certificates are generated server-side via PDFKit and streamed directly to the client.

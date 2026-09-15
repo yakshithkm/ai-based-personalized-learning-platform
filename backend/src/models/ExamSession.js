@@ -247,11 +247,20 @@ const examSessionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.Mixed,
       default: null,
     },
-    answersChecksum: {
+   answersChecksum: {
       type: String,
       default: null,
     },
     lastSubmitChecksum: {
+      type: String,
+      default: null,
+    },
+    // Stable, human-shareable reference for the "Download Certificate" / "Download
+    // Report" feature. Generated once (deterministically, from the session id) the
+    // first time it's needed - either at submit time or lazily on first download for
+    // sessions that were submitted before this field existed - and persisted so it
+    // never changes across repeated downloads.
+    certificateId: {
       type: String,
       default: null,
     },

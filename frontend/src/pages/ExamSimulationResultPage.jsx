@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import api from '../api/client';
+import { downloadExamCertificate, downloadExamReport } from '../api/examClient';
+import { CertificateIcon, DownloadIcon } from '../components/ResultIcons';
+import { useToast } from '../context/ToastContext';
 import { emitAttemptSubmitted } from '../utils/appEvents';
 
 const formatDuration = (totalSeconds = 0) => {
@@ -13,10 +16,17 @@ const formatDuration = (totalSeconds = 0) => {
 const ExamSimulationResultPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const toast = useToast();
   const [result, setResult] = useState(location.state?.result || null);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState('');
-  const sessionId = location.state?.sessionId || null;
+  const [downloadingReport, setDownloadingReport] = useState(false);
+  const [downloadingCertificate, setDownloadingCertificate] = useState(false);
+  // The result summary itself carries the session id it was generated for, so once a
+  // result is loaded (either from navigation state or the fetch below) it's the more
+  // reliable source - navigation state is lost on a manual page refresh, but the result
+  // summary is not.
+  const sessionId = result?.sessionId || location.state?.sessionId || null;
 
   useEffect(() => {
     if (!sessionId) return;
@@ -83,6 +93,30 @@ const ExamSimulationResultPage = () => {
   const goPracticeWeakSubject = () => {
     const target = result.postTestAnalysis?.weakSubjects?.[0]?.subject;
     navigate(target ? `/practice?topic=${encodeURIComponent(`${target} - `)}` : '/practice');
+  };
+
+  const handleDownloadReport = async () => {
+    if (!sessionId || downloadingReport) return;
+    setDownloadingReport(true);
+    try {
+      await downloadExamReport(sessionId);
+    } catch (error) {
+      toast?.showToast?.(error.message || 'Unable to generate the exam report. Please try again.', { type: 'error' });
+    } finally {
+      setDownloadingReport(false);
+    }
+  };
+
+  const handleDownloadCertificate = async () => {
+    if (!sessionId || downloadingCertificate) return;
+    setDownloadingCertificate(true);
+    try {
+      await downloadExamCertificate(sessionId);
+    } catch (error) {
+      toast?.showToast?.(error.message || 'Unable to generate the certificate. Please try again.', { type: 'error' });
+    } finally {
+      setDownloadingCertificate(false);
+    }
   };
 
   return (
@@ -190,8 +224,47 @@ const ExamSimulationResultPage = () => {
         </div>
 
         <div className="exam-action-row">
-          {!!result.postTestAnalysis?.weakSubjects?.length && (
-            <button className="outline-btn" onClick={goPracticeWeakSubject}>
+          {!!sessionId && (
+            <button
+              type="button"
+              className={`outline-btn ${downloadingReport ? 'btn-loading-pulse' : ''}`}
+              onClick={handleDownloadReport}
+              disabled={downloadingReport}
+            >
+              {downloadingReport ? (
+                <>
+                  <span className="btn-spinner" aria-hidden="true" />
+                  Generating Report...
+                </>
+              ) : (
+                <>
+                  <DownloadIcon />
+                  Download Report
+                </>
+              )}
+            </button>
+          )}
+          {!!sessionId && (
+            <button
+              type="button"
+              className={`outline-btn ${downloadingCertificate ? 'btn-loading-pulse' : ''}`}
+              onClick={handleDownloadCertificate}
+              disabled={downloadingCertificate}
+            >
+              {downloadingCertificate ? (
+                <>
+                  <span className="btn-spinner" aria-hidden="true" />
+                  Generating Certificate...
+                </>
+              ) : (
+                <>
+                  <CertificateIcon />
+                  Download Certificate
+                </>
+              )}
+            </button>
+          )}
+          {!!result.postTestAnalysis?.weakSubjects?.length && (            <button className="outline-btn" onClick={goPracticeWeakSubject}>
               Practice Weak Topics
             </button>
           )}

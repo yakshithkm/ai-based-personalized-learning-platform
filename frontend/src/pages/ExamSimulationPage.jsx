@@ -1789,12 +1789,6 @@ const ExamSimulationPage = () => {
       {answerState.syncWarning && <section className="panel error-text">{answerState.syncWarning}</section>}
       {uiLocked && <section className="panel exam-resync-indicator">Resyncing...</section>}
 
-      {session?.generationNotice && (
-        <section className="panel">
-          <p>{session.generationNotice}</p>
-        </section>
-      )}
-
       {session && (
         <>
           <section className="panel exam-live-header exam-live-header-accent">
