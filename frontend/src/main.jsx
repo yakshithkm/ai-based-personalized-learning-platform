@@ -17,6 +17,7 @@ import './styles/features/dashboard.css';
 import './styles/features/subpages.css';
 import './styles/features/analytics.css';
 import './styles/features/admin.css';
+import './styles/features/ai-tutor.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

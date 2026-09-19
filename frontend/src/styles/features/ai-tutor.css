@@ -1,0 +1,484 @@
+/* Ask with AI feature stylesheet — the doubt-resolution sidebar/drawer
+   used from the Practice Page. Reuses global design tokens (--surface-*,
+   --border, --radius-*, --primary, etc.) so it reads as part of the app
+   rather than a bolted-on widget. */
+
+.ai-sidebar-trigger-row {
+  margin-top: 0.4rem;
+}
+
+.ai-sidebar-trigger-row .outline-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.ai-sidebar-trigger-row .outline-btn svg {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--primary);
+}
+
+/* --- Backdrop (mobile only — see media query below) --- */
+
+.ai-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.55);
+  z-index: 198; /* now portaled to document.body, so this only needs to beat other top-level UI */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) ease;
+}
+
+.ai-sidebar-backdrop.ai-sidebar-backdrop-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- Sidebar/drawer --- */
+
+.ai-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 100vw);
+  /* --surface-1 is only ~86% opaque by design (it's meant to sit on top
+     of a full-page backdrop scrim, like .admin-modal does). This sidebar
+     intentionally has no backdrop on desktop so the Practice Page stays
+     visible beside it - so the translucent color is layered over an
+     opaque --panel here instead, giving the same tint without letting
+     the page underneath show through. */
+  background: linear-gradient(var(--surface-1), var(--surface-1)), var(--panel);
+  border-left: 1px solid var(--border);
+  box-shadow: var(--elevation-3);
+  z-index: 200; /* see z-index comment above */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  transform: translateX(100%);
+  transition: transform var(--duration-slow) var(--ease-out), width var(--duration-slow) var(--ease-out);
+}
+
+.ai-sidebar.ai-sidebar-open {
+  transform: translateX(0);
+}
+
+/* Maximized: fill everything to the right of the left nav column (280px,
+   matching .app-shell's grid-template-columns) rather than the whole
+   viewport, so the left nav stays visible per spec. Only applies once the
+   left nav is actually a persistent column - below that width it's already
+   an overlay drawer (see app-shell.css), so there's no "column" to leave
+   visible and the existing near-full-width mobile behavior already covers
+   the "maximized" intent. */
+@media (min-width: 781px) {
+  .ai-sidebar.ai-sidebar-maximized {
+    width: calc(100vw - 280px);
+  }
+}
+
+.ai-sidebar-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.1rem 1.1rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+}
+
+.ai-sidebar-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.ai-sidebar-subtitle {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.ai-sidebar-head-actions {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ai-sidebar-maximize-btn,
+.ai-sidebar-close-btn {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-0);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color var(--duration-base) ease, background var(--duration-base) ease;
+}
+
+.ai-sidebar-maximize-btn svg,
+.ai-sidebar-close-btn svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  fill: currentColor;
+}
+
+.ai-sidebar-maximize-btn:hover,
+.ai-sidebar-close-btn:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+  background: rgba(96, 165, 250, 0.12);
+}
+
+/* The maximize toggle only makes sense once there's a persistent left nav
+   column to leave visible next to the sidebar - hide it below that point
+   rather than let it silently do nothing. */
+@media (max-width: 780px) {
+  .ai-sidebar-maximize-btn {
+    display: none;
+  }
+}
+
+/* --- Message list --- */
+
+.ai-sidebar-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  /* Without this, scrolling to the top/bottom of this panel "chains" the
+     leftover wheel/touch delta to the next scrollable ancestor - which,
+     since this sidebar is portaled to document.body, is the Practice Page
+     itself, not the sidebar. This stops that handoff so each scrolls
+     independently, exactly like closing a native app panel should. */
+  overscroll-behavior: contain;
+  /* Keep it scrollable but hide the scrollbar chrome, matching the same
+     convention as .sidebar (the left nav) in app-shell.css. */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+
+.ai-sidebar-messages::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, modern Edge */
+}
+
+.ai-chat-msg {
+  max-width: 88%;
+  min-width: 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.ai-chat-msg-plain {
+  margin: 0.3rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.ai-chat-msg-body {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ai-chat-msg-body > *:first-child {
+  margin-top: 0;
+}
+
+.ai-chat-msg-body p,
+.ai-chat-msg-body ul,
+.ai-chat-msg-body ol,
+.ai-chat-msg-body h4,
+.ai-chat-msg-body h5,
+.ai-chat-msg-body h6 {
+  margin: 0.5rem 0 0;
+  /* Explicit, not inherited - a bare global "p { font-size: 0.97rem }"
+     rule elsewhere in index.css otherwise wins over inheriting this from
+     .ai-chat-msg-body, since a direct rule on an element always beats an
+     inherited value regardless of specificity. */
+  font-size: 0.9rem;
+}
+
+.ai-chat-msg-body h4,
+.ai-chat-msg-body h5,
+.ai-chat-msg-body h6 {
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.ai-chat-msg-body h4 {
+  font-size: 0.98rem;
+}
+
+.ai-chat-msg-body h5,
+.ai-chat-msg-body h6 {
+  font-size: 0.92rem;
+}
+
+.ai-chat-msg-body ul,
+.ai-chat-msg-body ol {
+  padding-left: 1.2rem;
+}
+
+.ai-chat-msg-body li {
+  margin: 0.2rem 0;
+}
+
+.ai-chat-msg-body li::marker {
+  color: var(--muted);
+}
+
+.ai-chat-msg-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0.6rem 0;
+}
+
+.ai-chat-msg-body code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.85em;
+  background: rgba(148, 163, 184, 0.15);
+  padding: 0.05rem 0.32rem;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+
+.ai-chat-msg-body pre {
+  margin: 0.5rem 0 0;
+  background: rgba(2, 6, 23, 0.4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.65rem;
+  overflow-x: auto;
+}
+
+.ai-chat-msg-body pre code {
+  background: none;
+  padding: 0;
+  white-space: pre;
+}
+
+.ai-chat-msg-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.ai-chat-msg-assistant {
+  align-self: flex-start;
+  background: var(--surface-0);
+}
+
+.ai-chat-msg-user {
+  align-self: flex-end;
+  background: rgba(59, 130, 246, 0.18);
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
+.ai-chat-msg-user .ai-chat-msg-label {
+  color: #bfdbfe;
+}
+
+/* --- Typing indicator --- */
+
+.ai-chat-typing p {
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.ai-typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: aiTypingBounce 1.1s ease-in-out infinite;
+}
+
+.ai-typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.ai-typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes aiTypingBounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-typing-dot {
+    animation: none;
+    opacity: 0.85;
+  }
+}
+
+/* --- Streaming cursor (shown while an assistant message is still
+   receiving chunks) --- */
+
+.ai-chat-cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--primary);
+  animation: aiCursorBlink 0.9s step-end infinite;
+}
+
+@keyframes aiCursorBlink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-chat-cursor {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* --- Error state --- */
+
+.ai-chat-error {
+  align-self: stretch;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.12);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 0.75rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.ai-chat-error p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #fecaca;
+}
+
+.ai-chat-retry-btn {
+  width: fit-content;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.82rem;
+}
+
+/* --- Input row --- */
+
+.ai-sidebar-input-row {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.55rem;
+  padding: 0.85rem 1.1rem;
+  border-top: 1px solid var(--border);
+}
+
+.ai-sidebar-input-row textarea {
+  flex: 1;
+  resize: none;
+  max-height: 6.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-0);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.88rem;
+  padding: 0.6rem 0.7rem;
+}
+
+.ai-sidebar-input-row textarea:disabled {
+  opacity: 0.6;
+}
+
+.ai-sidebar-send-btn {
+  flex: 0 0 auto;
+  width: 2.4rem;
+  height: 2.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, var(--primary), var(--primary-strong));
+  color: #eff6ff;
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-out), opacity var(--duration-base) ease,
+    filter var(--duration-base) ease;
+}
+
+.ai-sidebar-send-btn svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: currentColor;
+}
+
+.ai-sidebar-send-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+}
+
+.ai-sidebar-send-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* --- Responsive: near-full-screen drawer on small screens --- */
+
+@media (max-width: 720px) {
+  .ai-sidebar {
+    width: 100vw;
+  }
+
+  .ai-sidebar-backdrop.ai-sidebar-backdrop-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (min-width: 721px) {
+  /* Desktop: sidebar is a non-blocking panel, per spec ("should not
+     replace the Practice Page" / student can still see the question
+     underneath) — no dimming backdrop even while open. */
+  .ai-sidebar-backdrop {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-sidebar,
+  .ai-sidebar-backdrop {
+    transition: none;
+  }
+}

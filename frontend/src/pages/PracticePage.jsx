@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import api from '../api/client';
+import api, { API_BASE_URL } from '../api/client';
 import { trackProductEvent } from '../utils/productEvents';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import EmptyState from '../components/EmptyState';
 import { subjectColor } from '../utils/subjectVisuals';
 import { emitAttemptSubmitted } from '../utils/appEvents';
+import AISidebar from '../components/AISidebar';
 
 const makeSessionId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -14,6 +15,18 @@ const makeSessionId = () => {
   }
   return `session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 };
+
+const makeAiMessageId = () => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return `ai-msg-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+};
+
+// Not shown in the chat UI as a "You:" bubble - this only exists to trigger
+// the automatic initial explanation when the sidebar opens for a question.
+const INITIAL_AI_PROMPT = 'Please explain this question to me so I understand it.';
+const AI_ERROR_FALLBACK = "Sorry, I couldn't generate an explanation right now. Please try again.";
 
 const formatDuration = (totalSeconds = 0) => {
   const seconds = Math.max(0, Math.round(totalSeconds));
@@ -46,6 +59,12 @@ const XCircleIcon = () => (
   </svg>
 );
 
+const AIIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 2 9.5 8.5 3 11l6.5 2.5L12 20l2.5-6.5L21 11l-6.5-2.5L12 2zM19 3l-1 2-2 1 2 1 1 2 1-2 2-1-2-1-1-2z" />
+  </svg>
+);
+
 const PracticePage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -69,6 +88,23 @@ const PracticePage = () => {
   const [xpPulse, setXpPulse] = useState(0);
   const [sessionId, setSessionId] = useState('');
   const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
+
+  // Ask with AI sidebar state - scoped to whichever question is currently
+  // displayed. Every question-navigation action (Retry Similar, Move to
+  // Harder, Next Question, and starting a fresh set) must close the sidebar
+  // and clear these so the AI conversation never leaks across questions.
+  const [isAiSidebarOpen, setIsAiSidebarOpen] = useState(false);
+  const [aiMessages, setAiMessages] = useState([]);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
+  const [aiLastPayload, setAiLastPayload] = useState(null);
+  // The id of the assistant message currently being streamed into, if any -
+  // drives the blinking-cursor affordance so the student can see a reply is
+  // still in progress. null once the stream finishes, errors, or is reset.
+  const [aiStreamingMessageId, setAiStreamingMessageId] = useState(null);
+  // Not React state - aborting a fetch is an imperative action, not
+  // something that should trigger a re-render on its own.
+  const aiStreamAbortRef = useRef(null);
 
   useEffect(() => {
     const loadSubjects = async () => {
@@ -106,6 +142,7 @@ const PracticePage = () => {
           const { data } = await api.get('/recommendations/me');
           const newSessionId = makeSessionId();
           setSessionId(newSessionId);
+          resetAiSidebar();
           setQuestions(data.recommendations || []);
           setCurrentIndex(0);
           setResult(null);
@@ -133,6 +170,7 @@ const PracticePage = () => {
           const { data } = await api.get('/recommendations/focus-session');
           const newSessionId = makeSessionId();
           setSessionId(newSessionId);
+          resetAiSidebar();
           setQuestions(data.questions || []);
           setSessionMeta(data);
           setSessionResults([]);
@@ -167,6 +205,7 @@ const PracticePage = () => {
 
   const loadQuestions = async () => {
     setError('');
+    resetAiSidebar();
     setResult(null);
     setSelectedAnswer(null);
     setCurrentIndex(0);
@@ -251,7 +290,23 @@ const PracticePage = () => {
     }
   };
 
+  const resetAiSidebar = () => {
+    // Cancel any in-flight stream before clearing state - otherwise a
+    // still-arriving chunk from the PREVIOUS question could land after
+    // this reset and get appended into whatever the NEXT question's
+    // sidebar state becomes.
+    aiStreamAbortRef.current?.abort();
+    aiStreamAbortRef.current = null;
+    setIsAiSidebarOpen(false);
+    setAiMessages([]);
+    setAiLoading(false);
+    setAiError('');
+    setAiLastPayload(null);
+    setAiStreamingMessageId(null);
+  };
+
   const nextQuestion = () => {
+    resetAiSidebar();
     setResult(null);
     setSelectedAnswer(null);
     setCurrentIndex((prev) => prev + 1);
@@ -269,6 +324,10 @@ const PracticePage = () => {
         return;
       }
 
+      // Only close/reset the AI sidebar once the new question has actually
+      // loaded - an action that fails to find a follow-up question should
+      // leave the current question (and its AI conversation) untouched.
+      resetAiSidebar();
       setQuestions([next]);
       setCurrentIndex(0);
       setResult(null);
@@ -277,6 +336,147 @@ const PracticePage = () => {
     } catch (err) {
       setError(err?.response?.data?.message || 'Failed to load adaptive question');
     }
+  };
+
+  const sendToAI = async (payload) => {
+    if (!question) return;
+
+    // Cancel any still-in-flight request for this sidebar before starting a
+    // new one - prevents two overlapping streams (e.g. a rapid double-click
+    // on retry) from interleaving their chunks into the same message.
+    aiStreamAbortRef.current?.abort();
+    const abortController = new AbortController();
+    aiStreamAbortRef.current = abortController;
+    const isCurrent = () => aiStreamAbortRef.current === abortController;
+
+    setAiLoading(true);
+    setAiError('');
+    setAiLastPayload(payload);
+
+    const assistantMessageId = makeAiMessageId();
+    let hasStartedMessage = false;
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_BASE_URL}/ai/explain`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ questionId: question._id, ...payload }),
+        signal: abortController.signal,
+      });
+
+      if (!response.ok || !response.body) {
+        // A failure before the backend even starts streaming (e.g. the
+        // rate-limit middleware itself rejecting the request) still comes
+        // back as plain JSON, not SSE.
+        let message = AI_ERROR_FALLBACK;
+        try {
+          const data = await response.json();
+          message = data?.message || message;
+        } catch {
+          // Body wasn't JSON (or was already consumed) - keep the fallback.
+        }
+        throw new Error(message);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        // eslint-disable-next-line no-await-in-loop
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let boundary = buffer.indexOf('\n\n');
+        while (boundary !== -1) {
+          const rawEvent = buffer.slice(0, boundary);
+          buffer = buffer.slice(boundary + 2);
+          boundary = buffer.indexOf('\n\n');
+
+          const dataLine = rawEvent.split('\n').find((line) => line.startsWith('data:'));
+          if (!dataLine) continue;
+          const jsonText = dataLine.slice(5).trim();
+          if (!jsonText) continue;
+
+          let event;
+          try {
+            event = JSON.parse(jsonText);
+          } catch {
+            continue;
+          }
+
+          if (event.type === 'chunk' && event.text) {
+            if (!isCurrent()) continue; // superseded mid-parse - drop it
+            if (!hasStartedMessage) {
+              hasStartedMessage = true;
+              setAiLoading(false);
+              setAiStreamingMessageId(assistantMessageId);
+              setAiMessages((prev) => [...prev, { id: assistantMessageId, role: 'assistant', content: event.text }]);
+            } else {
+              setAiMessages((prev) =>
+                prev.map((msg) =>
+                  msg.id === assistantMessageId ? { ...msg, content: msg.content + event.text } : msg
+                )
+              );
+            }
+          } else if (event.type === 'error') {
+            throw new Error(event.message || AI_ERROR_FALLBACK);
+          }
+          // 'done' needs no handling here - the loop ends naturally when
+          // the server closes the stream right after sending it.
+        }
+      }
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        // Superseded by a newer request (navigation or a fresh retry) -
+        // not a real failure, and this request's state is stale, so don't
+        // touch anything the newer request may already be updating.
+        return;
+      }
+      if (isCurrent()) {
+        setAiError(err.message || AI_ERROR_FALLBACK);
+      }
+    } finally {
+      if (isCurrent()) {
+        aiStreamAbortRef.current = null;
+        setAiLoading(false);
+        setAiStreamingMessageId(null);
+      }
+    }
+  };
+
+  const openAiSidebar = () => {
+    if (!result || !question) return;
+    setIsAiSidebarOpen(true);
+    // Auto-send the current question the first time the sidebar opens for
+    // it; reopening (after just closing with X) shows the existing
+    // conversation instead of re-triggering this.
+    if (aiMessages.length === 0 && !aiLoading && !aiError) {
+      sendToAI({ message: INITIAL_AI_PROMPT, history: [] });
+    }
+  };
+
+  const closeAiSidebar = () => {
+    // Closing does NOT reset the conversation - only navigating to another
+    // question does (see resetAiSidebar, called from nextQuestion /
+    // loadAdaptiveActionQuestion / loadQuestions / the recommended & focus
+    // session loaders).
+    setIsAiSidebarOpen(false);
+  };
+
+  const sendAiFollowUp = (text) => {
+    const history = aiMessages.map((msg) => ({ role: msg.role, content: msg.content }));
+    setAiMessages((prev) => [...prev, { id: makeAiMessageId(), role: 'user', content: text }]);
+    sendToAI({ message: text, history });
+  };
+
+  const retryLastAiRequest = () => {
+    if (aiLastPayload) sendToAI(aiLastPayload);
   };
 
   const openSessionSummary = () => {
@@ -563,6 +763,11 @@ const PracticePage = () => {
                     <button className="solid-btn" onClick={openSessionSummary}>View Session Summary</button>
                   </div>
                 )}
+                <div className="feedback-actions ai-sidebar-trigger-row">
+                  <button type="button" className="outline-btn" onClick={openAiSidebar}>
+                    <AIIcon /> Ask with AI
+                  </button>
+                </div>
               </div>
             )}
           </article>
@@ -655,6 +860,18 @@ const PracticePage = () => {
           description="Pick a subject and topic above, then start practice to begin."
         />
       )}
+
+      <AISidebar
+        isOpen={isAiSidebarOpen}
+        question={question}
+        messages={aiMessages}
+        isLoading={aiLoading}
+        error={aiError}
+        streamingMessageId={aiStreamingMessageId}
+        onSendMessage={sendAiFollowUp}
+        onClose={closeAiSidebar}
+        onRetryLast={retryLastAiRequest}
+      />
     </div>
   );
 };

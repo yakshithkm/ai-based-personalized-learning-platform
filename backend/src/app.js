@@ -12,6 +12,7 @@ const analyticsRoutes = require('./routes/analyticsRoutes');
 const recommendationRoutes = require('./routes/recommendationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const examRoutes = require('./routes/examRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
 const { protect } = require('./middleware/authMiddleware');
 const { validateObjectIdParam } = require('./middleware/validateObjectIdParam');
@@ -62,6 +63,19 @@ app.use('/api/analytics', apiLimiter);
 app.use('/api/recommendations', apiLimiter);
 app.use('/api/admin', apiLimiter);
 
+// AI tutor calls hit Gemini's free-tier quota per request (unlike the other
+// routes above, which only hit MongoDB), so it gets its own tighter limit
+// rather than sharing the general 300/15min apiLimiter - this is an extra
+// guardrail on top of Gemini's own 429 responses, not a replacement for it.
+const aiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 40,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many AI tutor requests. Please wait a moment and try again.' },
+});
+app.use('/api/ai', aiLimiter);
+
 // Login/register are brute-force/credential-stuffing/signup-spam targets, so they get a
 // tighter limit on top of the general one.
 const authLimiter = rateLimit({
@@ -84,6 +98,7 @@ app.use('/api/attempts', attemptRoutes);
 app.use('/api/analytics', analyticsRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.get(
   '/api/exam/session/:sessionId/debug-intents',
