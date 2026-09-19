@@ -1,6 +1,6 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted recommendations, adaptive learning features, and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, adaptive learning features, and a dedicated admin portal.
 
 ## Tech Stack
 
@@ -8,6 +8,7 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 |---|---|
 | **Frontend** | React 18 + Vite + React Router v6 + Recharts |
 | **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit |
+| **AI Tutor** | Google Gemini API (`@google/genai`) — streaming, server-side only |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
 | **Testing** | Jest + Supertest + mongodb-memory-server (backend) · Vitest + Testing Library (frontend) |
 | **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs |
@@ -20,31 +21,32 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 1. **User Authentication** — Register, login, profile via JWT (Bearer token)
 2. **Question Bank** — Exam-wise (NEET/JEE/CET), subject-topic hierarchical question sets
 3. **Practice Quiz Flow** — Per-question attempt submission with correctness and explanation feedback
-4. **Performance Tracking** — Accuracy, attempt count, and time-per-topic persistence
-5. **Weak Topic Detection** — Threshold-based identification of underperforming topics
-6. **Personalized Recommendations** — ML-driven suggestions with rule-based fallback
-7. **Analytics Dashboard** — Charts (Recharts) for per-subject and per-topic performance
-8. **Exam Simulation** — Full-length and section-wise mock tests with real-time answer saving
-9. **Exam Scoring** — NEET/JEE marking scheme (+4/−1/0), percentile estimate, rank range
-10. **Post-Exam Intelligence** — Adaptive follow-up study plan generated from exam results
-11. **Exam Report & Certificate Download** — PDF export of exam results and completion certificate
-12. **Mistake Bank** — Persistent log of incorrect answers with spaced-repetition scheduling (3 stages)
-13. **Weak Topics Page** — Dedicated view of low-accuracy topics with drill-down
-14. **Study Plan Page** — AI-generated prioritised study schedule
-15. **Achievements Page** — Milestone and badge tracking
-16. **Flashcards** — Lightweight review interface
-17. **Session Summary** — Post-practice session breakdown
-18. **Profile Page** — User stats, target exam, and account settings
+4. **Ask with AI (AI Tutor)** — Streaming Gemini-powered doubt-resolution sidebar on the Practice Page; multi-turn conversation scoped to the currently attempted question
+5. **Performance Tracking** — Accuracy, attempt count, and time-per-topic persistence
+6. **Weak Topic Detection** — Threshold-based identification of underperforming topics
+7. **Personalized Recommendations** — ML-driven suggestions with rule-based fallback
+8. **Analytics Dashboard** — Charts (Recharts) for per-subject and per-topic performance
+9. **Exam Simulation** — Full-length and section-wise mock tests with real-time answer saving
+10. **Exam Scoring** — NEET/JEE marking scheme (+4/−1/0), percentile estimate, rank range
+11. **Post-Exam Intelligence** — Adaptive follow-up study plan generated from exam results
+12. **Exam Report & Certificate Download** — PDF export of exam results and completion certificate
+13. **Mistake Bank** — Persistent log of incorrect answers with spaced-repetition scheduling (3 stages)
+14. **Weak Topics Page** — Dedicated view of low-accuracy topics with drill-down
+15. **Study Plan Page** — AI-generated prioritised study schedule
+16. **Achievements Page** — Milestone and badge tracking
+17. **Flashcards** — Lightweight review interface
+18. **Session Summary** — Post-practice session breakdown
+19. **Profile Page** — User stats, target exam, and account settings
 
 ### Admin Portal
-19. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-20. **Admin Dashboard** — Platform-wide stats overview
-21. **Student Management** — List all students, drill into individual student detail
-22. **Question Bank CRUD** — Create, read, update, and delete questions
-23. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-24. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-25. **Admin Analytics** — Platform-wide analytics section
-26. **Product Event Tracking** — Internal telemetry for key user actions
+20. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+21. **Admin Dashboard** — Platform-wide stats overview
+22. **Student Management** — List all students, drill into individual student detail
+23. **Question Bank CRUD** — Create, read, update, and delete questions
+24. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+25. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+26. **Admin Analytics** — Platform-wide analytics section
+27. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -52,27 +54,35 @@ Full-stack personalized exam preparation platform with AI-assisted recommendatio
 
 ```
 ai-based-personalized-learning-platform/
-├── frontend/               # React + Vite SPA (dark responsive theme)
+├── frontend/               # React + Vite SPA (dark-mode glass/aurora theme)
 │   └── src/
 │       ├── pages/          # Route-level page components
 │       │   ├── (16 student pages)
 │       │   └── admin/      # 10 admin portal pages
-│       ├── components/     # Layout, AdminLayout, ProtectedRoute, landing sections
+│       ├── components/     # Layout, AdminLayout, ProtectedRoute, AISidebar,
+│       │   │               # AIChatMessage, BrandLogo, EmptyState, Footer,
+│       │   │               # PasswordField, ResultIcons
 │       │   └── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
 │       │                   # FaqAccordion, PriceCounter, Reveal, icons
 │       ├── api/            # Axios API clients (client.js, examClient.js)
-│       ├── context/        # Auth context
+│       ├── context/        # AuthContext, ThemeContext (dark-only), ToastContext
 │       ├── hooks/          # useMagneticHover, useScrollReveal
-│       ├── styles/         # Additional style modules (features/, components.css, global.css)
+│       ├── styles/         # Style modules:
+│       │   ├── features/   # admin.css, ai-tutor.css, analytics.css, app-shell.css,
+│       │   │               # dashboard.css, exam.css, landing.css, practice.css,
+│       │   │               # profile.css, subpages.css
+│       │   ├── components.css
+│       │   └── global.css
 │       └── utils/          # Shared utilities
 ├── backend/                # Node.js REST API
 │   ├── src/
-│   │   ├── controllers/    # 14 route handlers (auth, questions, attempts, analytics,
-│   │   │                   # exam, examReport, recommendation, admin × 7)
+│   │   ├── controllers/    # 15 route handlers (auth, questions, attempts, analytics,
+│   │   │                   # exam, examReport, recommendation, ai, admin × 7)
 │   │   ├── models/         # 9 Mongoose models — see Database Models
-│   │   ├── routes/         # 7 Express routers (auth, questions, attempts, analytics,
-│   │   │                   # recommendations, exams, admin)
-│   │   ├── services/       # 12 service modules — see Service Layer
+│   │   ├── routes/         # 8 Express routers (auth, questions, attempts, analytics,
+│   │   │                   # recommendations, exams, admin, ai)
+│   │   ├── services/       # 14 service modules — see Service Layer
+│   │   │   └── ai/         # aiService.js, geminiService.js
 │   │   ├── middleware/     # authMiddleware, errorMiddleware, validateObjectIdParam
 │   │   ├── config/         # DB connection
 │   │   ├── assets/         # Static backend assets
@@ -148,6 +158,11 @@ To reset demo data: `npm run reset:demo`
 | `JWT_EXPIRES_IN` | `7d` | JWT lifetime |
 | `ML_SERVICE_URL` | `http://127.0.0.1:8000` | Flask ML service base URL |
 | `CLIENT_URL` | `http://localhost:5173` | Allowed CORS origin(s), comma-separated |
+| `GEMINI_API_KEY` | — | Google Gemini API key for the AI Tutor feature. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Optional — the Practice Page "Ask with AI" sidebar is disabled when absent. |
+| `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Gemini model to use. Flash-Lite is recommended on the free tier (~500 req/day vs ~20 for full Flash). |
+| `ADMIN_EMAIL` | `admin@learning.com` | Admin account email — created/updated automatically on server start |
+| `ADMIN_PASSWORD` | `change_me_before_using` | Admin account password (bcrypt-hashed, never stored in plaintext) |
+| `ADMIN_NAME` | `Platform Admin` | Display name for the admin account |
 
 ---
 
@@ -168,7 +183,7 @@ To reset demo data: `npm run reset:demo`
 | `/login` | Login | Public |
 | `/register` | Register | Public |
 | `/dashboard` | Dashboard | ✅ |
-| `/practice` | Practice Quiz | ✅ |
+| `/practice` | Practice Quiz (+ AI Tutor sidebar) | ✅ |
 | `/analytics` | Analytics & Charts | ✅ |
 | `/profile` | User Profile | ✅ |
 | `/exam-simulation` | Exam Simulation | ✅ |
@@ -253,6 +268,11 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 |---|---|---|
 | `GET` | `/me` | ML-backed personalized topic recommendations |
 
+### AI Tutor (`/api/ai`)
+| Method | Path | Description |
+|---|---|---|
+| `POST` | `/explain` | Streams a Gemini-powered doubt-resolution reply (SSE) for the currently attempted question. Protected. Rate-limited to 40 req / 15 min. |
+
 ### Exam Simulation (`/api/exams`)
 | Method | Path | Description |
 |---|---|---|
@@ -299,7 +319,7 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 
 - **Helmet** — sets secure HTTP response headers
 - **CORS** — restricted to `CLIENT_URL` origins only (no wildcard + credentials)
-- **Rate limiting** — 300 req/15 min general API throttle; 20 req/15 min on `/auth/login` and `/auth/register`
+- **Rate limiting** — 300 req/15 min general API throttle; 20 req/15 min on `/auth/login` and `/auth/register`; 40 req/15 min on `/api/ai` (Gemini quota protection)
 - **Exam-session rate limiting** — per-session, per-question throttle with 3-second cooldown on 429; no infinite retry loops
 - **express-mongo-sanitize** — strips `$`/`.` keys from request input to block NoSQL injection
 - **bcryptjs** — password hashing
@@ -339,6 +359,8 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `productSignalsService` | Aggregated product signal computation |
 | `examDownloadService` | PDF report and certificate generation (PDFKit) |
 | `mlClient` | HTTP client for the Flask ML microservice |
+| `aiService` | Streaming doubt-resolution chat orchestration (question context + conversation history) |
+| `geminiService` | Low-level Google Gemini API client — SSE streaming, error translation, quota handling |
 
 ---
 
@@ -382,9 +404,11 @@ npm --prefix frontend run test:watch
 
 ## Notes
 
+- **AI Tutor** (`Ask with AI`): Available in the Practice Page sidebar. Uses Google Gemini (Flash-Lite by default) for streaming, multi-turn doubt resolution scoped to the currently attempted question. The sidebar renders as a portal to `document.body` to escape the app shell's stacking context. When `GEMINI_API_KEY` is absent or the Gemini service is unreachable, the feature degrades gracefully without affecting the rest of the platform.
 - The ML layer uses classical scikit-learn models and heuristic scoring rather than deep learning — intentional for lightweight deployment.
 - Exam simulation includes full state-reconciliation on session restore (handles page refresh mid-exam).
 - The `ExamSimulationPage` uses an explicit `selectedOptionMap` / `confirmedOptionMap` / `cooldownMap` architecture to prevent selection corruption and infinite retry loops on rate-limited saves.
 - Route-based code splitting ensures the initial JS bundle only contains the public landing page; the admin portal is entirely split from student-facing bundles.
 - The admin portal has its own separate authentication (`/admin/login`) and layout (`AdminLayout` with sidebar), isolated from the student shell.
 - PDF reports and certificates are generated server-side via PDFKit and streamed directly to the client.
+- The UI is dark-mode only — the entire design (including the landing page) uses a dark glass/aurora aesthetic. `ThemeContext` always applies `data-theme="dark"` and exposes `theme: 'dark'` to consumers.
