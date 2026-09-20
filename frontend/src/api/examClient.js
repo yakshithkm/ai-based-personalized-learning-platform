@@ -312,10 +312,20 @@ const submitExamAnswer = async ({
   }
 };
 
-const submitExamSession = async ({ sessionId }) => {
+// `reason` (MANUAL | TIME_EXPIRED | MAX_VIOLATIONS) and `violationCount` are optional. The
+// server verifies them (it never trusts them blindly) before persisting auto-submit metadata;
+// with neither supplied this behaves exactly as before (no request body).
+const submitExamSession = async ({ sessionId, reason, violationCount, presenceWarningCount }) => {
   const { requestId, signal } = beginRequest();
+  const body = reason
+    ? {
+        reason,
+        violationCount: Number(violationCount) || 0,
+        presenceWarningCount: Number(presenceWarningCount) || 0,
+      }
+    : undefined;
   try {
-    const response = await api.post(`/exams/sessions/${sessionId}/submit`, undefined, attachExamAuthHeaders({ signal }));
+    const response = await api.post(`/exams/sessions/${sessionId}/submit`, body, attachExamAuthHeaders({ signal }));
     if (!isLatestRequest(requestId)) {
       return { aborted: true, requestId, stale: true };
     }

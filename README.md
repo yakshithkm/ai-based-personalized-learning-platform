@@ -1,17 +1,18 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted doubt resolution, adaptive learning features, and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, adaptive learning features, and a dedicated admin portal.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | React 18 + Vite + React Router v6 + Recharts |
+| **Frontend** | React 18 + Vite + React Router v6 + Recharts + `@vladmandic/face-api` (on-device TensorFlow.js) |
 | **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit |
 | **AI Tutor** | Google Gemini API (`@google/genai`) — streaming, server-side only |
+| **Exam Proctoring** | On-device face presence detection (`@vladmandic/face-api`) + browser focus/visibility monitoring (dual independent counters) |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
 | **Testing** | Jest + Supertest + mongodb-memory-server (backend) · Vitest + Testing Library (frontend) |
-| **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs |
+| **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs · Idempotent event reporting · Privacy-first local video stream |
 
 ---
 
@@ -26,27 +27,32 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 6. **Weak Topic Detection** — Threshold-based identification of underperforming topics
 7. **Personalized Recommendations** — ML-driven suggestions with rule-based fallback
 8. **Analytics Dashboard** — Charts (Recharts) for per-subject and per-topic performance
-9. **Exam Simulation** — Full-length and section-wise mock tests with real-time answer saving
+9. **Exam Simulation** — Full-length and section-wise mock tests with real-time answer saving, single-flight locking, cooldown throttle, and full state reconciliation on restore
 10. **Exam Scoring** — NEET/JEE marking scheme (+4/−1/0), percentile estimate, rank range
-11. **Post-Exam Intelligence** — Adaptive follow-up study plan generated from exam results
-12. **Exam Report & Certificate Download** — PDF export of exam results and completion certificate
-13. **Mistake Bank** — Persistent log of incorrect answers with spaced-repetition scheduling (3 stages)
-14. **Weak Topics Page** — Dedicated view of low-accuracy topics with drill-down
-15. **Study Plan Page** — AI-generated prioritised study schedule
-16. **Achievements Page** — Milestone and badge tracking
-17. **Flashcards** — Lightweight review interface
-18. **Session Summary** — Post-practice session breakdown
-19. **Profile Page** — User stats, target exam, and account settings
+11. **AI Proctoring & Integrity Shield** — Dual-counter browser focus & on-device webcam presence tracking:
+    - **Focus Violation Tracking**: Detects tab changes (`visibilitychange`), window blurring (`blur` with a 250ms confirmation delay), and navigation attempts with 4 warning levels and automated submission at 5 violations (`MAX_VIOLATIONS`).
+    - **On-Device Webcam Presence Detection**: Evaluates live video locally via `@vladmandic/face-api` (TinyFaceDetector, ~190 KB weights served locally from `/models/`, no CDN, zero video uploaded or stored). Alerts after 5 consecutive absent frames and auto-submits after 5 presence warnings (`PRESENCE_LIMIT`).
+    - **Camera Status Monitoring**: Derives device status (requesting, active, denied, not-found, in-use, disconnected) with user recovery retry controls. Camera unavailability alone is treated as a client warning and is never penalized as an absence.
+    - **Server-Authoritative Idempotency**: Violation reports use client-generated idempotency keys (`crypto.randomUUID`) to prevent duplicate counts from retries.
+12. **Post-Exam Intelligence** — Adaptive follow-up study plan generated from exam results
+13. **Exam Report & Certificate Download** — PDF export of exam results and completion certificate
+14. **Mistake Bank** — Persistent log of incorrect answers with spaced-repetition scheduling (3 stages)
+15. **Weak Topics Page** — Dedicated view of low-accuracy topics with drill-down
+16. **Study Plan Page** — AI-generated prioritised study schedule
+17. **Achievements Page** — Milestone and badge tracking
+18. **Flashcards** — Lightweight review interface
+19. **Session Summary** — Post-practice session breakdown
+20. **Profile Page** — User stats, target exam, and account settings
 
 ### Admin Portal
-20. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-21. **Admin Dashboard** — Platform-wide stats overview
-22. **Student Management** — List all students, drill into individual student detail
-23. **Question Bank CRUD** — Create, read, update, and delete questions
-24. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-25. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-26. **Admin Analytics** — Platform-wide analytics section
-27. **Product Event Tracking** — Internal telemetry for key user actions
+21. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+22. **Admin Dashboard** — Platform-wide stats overview
+23. **Student Management** — List all students, drill into individual student detail
+24. **Question Bank CRUD** — Create, read, update, and delete questions
+25. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+26. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+27. **Admin Analytics** — Platform-wide analytics section
+28. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -55,18 +61,27 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 ```
 ai-based-personalized-learning-platform/
 ├── frontend/               # React + Vite SPA (dark-mode glass/aurora theme)
+│   ├── public/
+│   │   └── models/         # TinyFaceDetector weights served locally (~190 KB)
+│   ├── scripts/
+│   │   └── copy-face-models.mjs # postinstall script copying model weights to public/models
 │   └── src/
 │       ├── pages/          # Route-level page components
 │       │   ├── (16 student pages)
-│       │   └── admin/      # 10 admin portal pages
+│       │   ├── admin/      # 10 admin portal pages
+│       │   └── __tests__/  # Vitest integration & proctoring test suites
 │       ├── components/     # Layout, AdminLayout, ProtectedRoute, AISidebar,
 │       │   │               # AIChatMessage, BrandLogo, EmptyState, Footer,
 │       │   │               # PasswordField, ResultIcons
+│       │   ├── exam/       # PresenceToast, ProctorAlerts, ViolationIndicator, WebcamMonitor
+│       │   ├── admin/      # AdminLayout, AdminQuestionFormModal, ConfirmDialog, Pagination
 │       │   └── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
 │       │                   # FaqAccordion, PriceCounter, Reveal, icons
-│       ├── api/            # Axios API clients (client.js, examClient.js)
+│       ├── api/            # Axios API clients (client.js, examClient.js, examProctoringClient.js)
 │       ├── context/        # AuthContext, ThemeContext (dark-only), ToastContext
-│       ├── hooks/          # useMagneticHover, useScrollReveal
+│       ├── hooks/          # useExamViolationMonitor, usePresenceMonitor, useWebcamMonitor,
+│       │                   # useMagneticHover, useScrollReveal
+│       ├── lib/            # faceDetector.js (lazy on-device TensorFlow.js TinyFaceDetector)
 │       ├── styles/         # Style modules:
 │       │   ├── features/   # admin.css, ai-tutor.css, analytics.css, app-shell.css,
 │       │   │               # dashboard.css, exam.css, landing.css, practice.css,
@@ -82,12 +97,14 @@ ai-based-personalized-learning-platform/
 │   │   ├── routes/         # 8 Express routers (auth, questions, attempts, analytics,
 │   │   │                   # recommendations, exams, admin, ai)
 │   │   ├── services/       # 14 service modules — see Service Layer
-│   │   │   └── ai/         # aiService.js, geminiService.js
+│   │   │   ├── ai/         # aiService.js, geminiService.js
+│   │   │   └── pdf/        # examCertificatePdf.js, examReportPdf.js, pdfHelpers.js
 │   │   ├── middleware/     # authMiddleware, errorMiddleware, validateObjectIdParam
-│   │   ├── config/         # DB connection
+│   │   ├── config/         # DB connection, examConfig.js (proctoring settings)
 │   │   ├── assets/         # Static backend assets
 │   │   ├── data/           # Seed/reference data
 │   │   └── utils/
+│   ├── tests/              # Jest + Supertest test suites (6 test suites)
 │   ├── seedQuestions.js    # Question bank seed script
 │   ├── seedDemo.js         # Demo user + data seed script
 │   ├── seedAdmin.js        # Admin user seed script
@@ -111,6 +128,7 @@ ai-based-personalized-learning-platform/
 npm install
 
 # 2. Install backend and frontend dependencies
+# (frontend install runs postinstall script to copy on-device face detector models)
 npm --prefix backend install
 npm --prefix frontend install
 
@@ -169,7 +187,7 @@ To reset demo data: `npm run reset:demo`
 ## Frontend Setup
 
 1. `cd frontend`
-2. `npm install`
+2. `npm install` (triggers `postinstall` script `node scripts/copy-face-models.mjs` to copy model weights into `public/models`)
 3. Copy `.env.example` → `.env`
 4. `npm run dev` — start Vite dev server at `http://localhost:5173`
 
@@ -186,7 +204,7 @@ To reset demo data: `npm run reset:demo`
 | `/practice` | Practice Quiz (+ AI Tutor sidebar) | ✅ |
 | `/analytics` | Analytics & Charts | ✅ |
 | `/profile` | User Profile | ✅ |
-| `/exam-simulation` | Exam Simulation | ✅ |
+| `/exam-simulation` | Exam Simulation (+ Webcam & Focus Proctoring) | ✅ |
 | `/exam-simulation/result` | Exam Results | ✅ |
 | `/session-summary` | Session Summary | ✅ |
 | `/weak-topics` | Weak Topics | ✅ |
@@ -279,8 +297,9 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `POST` | `/sessions` | Start a new exam session |
 | `GET` | `/sessions/active/latest` | Fetch the latest active session |
 | `GET` | `/sessions/:sessionId` | Get session state |
-| `PATCH` | `/sessions/:sessionId/answer` | Save an answer for a question |
-| `POST` | `/sessions/:sessionId/submit` | Finalise and score the exam |
+| `PATCH` | `/sessions/:sessionId/answer` | Save an answer for a question (single-flight guarded) |
+| `POST` | `/sessions/:sessionId/violations` | Record a focus violation or presence warning with an idempotent event ID (`TAB_HIDDEN`, `WINDOW_BLUR`, `ROUTE_LEAVE`, `NO_PERSON`). Protected. |
+| `POST` | `/sessions/:sessionId/submit` | Finalise and score the exam. Accepts optional submit reason and claimed counters (`MANUAL`, `TIME_EXPIRED`, `MAX_VIOLATIONS`, `PRESENCE_LIMIT`) verified server-side. |
 | `GET` | `/sessions/:sessionId/report` | Download exam report as PDF |
 | `GET` | `/sessions/:sessionId/certificate` | Download completion certificate as PDF |
 
@@ -320,7 +339,9 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 - **Helmet** — sets secure HTTP response headers
 - **CORS** — restricted to `CLIENT_URL` origins only (no wildcard + credentials)
 - **Rate limiting** — 300 req/15 min general API throttle; 20 req/15 min on `/auth/login` and `/auth/register`; 40 req/15 min on `/api/ai` (Gemini quota protection)
-- **Exam-session rate limiting** — per-session, per-question throttle with 3-second cooldown on 429; no infinite retry loops
+- **Exam-session rate limiting** — per-session, per-question throttle with 3-second cooldown on 429; single-flight locks prevent request flooding
+- **Proctoring event idempotency** — client-generated UUID keys prevent duplicate counts or inflated violation state from network retries
+- **Privacy-first video handling** — camera streams remain purely local in browser memory; video frames are never recorded, transmitted, or uploaded to any server
 - **express-mongo-sanitize** — strips `$`/`.` keys from request input to block NoSQL injection
 - **bcryptjs** — password hashing
 - **JWT** — stateless auth via `Authorization: Bearer <token>` header
@@ -336,7 +357,7 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `Attempt` | Individual practice attempt record |
 | `Performance` | Aggregated per-topic metrics (accuracy, attempts, avg time) |
 | `TopicMeta` | Topic catalog for admin management (subjects/topics metadata) |
-| `ExamSession` | Full mock exam state — questions, answers, timing, scoring |
+| `ExamSession` | Full mock exam state — questions, answers, timing, scoring, and proctoring integrity state (`violationCount`, `maximumViolations`, `violationEvents`, `presenceWarningCount`, `maximumPresenceWarnings`, `autoSubmitted`, `autoSubmitReason`) |
 | `ExamAuditLog` | Immutable per-answer audit trail for exam integrity |
 | `Mistake` | Mistake bank with spaced-repetition fields (3 review stages) |
 | `ProductEvent` | Internal telemetry events |
@@ -347,7 +368,7 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 
 | Service | Responsibility |
 |---|---|
-| `examSimulationService` | Core exam session lifecycle, scoring, state reconciliation |
+| `examSimulationService` | Core exam session lifecycle, scoring, state reconciliation, focus & presence proctoring enforcement |
 | `recommendationService` | ML-backed + rule-based topic recommendations |
 | `analyticsService` | Per-topic and platform analytics aggregation |
 | `analysisService` | Post-exam intelligence and adaptive study plan generation |
@@ -380,7 +401,8 @@ npm run test:backend
 |---|---|
 | `api.test.js` | Basic route smoke tests |
 | `exam.simulation.test.js` | Full exam session lifecycle |
-| `exam.intent.ordering.test.js` | Question ordering and intent logic |
+| `exam.intent.ordering.test.js` | Question ordering, nonce rotation, and intent logic |
+| `exam.proctoring.test.js` | Focus violation recording, camera presence tracking, auto-submit reasons, duplicate prevention, and counter bounds |
 | `intelligence.validation.test.js` | Scoring and intelligence analysis |
 | `intelligence.adversarial.test.js` | Adversarial / edge-case scenarios |
 
@@ -391,6 +413,13 @@ npm --prefix frontend run test
 # watch mode:
 npm --prefix frontend run test:watch
 ```
+
+Key frontend test suites:
+- `ExamSimulationPage.proctoring.test.jsx` — Focus violations, blur grace confirmation, tab hidden detection, on-device presence detection, auto-submission flows, and duplicate prevention
+- `ExamSimulationPage.singleFlight.test.jsx` & `singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
+- `ExamSimulationPage.integrity.test.jsx` & `race.test.jsx` — State reconciliation, sequence ordering, out-of-order rejection, and duplicate suppression
+- `ExamSimulationPage.crossClient.integrity.test.jsx` — Multi-tab/device session conflict resolution
+- Smoke tests for `HomePage`, `ProfilePage`, `Layout`, and `PasswordField`
 
 ---
 
@@ -405,6 +434,12 @@ npm --prefix frontend run test:watch
 ## Notes
 
 - **AI Tutor** (`Ask with AI`): Available in the Practice Page sidebar. Uses Google Gemini (Flash-Lite by default) for streaming, multi-turn doubt resolution scoped to the currently attempted question. The sidebar renders as a portal to `document.body` to escape the app shell's stacking context. When `GEMINI_API_KEY` is absent or the Gemini service is unreachable, the feature degrades gracefully without affecting the rest of the platform.
+- **Exam Proctoring & Integrity Shield**:
+  - **Dual Independent Counters**: Focus violations (tab switches, window blurs, route leaves) and presence warnings (no face visible in camera) are tracked on separate counters. Neither adds to or interferes with the other.
+  - **Browser Focus Monitoring**: Utilizes `visibilitychange` and window `blur`. Transient blurs (system permission prompts or native confirmation dialogs) are filtered via a 250ms confirmation check. Each transition away from the exam counts as at most one violation. Reaching 5 violations triggers automatic test submission (`MAX_VIOLATIONS`).
+  - **On-Device Webcam Presence**: Powered by `@vladmandic/face-api` (TinyFaceDetector, ~190 KB weights served directly from `frontend/public/models/`). Face detection runs 100% on-device inside the student's browser via TensorFlow.js. Video frames are never sent over the network or saved anywhere. If a student is absent for 5 consecutive seconds, a warning toast is raised. 5 presence warnings trigger automatic test submission (`PRESENCE_LIMIT`).
+  - **Fail-Open & Resilient**: If the camera is denied, disconnected, in use by another app, or if the detector fails to load, presence checking safely turns off and the student is never penalized. Device status recovery with an inline Retry button is provided.
+  - **Server-Authoritative Enforcement**: Client auto-submit requests with reason `MAX_VIOLATIONS` or `PRESENCE_LIMIT` are validated by the backend against actual recorded counts before finalizing the exam.
 - The ML layer uses classical scikit-learn models and heuristic scoring rather than deep learning — intentional for lightweight deployment.
 - Exam simulation includes full state-reconciliation on session restore (handles page refresh mid-exam).
 - The `ExamSimulationPage` uses an explicit `selectedOptionMap` / `confirmedOptionMap` / `cooldownMap` architecture to prevent selection corruption and infinite retry loops on rate-limited saves.

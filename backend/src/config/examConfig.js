@@ -24,8 +24,22 @@ const DEFAULT_EXAM_CONFIG = {
 
 const getExamConfig = (examType) => EXAM_CONFIG[examType] || DEFAULT_EXAM_CONFIG;
 
+// Browser-based proctoring. Two SEPARATE counters, each with its own limit and auto-submit:
+//  * focus violations (tab/window/route-leave)            -> MAX_VIOLATIONS
+//  * "no person in front of the camera" warnings          -> PRESENCE_LIMIT
+// A camera that is merely unavailable (denied/unplugged) is a client-side warning only and is
+// never recorded or counted.
+const EXAM_PROCTORING = {
+  maxViolations: 5,
+  maxPresenceWarnings: 5,
+  violationTypes: ['TAB_HIDDEN', 'WINDOW_BLUR', 'ROUTE_LEAVE'],
+  presenceType: 'NO_PERSON',
+  submitReasons: ['MANUAL', 'TIME_EXPIRED', 'MAX_VIOLATIONS', 'PRESENCE_LIMIT'],
+};
+
 module.exports = {
   EXAM_CONFIG,
   DEFAULT_EXAM_CONFIG,
+  EXAM_PROCTORING,
   getExamConfig,
 };

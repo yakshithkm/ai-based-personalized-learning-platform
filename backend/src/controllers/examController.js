@@ -5,6 +5,7 @@ const {
   getLatestActiveExamSessionState,
   submitAnswer,
   submitExamSession,
+  recordExamViolation,
 } = require('../services/examSimulationService');
 
 const isTestOrDevMode = () => ['test', 'development'].includes(process.env.NODE_ENV);
@@ -108,9 +109,31 @@ const submitSessionAnswer = async (req, res, next) => {
 
 const finalizeExamSession = async (req, res, next) => {
   try {
+    // Body is optional: older clients post nothing and are treated as a manual submit.
+    const { reason, violationCount, presenceWarningCount } = req.body || {};
     const result = await submitExamSession({
       userId: req.user._id,
       sessionId: req.params.sessionId,
+      reason,
+      violationCount,
+      presenceWarningCount,
+    });
+
+    return res.json(result);
+  } catch (error) {
+    res.status(error.statusCode || 400);
+    return next(error);
+  }
+};
+
+const reportExamViolation = async (req, res, next) => {
+  try {
+    const { eventId, type } = req.body || {};
+    const result = await recordExamViolation({
+      userId: req.user._id,
+      sessionId: req.params.sessionId,
+      eventId,
+      type,
     });
 
     return res.json(result);
@@ -144,5 +167,6 @@ module.exports = {
   getLatestActiveSessionState,
   submitSessionAnswer,
   finalizeExamSession,
+  reportExamViolation,
   getDebugIntents,
 };

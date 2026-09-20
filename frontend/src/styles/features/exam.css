@@ -514,3 +514,229 @@
     animation: none;
   }
 }
+
+
+/* --- Proctoring: violation indicator, live camera preview, alerts ---
+   Additive only. Uses the same tokens/panel language as the rest of the exam UI. */
+
+.exam-header-metrics {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.exam-violation-indicator {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.55rem 0.8rem;
+  display: grid;
+  gap: 0.2rem;
+  min-width: 120px;
+  text-align: right;
+  background: rgba(30, 41, 59, 0.35);
+  transition: border-color 200ms ease, background 200ms ease, color 200ms ease;
+}
+
+.exam-violation-indicator span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.exam-violation-indicator strong {
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.exam-violation-indicator.level-warn {
+  border-color: rgba(250, 204, 21, 0.5);
+  background: rgba(161, 98, 7, 0.2);
+}
+
+.exam-violation-indicator.level-warn strong {
+  color: #facc15;
+}
+
+.exam-violation-indicator.level-alert {
+  border-color: rgba(249, 115, 22, 0.6);
+  background: rgba(194, 65, 12, 0.26);
+}
+
+.exam-violation-indicator.level-alert strong {
+  color: #fb923c;
+}
+
+.exam-violation-indicator.level-critical {
+  border-color: rgba(239, 68, 68, 0.7);
+  background: rgba(185, 28, 28, 0.32);
+}
+
+.exam-violation-indicator.level-critical strong {
+  color: #f87171;
+}
+
+.exam-proctor-cam {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.exam-proctor-cam-frame {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.exam-proctor-cam.active .exam-proctor-cam-frame {
+  border-color: rgba(34, 197, 94, 0.55);
+}
+
+.exam-proctor-cam.unavailable .exam-proctor-cam-frame {
+  border-color: rgba(250, 204, 21, 0.55);
+}
+
+.exam-proctor-cam-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror preview */
+}
+
+.exam-proctor-cam-status {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.exam-proctor-cam.active .exam-proctor-cam-status {
+  color: var(--success);
+}
+
+.exam-proctor-cam.unavailable .exam-proctor-cam-status {
+  color: #facc15;
+}
+
+.exam-proctor-cam-help {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: start;
+}
+
+.exam-proctor-cam-help p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+
+/* --- Proctoring: center the camera block when the sidebar is full-width --- */
+@media (max-width: 1180px) {
+  .exam-proctor-cam {
+    justify-items: center;
+    text-align: center;
+  }
+
+  /* "Retry camera" help block (shown only when the camera is unavailable) */
+  .exam-proctor-cam-help {
+    justify-items: center;
+  }
+}
+
+.exam-proctor-retry {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.exam-proctor-alerts {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.exam-proctor-alert {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.exam-proctor-alert p,
+.exam-proctor-alert small {
+  margin: 0;
+}
+
+.exam-proctor-alert.camera {
+  border-color: rgba(250, 204, 21, 0.5);
+}
+
+.exam-proctor-alert.camera strong {
+  color: #facc15;
+}
+
+.exam-proctor-alert.restored {
+  border-color: rgba(34, 197, 94, 0.5);
+  color: var(--success);
+}
+
+.exam-proctor-alert.focus {
+  border-color: rgba(249, 115, 22, 0.55);
+}
+
+.exam-proctor-alert.focus small {
+  color: var(--muted);
+}
+
+.exam-proctor-alert.focus.final {
+  border-color: rgba(239, 68, 68, 0.7);
+  color: #f87171;
+}
+
+/* Alerts should not lift on hover like regular panels - they are status, not links. */
+.exam-proctor-alert:hover {
+  transform: none;
+}
+
+
+/* --- Proctoring: presence (no person in front of the camera) --- */
+
+.exam-proctor-cam-presence {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.exam-presence-stack {
+  z-index: 70; /* above regular toasts while an exam is running */
+}
+
+.toast-item.toast-warning {
+  border-color: rgba(250, 204, 21, 0.55);
+  box-shadow: var(--elevation-3), 0 0 0 1px rgba(250, 204, 21, 0.14);
+}
+
+.toast-item.toast-warning strong {
+  color: #facc15;
+}
+
+.toast-item.toast-warning.final {
+  border-color: rgba(239, 68, 68, 0.7);
+  box-shadow: var(--elevation-3), 0 0 0 1px rgba(239, 68, 68, 0.18);
+}
+
+.toast-item.toast-warning.final strong {
+  color: #f87171;
+}
+
+.toast-item .toast-detail {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted);
+}

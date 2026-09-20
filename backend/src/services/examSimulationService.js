@@ -4,7 +4,7 @@ const Question = require('../models/Question');
 const ExamSession = require('../models/ExamSession');
 const ExamAuditLog = require('../models/ExamAuditLog');
 const { normalizeExamType, getAllowedSubjectsForExam, normalizeSubjectName } = require('../config/examSubjectMap');
-const { getExamConfig } = require('../config/examConfig');
+const { getExamConfig, EXAM_PROCTORING } = require('../config/examConfig');
 const { generateCertificateId } = require('../utils/generateCertificateId');
 
 const MOCK_BLUEPRINTS = {
@@ -793,6 +793,20 @@ const serializeSessionState = async (session) => {
       retries: 0,
     },
     integrityRisk: Boolean(session.integrityRisk),
+    // Focus-proctoring metadata. The server is the source of truth for the count, so a
+    // page refresh / session restore can never reset a student's violations.
+    violationCount: Math.min(
+      Number(session.violationCount || 0),
+      Number(session.maximumViolations || EXAM_PROCTORING.maxViolations)
+    ),
+    maximumViolations: Number(session.maximumViolations || EXAM_PROCTORING.maxViolations),
+    presenceWarningCount: Math.min(
+      Number(session.presenceWarningCount || 0),
+      Number(session.maximumPresenceWarnings || EXAM_PROCTORING.maxPresenceWarnings)
+    ),
+    maximumPresenceWarnings: Number(session.maximumPresenceWarnings || EXAM_PROCTORING.maxPresenceWarnings),
+    autoSubmitted: Boolean(session.autoSubmitted),
+    autoSubmitReason: session.autoSubmitReason || null,
   };
 };
 
@@ -1262,6 +1276,12 @@ const createExamSession = async ({ user, mode, examType, sectionSubject, strictN
       retries: 0,
     },
     integrityRisk: false,
+    violationCount: 0,
+    maximumViolations: EXAM_PROCTORING.maxViolations,
+    presenceWarningCount: 0,
+    maximumPresenceWarnings: EXAM_PROCTORING.maxPresenceWarnings,
+    autoSubmitted: false,
+    autoSubmitReason: null,
     currentQuestionIndex: 0,
     blueprintDiagnostics,
     resultSummary: null,
@@ -2187,7 +2207,113 @@ const buildPostTestAnalysis = ({
   };
 };
 
-const submitExamSession = async ({ userId, sessionId }) => {
+const normalizeSubmitReason = (reason) => {
+  const upper = String(reason || '').trim().toUpperCase();
+  return EXAM_PROCTORING.submitReasons.includes(upper) ? upper : 'MANUAL';
+};
+
+// The client only *requests* an auto-submit reason. It is honoured (and persisted) only when
+// the server can independently verify the underlying condition.
+const resolveAutoSubmitReason = ({
+  requestedReason,
+  violationCount,
+  maximumViolations,
+  presenceWarningCount,
+  maximumPresenceWarnings,
+  timeLeftSec,
+}) => {
+  if (requestedReason === 'MAX_VIOLATIONS' && violationCount >= maximumViolations) {
+    return 'MAX_VIOLATIONS';
+  }
+  if (requestedReason === 'PRESENCE_LIMIT' && presenceWarningCount >= maximumPresenceWarnings) {
+    return 'PRESENCE_LIMIT';
+  }
+  if (requestedReason === 'TIME_EXPIRED' && timeLeftSec === 0) {
+    return 'TIME_EXPIRED';
+  }
+  return null;
+};
+
+// Records exactly one proctoring event. Atomic, idempotent per `eventId`, capped, and a no-op
+// once the session is submitted or being submitted.
+//  * TAB_HIDDEN / WINDOW_BLUR / ROUTE_LEAVE -> focus counter (`violationCount`)
+//  * NO_PERSON                              -> presence counter (`presenceWarningCount`)
+// The two counters are independent. A camera that is merely unavailable is never sent here.
+const recordExamViolation = async ({ userId, sessionId, eventId, type }) => {
+  const maximumViolations = EXAM_PROCTORING.maxViolations;
+  const maximumPresenceWarnings = EXAM_PROCTORING.maxPresenceWarnings;
+  const cleanEventId = String(eventId || '').trim();
+  if (!cleanEventId || cleanEventId.length > 80) {
+    throw buildHttpError('A valid eventId is required', 400);
+  }
+  const isPresence = type === EXAM_PROCTORING.presenceType;
+  if (!isPresence && !EXAM_PROCTORING.violationTypes.includes(type)) {
+    throw buildHttpError('Invalid violation type', 400);
+  }
+
+  const counterField = isPresence ? 'presenceWarningCount' : 'violationCount';
+  const counterMax = isPresence ? maximumPresenceWarnings : maximumViolations;
+
+  const buildResult = (doc, extra) => {
+    const violationCount = Math.min(Number(doc.violationCount || 0), maximumViolations);
+    const presenceWarningCount = Math.min(Number(doc.presenceWarningCount || 0), maximumPresenceWarnings);
+    return {
+      ...extra,
+      violationCount,
+      maximumViolations,
+      limitReached: violationCount >= maximumViolations,
+      presenceWarningCount,
+      maximumPresenceWarnings,
+      presenceLimitReached: presenceWarningCount >= maximumPresenceWarnings,
+    };
+  };
+
+  const updated = await ExamSession.findOneAndUpdate(
+    {
+      _id: sessionId,
+      user: userId,
+      status: 'active',
+      isSubmitting: { $ne: true },
+      'violationEvents.eventId': { $ne: cleanEventId },
+      // `$not: $gte` (rather than `$lt`) also matches sessions created before this field existed.
+      [counterField]: { $not: { $gte: counterMax } },
+    },
+    {
+      $inc: { [counterField]: 1 },
+      $push: { violationEvents: { eventId: cleanEventId, type, at: new Date() } },
+    },
+    { new: true }
+  );
+
+  if (updated) {
+    return buildResult(updated, { recorded: true });
+  }
+
+  const current = await ExamSession.findOne({ _id: sessionId, user: userId })
+    .select('status isSubmitting violationCount presenceWarningCount violationEvents')
+    .lean();
+  if (!current) {
+    throw buildHttpError('Exam session not found', 404);
+  }
+
+  const duplicate = (current.violationEvents || []).some((entry) => entry.eventId === cleanEventId);
+  let reason = 'LIMIT_REACHED';
+  if (current.status !== 'active' || current.isSubmitting) {
+    reason = 'SESSION_NOT_ACTIVE';
+  } else if (duplicate) {
+    reason = 'DUPLICATE_EVENT';
+  }
+
+  return buildResult(current, { recorded: false, reason });
+};
+
+const submitExamSession = async ({
+  userId,
+  sessionId,
+  reason,
+  violationCount: claimedViolationCount,
+  presenceWarningCount: claimedPresenceCount,
+}) => {
   let session = await ExamSession.findOne({ _id: sessionId, user: userId });
   if (!session) {
     const error = new Error('Exam session not found');
@@ -2257,6 +2383,27 @@ const submitExamSession = async ({ userId, sessionId }) => {
         limit: MAX_SUBMIT_ATTEMPTS_PER_MIN,
       },
     });
+  }
+
+  // Safety net for a violation report that never reached the server (network blip): the
+  // client's claimed count may only ever RAISE the stored count (never lower it), and is
+  // clamped to the maximum. It is atomic, so it cannot clobber a concurrent report.
+  const claimedCount = Math.min(
+    Math.max(Number.parseInt(claimedViolationCount, 10) || 0, 0),
+    EXAM_PROCTORING.maxViolations
+  );
+  const claimedPresence = Math.min(
+    Math.max(Number.parseInt(claimedPresenceCount, 10) || 0, 0),
+    EXAM_PROCTORING.maxPresenceWarnings
+  );
+  if (claimedCount > 0 || claimedPresence > 0) {
+    const raiseTo = {};
+    if (claimedCount > 0) raiseTo.violationCount = claimedCount;
+    if (claimedPresence > 0) raiseTo.presenceWarningCount = claimedPresence;
+    await ExamSession.updateOne(
+      { _id: sessionId, user: userId, status: { $ne: 'submitted' } },
+      { $max: raiseTo }
+    );
   }
 
   const lockAcquired = await ExamSession.updateOne(
@@ -2385,6 +2532,19 @@ const submitExamSession = async ({ userId, sessionId }) => {
 
   const certificateId = generateCertificateId({ sessionId: session._id, examType: session.examType });
 
+  const maximumViolations = Number(session.maximumViolations || EXAM_PROCTORING.maxViolations);
+  const finalViolationCount = Math.min(Number(session.violationCount || 0), maximumViolations);
+  const maximumPresenceWarnings = Number(session.maximumPresenceWarnings || EXAM_PROCTORING.maxPresenceWarnings);
+  const finalPresenceWarningCount = Math.min(Number(session.presenceWarningCount || 0), maximumPresenceWarnings);
+  const autoSubmitReason = resolveAutoSubmitReason({
+    requestedReason: normalizeSubmitReason(reason),
+    violationCount: finalViolationCount,
+    maximumViolations,
+    presenceWarningCount: finalPresenceWarningCount,
+    maximumPresenceWarnings,
+    timeLeftSec: getTimeLeftSec(session),
+  });
+
   const resultSummary = {
     sessionId: String(session._id),
     certificateId,
@@ -2410,6 +2570,14 @@ const submitExamSession = async ({ userId, sessionId }) => {
     }),
     blueprintDiagnostics: session.blueprintDiagnostics || null,
     adaptiveFollowUp: analysis.adaptiveFollowUp,
+    proctoring: {
+      violationCount: finalViolationCount,
+      maximumViolations,
+      presenceWarningCount: finalPresenceWarningCount,
+      maximumPresenceWarnings,
+      autoSubmitted: Boolean(autoSubmitReason),
+      autoSubmitReason,
+    },
   };
 
   try {
@@ -2417,6 +2585,10 @@ const submitExamSession = async ({ userId, sessionId }) => {
     session.submittedAt = new Date();
     session.resultSummary = resultSummary;
     session.certificateId = certificateId;
+    session.violationCount = finalViolationCount;
+    session.presenceWarningCount = finalPresenceWarningCount;
+    session.autoSubmitted = Boolean(autoSubmitReason);
+    session.autoSubmitReason = autoSubmitReason;
     session.lastSubmitChecksum = computedChecksum;
     session.isSubmitting = false;
     session.lastActivityAt = new Date();
@@ -2458,4 +2630,5 @@ module.exports = {
   getLatestActiveExamSessionState,
   submitAnswer,
   submitExamSession,
+  recordExamViolation,
 };

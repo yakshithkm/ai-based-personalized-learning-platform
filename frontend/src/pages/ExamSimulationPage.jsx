@@ -10,6 +10,13 @@ import {
   submitExamAnswer,
   submitExamSession,
 } from '../api/examClient';
+import { useExamViolationMonitor } from '../hooks/useExamViolationMonitor';
+import { useWebcamMonitor } from '../hooks/useWebcamMonitor';
+import { usePresenceMonitor } from '../hooks/usePresenceMonitor';
+import WebcamMonitor from '../components/exam/WebcamMonitor';
+import ViolationIndicator from '../components/exam/ViolationIndicator';
+import ProctorAlerts from '../components/exam/ProctorAlerts';
+import PresenceToast from '../components/exam/PresenceToast';
 const EXAM_TAB_LOCK_KEY = 'exam-active-tab-lock';
 
 const SECTION_SUBJECT_OPTIONS = {
@@ -45,7 +52,6 @@ const buildConfirmedIntentSeqByQuestion = (intentLedger = {}) =>
 const getSessionStorageKey = (sessionId, key) => `exam-session:${sessionId}:${key}`;
 const ACTIVE_SESSION_STORAGE_KEY = 'exam-active-session-id';
 const PENDING_INTENT_STORAGE_KEY = (sessionId) => getSessionStorageKey(sessionId, 'pendingIntent');
-const TAB_SWITCH_WARNING_LIMIT = 3;
 const TAB_LOCK_STALE_MS = 8000;
 const MAX_RETRIES = 2;
 const buildIntentId = () => {
@@ -171,7 +177,6 @@ const answerReducer = (state, action) => {
 const initialMetaState = {
   reviewFlags: {},
   visitedQuestions: {},
-  tabSwitchCount: 0,
 };
 
 const metaReducer = (state, action) => {
@@ -203,11 +208,6 @@ const metaReducer = (state, action) => {
           ...state.visitedQuestions,
           [action.payload.questionId]: true,
         },
-      };
-    case 'INCREMENT_TAB_SWITCH':
-      return {
-        ...state,
-        tabSwitchCount: state.tabSwitchCount + 1,
       };
     default:
       return state;
@@ -285,7 +285,6 @@ const ExamSimulationPage = () => {
   const [submitLocked, setSubmitLocked] = useState(false);
   const [uiLocked, setUiLocked] = useState(false);
   const [error, setError] = useState('');
-  const [tabWarning, setTabWarning] = useState('');
   const [restoreNotice, setRestoreNotice] = useState('');
   const [multiTabWarning, setMultiTabWarning] = useState('');
   const [isSecondaryTab, setIsSecondaryTab] = useState(false);
@@ -389,6 +388,35 @@ const ExamSimulationPage = () => {
   // A click that happens to match this value must still go through a real save —
   // it must not be short-circuited as "already selected".
   const reconciledOnlyQuestionsRef = useRef(new Set());
+
+  // --- Browser focus + webcam proctoring ---------------------------------------------------
+  // Monitoring runs only while a real exam session is active, no submission has begun, and
+  // this tab owns the exam. Camera problems never touch the violation counter or submit.
+  // All the logic lives in hooks/useWebcamMonitor and hooks/useExamViolationMonitor; the page
+  // only wires them to the protected `submitExam(reason)` below.
+  const submitExamRef = useRef(null);
+  const proctoringActive =
+    Boolean(session && session.status === 'active') && !isSubmitting && !submitLocked && !isSecondaryTab;
+  const camera = useWebcamMonitor({ enabled: proctoringActive });
+  const violations = useExamViolationMonitor({
+    sessionId: session?.sessionId || '',
+    active: proctoringActive,
+    paused: camera.promptPending,
+    maxViolations: session?.maximumViolations,
+    initialCount: session?.violationCount,
+    onLimitReached: () => submitExamRef.current?.('MAX_VIOLATIONS'),
+    navigate,
+  });
+  // "No person in front of the camera" warnings: a separate counter with its own limit.
+  const presence = usePresenceMonitor({
+    active: proctoringActive,
+    stream: camera.status === 'active' ? camera.stream : null,
+    paused: camera.promptPending,
+    sessionId: session?.sessionId || '',
+    maxWarnings: session?.maximumPresenceWarnings,
+    initialCount: session?.presenceWarningCount,
+    onLimitReached: () => submitExamRef.current?.('PRESENCE_LIMIT'),
+  });
 
   const syncPendingRequestCount = () => {
     setPendingRequestCount(inFlightIntentMapRef.current.size);
@@ -511,46 +539,7 @@ const ExamSimulationPage = () => {
   useEffect(() => {
     if (!session || session.status !== 'active' || timeLeftSec > 0 || isSubmitting || submitLocked) return;
 
-    const autoSubmit = async () => {
-      try {
-        if (submitTriggeredRef.current) return;
-        submitTriggeredRef.current = true;
-        setSubmitLocked(true);
-        setIsSubmitting(true);
-        const synced = await flushPendingSave();
-        if (!synced) {
-          throw new Error('Unable to sync answers before auto-submit.');
-        }
-        await Promise.all(inFlightSavesRef.current);
-        const submitResponse = await submitExamSession({ sessionId: session.sessionId });
-        if (submitResponse?.aborted) {
-          throw new Error('Submit was superseded by a newer request.');
-        }
-        const { data } = submitResponse;
-        setSession((prev) => (prev ? { ...prev, status: 'expired', submittedAt: data.submittedAt } : prev));
-        navigate('/exam-simulation/result', {
-          replace: true,
-          state: {
-            result: data,
-            sessionId: session.sessionId,
-            sessionMeta: {
-              examType: session.examType,
-              mode: session.mode,
-            },
-          },
-        });
-        localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
-        localStorage.removeItem(EXAM_TAB_LOCK_KEY);
-      } catch (err) {
-        setError(err?.response?.data?.message || 'Auto-submit failed. Please submit manually.');
-        submitTriggeredRef.current = false;
-        setSubmitLocked(false);
-      } finally {
-        setIsSubmitting(false);
-      }
-    };
-
-    autoSubmit();
+    submitExam('TIME_EXPIRED');
   }, [timeLeftSec, session, isSubmitting, submitLocked, navigate]);
 
   const questions = session?.questions || [];
@@ -1200,7 +1189,6 @@ const ExamSimulationPage = () => {
       syncPendingRequestCount();
     }
 
-    setTabWarning('');
     submitTriggeredRef.current = false;
     setSubmitLocked(false);
   }, [session?.sessionId]);
@@ -1345,19 +1333,11 @@ const ExamSimulationPage = () => {
       if (pendingIntentRef.current) {
         persistPendingIntentSnapshot();
       }
-
-      const nextCount = metaState.tabSwitchCount + 1;
-      dispatchMeta({ type: 'INCREMENT_TAB_SWITCH' });
-      if (nextCount > TAB_SWITCH_WARNING_LIMIT) {
-        setTabWarning(
-          `You switched tabs ${nextCount} times. Stay on this tab to avoid invalidating the simulation.`
-        );
-      }
     };
 
     document.addEventListener('visibilitychange', onVisibilityChange);
     return () => document.removeEventListener('visibilitychange', onVisibilityChange);
-  }, [session, metaState.tabSwitchCount]);
+  }, [session]);
 
   useEffect(
     () => () => {
@@ -1436,7 +1416,6 @@ const ExamSimulationPage = () => {
 
   const startSimulation = async () => {
     setError('');
-    setTabWarning('');
     setRestoreNotice('');
     setMultiTabWarning('');
     setIsSecondaryTab(false);
@@ -1500,27 +1479,48 @@ const ExamSimulationPage = () => {
     });
   };
 
-  const submitSimulation = async () => {
-    if (!session || session.status !== 'active' || isSubmitting || submitLocked) return;
-    const ok = window.confirm('Submit test now? You cannot change answers after submission.');
-    if (!ok) return;
+  // The ONE protected submission path. MANUAL (Submit button), TIME_EXPIRED (timer) and
+  // MAX_VIOLATIONS (focus limit) all go through here, so a simultaneous timer / 5th violation /
+  // button press / duplicate focus event can only ever send a single submit request.
+  // `submitTriggeredRef` is a ref (not state) so the guard is race-proof across re-renders.
+  const submitExam = async (reason = 'MANUAL') => {
+    if (!session || session.status !== 'active') return;
+    if (submitTriggeredRef.current) return;
+    submitTriggeredRef.current = true;
+    const isAuto = reason !== 'MANUAL';
 
     try {
-      if (submitTriggeredRef.current) return;
-      submitTriggeredRef.current = true;
-      setSubmitLocked(true);
+      setSubmitLocked(true); // also stops webcam + focus listeners (proctoringActive -> false)
       setIsSubmitting(true);
-      const synced = await flushPendingSave();
+      let synced = await flushPendingSave();
+      // A save may be mid-flight when the limit is hit; give it a moment rather than failing.
+      for (
+        let attemptNo = 0;
+        !synced && (reason === 'MAX_VIOLATIONS' || reason === 'PRESENCE_LIMIT') && attemptNo < 4;
+        attemptNo += 1
+      ) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        synced = await flushPendingSave();
+      }
       if (!synced) {
         throw new Error('Unable to sync answers before submit.');
       }
       await Promise.all(inFlightSavesRef.current);
-      const submitResponse = await submitExamSession({ sessionId: session.sessionId });
+      // Let in-flight violation reports land so the server holds the final count.
+      await Promise.all([violations.flushReports(), presence.flushReports()]);
+      const submitResponse = await submitExamSession({
+        sessionId: session.sessionId,
+        reason,
+        violationCount: violations.getViolationCount(),
+        presenceWarningCount: presence.getWarningCount(),
+      });
       if (submitResponse?.aborted) {
         throw new Error('Submit was superseded by a newer request.');
       }
       const { data } = submitResponse;
-      setSession((prev) => (prev ? { ...prev, status: 'submitted', submittedAt: data.submittedAt } : prev));
+      setSession((prev) =>
+        prev ? { ...prev, status: reason === 'TIME_EXPIRED' ? 'expired' : 'submitted', submittedAt: data.submittedAt } : prev
+      );
       navigate('/exam-simulation/result', {
         replace: true,
         state: {
@@ -1535,12 +1535,23 @@ const ExamSimulationPage = () => {
       localStorage.removeItem(ACTIVE_SESSION_STORAGE_KEY);
       localStorage.removeItem(EXAM_TAB_LOCK_KEY);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to submit exam simulation.');
+      setError(
+        err?.response?.data?.message ||
+          (isAuto ? 'Auto-submit failed. Please submit manually.' : 'Failed to submit exam simulation.')
+      );
       submitTriggeredRef.current = false;
       setSubmitLocked(false);
     } finally {
       setIsSubmitting(false);
     }
+  };
+  submitExamRef.current = submitExam;
+
+  const submitSimulation = async () => {
+    if (!session || session.status !== 'active' || isSubmitting || submitLocked) return;
+    const ok = window.confirm('Submit test now? You cannot change answers after submission.');
+    if (!ok) return;
+    await submitExam('MANUAL');
   };
 
   const canGoNext = () => {
@@ -1785,12 +1796,14 @@ const ExamSimulationPage = () => {
       {error && <section className="panel error-text">{error}</section>}
       {restoreNotice && <section className="panel">{restoreNotice}</section>}
       {multiTabWarning && <section className="panel error-text">{multiTabWarning}</section>}
-      {tabWarning && <section className="panel error-text">{tabWarning}</section>}
       {answerState.syncWarning && <section className="panel error-text">{answerState.syncWarning}</section>}
       {uiLocked && <section className="panel exam-resync-indicator">Resyncing...</section>}
 
       {session && (
         <>
+          <ProctorAlerts camera={camera} notice={violations.notice} />
+          <PresenceToast toast={presence.toast} onDismiss={presence.dismissToast} />
+
           <section className="panel exam-live-header exam-live-header-accent">
             <div>
               <h3>
@@ -1799,9 +1812,12 @@ const ExamSimulationPage = () => {
               <p>{behaviorText}</p>
               <p className="exam-mode-note">{modeExplanation}</p>
             </div>
-            <div className={`exam-timer ${timeLeftSec < 300 ? 'danger' : ''}`}>
-              <span>Time Left</span>
-              <strong>{formatTime(timeLeftSec)}</strong>
+            <div className="exam-header-metrics">
+              <ViolationIndicator count={violations.violationCount} max={violations.maxViolations} />
+              <div className={`exam-timer ${timeLeftSec < 300 ? 'danger' : ''}`}>
+                <span>Time Left</span>
+                <strong>{formatTime(timeLeftSec)}</strong>
+              </div>
             </div>
           </section>
 
@@ -1908,6 +1924,13 @@ const ExamSimulationPage = () => {
           </section>
 
           <section className="panel exam-palette-panel">
+            <WebcamMonitor
+              status={camera.status}
+              stream={camera.stream}
+              hint={camera.hint}
+              onRetry={camera.retry}
+              presence={{ status: presence.status, count: presence.warningCount, max: presence.maxWarnings }}
+            />
             <h3>Question Palette</h3>
             <QuestionPalette
               questions={questions}

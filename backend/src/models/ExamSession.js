@@ -264,6 +264,55 @@ const examSessionSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    // --- Browser focus proctoring (no webcam data is ever stored) ---
+    // Only focus/tab/window/route-leave violations are counted here. Camera problems are
+    // client-side warnings and intentionally never reach this model.
+    violationCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    maximumViolations: {
+      type: Number,
+      default: 5,
+      min: 1,
+    },
+    // One entry per counted violation. `eventId` is a client-generated idempotency key so
+    // a retried report can never be counted twice. Bounded by the violation cap.
+    violationEvents: {
+      type: [
+        new mongoose.Schema(
+          {
+            eventId: { type: String, required: true },
+            type: { type: String, required: true },
+            at: { type: Date, default: Date.now },
+          },
+          { _id: false }
+        ),
+      ],
+      default: [],
+    },
+    // "No person in front of the camera" warnings. Separate from violationCount on purpose:
+    // focus violations and presence warnings never add to each other.
+    presenceWarningCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    maximumPresenceWarnings: {
+      type: Number,
+      default: 5,
+      min: 1,
+    },
+    autoSubmitted: {
+      type: Boolean,
+      default: false,
+    },
+    autoSubmitReason: {
+      type: String,
+      enum: ['MAX_VIOLATIONS', 'PRESENCE_LIMIT', 'TIME_EXPIRED', null],
+      default: null,
+    },
   },
   {
     timestamps: true,
