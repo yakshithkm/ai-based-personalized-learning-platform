@@ -533,6 +533,7 @@ select:focus {
   cursor: pointer;
   overflow-wrap: break-word;
   word-break: break-word;
+  text-decoration: none;
   transition: transform var(--duration-fast) var(--ease-out), opacity var(--duration-base) ease,
     box-shadow var(--duration-base) ease, filter var(--duration-base) ease, background var(--duration-base) ease;
 }

@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { getRecommendation } from '../api/learning';
+import ImprovementBanner from '../components/learning/ImprovementBanner';
 import { trackProductEvent } from '../utils/productEvents';
 
 const getReadinessLabel = (accuracy = 0) => {
@@ -11,6 +14,22 @@ const SessionSummaryPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const summary = location.state?.summary;
+  const recommendationId = summary?.recommendationId;
+  const [learningImpact, setLearningImpact] = useState(null);
+
+  // After a "practice after learning" set: show how accuracy compares with before the lesson.
+  useEffect(() => {
+    if (!recommendationId) return undefined;
+    let cancelled = false;
+    getRecommendation(recommendationId)
+      .then((res) => {
+        if (!cancelled) setLearningImpact({ title: res.content?.title, effectiveness: res.effectiveness });
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [recommendationId]);
 
   if (!summary) {
     return (
@@ -45,6 +64,8 @@ const SessionSummaryPage = () => {
           <p><strong>Key Pattern:</strong> {summary.keyPattern || 'No dominant failure pattern found.'}</p>
         </div>
       </section>
+
+      {learningImpact && <ImprovementBanner title={learningImpact.title} effectiveness={learningImpact.effectiveness} />}
 
       <section className="panel insight-breakdown-panel">
         <div className="panel-head-row">

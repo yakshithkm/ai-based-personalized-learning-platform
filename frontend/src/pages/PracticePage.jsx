@@ -82,6 +82,8 @@ const PracticePage = () => {
   const [startTime, setStartTime] = useState(Date.now());
   const [error, setError] = useState('');
   const [recommendedMode, setRecommendedMode] = useState(false);
+  // Set when the session is a "practice after learning" set opened from a learning recommendation.
+  const [contentRecId, setContentRecId] = useState(null);
   const [focusMode, setFocusMode] = useState(false);
   const [sessionResults, setSessionResults] = useState([]);
   const [sessionMeta, setSessionMeta] = useState(null);
@@ -132,6 +134,44 @@ const PracticePage = () => {
       const [subject, topic] = requestedTopic.split(' - ');
       setSelectedSubject(subject);
       setSelectedTopic(topic);
+    }
+
+    if (mode !== 'content-practice') setContentRecId(null);
+
+    if (mode === 'content-practice' && searchParams.get('rec')) {
+      const recId = searchParams.get('rec');
+      setRecommendedMode(true);
+      setFocusMode(false);
+      setContentRecId(recId);
+      const loadContentPractice = async () => {
+        try {
+          const { data } = await api.get(`/recommendations/${recId}/practice`, {
+            params: { count: searchParams.get('count') || 5 },
+          });
+          if (!(data.questions || []).length) {
+            setError('No practice questions are available for this topic yet.');
+            return;
+          }
+          const newSessionId = makeSessionId();
+          setSessionId(newSessionId);
+          resetAiSidebar();
+          setQuestions(data.questions);
+          setCurrentIndex(0);
+          setResult(null);
+          setSelectedAnswer(null);
+          setSessionResults([]);
+          setStartTime(Date.now());
+          trackProductEvent('session_started', {
+            sessionId: newSessionId,
+            sessionMode: 'content-practice',
+            totalQuestions: data.questions.length,
+          });
+        } catch (err) {
+          setError(err?.response?.data?.message || 'Failed to load the practice set for this lesson');
+        }
+      };
+
+      loadContentPractice();
     }
 
     if (mode === 'recommended') {
@@ -508,7 +548,9 @@ const PracticePage = () => {
         ? 'Not ready yet, but the trend can be repaired quickly.'
         : 'Not ready — the current method is not converting into marks.';
 
-    const nextAction = weakAreas.length
+    const nextAction = contentRecId
+      ? { label: 'See your learning progress', route: '/learn' }
+      : weakAreas.length
       ? {
           label: 'Retry Mistake Questions',
           route: '/practice?mode=recommended',
@@ -538,6 +580,7 @@ const PracticePage = () => {
           improvementSuggestion,
           earnedXp,
           sessionId,
+          recommendationId: contentRecId || undefined,
           nextRecommendedSession: sessionMeta?.mix || null,
           nextAction,
         },
@@ -567,10 +610,12 @@ const PracticePage = () => {
   const sessionTimeSec = sessionResults.reduce((sum, entry) => sum + Number(entry.timeTakenSec || 0), 0);
   const recentQuestions = [...sessionResults].reverse().slice(0, 6);
 
-  const modeLabel = focusMode ? 'Focus Session' : recommendedMode ? 'Recommended Set' : 'Custom Practice';
+  const modeLabel = focusMode ? 'Focus Session' : contentRecId ? 'Practice After Learning' : recommendedMode ? 'Recommended Set' : 'Custom Practice';
   const modeSubtitle = focusMode
     ? 'Focus session is active: weak topics + mistakes + one harder challenge.'
-    : recommendedMode
+    : contentRecId
+      ? 'Practice after learning — questions chosen from the topic you just studied.'
+      : recommendedMode
       ? 'Recommended adaptive set is active — questions chosen from your performance profile.'
       : 'Choose a subject, topic, and difficulty, then start practice to begin.';
 

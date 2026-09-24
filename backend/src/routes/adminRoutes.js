@@ -24,6 +24,14 @@ const {
 } = require('../controllers/adminCatalogController');
 const { listExamSessions, getExamSessionDetail } = require('../controllers/adminExamController');
 const { getPlatformAnalytics } = require('../controllers/adminAnalyticsController');
+const {
+	listContent,
+	getContent,
+	createContent,
+	updateContent,
+	deleteContent,
+	getContentMeta,
+} = require('../controllers/adminLearningContentController');
 
 const router = express.Router();
 const validateId = validateObjectIdParam('id');
@@ -37,6 +45,14 @@ router.use(protect, requireAdmin);
 
 // --- Dashboard ---
 router.get('/dashboard', getDashboardStats);
+
+// --- Learning content (powers the learning-content recommendation engine) ---
+router.get('/learning-content/meta', getContentMeta);
+router.get('/learning-content', listContent);
+router.post('/learning-content', createContent);
+router.get('/learning-content/:id', validateId, getContent);
+router.put('/learning-content/:id', validateId, updateContent);
+router.delete('/learning-content/:id', validateId, deleteContent);
 
 // --- Students ---
 router.get('/students', listStudents);

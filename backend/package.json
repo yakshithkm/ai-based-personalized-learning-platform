@@ -10,6 +10,7 @@
     "seed:questions": "node seedQuestions.js",
     "seed:demo": "node seedDemo.js",
     "seed:admin": "node seedAdmin.js",
+    "seed:content": "node seedLearningContent.js",
     "reset:demo": "node resetDemo.js",
     "test": "cross-env NODE_ENV=test jest --runInBand"
   },

@@ -2,6 +2,7 @@ const Attempt = require('../models/Attempt');
 const Mistake = require('../models/Mistake');
 const Question = require('../models/Question');
 const { analyzePerformance } = require('./analysisService');
+const { getQuestionHistory, logQuestionRecommendations } = require('./learning/history');
 
 const sampleItems = (items, count) => {
   const shuffled = [...items].sort(() => Math.random() - 0.5);
@@ -30,15 +31,8 @@ const deriveDifficulty = ({ accuracy, fallback = 'Medium' }) => {
 };
 
 const getTopicKey = (subject, topic, subtopic = 'General') => `${subject}::${topic}::${subtopic}`;
-const recommendationHistory = new Map();
-
-const getHistoryForUser = (userId) => {
-  const key = String(userId);
-  if (!recommendationHistory.has(key)) {
-    recommendationHistory.set(key, []);
-  }
-  return recommendationHistory.get(key);
-};
+// Recommendation history used to live in an in-memory Map here (lost on restart/deploy and not
+// shared between backend instances). It is now persisted - see services/learning/history.js.
 
 const rankDifficulty = (difficulty) => {
   if (difficulty === 'Hard') return 3;
@@ -208,13 +202,17 @@ const reasonDetail = (reason, question) => {
   return reasonToAiSignals(reason).why;
 };
 
+// `concept`, `yearTag` and an omitted `difficulty` are optional extensions used by the learning
+// engine's practice sets; the question engine's own calls behave exactly as before.
 const fetchQuestionBatch = async ({
   targetExam,
   subject,
   topic,
   subtopic,
+  concept,
+  yearTag,
   difficulty,
-  excludeIds,
+  excludeIds = new Set(),
   limit,
 }) => {
   const baseQuery = {
@@ -232,10 +230,15 @@ const fetchQuestionBatch = async ({
     ];
   }
 
-  let pool = await Question.find({ ...baseQuery, difficulty })
-    .limit(Math.max(limit * 10, 40))
-    .select('-correctAnswerIndex -correctAnswer')
-    .lean();
+  if (concept) baseQuery.conceptTested = concept;
+  if (yearTag) baseQuery.yearTag = yearTag;
+
+  let pool = difficulty
+    ? await Question.find({ ...baseQuery, difficulty })
+        .limit(Math.max(limit * 10, 40))
+        .select('-correctAnswerIndex -correctAnswer')
+        .lean()
+    : [];
 
   if (!pool.length) {
     pool = await Question.find(baseQuery)
@@ -307,8 +310,7 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
   });
 
   const usedIds = new Set();
-  const history = getHistoryForUser(userId);
-  const recentHistory = history.slice(-120);
+  const recentHistory = await getQuestionHistory(userId, 120);
   const recentHistoryIds = new Set(recentHistory.map((entry) => String(entry.questionId)));
 
   const recentAttemptWindow = attempts.slice(0, 40);
@@ -708,20 +710,7 @@ const getRecommendedQuestions = async ({ userId, targetExam, limit = 10 }) => {
     }
   }
 
-  recommendations.forEach((question) => {
-    history.push({
-      questionId: String(question._id),
-      topic: question.topic,
-      subtopic: question.subtopic || 'General',
-      difficulty: question.difficulty || 'Medium',
-      recommendationReason: question.recommendationReason,
-      createdAt: now,
-    });
-  });
-
-  if (history.length > 260) {
-    history.splice(0, history.length - 260);
-  }
+  await logQuestionRecommendations(userId, recommendations, now);
 
   const difficultyPlan = recommendations.reduce(
     (acc, question) => {
@@ -825,4 +814,5 @@ const getFocusSessionQuestions = async ({ userId, targetExam, total = 10 }) => {
 module.exports = {
   getRecommendedQuestions,
   getFocusSessionQuestions,
+  fetchQuestionBatch,
 };

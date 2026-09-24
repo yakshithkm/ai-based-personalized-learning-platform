@@ -438,6 +438,26 @@
 
 .admin-table-scroll {
   overflow-x: auto;
+  /* Styled to match the dark theme instead of the raw OS scrollbar. */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+.admin-table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.admin-table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-table-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.35);
+  border-radius: var(--radius-pill);
+}
+
+.admin-table-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.55);
 }
 
 .admin-table {
@@ -766,3 +786,7 @@
     min-width: 0;
   }
 }
+/* Learning-content admin form helpers */
+.admin-form-fieldset { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.5rem 0.8rem; margin: 0; min-width: 0; display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; }
+.admin-form-fieldset legend { padding: 0 0.3rem; color: var(--muted); font-size: 0.85rem; }
+.admin-inline-check { display: inline-flex; gap: 0.4rem; align-items: center; }

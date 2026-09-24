@@ -1,9 +1,10 @@
 import React from 'react';
 
-// Cleans up LaTeX-ish math notation the model may still slip in despite the
-// system instruction asking it not to - this sidebar has no math renderer,
-// so turning "$H_2O$" / "\Delta H_{\text{mixing}}" into plain "H₂O" /
-// "ΔH(mixing)" reads far better than showing the raw markup verbatim.
+// Cleans up LaTeX-ish math notation (from the AI tutor) and plain-text
+// subscript/superscript notation (from curated learning content) alike -
+// there is no full math renderer here, so "$H_2O$", "\Delta H_{\text{mixing}}"
+// and "x_A", "K_b", "n^m" all end up as real <sub>/<sup> (or Unicode digit
+// sub/superscripts) instead of showing the raw underscores/braces/carets.
 // Order matters: strip \text{...} wrappers and translate named Greek/math
 // commands to Unicode FIRST, then convert what's left of subscript/
 // superscript groups, then sweep up anything still unrecognized.
@@ -75,12 +76,22 @@ export const sanitizeMathNotation = (text) => {
     .replace(/\^\{(\d+)\}/g, (_, d) => toSuperscript(d))
     .replace(/([A-Za-z)\]])_(\d+)/g, (_, prefix, d) => `${prefix}${toSubscript(d)}`)
     .replace(/([A-Za-z)\]])\^(\d+)/g, (_, prefix, d) => `${prefix}${toSuperscript(d)}`)
+    // Plain-text (unbraced) letter-based sub/superscripts, e.g. "x_A", "K_b",
+    // "R_total", "n^m" - Unicode has no general sub/superscript letters, so wrap
+    // them as ~sub~ / ^sup^ tokens for applyInline to render as real <sub>/<sup>
+    // (rather than leaving the underscore/caret visible as raw text). Must run
+    // BEFORE the parenthesized-exponent rule below, since "^(" never matches this
+    // (letters-only) pattern - so its ^...^ output is never re-wrapped by this rule.
+    .replace(/([A-Za-z0-9)\]])_([A-Za-z][A-Za-z0-9]*)/g, (_, base, sub) => `${base}~${sub}~`)
+    .replace(/([A-Za-z0-9)\]])\^([A-Za-z][A-Za-z0-9]*)/g, (_, base, sup) => `${base}^${sup}^`)
+    // A parenthesized superscript exponent, e.g. "n^(mn)" - drop the now-redundant
+    // parens; this is the LAST rule to touch ^, so its output is never re-matched.
+    .replace(/\^\(([^()]+)\)/g, (_, inner) => `^${inner}^`)
     // Whatever's left of _{...}/^{...} is non-numeric (e.g. "_{mixing}"
-    // after \text{mixing} was unwrapped above) - Unicode has no general
-    // sub/superscript letters, so render it parenthetically instead of
-    // showing the underscore/braces literally.
-    .replace(/_\{([^{}]+)\}/g, (_, inner) => `(${inner.trim()})`)
-    .replace(/\^\{([^{}]+)\}/g, (_, inner) => `^(${inner.trim()})`)
+    // after \text{mixing} was unwrapped above) - wrap it the same way so it
+    // renders as a real <sub>/<sup> instead of showing braces literally.
+    .replace(/_\{([^{}]+)\}/g, (_, inner) => `~${inner.trim()}~`)
+    .replace(/\^\{([^{}]+)\}/g, (_, inner) => `^${inner.trim()}^`)
     // Any remaining backslash-prefixed command we didn't name above
     // (\frac, \sum, \int, stray \left/\right artifacts, etc.) - strip the
     // backslash and command name rather than let it show up as raw markup.
@@ -103,7 +114,7 @@ let inlineKeySeq = 0;
 // is no HTML-injection surface even though this is model-generated text.
 const applyInline = (text) => {
   const nodes = [];
-  const pattern = /(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)/g;
+  const pattern = /(\*\*[^*]+\*\*|`[^`]+`|~[^~]+~|\^[^^]+\^|\*[^*]+\*)/g;
   let lastIndex = 0;
   let match = pattern.exec(text);
 
@@ -117,6 +128,10 @@ const applyInline = (text) => {
       nodes.push(<strong key={key}>{token.slice(2, -2)}</strong>);
     } else if (token.startsWith('`')) {
       nodes.push(<code key={key}>{token.slice(1, -1)}</code>);
+    } else if (token.startsWith('~')) {
+      nodes.push(<sub key={key}>{token.slice(1, -1)}</sub>);
+    } else if (token.startsWith('^')) {
+      nodes.push(<sup key={key}>{token.slice(1, -1)}</sup>);
     } else {
       nodes.push(<em key={key}>{token.slice(1, -1)}</em>);
     }

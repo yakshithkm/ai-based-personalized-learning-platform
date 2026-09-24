@@ -22,6 +22,8 @@ const ExamSimulationPage = lazy(() => import('./pages/ExamSimulationPage'));
 const ExamSimulationResultPage = lazy(() => import('./pages/ExamSimulationResultPage'));
 const WeakTopicsPage = lazy(() => import('./pages/WeakTopicsPage'));
 const StudyPlanPage = lazy(() => import('./pages/StudyPlanPage'));
+const LearnPage = lazy(() => import('./pages/LearnPage'));
+const LearningContentPage = lazy(() => import('./pages/LearningContentPage'));
 const MistakeBankPage = lazy(() => import('./pages/MistakeBankPage'));
 const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
 const AchievementsPage = lazy(() => import('./pages/AchievementsPage'));
@@ -35,6 +37,7 @@ const AdminStudentDetailPage = lazy(() => import('./pages/admin/AdminStudentDeta
 const AdminQuestionsPage = lazy(() => import('./pages/admin/AdminQuestionsPage'));
 const AdminSubjectsPage = lazy(() => import('./pages/admin/AdminSubjectsPage'));
 const AdminTopicsPage = lazy(() => import('./pages/admin/AdminTopicsPage'));
+const AdminLearningContentPage = lazy(() => import('./pages/admin/AdminLearningContentPage'));
 const AdminExamsPage = lazy(() => import('./pages/admin/AdminExamsPage'));
 const AdminExamDetailPage = lazy(() => import('./pages/admin/AdminExamDetailPage'));
 const AdminAnalyticsSectionPage = lazy(() => import('./pages/admin/AdminAnalyticsSectionPage'));
@@ -66,6 +69,28 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <PracticePage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/learn"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <LearnPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/learn/:recommendationId"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <LearningContentPage />
             </Layout>
           </ProtectedRoute>
         }
@@ -252,6 +277,16 @@ const App = () => {
           <ProtectedRoute requireAdmin redirectTo="/admin/login">
             <AdminLayout>
               <AdminTopicsPage />
+            </AdminLayout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/learning-content"
+        element={
+          <ProtectedRoute requireAdmin redirectTo="/admin/login">
+            <AdminLayout>
+              <AdminLearningContentPage />
             </AdminLayout>
           </ProtectedRoute>
         }

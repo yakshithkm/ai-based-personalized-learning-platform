@@ -1,6 +1,14 @@
 const Attempt = require('../models/Attempt');
 const Question = require('../models/Question');
 const { getRecommendedQuestions, getFocusSessionQuestions } = require('../services/recommendationService');
+const { getLearningBundle } = require('../services/learning');
+
+// Backward compatible: the question payload is unchanged; `?include=learning` adds the
+// learning-content bundle next to it (the dashboard / practice pages do not request it).
+const withLearning = async (req, payload) => {
+  if (req.query.include !== 'learning') return payload;
+  return { ...payload, learning: await getLearningBundle(req.user) };
+};
 
 const getRecommendations = async (req, res, next) => {
   try {
@@ -20,11 +28,13 @@ const getRecommendations = async (req, res, next) => {
           adaptiveDifficultyApplied: false,
         },
       }));
-      return res.json({
-        source: 'cold-start',
-        weakTopics: [],
-        recommendations: starterWithSignals,
-      });
+      return res.json(
+        await withLearning(req, {
+          source: 'cold-start',
+          weakTopics: [],
+          recommendations: starterWithSignals,
+        })
+      );
     }
 
     const recommendationResult = await getRecommendedQuestions({
@@ -33,15 +43,17 @@ const getRecommendations = async (req, res, next) => {
       limit: 10,
     });
 
-    return res.json({
-      source: recommendationResult.source,
-      priorityOrder: recommendationResult.priorityOrder,
-      weakTopics: recommendationResult.weakTopics,
-      strongTopics: recommendationResult.strongTopics,
-      recommendations: recommendationResult.recommendations,
-      difficultyPlan: recommendationResult.difficultyPlan,
-      confidence: recommendationResult.confidence,
-    });
+    return res.json(
+      await withLearning(req, {
+        source: recommendationResult.source,
+        priorityOrder: recommendationResult.priorityOrder,
+        weakTopics: recommendationResult.weakTopics,
+        strongTopics: recommendationResult.strongTopics,
+        recommendations: recommendationResult.recommendations,
+        difficultyPlan: recommendationResult.difficultyPlan,
+        confidence: recommendationResult.confidence,
+      })
+    );
   } catch (error) {
     return next(error);
   }

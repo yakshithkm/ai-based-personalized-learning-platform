@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
+import PersonalizedPlanPanel from '../components/learning/PersonalizedPlanPanel';
 import { subjectColor, subjectIconPath } from '../utils/subjectVisuals';
 
 const priorityForAccuracy = (accuracy = 0) => {
@@ -101,6 +102,8 @@ const StudyPlanPage = () => {
         <h2>AI Study Plan for You</h2>
         <p>{studyStrategy.guidanceText || 'Focus on these topics to improve your score.'}</p>
       </section>
+
+      <PersonalizedPlanPanel />
 
       {studyStrategy.timeAllocation?.length > 0 && (
         <section className="panel">

@@ -1,6 +1,6 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, adaptive learning features, and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, adaptive learning features, a learning-content recommendation engine, and a dedicated admin portal.
 
 ## Tech Stack
 
@@ -43,16 +43,19 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 18. **Flashcards** — Lightweight review interface
 19. **Session Summary** — Post-practice session breakdown
 20. **Profile Page** — User stats, target exam, and account settings
+21. **Learn Page** — Personalised learning hub (`/learn`): curated study-material recommendations organised into sections (Weak Areas, Mistake Recovery, Continue Learning, Practice After Learning, Challenges, Explore New); includes a LearnNext hero card, daily plan, and improvement banners
+22. **Learning Content Detail** — Individual content page (`/learn/:recommendationId`): start, progress, complete, skip, and feedback lifecycle actions with before/after practice measurement
 
 ### Admin Portal
-21. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-22. **Admin Dashboard** — Platform-wide stats overview
-23. **Student Management** — List all students, drill into individual student detail
-24. **Question Bank CRUD** — Create, read, update, and delete questions
-25. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-26. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-27. **Admin Analytics** — Platform-wide analytics section
-28. **Product Event Tracking** — Internal telemetry for key user actions
+23. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+24. **Admin Dashboard** — Platform-wide stats overview
+25. **Student Management** — List all students, drill into individual student detail
+26. **Question Bank CRUD** — Create, read, update, and delete questions
+27. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+28. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+29. **Admin Analytics** — Platform-wide analytics section
+30. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
+31. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -67,47 +70,57 @@ ai-based-personalized-learning-platform/
 │   │   └── copy-face-models.mjs # postinstall script copying model weights to public/models
 │   └── src/
 │       ├── pages/          # Route-level page components
-│       │   ├── (16 student pages)
-│       │   ├── admin/      # 10 admin portal pages
+│       │   ├── (18 student pages, including LearnPage & LearningContentPage)
+│       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
 │       │   └── __tests__/  # Vitest integration & proctoring test suites
 │       ├── components/     # Layout, AdminLayout, ProtectedRoute, AISidebar,
 │       │   │               # AIChatMessage, BrandLogo, EmptyState, Footer,
 │       │   │               # PasswordField, ResultIcons
 │       │   ├── exam/       # PresenceToast, ProctorAlerts, ViolationIndicator, WebcamMonitor
 │       │   ├── admin/      # AdminLayout, AdminQuestionFormModal, ConfirmDialog, Pagination
+│       │   ├── learning/   # LearnNextCard, LearnNextTeaser, RecommendationCard, DailyPlan,
+│       │   │               # ImprovementBanner, LearningPath, PersonalizedPlanPanel,
+│       │   │               # ContentFeedback, learningUi
 │       │   └── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
 │       │                   # FaqAccordion, PriceCounter, Reveal, icons
-│       ├── api/            # Axios API clients (client.js, examClient.js, examProctoringClient.js)
+│       ├── api/            # Axios API clients (client.js, examClient.js,
+│       │                   # examProctoringClient.js, learning.js)
 │       ├── context/        # AuthContext, ThemeContext (dark-only), ToastContext
 │       ├── hooks/          # useExamViolationMonitor, usePresenceMonitor, useWebcamMonitor,
 │       │                   # useMagneticHover, useScrollReveal
 │       ├── lib/            # faceDetector.js (lazy on-device TensorFlow.js TinyFaceDetector)
 │       ├── styles/         # Style modules:
 │       │   ├── features/   # admin.css, ai-tutor.css, analytics.css, app-shell.css,
-│       │   │               # dashboard.css, exam.css, landing.css, practice.css,
-│       │   │               # profile.css, subpages.css
+│       │   │               # dashboard.css, exam.css, landing.css, learning.css,
+│       │   │               # practice.css, profile.css, subpages.css
 │       │   ├── components.css
 │       │   └── global.css
 │       └── utils/          # Shared utilities
 ├── backend/                # Node.js REST API
 │   ├── src/
-│   │   ├── controllers/    # 15 route handlers (auth, questions, attempts, analytics,
-│   │   │                   # exam, examReport, recommendation, ai, admin × 7)
-│   │   ├── models/         # 9 Mongoose models — see Database Models
+│   │   ├── controllers/    # 17 route handlers (auth, questions, attempts, analytics,
+│   │   │                   # exam, examReport, recommendation, learningRecommendation,
+│   │   │                   # ai, admin × 8 incl. adminLearningContent)
+│   │   ├── models/         # 13 Mongoose models — see Database Models
 │   │   ├── routes/         # 8 Express routers (auth, questions, attempts, analytics,
 │   │   │                   # recommendations, exams, admin, ai)
-│   │   ├── services/       # 14 service modules — see Service Layer
+│   │   ├── services/       # 15 service modules — see Service Layer
 │   │   │   ├── ai/         # aiService.js, geminiService.js
+│   │   │   ├── learning/   # index.js + 14 focused modules (ranking, needDetection,
+│   │   │   │               # learnerProfile, lifecycle, practiceSet, dailyPlan,
+│   │   │   │               # learningPath, history, effectiveness, explanations,
+│   │   │   │               # aiExplainer, serializers, constants, errors)
 │   │   │   └── pdf/        # examCertificatePdf.js, examReportPdf.js, pdfHelpers.js
 │   │   ├── middleware/     # authMiddleware, errorMiddleware, validateObjectIdParam
 │   │   ├── config/         # DB connection, examConfig.js (proctoring settings)
 │   │   ├── assets/         # Static backend assets
 │   │   ├── data/           # Seed/reference data
 │   │   └── utils/
-│   ├── tests/              # Jest + Supertest test suites (6 test suites)
+│   ├── tests/              # Jest + Supertest test suites (8 test suites)
 │   ├── seedQuestions.js    # Question bank seed script
 │   ├── seedDemo.js         # Demo user + data seed script
 │   ├── seedAdmin.js        # Admin user seed script
+│   ├── seedLearningContent.js # Learning content library seed script
 │   └── resetDemo.js        # Demo data reset script
 ├── ml-service/             # Python Flask microservice
 │   ├── app.py              # /health + /analyze endpoints (port 8000)
@@ -162,7 +175,8 @@ npm run dev:ml         # ML service only (port 8000)
 4. `npm run seed` or `npm run seed:questions` — populate the question bank
 5. `npm run seed:demo` — (optional) load a demo user with pre-built data
 6. `npm run seed:admin` — (optional) seed an admin account
-7. `npm run dev` — start with nodemon
+7. `npm run seed:content` — (optional) seed the learning-content library (`-- --dry-run` validates only, `-- --reset` removes unused seeded rows first)
+8. `npm run dev` — start with nodemon
 
 To reset demo data: `npm run reset:demo`
 
@@ -178,6 +192,7 @@ To reset demo data: `npm run reset:demo`
 | `CLIENT_URL` | `http://localhost:5173` | Allowed CORS origin(s), comma-separated |
 | `GEMINI_API_KEY` | — | Google Gemini API key for the AI Tutor feature. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Optional — the Practice Page "Ask with AI" sidebar is disabled when absent. |
 | `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Gemini model to use. Flash-Lite is recommended on the free tier (~500 req/day vs ~20 for full Flash). |
+| `LEARNING_AI_EXPLANATIONS` | `false` | Set to `true` (with `GEMINI_API_KEY`) to let Gemini rephrase the top "why" sentence in learning recommendations. Ranking never depends on it. |
 | `ADMIN_EMAIL` | `admin@learning.com` | Admin account email — created/updated automatically on server start |
 | `ADMIN_PASSWORD` | `change_me_before_using` | Admin account password (bcrypt-hashed, never stored in plaintext) |
 | `ADMIN_NAME` | `Platform Admin` | Display name for the admin account |
@@ -202,6 +217,8 @@ To reset demo data: `npm run reset:demo`
 | `/register` | Register | Public |
 | `/dashboard` | Dashboard | ✅ |
 | `/practice` | Practice Quiz (+ AI Tutor sidebar) | ✅ |
+| `/learn` | Personalised Learning Hub | ✅ |
+| `/learn/:recommendationId` | Learning Content Detail | ✅ |
 | `/analytics` | Analytics & Charts | ✅ |
 | `/profile` | User Profile | ✅ |
 | `/exam-simulation` | Exam Simulation (+ Webcam & Focus Proctoring) | ✅ |
@@ -225,6 +242,7 @@ To reset demo data: `npm run reset:demo`
 | `/admin/questions` | Question Bank | ✅ Admin only |
 | `/admin/subjects` | Subjects Overview | ✅ Admin only |
 | `/admin/topics` | Topics CRUD | ✅ Admin only |
+| `/admin/learning-content` | Learning Content CRUD | ✅ Admin only |
 | `/admin/exams` | Exam Sessions | ✅ Admin only |
 | `/admin/exams/:id` | Exam Session Detail | ✅ Admin only |
 | `/admin/analytics` | Platform Analytics | ✅ Admin only |
@@ -284,7 +302,21 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 ### Recommendations (`/api/recommendations`)
 | Method | Path | Description |
 |---|---|---|
-| `GET` | `/me` | ML-backed personalized topic recommendations |
+| `GET` | `/me` | ML-backed personalized topic recommendations (`?include=learning` additionally returns the learning-content bundle) |
+| `GET` | `/focus-session` | Returns a focused practice set for the current session |
+| `GET` | `/learning` | Full learning-content recommendation bundle (sections, learnNext, dailyPlan) |
+| `GET` | `/learn-next` | Top single learning-content recommendation |
+| `GET` | `/weak-areas` | Learning content targeting weak topics |
+| `GET` | `/mistake-recovery` | Learning content for repeatedly missed concepts |
+| `GET` | `/challenges` | Advanced content for mastered topics |
+| `GET` | `/daily-plan` | Daily learning schedule |
+| `GET` | `/:id` | Get a single recommendation by ID |
+| `GET` | `/:id/practice` | Practice question set for a recommendation |
+| `POST` | `/:id/start` | Mark recommendation as started |
+| `POST` | `/:id/progress` | Update progress on a recommendation |
+| `POST` | `/:id/complete` | Mark recommendation as completed |
+| `POST` | `/:id/skip` | Skip a recommendation |
+| `POST` | `/:id/feedback` | Submit feedback on a recommendation |
 
 ### AI Tutor (`/api/ai`)
 | Method | Path | Description |
@@ -321,6 +353,12 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `POST` | `/topics` | Create topic |
 | `PUT` | `/topics/:id` | Update topic |
 | `DELETE` | `/topics/:id` | Delete topic |
+| `GET` | `/learning-content` | List learning content |
+| `GET` | `/learning-content/meta` | Learning content metadata (subjects, topics, types) |
+| `GET` | `/learning-content/:id` | Get single content item |
+| `POST` | `/learning-content` | Create content item |
+| `PUT` | `/learning-content/:id` | Update content item |
+| `DELETE` | `/learning-content/:id` | Delete content item |
 | `GET` | `/exams` | List exam sessions |
 | `GET` | `/exams/:id` | Exam session detail |
 | `GET` | `/analytics` | Platform-wide analytics |
@@ -333,6 +371,20 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `GET` | `/api/health` |
 
 ---
+
+## Learning-Content Recommendations
+
+TutorMind recommends *what to learn next* (study material → practice → re-measure), not just which questions to solve. The engine is deterministic and needs no LLM or API key.
+
+**Pipeline:** student performance → learning-need detection → candidate retrieval (active `LearningContent` only) → prerequisite expansion → 0-100 ranking → sections / learning path / daily plan → persisted recommendation history → lifecycle (start, progress, complete, feedback) → practice set → before/after measurement → next recommendation.
+
+**Code:** `backend/src/services/learning/` (15 focused modules), models `LearningContent`, `LearningContentProgress`, `LearningRecommendation`, `QuestionRecommendationLog`.
+
+**Endpoints (all authenticated):** `GET /api/recommendations/me` (unchanged; `?include=learning` adds the bundle), `GET /api/recommendations/learning`, `learn-next`, `weak-areas`, `mistake-recovery`, `challenges`, `daily-plan`, `focus-session`, `GET /:id`, `GET /:id/practice`, `POST /:id/start|progress|complete|skip|feedback`, and admin `GET/POST/PUT/DELETE /api/admin/learning-content` (+ `/meta`).
+
+**Seeding** (idempotent): `cd backend && npm run seed:questions && npm run seed:content` (`-- --dry-run` validates only, `-- --reset` removes unused seeded rows first).
+
+**Optional AI:** `LEARNING_AI_EXPLANATIONS=true` (with `GEMINI_API_KEY`) lets Gemini rephrase only the top "why" sentence. Ranking never depends on it.
 
 ## Security
 
@@ -360,6 +412,10 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `ExamSession` | Full mock exam state — questions, answers, timing, scoring, and proctoring integrity state (`violationCount`, `maximumViolations`, `violationEvents`, `presenceWarningCount`, `maximumPresenceWarnings`, `autoSubmitted`, `autoSubmitReason`) |
 | `ExamAuditLog` | Immutable per-answer audit trail for exam integrity |
 | `Mistake` | Mistake bank with spaced-repetition fields (3 review stages) |
+| `LearningContent` | Study material items powering the recommendation engine (title, type, subject, topic, difficulty, prerequisites, active flag) |
+| `LearningContentProgress` | Per-student progress record for each content item (status, score, time spent) |
+| `LearningRecommendation` | Persisted recommendation record including ranking score, lifecycle state, and before/after measurement |
+| `QuestionRecommendationLog` | Log linking practice questions to a parent recommendation for before/after measurement |
 | `ProductEvent` | Internal telemetry events |
 
 ---
@@ -382,6 +438,7 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `mlClient` | HTTP client for the Flask ML microservice |
 | `aiService` | Streaming doubt-resolution chat orchestration (question context + conversation history) |
 | `geminiService` | Low-level Google Gemini API client — SSE streaming, error translation, quota handling |
+| `learning/` (15 modules) | Learning-content recommendation engine: need detection, learner profiling, candidate retrieval & ranking, prerequisite expansion, lifecycle management, practice sets, daily plans, effectiveness tracking, AI explainer, and serialization |
 
 ---
 
@@ -405,6 +462,8 @@ npm run test:backend
 | `exam.proctoring.test.js` | Focus violation recording, camera presence tracking, auto-submit reasons, duplicate prevention, and counter bounds |
 | `intelligence.validation.test.js` | Scoring and intelligence analysis |
 | `intelligence.adversarial.test.js` | Adversarial / edge-case scenarios |
+| `learning.engine.test.js` | Learning-content recommendation engine (ranking, need detection, lifecycle) |
+| `learning.api.test.js` | Learning recommendation REST API integration |
 
 ### Frontend (Vitest + Testing Library)
 
@@ -419,6 +478,7 @@ Key frontend test suites:
 - `ExamSimulationPage.singleFlight.test.jsx` & `singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
 - `ExamSimulationPage.integrity.test.jsx` & `race.test.jsx` — State reconciliation, sequence ordering, out-of-order rejection, and duplicate suppression
 - `ExamSimulationPage.crossClient.integrity.test.jsx` — Multi-tab/device session conflict resolution
+- `LearnPage.test.jsx` — Learning hub rendering, section display, empty/error/cold-start states, and lifecycle interactions
 - Smoke tests for `HomePage`, `ProfilePage`, `Layout`, and `PasswordField`
 
 ---

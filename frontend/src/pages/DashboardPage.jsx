@@ -10,6 +10,7 @@ import {
   YAxis,
 } from 'recharts';
 import api from '../api/client';
+import LearnNextTeaser from '../components/learning/LearnNextTeaser';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { trackProductEvent } from '../utils/productEvents';
@@ -280,7 +281,7 @@ const DashboardPage = () => {
   return (
     <div className="dash-grid">
       <section className="dash-greeting">
-        <h1>{greetingWord}, {firstName}! 👋</h1>
+        <h1>{greetingWord}, {firstName}!</h1>
         <p>Let&apos;s continue your journey towards success.</p>
       </section>
 
@@ -292,7 +293,7 @@ const DashboardPage = () => {
           </div>
           <p className="metric-value">{habit.currentStreak || 0} <small>days</small></p>
           <p className="metric-caption">
-            {habit.currentStreak > 0 ? 'Keep it up! 🔥' : `Longest streak: ${habit.longestStreak || 0} days`}
+            {habit.currentStreak > 0 ? 'Keep it up!' : `Longest streak: ${habit.longestStreak || 0} days`}
           </p>
         </article>
 
@@ -545,9 +546,11 @@ const DashboardPage = () => {
         </article>
       </section>
 
+      <LearnNextTeaser />
+
       <section className="dash-recommend-banner">
         <div className="dash-recommend-text">
-          <p className="dash-recommend-title">Next Up: {dominantAction.title} 🔥</p>
+          <p className="dash-recommend-title">Next Up: {dominantAction.title}</p>
           <p className="dash-recommend-sub">{dominantAction.text}</p>
         </div>
         <button type="button" className="solid-btn dash-recommend-cta" onClick={startRecommendedPractice}>

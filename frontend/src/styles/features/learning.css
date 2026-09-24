@@ -1,0 +1,126 @@
+/* Learning-content recommendations (Learn page, content viewer, badges, plan).
+   Uses the shared design tokens from index.css; no landing-page styles here. */
+
+.lr-page { align-content: start; }
+
+/* --- badges & chips --- */
+.lr-badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; min-width: 0; }
+.lr-badge {
+  display: inline-flex; align-items: center; padding: 0.15rem 0.6rem; border-radius: var(--radius-pill);
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.01em; color: var(--text);
+  background: rgba(148, 163, 184, 0.16); border: 1px solid var(--border); white-space: nowrap;
+}
+.lr-priority-high { color: #fecaca; background: rgba(239, 68, 68, 0.16); border-color: rgba(239, 68, 68, 0.4); }
+.lr-priority-medium { color: #fde68a; background: rgba(245, 158, 11, 0.14); border-color: rgba(245, 158, 11, 0.4); }
+.lr-priority-low { color: #bbf7d0; background: rgba(34, 197, 94, 0.12); border-color: rgba(34, 197, 94, 0.35); }
+.lr-diff-easy { color: #bbf7d0; border-color: rgba(34, 197, 94, 0.4); }
+.lr-diff-medium { color: #fde68a; border-color: rgba(245, 158, 11, 0.4); }
+.lr-diff-hard { color: #fecaca; border-color: rgba(239, 68, 68, 0.4); }
+.lr-reason { color: #bfdbfe; background: rgba(96, 165, 250, 0.14); border-color: rgba(96, 165, 250, 0.4); }
+.lr-meta { margin: 0.15rem 0 0.6rem; color: var(--muted); font-size: 0.9rem; overflow-wrap: anywhere; }
+.lr-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; margin: 0.6rem 0 0; padding: 0; }
+.lr-chips li { padding: 0.2rem 0.6rem; border-radius: var(--radius-pill); font-size: 0.78rem; color: var(--muted); border: 1px dashed var(--border); }
+
+.lr-progress { height: 8px; border-radius: var(--radius-pill); background: rgba(148, 163, 184, 0.2); overflow: hidden; margin: 0.6rem 0 0.25rem; }
+.lr-progress > span { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--success)); transition: width var(--duration-base) var(--ease-out); }
+
+/* --- hero (Learn Next) --- */
+.lr-hero {
+  display: grid; gap: 0.5rem; min-width: 0;
+  border-color: rgba(96, 165, 250, 0.45);
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.18), var(--surface-1) 55%);
+  box-shadow: var(--elevation-2);
+}
+.lr-hero-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem; align-items: center; }
+.lr-eyebrow { margin: 0; letter-spacing: 0.14em; text-transform: uppercase; }
+.lr-hero-title { margin: 0.2rem 0 0; font-size: clamp(1.4rem, 3.2vw, 2rem); overflow-wrap: anywhere; }
+.lr-why h3, .lr-path-wrap h3 { margin: 0.6rem 0 0.25rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.lr-why p { margin: 0; line-height: 1.55; }
+.lr-cta-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
+.lr-cta, .lr-card-cta { display: inline-flex; justify-content: center; text-decoration: none; }
+.lr-resume small { color: var(--muted); }
+
+/* --- learning path --- */
+.lr-path { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+.lr-step > a, .lr-step > div {
+  display: flex; gap: 0.6rem; align-items: center; padding: 0.5rem 0.7rem; border-radius: var(--radius-sm);
+  border: 1px solid transparent; color: var(--text); text-decoration: none; min-width: 0;
+}
+.lr-step > a:hover { border-color: var(--border); background: rgba(148, 163, 184, 0.08); }
+.lr-step > a:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.lr-step-text { display: grid; min-width: 0; }
+.lr-step-text small { color: var(--muted); }
+.lr-step-mark { width: 1.4rem; text-align: center; color: var(--muted); flex: none; }
+.lr-step-done { color: var(--success); }
+.lr-step-next, .lr-step-active { color: var(--primary); }
+.lr-step-completed .lr-step-text strong { text-decoration: line-through; opacity: 0.7; }
+.lr-step-next > a, .lr-step-next > div { border-color: rgba(96, 165, 250, 0.4); background: rgba(96, 165, 250, 0.08); }
+
+/* --- sections & cards --- */
+.lr-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 0.9rem; }
+.lr-card { display: grid; gap: 0.4rem; align-content: start; padding: 0.9rem; min-width: 0; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--surface-0); }
+.lr-card h4 { margin: 0.2rem 0 0; overflow-wrap: anywhere; }
+.lr-card-reason { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+.lr-card-cta { margin-top: 0.4rem; }
+
+/* --- daily plan --- */
+.lr-plan-list { list-style: none; margin: 0.6rem 0 0; padding: 0; display: grid; gap: 0.5rem; }
+.lr-plan-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.7rem; align-items: start; padding: 0.6rem 0.7rem; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+.lr-plan-num { display: inline-grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: rgba(96, 165, 250, 0.2); color: #bfdbfe; font-weight: 700; font-size: 0.8rem; }
+.lr-plan-body { display: grid; gap: 0.15rem; min-width: 0; }
+.lr-plan-body a { color: var(--text); text-decoration: none; overflow-wrap: anywhere; }
+.lr-plan-body a:hover { text-decoration: underline; }
+.lr-plan-body small, .lr-plan-body p { color: var(--muted); margin: 0; font-size: 0.85rem; }
+.lr-plan-icon { display: inline-flex; align-items: center; justify-content: center; color: var(--muted); flex: none; }
+.lr-plan-icon svg { width: 1.1rem; height: 1.1rem; }
+
+/* --- improvement banner --- */
+.lr-improve { border-color: rgba(34, 197, 94, 0.35); }
+.lr-improve-numbers { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin: 0.4rem 0; }
+.lr-improve-numbers small { display: block; color: var(--muted); }
+.lr-improve-numbers strong { font-size: 1.6rem; }
+.lr-improve-delta { padding: 0.25rem 0.7rem; border-radius: var(--radius-pill); font-weight: 700; }
+.lr-improve-delta.up { color: #bbf7d0; background: rgba(34, 197, 94, 0.16); }
+.lr-improve-delta.down { color: #fde68a; background: rgba(245, 158, 11, 0.16); }
+
+/* --- welcome / baseline --- */
+.lr-welcome { display: grid; gap: 0.5rem; }
+.lr-start-path { margin: 0.4rem 0; padding-left: 1.1rem; display: grid; gap: 0.25rem; }
+.lr-start-path small { color: var(--muted); }
+.lr-baseline-note p { margin: 0; color: var(--muted); }
+
+/* --- content viewer --- */
+.lr-content-head { display: grid; gap: 0.3rem; }
+.lr-back { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+.lr-back:hover { color: var(--text); }
+.lr-why-inline { margin: 0.4rem 0 0; color: var(--muted); line-height: 1.5; }
+.lr-article { line-height: 1.7; min-width: 0; overflow-wrap: anywhere; }
+.lr-article h2, .lr-article h3 { margin-top: 1.2rem; }
+.lr-objectives ul { margin: 0.3rem 0 0; padding-left: 1.1rem; display: grid; gap: 0.2rem; }
+.lr-inline-actions { margin: 0.8rem 0 0; }
+.lr-complete { display: grid; gap: 0.4rem; border-color: rgba(34, 197, 94, 0.4); }
+
+/* --- feedback --- */
+.lr-feedback { display: grid; gap: 0.8rem; margin-top: 0.8rem; }
+.lr-feedback fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.lr-feedback legend { padding: 0; margin-bottom: 0.4rem; color: var(--muted); font-size: 0.9rem; }
+.lr-feedback-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.lr-feedback .lr-selected { border-color: var(--primary); background: rgba(96, 165, 250, 0.16); }
+.lr-feedback-btn { display: inline-flex; align-items: center; gap: 0.4rem; }
+.lr-feedback-btn svg { width: 1rem; height: 1rem; flex: none; }
+.lr-thanks { margin: 0; color: var(--success); font-size: 0.88rem; }
+
+/* --- dashboard teaser --- */
+.lr-teaser { display: grid; gap: 0.35rem; border-color: rgba(96, 165, 250, 0.4); }
+.lr-teaser h3 { margin: 0; }
+.lr-teaser p { margin: 0; color: var(--muted); }
+
+@media (max-width: 640px) {
+  .lr-plan-item { grid-template-columns: auto minmax(0, 1fr); }
+  .lr-plan-icon { display: none; }
+  .lr-cta-row > * { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lr-progress > span { transition: none; }
+}
