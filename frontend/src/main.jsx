@@ -21,6 +21,7 @@ import './styles/features/admin.css';
 import './styles/features/ai-tutor.css';
 import './styles/features/learning.css';
 import './styles/features/gamification.css';
+import './styles/features/about-exams.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

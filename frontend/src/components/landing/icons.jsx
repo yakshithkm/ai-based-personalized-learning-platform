@@ -120,3 +120,57 @@ export const CloseIcon = (props) => (
     <path d="M19 5L5 19" />
   </svg>
 );
+
+// --- About Exams page icons ---
+// Same hand-drawn 24x24 stroke system as above, added for the exam
+// information cards rather than pulling in an icon library for a handful
+// of glyphs.
+
+export const MedicalIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M12 3.5v17" />
+    <path d="M3.5 12h17" />
+    <rect x="3.5" y="3.5" width="17" height="17" rx="4" />
+  </svg>
+);
+
+export const CalculatorIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <rect x="4.5" y="2.8" width="15" height="18.4" rx="2.2" />
+    <path d="M7.3 6.6h9.4" />
+    <path d="M7.6 11h1.6M11.2 11h1.6M14.8 11h1.6" />
+    <path d="M7.6 14.6h1.6M11.2 14.6h1.6M14.8 14.6h1.6" />
+    <path d="M7.6 18.2h1.6M11.2 18.2h1.6M14.8 18.2h1.6" />
+  </svg>
+);
+
+export const MapPinIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M12 21.2s7.2-6.9 7.2-12A7.2 7.2 0 1 0 4.8 9.2c0 5.1 7.2 12 7.2 12z" />
+    <circle cx="12" cy="9.2" r="2.6" />
+  </svg>
+);
+
+export const ExternalLinkIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M9.5 5.5h-4a1.5 1.5 0 0 0-1.5 1.5v11.5a1.5 1.5 0 0 0 1.5 1.5h11.5a1.5 1.5 0 0 0 1.5-1.5v-4" />
+    <path d="M14.5 3.5H20.5v6" />
+    <path d="M20.2 3.8 11 13" />
+  </svg>
+);
+
+export const CalendarIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <rect x="3.5" y="4.8" width="17" height="15.7" rx="2.4" />
+    <path d="M3.5 9.6h17" />
+    <path d="M8 3v3.4M16 3v3.4" />
+  </svg>
+);
+
+export const NoticeIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <path d="M6 3.5h9.2L18 6.3v14.2H6z" />
+    <path d="M15.2 3.5v2.8H18" />
+    <path d="M8.6 11h6.8M8.6 14.2h6.8M8.6 17.4h4.2" />
+  </svg>
+);

@@ -54,17 +54,22 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
     - **Codified Achievement Catalog**: 21 immutable milestone achievements spanning practice volume, high accuracy, daily streaks, learning material completion, exam performance, and player level.
     - **Live UI Chrome & Micro-Interactions**: Real-time XP gain toasts (`+XP`), interactive Level-Up celebration modals, Achievement Unlocked dialogs, and a responsive Level/XP header pill that scales gracefully down to mobile widths.
     - **Automatic Historical Backfill**: Idempotent reconstruction mechanism populating XP, streaks, and achievements from pre-existing practice attempts, content progress, and exam history so existing accounts or seeded demo profiles never start at Level 1 / 0 XP.
+24. **Comprehensive Exam Hub (About Exams)** — Dedicated reference and guidance center (`/about-exams`) for NEET (UG), JEE Main, and Karnataka CET (KCET / UGCET):
+    - **Official Authorities & Scope**: Details governing bodies (NTA, KEA), degree pathways (MBBS, BDS, AYUSH, B.Tech/B.E., B.Arch, B.Planning, Pharmacy), and paper formats.
+    - **Verified Direct Portals**: Links directly to official candidate portals and public notice boards for circulars, admit cards, and application forms without fragile year-specific URLs.
+    - **Side-by-Side Comparison Matrix**: Cross-exam comparison table contrasting conducting bodies, purposes, subject combinations, and national vs. state eligibility scopes.
+    - **Exam Chooser Guide & FAQ**: Decision frameworks and answers to common queries to help candidates select their target entrance examination based on career pathways.
 
 ### Admin Portal
-24. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-25. **Admin Dashboard** — Platform-wide stats overview
-26. **Student Management** — List all students, drill into individual student detail
-27. **Question Bank CRUD** — Create, read, update, and delete questions
-28. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-29. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-30. **Admin Analytics** — Platform-wide analytics section
-31. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
-32. **Product Event Tracking** — Internal telemetry for key user actions
+25. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+26. **Admin Dashboard** — Platform-wide stats overview
+27. **Student Management** — List all students, drill into individual student detail
+28. **Question Bank CRUD** — Create, read, update, and delete questions
+29. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+30. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+31. **Admin Analytics** — Platform-wide analytics section
+32. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
+33. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -79,7 +84,7 @@ ai-based-personalized-learning-platform/
 │   │   └── copy-face-models.mjs # postinstall script copying model weights to public/models
 │   └── src/
 │       ├── pages/          # Route-level page components
-│       │   ├── (18 student pages, including LearnPage & LearningContentPage)
+│       │   ├── (19 pages: 18 student/public pages incl. AboutExamPage, LearnPage & LearningContentPage + 1 legacy admin analytics)
 │       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
 │       │   └── __tests__/  # Vitest integration, proctoring & single-flight suites
 │       ├── components/     # Layout, AdminLayout, ProtectedRoute, AISidebar,
@@ -99,9 +104,9 @@ ai-based-personalized-learning-platform/
 │       │                   # useMagneticHover, useScrollReveal
 │       ├── lib/            # faceDetector.js (lazy on-device TensorFlow.js TinyFaceDetector)
 │       ├── styles/         # Style modules:
-│       │   ├── features/   # admin.css, ai-tutor.css, analytics.css, app-shell.css,
-│       │   │               # dashboard.css, exam.css, gamification.css, landing.css,
-│       │   │               # learning.css, practice.css, profile.css, subpages.css
+│       │   ├── features/   # about-exams.css, admin.css, ai-tutor.css, analytics.css,
+│       │   │               # app-shell.css, dashboard.css, exam.css, gamification.css,
+│       │   │               # landing.css, learning.css, practice.css, profile.css, subpages.css
 │       │   ├── components.css
 │       │   └── global.css
 │       └── utils/          # Shared utilities & appEvents.js (attempt/gamification event bus)
@@ -227,6 +232,7 @@ To reset demo data: `npm run reset:demo`
 | Route | Page | Auth |
 |---|---|---|
 | `/` | Home / Landing | Public |
+| `/about-exams` | About Exams (NEET, JEE Main, KCET reference hub) | Public |
 | `/login` | Login | Public |
 | `/register` | Register | Public |
 | `/dashboard` | Dashboard | ✅ |
@@ -563,13 +569,13 @@ npm --prefix frontend run test
 npm --prefix frontend run test:watch
 ```
 
-Key frontend test suites (12 test files, 66 tests):
+Key frontend test suites (13 test files, 68 tests):
 - `ExamSimulationPage.proctoring.test.jsx` — Focus violations, blur grace confirmation, tab hidden detection, on-device presence detection, auto-submission flows, and duplicate prevention
 - `ExamSimulationPage.singleFlight.test.jsx` & `singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
 - `ExamSimulationPage.integrity.test.jsx` & `race.test.jsx` — State reconciliation, sequence ordering, out-of-order rejection, and duplicate suppression
 - `ExamSimulationPage.crossClient.integrity.test.jsx` — Multi-tab/device session conflict resolution
 - `LearnPage.test.jsx` — Learning hub rendering, section display, empty/error/cold-start states, and lifecycle interactions
-- Smoke tests for `HomePage`, `ProfilePage`, `Layout`, and `PasswordField`
+- Smoke tests for `HomePage`, `AboutExamPage`, `ProfilePage`, `Layout`, and `PasswordField`
 
 ---
 

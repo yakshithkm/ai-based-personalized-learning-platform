@@ -56,4 +56,38 @@ describe('HomePage (landing page) smoke test', () => {
 
     vi.unstubAllGlobals();
   });
+
+  it('links the "About Exam" nav item to the /about-exams route', async () => {
+    vi.stubGlobal('IntersectionObserver', IntersectionObserverStub);
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn().mockImplementation((query) => ({
+        matches: false,
+        media: query,
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      }))
+    );
+
+    render(
+      <MemoryRouter>
+        <ThemeProvider>
+          <AuthProvider>
+            <HomePage />
+          </AuthProvider>
+        </ThemeProvider>
+      </MemoryRouter>
+    );
+
+    const aboutExamLinks = screen.getAllByRole('link', { name: 'About Exam' });
+    expect(aboutExamLinks.length).toBeGreaterThan(0);
+    aboutExamLinks.forEach((link) => {
+      expect(link).toHaveAttribute('href', '/about-exams');
+    });
+
+    vi.unstubAllGlobals();
+  });
 });

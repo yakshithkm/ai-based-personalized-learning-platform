@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import BrandLogo from '../components/BrandLogo';
 import Footer from '../components/Footer';
 import Reveal from '../components/landing/Reveal';
@@ -12,9 +12,13 @@ import { useCountUp } from '../hooks/useScrollReveal';
 import { useMagneticHover } from '../hooks/useMagneticHover';
 import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, ArrowRightIcon, MenuIcon, CloseIcon } from '../components/landing/icons';
 
+// Anchor links (`href`) smooth-scroll within the landing page; the one
+// route link (`to`) is a real React Router navigation to a separate page
+// and is rendered as a <Link> instead of a scroll-spy anchor below.
 const navLinks = [
   { label: 'Why TutorMind', href: 'why-tutormind' },
   { label: 'Subjects', href: 'subjects-section' },
+  { label: 'About Exam', to: '/about-exams' },
   { label: 'How it works', href: 'how-it-works' },
   { label: 'Pricing', href: 'pricing-section' },
   { label: 'FAQ', href: 'faq-section' },
@@ -296,19 +300,25 @@ const HomePage = () => {
         <BrandLogo className="landing-logo" to="/" onClick={scrollToTop} />
 
         <nav className="landing-nav">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={`#${link.href}`}
-              className={activeSection === link.href ? 'is-active' : ''}
-              onClick={(event) => {
-                event.preventDefault();
-                scrollToSection(link.href);
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.to ? (
+              <Link key={link.to} to={link.to}>
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={`#${link.href}`}
+                className={activeSection === link.href ? 'is-active' : ''}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(link.href);
+                }}
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </nav>
 
         <div className="landing-actions">
@@ -345,19 +355,25 @@ const HomePage = () => {
         aria-label="Site navigation"
       >
         <nav className="landing-mobile-nav">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={`#${link.href}`}
-              className={activeSection === link.href ? 'is-active' : ''}
-              onClick={(event) => {
-                event.preventDefault();
-                scrollToSection(link.href);
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) =>
+            link.to ? (
+              <Link key={link.to} to={link.to} onClick={() => setMobileNavOpen(false)}>
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={`#${link.href}`}
+                className={activeSection === link.href ? 'is-active' : ''}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(link.href);
+                }}
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </nav>
         <div className="landing-mobile-actions">
           <button

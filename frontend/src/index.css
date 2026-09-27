@@ -2741,6 +2741,9 @@ button:focus-visible {
 .landing-nav a:nth-child(5) {
   animation-delay: 0.5s;
 }
+.landing-nav a:nth-child(6) {
+  animation-delay: 0.56s;
+}
 
 @keyframes navItemFadeIn {
   from {

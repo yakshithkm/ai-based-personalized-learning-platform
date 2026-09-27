@@ -1,0 +1,489 @@
+/* --- About Entrance Exams page ---
+   Reuses landing-page structural classes (.landing-page, .landing-section,
+   .section-eyebrow, .solid-btn/.outline-btn, Reveal fade/slide-up) for
+   visual consistency; only the page-specific card/table/badge layout below
+   is new. */
+
+.about-exam-topbar {
+  grid-template-columns: auto 1fr auto;
+}
+
+.about-exam-back-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.86rem;
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) ease,
+    filter var(--duration-base) ease, box-shadow var(--duration-base) ease;
+}
+
+.about-exam-back-top svg,
+.about-exam-back-bottom .btn-arrow {
+  width: 16px;
+  height: 16px;
+}
+
+.about-exam-back-top:hover svg {
+  transform: translateX(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-exam-back-top:hover svg {
+    transform: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .about-exam-back-top span {
+    display: none;
+  }
+}
+
+/* ---- Page header ---- */
+.about-exam-header {
+  padding-top: 2.6rem;
+}
+
+.about-exam-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin: 0 auto 1rem;
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  border-radius: var(--radius-pill);
+  color: #bfdbfe;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  padding: 0.36rem 0.85rem;
+  background: rgba(37, 99, 235, 0.18);
+}
+
+.about-exam-header h1 {
+  font-size: clamp(1.9rem, 4.4vw, 2.9rem);
+  margin: 0 0 0.6rem;
+  color: #f3f4f6;
+}
+
+/* ---- Exam cards ---- */
+.about-exam-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
+  max-width: 1240px;
+  margin: 1.8rem auto 0;
+  text-align: left;
+}
+
+@media (max-width: 1080px) {
+  .about-exam-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .about-exam-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.about-exam-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 1.4rem;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.66), rgba(2, 6, 23, 0.76));
+  box-shadow: var(--elevation-1);
+  transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) ease,
+    box-shadow var(--duration-base) ease;
+}
+
+.about-exam-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(96, 165, 250, 0.4);
+  box-shadow: var(--elevation-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-exam-card:hover {
+    transform: none;
+  }
+}
+
+.about-exam-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.about-exam-icon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  color: #93c5fd;
+  background: rgba(96, 165, 250, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.24);
+}
+
+.about-exam-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.about-exam-card-head h2 {
+  margin: 0 0 0.15rem;
+  font-size: 1.15rem;
+  color: #f3f4f6;
+}
+
+.about-exam-fullname {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.about-exam-authority {
+  margin: 0 0 0.7rem;
+  font-size: 0.88rem;
+  color: #cbd5e1;
+}
+
+.about-exam-authority strong {
+  color: #e5e7eb;
+}
+
+.about-exam-purpose {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: #aab8d8;
+}
+
+.about-exam-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.about-exam-card h3 svg {
+  width: 16px;
+  height: 16px;
+}
+
+.about-exam-list {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.about-exam-list li {
+  position: relative;
+  padding-left: 1.15rem;
+  font-size: 0.87rem;
+  color: #cbd5e1;
+}
+
+.about-exam-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(96, 165, 250, 0.7);
+}
+
+.about-exam-chip-list {
+  margin: 0 0 0.4rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.about-exam-chip {
+  padding: 0.28rem 0.68rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface-0);
+  font-size: 0.78rem;
+  color: #e2e8f0;
+}
+
+.about-exam-subjects-note {
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.about-exam-who {
+  margin-bottom: 1.1rem;
+}
+
+.about-exam-who p {
+  margin: 0;
+  font-size: 0.87rem;
+  line-height: 1.5;
+  color: #cbd5e1;
+}
+
+.about-exam-links {
+  margin-bottom: 1.1rem;
+}
+
+.about-exam-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.about-exam-link-row a {
+  font-size: 0.82rem;
+  padding: 0.55rem 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.exam-status-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.exam-status-note svg {
+  flex: 0 0 auto;
+  width: 15px;
+  height: 15px;
+  margin-top: 0.1em;
+}
+
+.about-exam-leaving-note {
+  margin: 0;
+  font-size: 0.74rem;
+  color: rgba(148, 163, 184, 0.75);
+}
+
+.about-exam-notice {
+  margin-top: auto;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+.about-exam-notice p {
+  margin: 0 0 0.6rem;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: #c7d2fe;
+}
+
+.about-exam-notice-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.about-exam-notice-link svg {
+  width: 15px;
+  height: 15px;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.about-exam-notice-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-exam-notice-link:hover svg {
+    transform: none;
+  }
+}
+
+/* ---- Quick Comparison ---- */
+.about-exam-table-wrap {
+  max-width: 1080px;
+  margin: 1.6rem auto 0;
+  overflow-x: auto;
+}
+
+.about-exam-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.about-exam-table th,
+.about-exam-table td {
+  padding: 0.75rem 0.9rem;
+  font-size: 0.86rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.about-exam-table thead th {
+  background: rgba(15, 23, 42, 0.6);
+  color: #93c5fd;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.about-exam-table tbody th {
+  color: #f1f5f9;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.about-exam-table tbody td {
+  color: #cbd5e1;
+}
+
+.about-exam-table tbody tr:last-child th,
+.about-exam-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Responsive table -> stacked cards. Below the breakpoint the table
+   itself is reflowed into a series of labeled rows using data-label,
+   rather than duplicating the data in separate markup — so no content is
+   ever hidden from assistive tech at any width. */
+@media (max-width: 720px) {
+  .about-exam-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .about-exam-table,
+  .about-exam-table tbody,
+  .about-exam-table tr,
+  .about-exam-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .about-exam-table tr {
+    padding: 0.85rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-exam-table tr:last-child {
+    border-bottom: none;
+  }
+
+  .about-exam-table tbody th {
+    display: block;
+    padding: 0 0 0.4rem;
+    border-bottom: none;
+    font-size: 0.95rem;
+  }
+
+  .about-exam-table td {
+    padding: 0.3rem 0;
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .about-exam-table td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+}
+
+/* ---- Which Exam Should I Prepare For? ---- */
+.about-exam-which-grid {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 900px) {
+  .about-exam-which-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.about-exam-which-card {
+  text-align: center;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.66), rgba(2, 6, 23, 0.76));
+  box-shadow: var(--elevation-1);
+}
+
+.about-exam-which-card .about-exam-icon {
+  margin: 0 auto 0.7rem;
+}
+
+.about-exam-which-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.02rem;
+  color: #f3f4f6;
+}
+
+.about-exam-which-card p {
+  margin: 0;
+  color: #aab8d8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ---- Disclaimer + back-to-home ---- */
+.about-exam-disclaimer-section {
+  display: grid;
+  gap: 1.1rem;
+  justify-items: center;
+  padding-bottom: 1.2rem;
+}
+
+.about-exam-disclaimer {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-0);
+  padding: 0.9rem 1.1rem;
+}
