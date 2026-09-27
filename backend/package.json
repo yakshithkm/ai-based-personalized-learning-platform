@@ -12,6 +12,7 @@
     "seed:admin": "node seedAdmin.js",
     "seed:content": "node seedLearningContent.js",
     "reset:demo": "node resetDemo.js",
+    "backfill:gamification": "node backfillGamification.js",
     "test": "cross-env NODE_ENV=test jest --runInBand"
   },
   "dependencies": {

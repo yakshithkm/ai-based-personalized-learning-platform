@@ -683,6 +683,15 @@ button:focus-visible {
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--border);
   transition: background var(--duration-base) ease, box-shadow var(--duration-base) ease;
+  /* Same systemic fix as .sidebar > * above: .app-header is a grid item
+     (grid-area: header, in both the desktop 2-column and mobile 1-column
+     .app-shell grid), so it defaults to min-width: auto - a child whose
+     flex content can't shrink below its intrinsic width (e.g. the header
+     search bar plus every header-actions pill) forces the grid column,
+     and therefore the whole page, wider than the viewport. That's what
+     showed up as every card below "widening": the page itself had grown,
+     not the cards. */
+  min-width: 0;
 }
 
 .app-header.scrolled {
@@ -3443,6 +3452,10 @@ button:focus-visible {
     padding: 0.35rem 0.55rem;
   }
 
+  .gam-header-pill {
+    padding: 0.35rem 0.55rem;
+  }
+
   .icon-btn,
   .header-menu-btn,
   .header-search-toggle-btn {
@@ -3481,6 +3494,15 @@ button:focus-visible {
 
   .streak-pill .streak-label-compact {
     display: inline;
+  }
+
+  /* Same treatment as the streak pill just above: the level number is the
+     essential, glanceable part - the "X/Y XP" fraction is the verbose part
+     that's safe to drop once space is this tight. This is also the piece
+     that was actually forcing the whole page wider at phone widths before
+     .app-header got min-width: 0 (see that rule for the root cause). */
+  .gam-header-pill .gam-header-xp {
+    display: none;
   }
 
   .header-dropdown {

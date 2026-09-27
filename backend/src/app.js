@@ -13,6 +13,7 @@ const recommendationRoutes = require('./routes/recommendationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const examRoutes = require('./routes/examRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const gamificationRoutes = require('./routes/gamificationRoutes');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
 const { protect } = require('./middleware/authMiddleware');
 const { validateObjectIdParam } = require('./middleware/validateObjectIdParam');
@@ -99,6 +100,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/gamification', gamificationRoutes);
 
 app.get(
   '/api/exam/session/:sessionId/debug-intents',

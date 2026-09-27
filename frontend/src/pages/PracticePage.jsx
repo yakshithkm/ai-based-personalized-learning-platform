@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import EmptyState from '../components/EmptyState';
 import { subjectColor } from '../utils/subjectVisuals';
-import { emitAttemptSubmitted } from '../utils/appEvents';
+import { emitAttemptSubmitted, emitGamificationEvent } from '../utils/appEvents';
 import AISidebar from '../components/AISidebar';
 
 const makeSessionId = () => {
@@ -307,10 +307,24 @@ const PracticePage = () => {
         totalQuestions: questions.length,
       });
       setResult(data.result);
-      setXpPulse(data.result?.xpEarned || 0);
+      // The gamification result is the real, server-authoritative XP award
+      // for this attempt (it applies the weak-topic/hard-difficulty/speed
+      // bonuses); data.result.xpEarned is a legacy, pre-gamification flat
+      // estimate (12 for any correct answer, no difficulty weighting) that
+      // predates this system and no longer matches what actually landed in
+      // the header - only fall back to it if gamification didn't run at all
+      // (e.g. a transient backend error swallowed inside attemptController).
+      const authoritativeXp =
+        data.gamification && !data.gamification.duplicate
+          ? data.gamification.xpAwarded
+          : data.result?.xpEarned || 0;
+      setXpPulse(authoritativeXp);
       // Let the app shell know an attempt just landed so the header streak
       // pill can refresh immediately instead of only on next page load.
       emitAttemptSubmitted({ isCorrect: data.result?.isCorrect });
+      // Server-authoritative XP/level/streak/achievement update for this
+      // attempt, if any (a duplicate/refresh resubmission carries none).
+      emitGamificationEvent(data.gamification);
       setSessionResults((prev) => [
         ...prev,
         {
@@ -319,7 +333,7 @@ const PracticePage = () => {
           subject: question.subject,
           isCorrect: data.result.isCorrect,
           performanceLabel: data.result.performanceLabel,
-          xpEarned: data.result?.xpEarned || 0,
+          xpEarned: authoritativeXp,
           timeTakenSec,
           selectedAnswerText: question.options?.[selectedAnswer] ?? '',
           correctAnswerText: data.result?.correctAnswer ?? '',

@@ -1,0 +1,163 @@
+/* Gamification: XP toast stack, achievement/level-up modals, header status
+   pill, and the dashboard progress widget. Uses the same design tokens as
+   the rest of the app (see index.css :root) - no new color palette. */
+
+.xp-toast-stack {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.xp-toast {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-2);
+  padding: 10px 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  animation: xp-toast-in var(--duration-slow) var(--ease-out);
+}
+
+.xp-toast-amount {
+  font-weight: 700;
+  color: var(--success);
+}
+
+.xp-toast-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@keyframes xp-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gam-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 90;
+  padding: 20px;
+}
+
+.gam-modal {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elevation-3);
+  padding: 32px 28px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+  animation: gam-modal-in var(--duration-base) var(--ease-out);
+}
+
+@keyframes gam-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.gam-modal-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.gam-modal-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin: 0 0 4px;
+}
+
+.gam-modal h3 {
+  margin: 0 0 8px;
+  color: var(--text);
+}
+
+.gam-modal-desc {
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.gam-modal-xp {
+  color: var(--success);
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+/* Header status pill (Layout.jsx) */
+.gam-header-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-glass);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.gam-header-level {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* Dashboard progress widget */
+.gam-dashboard-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.gam-xp-bar-track {
+  width: 100%;
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.gam-xp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--primary-strong));
+  transition: width var(--duration-slow) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-toast,
+  .gam-modal {
+    animation: none;
+  }
+  .gam-xp-bar-fill {
+    transition: none;
+  }
+}

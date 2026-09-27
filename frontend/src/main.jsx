@@ -5,6 +5,7 @@ import App from './App';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './context/ToastContext';
+import { GamificationProvider } from './context/GamificationContext';
 import './index.css';
 import './styles/global.css';
 import './styles/components.css';
@@ -19,6 +20,7 @@ import './styles/features/analytics.css';
 import './styles/features/admin.css';
 import './styles/features/ai-tutor.css';
 import './styles/features/learning.css';
+import './styles/features/gamification.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -26,7 +28,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ThemeProvider>
         <AuthProvider>
           <ToastProvider>
-            <App />
+            <GamificationProvider>
+              <App />
+            </GamificationProvider>
           </ToastProvider>
         </AuthProvider>
       </ThemeProvider>

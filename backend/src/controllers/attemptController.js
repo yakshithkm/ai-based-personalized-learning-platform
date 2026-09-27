@@ -20,7 +20,11 @@ const {
   getMistakeBankForUser,
 } = require('../services/progressTracker');
 const { trackProductEvent } = require('../services/eventTrackingService');
+const { processEvent: processGamificationEvent } = require('../services/gamification/gamificationService');
 
+// Legacy, pre-gamification flat XP estimate. No longer the source of truth
+// for result.xpEarned (see the gamification block below) - kept only as a
+// fallback for the rare case the real gamification award itself failed.
 const pointsForAttempt = ({ isCorrect, timeTakenSec }) => {
   const base = isCorrect ? 12 : 5;
   const speedBonus = isCorrect && Number(timeTakenSec || 0) <= 35 ? 3 : 0;
@@ -269,7 +273,41 @@ const submitAttempt = async (req, res, next) => {
       ? 'You are consistently confident but incorrect in this concept. Slowing down and rebuilding fundamentals is recommended.'
       : '';
 
-    const xpEarned = pointsForAttempt({ isCorrect, timeTakenSec: Number(timeTakenSec) });
+    // Gamification is a side effect of a real, validated attempt (the
+    // attempt document above is already persisted with its own _id, which
+    // is what makes the XP award idempotent - resubmitting/refreshing can
+    // never double-count it). Never let a gamification hiccup break the
+    // core practice flow.
+    let gamification = null;
+    try {
+      gamification = await processGamificationEvent({
+        userId: req.user._id,
+        eventType: 'PRACTICE_ANSWER',
+        sourceId: attempt._id,
+        metadata: {
+          isCorrect,
+          timeTakenSec: normalizedTaken,
+          difficulty: question.difficulty,
+          isWeakTopic: Boolean(topicEntry && topicEntry.accuracy < 60),
+          subject: question.subject,
+          topic: question.topic,
+        },
+      });
+    } catch (gamificationError) {
+      gamification = null;
+    }
+
+    // result.xpEarned mirrors the real, authoritative gamification award
+    // (the same figure the header Level/XP pill shows) rather than a
+    // separate, pre-gamification flat estimate - the two used to disagree
+    // (e.g. a flat 12 here vs. a real 20 for a Hard-difficulty correct
+    // answer), which showed up as two different XP numbers on the same
+    // screen. pointsForAttempt is kept only as a fallback for the rare case
+    // gamification itself failed above, so this field is never left empty.
+    const xpEarned =
+      gamification && !gamification.duplicate
+        ? gamification.xpAwarded
+        : pointsForAttempt({ isCorrect, timeTakenSec: Number(timeTakenSec) });
 
     return res.status(201).json({
       message: 'Attempt submitted',
@@ -329,6 +367,7 @@ const submitAttempt = async (req, res, next) => {
         avgAccuracy: performance?.overallAccuracy || 0,
         avgTimeTakenSec: performance?.averageTimeTakenSec || 0,
       },
+      gamification,
     });
   } catch (error) {
     return next(error);

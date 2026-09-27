@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useGamification } from '../context/GamificationContext';
 import api from '../api/client';
 import { onAttemptSubmitted } from '../utils/appEvents';
 import BrandLogo from './BrandLogo';
@@ -163,6 +164,7 @@ const toneToClass = (tone) => {
 
 const Layout = ({ children }) => {
   const { user, logout } = useAuth();
+  const { gamification } = useGamification();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -504,11 +506,34 @@ const Layout = ({ children }) => {
         </div>
 
         <div className="header-actions">
+          {/* Deliberately still the legacy analytics-derived streak (not
+              gamification.profile.currentStreak) so this pill always agrees
+              with the Profile page's "Max streak" figure. A historical
+              backfill migration now exists (services/gamification/
+              backfillService.js), so this is no longer a "the new system
+              hasn't caught up yet" gap - the two streaks can genuinely
+              differ going forward, because GamificationProfile's streak
+              counts a broader set of activities (learning content, exams,
+              mistake review - see STREAK_ELIGIBLE_EVENTS) while this legacy
+              figure is derived from practice Attempts only. Switching this
+              pill to the gamification streak is a real product decision
+              (which definition should the header reflect), not a bug fix -
+              revisit deliberately, not by default. */}
           <span className="streak-pill" title={`${streak} day ${streak === 1 ? 'streak' : 'streaks'}`}>
             <FlameIcon />
             <span className="streak-label">{streak} day {streak === 1 ? 'streak' : 'streaks'}</span>
             <span className="streak-label-compact">{streak}d</span>
           </span>
+
+          {gamification?.profile && (
+            <span
+              className="gam-header-pill"
+              title={`Level ${gamification.profile.level} · ${gamification.profile.totalXp} total XP`}
+            >
+              <span className="gam-header-level">Lvl {gamification.profile.level}</span>
+              <span className="gam-header-xp">{gamification.profile.currentLevelXp}/{gamification.profile.xpForNextLevel} XP</span>
+            </span>
+          )}
 
           <div className="header-profile" ref={notifRef}>
             <button

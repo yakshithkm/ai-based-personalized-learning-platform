@@ -1,9 +1,11 @@
 const Attempt = require('../models/Attempt');
 const Mistake = require('../models/Mistake');
 const Question = require('../models/Question');
+const GamificationProfile = require('../models/GamificationProfile');
 const { getAllowedSubjectsForExam } = require('../config/examSubjectMap');
 const { rebuildPerformanceForUser } = require('./performanceService');
 const { getMistakeBankForUser } = require('./progressTracker');
+const { backfillUserGamification } = require('./gamification/backfillService');
 const {
   computeExamReadiness,
   inferReadinessStatus,
@@ -603,6 +605,14 @@ const buildNextBestAction = ({ dueMistakeCount, focusToday, strongTopics, streak
   };
 };
 
+// Legacy, pre-gamification XP/level estimate. No longer the primary source
+// for the `xp` block below (see getAdaptiveAnalytics, which now reads the
+// real, persistent GamificationProfile - the same figures the header
+// Level/XP pill shows). This used a flat, non-difficulty-weighted formula
+// AND a different level curve (floor(totalXp/250)+1) than the real
+// gamification system, so the two used to disagree - kept only as a
+// fallback for the narrow case a user has no GamificationProfile yet (the
+// backfill call just above should make that effectively never happen).
 const pointsForAttempt = ({ isCorrect, timeTakenSec }) => {
   const base = isCorrect ? 12 : 5;
   const speedBonus = isCorrect && Number(timeTakenSec || 0) <= 35 ? 3 : 0;
@@ -626,7 +636,17 @@ const getAdaptiveAnalytics = async (userId, targetExam) => {
   const now = new Date();
   const allowedSubjects = getAllowedSubjectsForExam(targetExam);
 
-  const [performance, recentAttempts, allAttempts, mistakeBank, dueMistakeCount, totalQuestions, solvedQuestionIds, attemptedQuestionIds] = await Promise.all([
+  // Best-effort: makes sure the persistent GamificationProfile this page's
+  // `xp` block reads below (and the header Level/XP pill elsewhere) is
+  // populated even if this happens to be the first gamification-aware
+  // endpoint a given user has ever hit. Never allowed to fail analytics.
+  try {
+    await backfillUserGamification(userId);
+  } catch (error) {
+    // Swallowed on purpose - see comment above.
+  }
+
+  const [performance, recentAttempts, allAttempts, mistakeBank, dueMistakeCount, totalQuestions, solvedQuestionIds, attemptedQuestionIds, gamificationProfile] = await Promise.all([
     rebuildPerformanceForUser(userId),
     Attempt.find({ user: userId })
       .sort({ createdAt: -1 })
@@ -641,6 +661,7 @@ const getAdaptiveAnalytics = async (userId, targetExam) => {
     Question.countDocuments({ subject: { $in: allowedSubjects } }),
     Attempt.distinct('question', { user: userId, isCorrect: true }),
     Attempt.distinct('question', { user: userId }),
+    GamificationProfile.findOne({ user: userId }).select('totalXp weeklyXp level').lean(),
   ]);
 
   const uniqueSolved = (solvedQuestionIds || []).length;
@@ -732,7 +753,9 @@ const getAdaptiveAnalytics = async (userId, targetExam) => {
     noMistakes,
   });
 
-  const xp = calculateXpSummary(allAttempts || []);
+  const xp = gamificationProfile
+    ? { totalXp: gamificationProfile.totalXp, weeklyXp: gamificationProfile.weeklyXp, level: gamificationProfile.level }
+    : calculateXpSummary(allAttempts || []); // fallback only - see comment on calculateXpSummary above
 
   const preferredTopic = focusToday[0]
     ? `${focusToday[0].subject} - ${focusToday[0].topic}`

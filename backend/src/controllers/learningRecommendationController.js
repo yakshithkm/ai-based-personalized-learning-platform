@@ -5,6 +5,7 @@ const { evaluateEffectiveness } = require('../services/learning/effectiveness');
 const { serializeContent, serializeProgress, serializeRecommendation } = require('../services/learning/serializers');
 const LearningContent = require('../models/LearningContent');
 const LearningContentProgress = require('../models/LearningContentProgress');
+const { processEvent: processGamificationEvent } = require('../services/gamification/gamificationService');
 
 // Services signal client errors with HttpError(statusCode); anything else is a real 500.
 const fail = (res, next, error) => {
@@ -104,7 +105,23 @@ const progressRecommendation = async (req, res, next) => {
 
 const completeRecommendation = async (req, res, next) => {
   try {
-    return res.json(await lifecycle.completeRecommendation(req.user, req.params.id, req.body || {}));
+    const result = await lifecycle.completeRecommendation(req.user, req.params.id, req.body || {});
+
+    let gamification = null;
+    if (!result.alreadyCompleted) {
+      try {
+        gamification = await processGamificationEvent({
+          userId: req.user._id,
+          eventType: 'LEARNING_COMPLETED',
+          sourceId: result.recommendation.id,
+          metadata: { kind: result.recommendation.kind },
+        });
+      } catch (gamificationError) {
+        gamification = null;
+      }
+    }
+
+    return res.json({ ...result, gamification });
   } catch (error) {
     return fail(res, next, error);
   }

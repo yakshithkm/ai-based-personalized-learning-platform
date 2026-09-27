@@ -9,6 +9,7 @@ import {
 import ContentFeedback from '../components/learning/ContentFeedback';
 import { DifficultyBadge, ProgressBar, TypeBadge } from '../components/learning/learningUi';
 import { renderMiniMarkdown } from '../utils/markdownLite';
+import { emitGamificationEvent } from '../utils/appEvents';
 
 const HEARTBEAT_MS = 30000;
 
@@ -120,6 +121,7 @@ const LearningContentPage = () => {
       doneRef.current = true;
       setCompleted(res);
       setPercent(100);
+      emitGamificationEvent(res?.gamification);
     } catch (err) {
       setError({ status: err?.response?.status, message: err?.response?.data?.message || 'Could not mark this as complete.', soft: true });
     } finally {

@@ -7,6 +7,7 @@ const {
   submitExamSession,
   recordExamViolation,
 } = require('../services/examSimulationService');
+const { processEvent: processGamificationEvent } = require('../services/gamification/gamificationService');
 
 const isTestOrDevMode = () => ['test', 'development'].includes(process.env.NODE_ENV);
 
@@ -119,7 +120,29 @@ const finalizeExamSession = async (req, res, next) => {
       presenceWarningCount,
     });
 
-    return res.json(result);
+    // Section 25: never reward a submission forced by a proctoring
+    // violation (max focus violations or presence-check failures). A normal
+    // manual submit or a time-expired auto-submit still counts.
+    const disqualifyingReasons = new Set(['MAX_VIOLATIONS', 'PRESENCE_LIMIT']);
+    const autoSubmitReason = result?.proctoring?.autoSubmitReason || null;
+    let gamification = null;
+    if (!disqualifyingReasons.has(autoSubmitReason)) {
+      const maxScore = Number(result?.scoreSummary?.maxScore || 0);
+      const totalScore = Number(result?.scoreSummary?.totalScore || 0);
+      const scorePercent = maxScore > 0 ? Math.max(0, (totalScore / maxScore) * 100) : 0;
+      try {
+        gamification = await processGamificationEvent({
+          userId: req.user._id,
+          eventType: 'EXAM_COMPLETED',
+          sourceId: result.sessionId,
+          metadata: { scorePercent, examType: result?.scoreSummary?.examType },
+        });
+      } catch (gamificationError) {
+        gamification = null;
+      }
+    }
+
+    return res.json({ ...result, gamification });
   } catch (error) {
     res.status(error.statusCode || 400);
     return next(error);

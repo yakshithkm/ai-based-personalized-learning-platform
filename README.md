@@ -1,6 +1,6 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, adaptive learning features, a learning-content recommendation engine, and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, and a dedicated admin portal.
 
 ## Tech Stack
 
@@ -10,6 +10,8 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 | **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit |
 | **AI Tutor** | Google Gemini API (`@google/genai`) — streaming, server-side only |
 | **Exam Proctoring** | On-device face presence detection (`@vladmandic/face-api`) + browser focus/visibility monitoring (dual independent counters) |
+| **Learning Engine** | Deterministic 0–100 ranking engine + prerequisite expansion + before/after effectiveness tracker |
+| **Gamification** | Server-authoritative XP ledger (`GamificationEvent`) + level curve + streak shields + achievement engine + historical backfill |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
 | **Testing** | Jest + Supertest + mongodb-memory-server (backend) · Vitest + Testing Library (frontend) |
 | **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs · Idempotent event reporting · Privacy-first local video stream |
@@ -45,17 +47,24 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 20. **Profile Page** — User stats, target exam, and account settings
 21. **Learn Page** — Personalised learning hub (`/learn`): curated study-material recommendations organised into sections (Weak Areas, Mistake Recovery, Continue Learning, Practice After Learning, Challenges, Explore New); includes a LearnNext hero card, daily plan, and improvement banners
 22. **Learning Content Detail** — Individual content page (`/learn/:recommendationId`): start, progress, complete, skip, and feedback lifecycle actions with before/after practice measurement
+23. **Gamification & Engagement Engine** — Server-authoritative motivation architecture:
+    - **XP & Dynamic Level Progression**: Non-linear level progression formula (`250 + (level - 1) * 100` incremental XP per level) driven by verified learning actions (practice attempts with difficulty/speed/weak-topic bonuses, completed study content, legitimate exam scores, daily learning activity, and streak days).
+    - **Anti-Farming Event Ledger**: Append-only `GamificationEvent` store with unique `(user, dedupeKey)` constraints ensuring duplicate requests, rapid clicking, or refreshed submissions can never double-credit XP.
+    - **Streak Tracking & Streak Shields**: Daily active tracking with 3, 7, 14, 30, 60, 100, and 365-day milestones. Streak shields are automatically awarded at every 7-day milestone (up to 3 shields max) to protect active streaks during inactive days.
+    - **Codified Achievement Catalog**: 21 immutable milestone achievements spanning practice volume, high accuracy, daily streaks, learning material completion, exam performance, and player level.
+    - **Live UI Chrome & Micro-Interactions**: Real-time XP gain toasts (`+XP`), interactive Level-Up celebration modals, Achievement Unlocked dialogs, and a responsive Level/XP header pill that scales gracefully down to mobile widths.
+    - **Automatic Historical Backfill**: Idempotent reconstruction mechanism populating XP, streaks, and achievements from pre-existing practice attempts, content progress, and exam history so existing accounts or seeded demo profiles never start at Level 1 / 0 XP.
 
 ### Admin Portal
-23. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-24. **Admin Dashboard** — Platform-wide stats overview
-25. **Student Management** — List all students, drill into individual student detail
-26. **Question Bank CRUD** — Create, read, update, and delete questions
-27. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-28. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-29. **Admin Analytics** — Platform-wide analytics section
-30. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
-31. **Product Event Tracking** — Internal telemetry for key user actions
+24. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+25. **Admin Dashboard** — Platform-wide stats overview
+26. **Student Management** — List all students, drill into individual student detail
+27. **Question Bank CRUD** — Create, read, update, and delete questions
+28. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+29. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+30. **Admin Analytics** — Platform-wide analytics section
+31. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
+32. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -72,7 +81,7 @@ ai-based-personalized-learning-platform/
 │       ├── pages/          # Route-level page components
 │       │   ├── (18 student pages, including LearnPage & LearningContentPage)
 │       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
-│       │   └── __tests__/  # Vitest integration & proctoring test suites
+│       │   └── __tests__/  # Vitest integration, proctoring & single-flight suites
 │       ├── components/     # Layout, AdminLayout, ProtectedRoute, AISidebar,
 │       │   │               # AIChatMessage, BrandLogo, EmptyState, Footer,
 │       │   │               # PasswordField, ResultIcons
@@ -85,42 +94,46 @@ ai-based-personalized-learning-platform/
 │       │                   # FaqAccordion, PriceCounter, Reveal, icons
 │       ├── api/            # Axios API clients (client.js, examClient.js,
 │       │                   # examProctoringClient.js, learning.js)
-│       ├── context/        # AuthContext, ThemeContext (dark-only), ToastContext
+│       ├── context/        # AuthContext, GamificationContext, ThemeContext (dark-only), ToastContext
 │       ├── hooks/          # useExamViolationMonitor, usePresenceMonitor, useWebcamMonitor,
 │       │                   # useMagneticHover, useScrollReveal
 │       ├── lib/            # faceDetector.js (lazy on-device TensorFlow.js TinyFaceDetector)
 │       ├── styles/         # Style modules:
 │       │   ├── features/   # admin.css, ai-tutor.css, analytics.css, app-shell.css,
-│       │   │               # dashboard.css, exam.css, landing.css, learning.css,
-│       │   │               # practice.css, profile.css, subpages.css
+│       │   │               # dashboard.css, exam.css, gamification.css, landing.css,
+│       │   │               # learning.css, practice.css, profile.css, subpages.css
 │       │   ├── components.css
 │       │   └── global.css
-│       └── utils/          # Shared utilities
+│       └── utils/          # Shared utilities & appEvents.js (attempt/gamification event bus)
 ├── backend/                # Node.js REST API
 │   ├── src/
-│   │   ├── controllers/    # 17 route handlers (auth, questions, attempts, analytics,
+│   │   ├── controllers/    # 18 route handlers (auth, questions, attempts, analytics,
 │   │   │                   # exam, examReport, recommendation, learningRecommendation,
-│   │   │                   # ai, admin × 8 incl. adminLearningContent)
-│   │   ├── models/         # 13 Mongoose models — see Database Models
-│   │   ├── routes/         # 8 Express routers (auth, questions, attempts, analytics,
-│   │   │                   # recommendations, exams, admin, ai)
-│   │   ├── services/       # 15 service modules — see Service Layer
+│   │   │                   # gamification, ai, admin × 8 incl. adminLearningContent)
+│   │   ├── models/         # 16 Mongoose models — see Database Models
+│   │   ├── routes/         # 9 Express routers (auth, questions, attempts, analytics,
+│   │   │                   # recommendations, exams, gamification, admin, ai)
+│   │   ├── services/       # 16 service modules — see Service Layer
 │   │   │   ├── ai/         # aiService.js, geminiService.js
+│   │   │   ├── gamification/ # gamificationService.js, backfillService.js, config.js
 │   │   │   ├── learning/   # index.js + 14 focused modules (ranking, needDetection,
 │   │   │   │               # learnerProfile, lifecycle, practiceSet, dailyPlan,
 │   │   │   │               # learningPath, history, effectiveness, explanations,
 │   │   │   │               # aiExplainer, serializers, constants, errors)
 │   │   │   └── pdf/        # examCertificatePdf.js, examReportPdf.js, pdfHelpers.js
 │   │   ├── middleware/     # authMiddleware, errorMiddleware, validateObjectIdParam
-│   │   ├── config/         # DB connection, examConfig.js (proctoring settings)
+│   │   ├── config/         # DB connection, examConfig.js, examSubjectMap.js
 │   │   ├── assets/         # Static backend assets
 │   │   ├── data/           # Seed/reference data
 │   │   └── utils/
-│   ├── tests/              # Jest + Supertest test suites (8 test suites)
+│   ├── tests/              # Jest + Supertest test suites (10 test suites)
 │   ├── seedQuestions.js    # Question bank seed script
 │   ├── seedDemo.js         # Demo user + data seed script
 │   ├── seedAdmin.js        # Admin user seed script
 │   ├── seedLearningContent.js # Learning content library seed script
+│   ├── backfillGamification.js # CLI script for gamification historical backfill
+│   ├── scripts/
+│   │   └── backfillGamification.js # Multi-user backfill runner
 │   └── resetDemo.js        # Demo data reset script
 ├── ml-service/             # Python Flask microservice
 │   ├── app.py              # /health + /analyze endpoints (port 8000)
@@ -176,7 +189,8 @@ npm run dev:ml         # ML service only (port 8000)
 5. `npm run seed:demo` — (optional) load a demo user with pre-built data
 6. `npm run seed:admin` — (optional) seed an admin account
 7. `npm run seed:content` — (optional) seed the learning-content library (`-- --dry-run` validates only, `-- --reset` removes unused seeded rows first)
-8. `npm run dev` — start with nodemon
+8. `npm run backfill:gamification` — (optional) backfill XP, levels, streaks, and achievements for existing users or demo accounts
+9. `npm run dev` — start with nodemon
 
 To reset demo data: `npm run reset:demo`
 
@@ -291,13 +305,13 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 ### Attempts (`/api/attempts`)
 | Method | Path | Description |
 |---|---|---|
-| `POST` | `/` | Submit a practice attempt |
+| `POST` | `/` | Submit a practice attempt (evaluates correctness, persists performance, processes server-authoritative gamification XP) |
 | `GET` | `/me` | Get current user's attempt history |
 
 ### Analytics (`/api/analytics`)
 | Method | Path | Description |
 |---|---|---|
-| `GET` | `/me` | Per-topic performance stats for current user |
+| `GET` | `/me` | Per-topic performance stats, habit insights, exam readiness, and persistent gamification level/XP for current user |
 
 ### Recommendations (`/api/recommendations`)
 | Method | Path | Description |
@@ -314,9 +328,19 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `GET` | `/:id/practice` | Practice question set for a recommendation |
 | `POST` | `/:id/start` | Mark recommendation as started |
 | `POST` | `/:id/progress` | Update progress on a recommendation |
-| `POST` | `/:id/complete` | Mark recommendation as completed |
+| `POST` | `/:id/complete` | Mark recommendation as completed (awards 20 XP via gamification engine) |
 | `POST` | `/:id/skip` | Skip a recommendation |
 | `POST` | `/:id/feedback` | Submit feedback on a recommendation |
+
+### Gamification (`/api/gamification`)
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/summary` | Aggregated gamification summary (profile, recent events, unlock count) for header pill and dashboard |
+| `GET` | `/profile` | Current user gamification profile (XP, level, streak, shields, counters, personal bests) |
+| `GET` | `/achievements` | Full achievement catalog (21 milestones) with user unlock status and timestamp |
+| `GET` | `/history` | Paginated append-only XP event history ledger (anti-farming audit trail) |
+
+> **Note**: Gamification routes are strictly read-only by design. There is intentionally no client endpoint to add XP or grant achievements; XP is awarded server-authoritative as a side effect of validated learning actions (answering questions, finishing learning content, or submitting legitimate exams).
 
 ### AI Tutor (`/api/ai`)
 | Method | Path | Description |
@@ -331,7 +355,7 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `GET` | `/sessions/:sessionId` | Get session state |
 | `PATCH` | `/sessions/:sessionId/answer` | Save an answer for a question (single-flight guarded) |
 | `POST` | `/sessions/:sessionId/violations` | Record a focus violation or presence warning with an idempotent event ID (`TAB_HIDDEN`, `WINDOW_BLUR`, `ROUTE_LEAVE`, `NO_PERSON`). Protected. |
-| `POST` | `/sessions/:sessionId/submit` | Finalise and score the exam. Accepts optional submit reason and claimed counters (`MANUAL`, `TIME_EXPIRED`, `MAX_VIOLATIONS`, `PRESENCE_LIMIT`) verified server-side. |
+| `POST` | `/sessions/:sessionId/submit` | Finalise and score the exam. Accepts optional submit reason and claimed counters (`MANUAL`, `TIME_EXPIRED`, `MAX_VIOLATIONS`, `PRESENCE_LIMIT`) verified server-side. Legitimate submissions process exam XP. |
 | `GET` | `/sessions/:sessionId/report` | Download exam report as PDF |
 | `GET` | `/sessions/:sessionId/certificate` | Download completion certificate as PDF |
 
@@ -386,6 +410,65 @@ TutorMind recommends *what to learn next* (study material → practice → re-me
 
 **Optional AI:** `LEARNING_AI_EXPLANATIONS=true` (with `GEMINI_API_KEY`) lets Gemini rephrase only the top "why" sentence. Ranking never depends on it.
 
+---
+
+## Gamification & Engagement Engine
+
+TutorMind integrates a server-authoritative gamification engine designed to reward consistent study habits, deliberate practice, and mastery.
+
+### Architectural Guarantees & Anti-Farming
+
+- **Server-Authoritative Awards**: The frontend never transmits XP values or unlocks directly. XP is awarded purely as a side effect of server-side operations (attempt submission, learning item completion, legitimate exam submission).
+- **Append-Only Event Ledger (`GamificationEvent`)**: Every award is logged with a deterministic `dedupeKey` (e.g. `PRACTICE_ANSWER:${attemptId}` or `DAILY_ACTIVITY:${date}`). A unique compound index on `(user, dedupeKey)` ensures duplicate client retries or page refreshes are treated as idempotent no-ops.
+- **Proctoring Disqualification**: Exams terminated automatically due to integrity violations (`MAX_VIOLATIONS` or `PRESENCE_LIMIT`) are strictly disqualified from earning exam completion or high-score XP.
+
+### XP Awards & Progression
+
+| Event | Base XP | Bonus Conditions |
+|---|---|---|
+| Practice Answer (Incorrect) | 5 XP | — |
+| Practice Answer (Correct) | 10 XP | +3 XP speed bonus (answered in ≤ 35s) |
+| Practice Answer (Weak Topic) | 15 XP | +3 XP speed bonus if answered in ≤ 35s |
+| Practice Answer (Hard Question) | 20 XP | +3 XP speed bonus if answered in ≤ 35s |
+| Learning Content Completed | 20 XP | Triggered on recommendation completion |
+| Exam Completed | 50 XP | Disqualified if terminated for proctoring violations |
+| Exam Score ≥ 80% | +50 XP | Added to base exam completion award |
+| Exam Score ≥ 90% | +75 XP | Added to base exam completion award |
+| Exam Score ≥ 95% | +100 XP | Added to base exam completion award |
+| Daily Active Practice | 5 XP | Awarded once per calendar day |
+| Streak Day | 10 XP | Awarded upon advancing daily streak |
+
+### Dynamic Level Curve
+
+The XP required to progress between levels scales non-linearly:
+$$\text{XP to next level from } L = 250 + (L - 1) \times 100$$
+
+- **Level 1 → 2**: 250 XP
+- **Level 2 → 3**: 350 XP (600 cumulative XP)
+- **Level 3 → 4**: 450 XP (1,050 cumulative XP)
+- **Level 4 → 5**: 550 XP (1,600 cumulative XP)
+
+### Streak Shields & Habit System
+
+- **Habit Streaks**: Calculated across all qualifying study events (practice questions, learning material, exam completions).
+- **Streak Shields**: For every 7 days of continuous streak, the student automatically earns 1 Streak Shield (capped at 3 shields max) to prevent accidental streak forfeiture during missed days.
+
+### Codified Achievement Catalog
+
+21 achievements across 6 categories defined in `backend/src/services/gamification/config.js` and stored permanently in `UserAchievement`:
+- **Practice Volume**: *First Step* (1 Q), *Getting Started* (25 Q), *Question Crusher* (100 Q), *Practice Pro* (500 Q), *Master Solver* (1000 Q)
+- **Accuracy**: *Sharpshooter* (80%+ across 20+ Q), *Precision* (90%+ across 50+ Q)
+- **Streaks**: *3-Day Learner*, *7-Day Streak*, *14-Day Streak*, *30-Day Streak*, *60-Day Streak*, *100-Day Streak*
+- **Learning Content**: *First Lesson* (1 item), *Knowledge Builder* (10 items), *Deep Learner* (50 items)
+- **Exams**: *First Exam*, *Exam Ready* (5 exams), *High Performer* (80%+ score), *Elite Performance* (90%+ score)
+- **Levels**: *Rising Star* (Level 5), *Advanced Learner* (Level 10), *Master Learner* (Level 20)
+
+### Historical Backfill Migration
+
+Pre-existing users and seeded demo accounts are automatically backfilled via `backend/src/services/gamification/backfillService.js`. When any user hits `/api/gamification/*` or `/api/analytics/me`, their historical practice attempts, content progress, and exam sessions are reconciled into `GamificationProfile` and `GamificationEvent` idempotently without double-counting. Administrators can also run the batch backfill CLI via `npm --prefix backend run backfill:gamification`.
+
+---
+
 ## Security
 
 - **Helmet** — sets secure HTTP response headers
@@ -394,6 +477,7 @@ TutorMind recommends *what to learn next* (study material → practice → re-me
 - **Exam-session rate limiting** — per-session, per-question throttle with 3-second cooldown on 429; single-flight locks prevent request flooding
 - **Proctoring event idempotency** — client-generated UUID keys prevent duplicate counts or inflated violation state from network retries
 - **Privacy-first video handling** — camera streams remain purely local in browser memory; video frames are never recorded, transmitted, or uploaded to any server
+- **Anti-farming gamification ledger** — unique compound indexes prevent replay attacks, double-crediting, or inflated scores
 - **express-mongo-sanitize** — strips `$`/`.` keys from request input to block NoSQL injection
 - **bcryptjs** — password hashing
 - **JWT** — stateless auth via `Authorization: Bearer <token>` header
@@ -416,6 +500,9 @@ TutorMind recommends *what to learn next* (study material → practice → re-me
 | `LearningContentProgress` | Per-student progress record for each content item (status, score, time spent) |
 | `LearningRecommendation` | Persisted recommendation record including ranking score, lifecycle state, and before/after measurement |
 | `QuestionRecommendationLog` | Log linking practice questions to a parent recommendation for before/after measurement |
+| `GamificationProfile` | Server-authoritative user gamification state (XP, level, level progress, daily/weekly XP, streaks, streak shields, personal bests, historical counters) |
+| `GamificationEvent` | Append-only event ledger with unique `(user, dedupeKey)` index preventing XP double-counting and farming |
+| `UserAchievement` | Immutable unlock records with unique `(user, achievementId)` index ensuring achievements cannot be lost |
 | `ProductEvent` | Internal telemetry events |
 
 ---
@@ -426,7 +513,8 @@ TutorMind recommends *what to learn next* (study material → practice → re-me
 |---|---|
 | `examSimulationService` | Core exam session lifecycle, scoring, state reconciliation, focus & presence proctoring enforcement |
 | `recommendationService` | ML-backed + rule-based topic recommendations |
-| `analyticsService` | Per-topic and platform analytics aggregation |
+| `gamification/` (3 modules) | Server-authoritative gamification engine: XP calculation & anti-farming deduplication (`gamificationService`), historical backfill reconstruction (`backfillService`), and central awards/level-curve/achievements config (`config`) |
+| `analyticsService` | Per-topic and platform analytics aggregation, habit tracking, and gamification profile integration |
 | `analysisService` | Post-exam intelligence and adaptive study plan generation |
 | `feedbackService` | Practice attempt feedback and explanation delivery |
 | `performanceService` | Attempt-to-performance aggregation writes |
@@ -462,6 +550,8 @@ npm run test:backend
 | `exam.proctoring.test.js` | Focus violation recording, camera presence tracking, auto-submit reasons, duplicate prevention, and counter bounds |
 | `intelligence.validation.test.js` | Scoring and intelligence analysis |
 | `intelligence.adversarial.test.js` | Adversarial / edge-case scenarios |
+| `gamification.test.js` | XP calculation, speed & difficulty bonuses, anti-farming deduplication, level curve progression, and achievement unlocks |
+| `gamification.backfill.test.js` | Historical streak reconstruction, multi-source backfill, and idempotency guarantees |
 | `learning.engine.test.js` | Learning-content recommendation engine (ranking, need detection, lifecycle) |
 | `learning.api.test.js` | Learning recommendation REST API integration |
 
@@ -473,7 +563,7 @@ npm --prefix frontend run test
 npm --prefix frontend run test:watch
 ```
 
-Key frontend test suites:
+Key frontend test suites (12 test files, 66 tests):
 - `ExamSimulationPage.proctoring.test.jsx` — Focus violations, blur grace confirmation, tab hidden detection, on-device presence detection, auto-submission flows, and duplicate prevention
 - `ExamSimulationPage.singleFlight.test.jsx` & `singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
 - `ExamSimulationPage.integrity.test.jsx` & `race.test.jsx` — State reconciliation, sequence ordering, out-of-order rejection, and duplicate suppression
@@ -493,6 +583,10 @@ Key frontend test suites:
 
 ## Notes
 
+- **Gamification & Habit Retention**:
+  - XP awards are server-authoritative and completely shielded from client tampering. An append-only ledger (`GamificationEvent`) guarantees idempotency and blocks XP farming.
+  - Streak shields safeguard consistent study habits by forgiving up to 3 inactive days without resetting the student's streak counter.
+  - Micro-interactions (animated XP toasts, level-up celebration dialogs, and unlock modals) are broadcast through custom DOM events (`tutormind:gamification-event`) handled globally by `GamificationProvider`.
 - **AI Tutor** (`Ask with AI`): Available in the Practice Page sidebar. Uses Google Gemini (Flash-Lite by default) for streaming, multi-turn doubt resolution scoped to the currently attempted question. The sidebar renders as a portal to `document.body` to escape the app shell's stacking context. When `GEMINI_API_KEY` is absent or the Gemini service is unreachable, the feature degrades gracefully without affecting the rest of the platform.
 - **Exam Proctoring & Integrity Shield**:
   - **Dual Independent Counters**: Focus violations (tab switches, window blurs, route leaves) and presence warnings (no face visible in camera) are tracked on separate counters. Neither adds to or interferes with the other.

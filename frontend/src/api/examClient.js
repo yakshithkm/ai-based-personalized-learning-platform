@@ -1,4 +1,5 @@
 import api from './client';
+import { emitGamificationEvent } from '../utils/appEvents';
 
 const RETRY_DELAY_MS = 1200;
 const requestState = {
@@ -330,6 +331,12 @@ const submitExamSession = async ({ sessionId, reason, violationCount, presenceWa
       return { aborted: true, requestId, stale: true };
     }
     requestState.activeController = null;
+    // Fires the XP toast / level-up / achievement modal, if the submission
+    // was eligible (a proctoring-violation auto-submit carries none - see
+    // examController.finalizeExamSession). Kept here rather than in the
+    // (high-fragility) ExamSimulationPage so this integration never touches
+    // that page's state or handlers.
+    emitGamificationEvent(response?.data?.gamification);
     return response;
   } catch (error) {
     if (isAbortError(error)) {
