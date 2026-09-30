@@ -14,6 +14,7 @@ const adminRoutes = require('./routes/adminRoutes');
 const examRoutes = require('./routes/examRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 const gamificationRoutes = require('./routes/gamificationRoutes');
+const referralRoutes = require('./routes/referralRoutes');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
 const { protect } = require('./middleware/authMiddleware');
 const { validateObjectIdParam } = require('./middleware/validateObjectIdParam');
@@ -63,6 +64,7 @@ app.use('/api/attempts', apiLimiter);
 app.use('/api/analytics', apiLimiter);
 app.use('/api/recommendations', apiLimiter);
 app.use('/api/admin', apiLimiter);
+app.use('/api/referrals', apiLimiter);
 
 // AI tutor calls hit Gemini's free-tier quota per request (unlike the other
 // routes above, which only hit MongoDB), so it gets its own tighter limit
@@ -101,6 +103,7 @@ app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/gamification', gamificationRoutes);
+app.use('/api/referrals', referralRoutes);
 
 app.get(
   '/api/exam/session/:sessionId/debug-intents',

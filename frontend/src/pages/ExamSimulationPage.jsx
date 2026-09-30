@@ -17,6 +17,7 @@ import WebcamMonitor from '../components/exam/WebcamMonitor';
 import ViolationIndicator from '../components/exam/ViolationIndicator';
 import ProctorAlerts from '../components/exam/ProctorAlerts';
 import PresenceToast from '../components/exam/PresenceToast';
+import { PROTECTED_CONTENT_CLASS, protectedContentHandlers } from '../utils/protectedContent';
 const EXAM_TAB_LOCK_KEY = 'exam-active-tab-lock';
 
 const SECTION_SUBJECT_OPTIONS = {
@@ -1863,7 +1864,12 @@ const ExamSimulationPage = () => {
                 <span className="exam-tag-chip">{currentQuestion?.difficultyLevel || currentQuestion?.difficulty}</span>
                 <span className="exam-tag-chip">{currentQuestion?.weightage || 'Medium'} Weightage</span>
               </div>
-              <p className="exam-question-text">{currentQuestion?.text}</p>
+               <p
+                className={`exam-question-text ${PROTECTED_CONTENT_CLASS}`}
+                {...protectedContentHandlers}
+              >
+                {currentQuestion?.text}
+              </p>
 
               <div className="option-list">
                 {(currentQuestion?.options || []).map((option, idx) => (
@@ -1879,7 +1885,9 @@ const ExamSimulationPage = () => {
                     onClick={() => handleOptionSelect(idx)}
                     disabled={inputsDisabled || (savingQuestionIdRef.current === currentQuestion?._id)}
                   >
-                    {option}
+                    <span className={PROTECTED_CONTENT_CLASS} {...protectedContentHandlers}>
+                      {option}
+                    </span>
                   </button>
                 ))}
               </div>

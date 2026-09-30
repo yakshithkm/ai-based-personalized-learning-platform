@@ -57,6 +57,12 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   margin-top: 0.5rem;
 }
 
+.profile-header-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
 .profile-ring-panel {
   display: flex;
   align-items: center;
@@ -482,4 +488,121 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   .profile-ring-legend {
     width: 100%;
   }
+}
+
+/* Invite Friends modal - its own backdrop (pinned near the top of the
+   viewport, not vertically centered like .gam-modal-backdrop in
+   gamification.css) so the invite link/copy button are reachable without
+   scrolling the page first, however far down the Profile page was scrolled
+   when the modal was opened. Reuses .gam-modal for the card chrome
+   (padding/radius/shadow/animation), text-aligned left instead of that
+   modal's centered layout. */
+.invite-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.6);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 90;
+  padding: 20px;
+  padding-top: 7vh;
+  overflow-y: auto;
+}
+
+.invite-friends-modal {
+  text-align: left;
+  max-width: 460px;
+  position: relative;
+}
+
+.invite-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.invite-modal-close:hover {
+  color: var(--text);
+}
+
+.invite-modal-desc {
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+
+.invite-modal-status {
+  color: var(--muted);
+}
+
+.invite-link-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.9rem;
+}
+
+.invite-link-row input {
+  flex: 1 1 220px;
+  min-width: 0;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.75rem;
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.invite-modal-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.invite-modal-actions .solid-btn,
+.invite-modal-actions .outline-btn,
+.invite-link-row .outline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.invite-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.7rem;
+}
+
+.invite-stat-box {
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.invite-stat-box span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.invite-stat-box strong {
+  font-size: 1.1rem;
+}
+
+.invite-modal-empty {
+  margin-top: 1rem;
+  color: var(--muted);
+  text-align: center;
 }

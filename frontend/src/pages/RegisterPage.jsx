@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
 import PasswordField from '../components/PasswordField';
@@ -15,6 +15,11 @@ const FEATURES = [
 const RegisterPage = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // Referral code from an invite link (?ref=ABC123XY), preserved through the
+  // form and sent to the backend on submit. The backend re-validates it
+  // against the database - this is only ever used to prefill the request.
+  const referralCode = (searchParams.get('ref') || '').trim();
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -34,7 +39,7 @@ const RegisterPage = () => {
     setBusy(true);
 
     try {
-      await register(form);
+      await register(referralCode ? { ...form, ref: referralCode } : form);
       navigate('/dashboard');
     } catch (err) {
       setError(err?.response?.data?.message || 'Registration failed');
@@ -83,6 +88,11 @@ const RegisterPage = () => {
           <form className="auth-card" onSubmit={onSubmit}>
             <h3>Create your account</h3>
             <p>Start your personalized learning journey.</p>
+            {!!referralCode && (
+              <p className="chip nav-badge" style={{ marginBottom: '0.6rem' }}>
+                Invited with code {referralCode}
+              </p>
+            )}
 
             <label htmlFor="register-name">
               Full Name

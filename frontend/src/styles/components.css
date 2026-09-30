@@ -19,6 +19,18 @@
   margin: 1rem 0;
 }
 
+/* Blocks selection/highlight of question and option text on Practice and Exam
+   Simulation (copy/cut/drag/context-menu are additionally blocked via JS
+   handlers - see frontend/src/utils/protectedContent.js). Scoped to this
+   class only, so normal interaction (clicking an option button, buttons,
+   inputs, navigation) elsewhere is unaffected. */
+.question-protected-content {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 .option-btn {
   text-align: left;
   background: rgba(15, 23, 42, 0.72);

@@ -1,27 +1,29 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, question content protection, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, a peer referral/invite program, non-blocking transactional security emails, and a dedicated admin portal.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
 | **Frontend** | React 18 + Vite + React Router v6 + Recharts + `@vladmandic/face-api` (on-device TensorFlow.js) |
-| **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit |
+| **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit + Nodemailer |
 | **AI Tutor** | Google Gemini API (`@google/genai`) — streaming, server-side only |
-| **Exam Proctoring** | On-device face presence detection (`@vladmandic/face-api`) + browser focus/visibility monitoring (dual independent counters) |
+| **Exam Proctoring & Content Protection** | On-device face presence detection (`@vladmandic/face-api`) + browser focus/visibility monitoring + client-side question anti-copy/anti-leak shield |
 | **Learning Engine** | Deterministic 0–100 ranking engine + prerequisite expansion + before/after effectiveness tracker |
 | **Gamification** | Server-authoritative XP ledger (`GamificationEvent`) + level curve + streak shields + achievement engine + historical backfill |
+| **Referrals & Community** | Server-authoritative referral codes (`User.referralCode`) + unique referral tracking (`Referral`) + dynamic Web Share & clipboard invite links |
+| **Transactional Email** | Nodemailer with non-blocking fire-and-forget SMTP delivery + fail-safe offline degradation |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
-| **Testing** | Jest + Supertest + mongodb-memory-server (backend) · Vitest + Testing Library (frontend) |
-| **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs · Idempotent event reporting · Privacy-first local video stream |
+| **Testing** | Jest + Supertest + mongodb-memory-server (backend: 14 test suites) · Vitest + Testing Library (frontend: 18 test files, 81 tests) |
+| **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs · Idempotent event reporting · Privacy-first local video stream · Question content protection · Non-blocking email boundary |
 
 ---
 
 ## Features
 
 ### Student-Facing
-1. **User Authentication** — Register, login, profile via JWT (Bearer token)
+1. **User Authentication** — Register, login, profile via JWT (Bearer token); supports referral code tracking (`?ref=`) and non-blocking transactional security emails (welcome email on registration and login confirmation with IST timestamp)
 2. **Question Bank** — Exam-wise (NEET/JEE/CET), subject-topic hierarchical question sets
 3. **Practice Quiz Flow** — Per-question attempt submission with correctness and explanation feedback
 4. **Ask with AI (AI Tutor)** — Streaming Gemini-powered doubt-resolution sidebar on the Practice Page; multi-turn conversation scoped to the currently attempted question
@@ -35,6 +37,7 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
     - **Focus Violation Tracking**: Detects tab changes (`visibilitychange`), window blurring (`blur` with a 250ms confirmation delay), and navigation attempts with 4 warning levels and automated submission at 5 violations (`MAX_VIOLATIONS`).
     - **On-Device Webcam Presence Detection**: Evaluates live video locally via `@vladmandic/face-api` (TinyFaceDetector, ~190 KB weights served locally from `/models/`, no CDN, zero video uploaded or stored). Alerts after 5 consecutive absent frames and auto-submits after 5 presence warnings (`PRESENCE_LIMIT`).
     - **Camera Status Monitoring**: Derives device status (requesting, active, denied, not-found, in-use, disconnected) with user recovery retry controls. Camera unavailability alone is treated as a client warning and is never penalized as an absence.
+    - **Question Content Protection & Anti-Leak**: Restricts selection (`user-select: none`), clipboard copying (`onCopy`), cutting (`onCut`), drag-and-drop (`onDragStart`), and right-click context menus (`onContextMenu`) across question stems and options in both Practice and Exam Simulation modes without impeding button clicks.
     - **Server-Authoritative Idempotency**: Violation reports use client-generated idempotency keys (`crypto.randomUUID`) to prevent duplicate counts from retries.
 12. **Post-Exam Intelligence** — Adaptive follow-up study plan generated from exam results
 13. **Exam Report & Certificate Download** — PDF export of exam results and completion certificate
@@ -44,7 +47,7 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 17. **Achievements Page** — Milestone and badge tracking
 18. **Flashcards** — Lightweight review interface
 19. **Session Summary** — Post-practice session breakdown
-20. **Profile Page** — User stats, target exam, and account settings
+20. **Profile Page** — User stats, target exam, account settings, and an **Invite Friends** entry point with referral code display and statistics
 21. **Learn Page** — Personalised learning hub (`/learn`): curated study-material recommendations organised into sections (Weak Areas, Mistake Recovery, Continue Learning, Practice After Learning, Challenges, Explore New); includes a LearnNext hero card, daily plan, and improvement banners
 22. **Learning Content Detail** — Individual content page (`/learn/:recommendationId`): start, progress, complete, skip, and feedback lifecycle actions with before/after practice measurement
 23. **Gamification & Engagement Engine** — Server-authoritative motivation architecture:
@@ -54,22 +57,31 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
     - **Codified Achievement Catalog**: 21 immutable milestone achievements spanning practice volume, high accuracy, daily streaks, learning material completion, exam performance, and player level.
     - **Live UI Chrome & Micro-Interactions**: Real-time XP gain toasts (`+XP`), interactive Level-Up celebration modals, Achievement Unlocked dialogs, and a responsive Level/XP header pill that scales gracefully down to mobile widths.
     - **Automatic Historical Backfill**: Idempotent reconstruction mechanism populating XP, streaks, and achievements from pre-existing practice attempts, content progress, and exam history so existing accounts or seeded demo profiles never start at Level 1 / 0 XP.
-24. **Comprehensive Exam Hub (About Exams)** — Dedicated reference and guidance center (`/about-exams`) for NEET (UG), JEE Main, and Karnataka CET (KCET / UGCET):
+24. **Invite Friends & Referral Program** — Built-in peer referral system with live stats:
+    - **Unique Referral Codes**: High-entropy 8-character codes (`ABCDEFGHJKMNPQRSTUVWXYZ23456789`, excluding visually ambiguous characters like `0/O` and `1/I/L`) auto-assigned to every user and lazily backfilled on save.
+    - **Seamless Invite Links**: Dynamic links (`/register?ref=CODE`) built from frontend configuration (`VITE_CLIENT_URL` or runtime `window.location.origin`).
+    - **Multi-Channel Sharing**: Dedicated `InviteFriendsModal` featuring one-click link copying (with toast confirmation), native Web Share API (`navigator.share`), and pre-filled email invitations (`mailto:`).
+    - **Server-Authoritative Tracking**: DB-level enforcement ensuring one referrer per user (`referredUser` unique index) with automatic self-referral prevention and live signup counters (`friendsInvited`, `successfulSignups`).
+25. **Transactional Security & Notification Emails** — Fail-safe email alerts powered by Nodemailer:
+    - **Login Confirmation**: Dispatches an instant security notification upon every successful login with date, IST time, and alert instructions for unrecognized logins.
+    - **Registration Welcome**: Welcomes new students with account details and target examination summary.
+    - **Non-Blocking Architecture**: Fire-and-forget execution with internal error boundaries ensures slow or unconfigured SMTP servers never block, delay, or fail authentication requests.
+26. **Comprehensive Exam Hub (About Exams)** — Dedicated reference and guidance center (`/about-exams`) for NEET (UG), JEE Main, and Karnataka CET (KCET / UGCET):
     - **Official Authorities & Scope**: Details governing bodies (NTA, KEA), degree pathways (MBBS, BDS, AYUSH, B.Tech/B.E., B.Arch, B.Planning, Pharmacy), and paper formats.
     - **Verified Direct Portals**: Links directly to official candidate portals and public notice boards for circulars, admit cards, and application forms without fragile year-specific URLs.
     - **Side-by-Side Comparison Matrix**: Cross-exam comparison table contrasting conducting bodies, purposes, subject combinations, and national vs. state eligibility scopes.
     - **Exam Chooser Guide & FAQ**: Decision frameworks and answers to common queries to help candidates select their target entrance examination based on career pathways.
 
 ### Admin Portal
-25. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-26. **Admin Dashboard** — Platform-wide stats overview
-27. **Student Management** — List all students, drill into individual student detail
-28. **Question Bank CRUD** — Create, read, update, and delete questions
-29. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-30. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-31. **Admin Analytics** — Platform-wide analytics section
-32. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
-33. **Product Event Tracking** — Internal telemetry for key user actions
+27. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+28. **Admin Dashboard** — Platform-wide stats overview
+29. **Student Management** — List all students, drill into individual student detail
+30. **Question Bank CRUD** — Create, read, update, and delete questions
+31. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+32. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+33. **Admin Analytics** — Platform-wide analytics section
+34. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
+35. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -86,17 +98,19 @@ ai-based-personalized-learning-platform/
 │       ├── pages/          # Route-level page components
 │       │   ├── (19 pages: 18 student/public pages incl. AboutExamPage, LearnPage & LearningContentPage + 1 legacy admin analytics)
 │       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
-│       │   └── __tests__/  # Vitest integration, proctoring & single-flight suites
+│       │   └── __tests__/  # Vitest integration, proctoring, content protection & single-flight suites (14 suites)
 │       ├── components/     # Layout, AdminLayout, ProtectedRoute, AISidebar,
 │       │   │               # AIChatMessage, BrandLogo, EmptyState, Footer,
-│       │   │               # PasswordField, ResultIcons
+│       │   │               # InviteFriendsModal, PasswordField, ResultIcons
 │       │   ├── exam/       # PresenceToast, ProctorAlerts, ViolationIndicator, WebcamMonitor
 │       │   ├── admin/      # AdminLayout, AdminQuestionFormModal, ConfirmDialog, Pagination
 │       │   ├── learning/   # LearnNextCard, LearnNextTeaser, RecommendationCard, DailyPlan,
 │       │   │               # ImprovementBanner, LearningPath, PersonalizedPlanPanel,
 │       │   │               # ContentFeedback, learningUi
-│       │   └── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
-│       │                   # FaqAccordion, PriceCounter, Reveal, icons
+│       │   ├── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
+│       │   │               # FaqAccordion, PriceCounter, Reveal, icons
+│       │   ├── __smoke__/  # Layout and PasswordField smoke tests
+│       │   └── __tests__/  # InviteFriendsModal integration tests
 │       ├── api/            # Axios API clients (client.js, examClient.js,
 │       │                   # examProctoringClient.js, learning.js)
 │       ├── context/        # AuthContext, GamificationContext, ThemeContext (dark-only), ToastContext
@@ -107,31 +121,33 @@ ai-based-personalized-learning-platform/
 │       │   ├── features/   # about-exams.css, admin.css, ai-tutor.css, analytics.css,
 │       │   │               # app-shell.css, dashboard.css, exam.css, gamification.css,
 │       │   │               # landing.css, learning.css, practice.css, profile.css, subpages.css
-│       │   ├── components.css
+│       │   ├── components.css # Shared components + question content protection styling
 │       │   └── global.css
-│       └── utils/          # Shared utilities & appEvents.js (attempt/gamification event bus)
+│       └── utils/          # Shared utilities, appEvents.js & protectedContent.js
 ├── backend/                # Node.js REST API
 │   ├── src/
-│   │   ├── controllers/    # 18 route handlers (auth, questions, attempts, analytics,
-│   │   │                   # exam, examReport, recommendation, learningRecommendation,
-│   │   │                   # gamification, ai, admin × 8 incl. adminLearningContent)
-│   │   ├── models/         # 16 Mongoose models — see Database Models
-│   │   ├── routes/         # 9 Express routers (auth, questions, attempts, analytics,
-│   │   │                   # recommendations, exams, gamification, admin, ai)
-│   │   ├── services/       # 16 service modules — see Service Layer
+│   │   ├── controllers/    # 19 route handlers (auth, referral, questions, attempts,
+│   │   │                   # analytics, exam, examReport, recommendation,
+│   │   │                   # learningRecommendation, gamification, ai, admin × 8)
+│   │   ├── models/         # 17 Mongoose models — see Database Models (incl. Referral)
+│   │   ├── routes/         # 10 Express routers (auth, referral, questions, attempts,
+│   │   │                   # analytics, recommendations, exams, gamification, admin, ai)
+│   │   ├── services/       # 17 service modules — see Service Layer
 │   │   │   ├── ai/         # aiService.js, geminiService.js
 │   │   │   ├── gamification/ # gamificationService.js, backfillService.js, config.js
 │   │   │   ├── learning/   # index.js + 14 focused modules (ranking, needDetection,
 │   │   │   │               # learnerProfile, lifecycle, practiceSet, dailyPlan,
 │   │   │   │               # learningPath, history, effectiveness, explanations,
 │   │   │   │               # aiExplainer, serializers, constants, errors)
-│   │   │   └── pdf/        # examCertificatePdf.js, examReportPdf.js, pdfHelpers.js
+│   │   │   ├── pdf/        # examCertificatePdf.js, examReportPdf.js, pdfHelpers.js
+│   │   │   └── emailService.js # Nodemailer transactional email delivery
 │   │   ├── middleware/     # authMiddleware, errorMiddleware, validateObjectIdParam
 │   │   ├── config/         # DB connection, examConfig.js, examSubjectMap.js
 │   │   ├── assets/         # Static backend assets
 │   │   ├── data/           # Seed/reference data
-│   │   └── utils/
-│   ├── tests/              # Jest + Supertest test suites (10 test suites)
+│   │   └── utils/          # adminBootstrap, generateCertificateId, generateReferralCode,
+│   │                       # generateToken, isValidObjectId
+│   ├── tests/              # Jest + Supertest test suites (14 test suites)
 │   ├── seedQuestions.js    # Question bank seed script
 │   ├── seedDemo.js         # Demo user + data seed script
 │   ├── seedAdmin.js        # Admin user seed script
@@ -165,6 +181,7 @@ npm --prefix frontend install
 
 # 3. Configure environment files
 cp backend/.env.example backend/.env   # then edit backend/.env
+cp frontend/.env.example frontend/.env # then edit frontend/.env
 
 # 4. Seed the question bank (first-time only)
 npm run seed
@@ -215,6 +232,12 @@ To reset demo data: `npm run reset:demo`
 | `ADMIN_EMAIL` | `admin@learning.com` | Admin account email — created/updated automatically on server start |
 | `ADMIN_PASSWORD` | `change_me_before_using` | Admin account password (bcrypt-hashed, never stored in plaintext) |
 | `ADMIN_NAME` | `Platform Admin` | Display name for the admin account |
+| `SMTP_HOST` | — | SMTP mail server host (e.g. `smtp.gmail.com`). Optional — if unset, transactional emails are skipped safely without error. |
+| `SMTP_PORT` | — | SMTP port (e.g. `587` for STARTTLS or `465` for TLS). |
+| `SMTP_SECURE` | `false` | Set to `true` for TLS (port 465) or `false` for STARTTLS/plain (port 587). |
+| `SMTP_USER` | — | SMTP authentication username / sender email. |
+| `SMTP_PASSWORD` | — | SMTP authentication password or app password. |
+| `MAIL_FROM` | — | Default sender header (e.g. `"TutorMind <no-reply@tutormind.com>"`). |
 
 ---
 
@@ -225,6 +248,13 @@ To reset demo data: `npm run reset:demo`
 3. Copy `.env.example` → `.env`
 4. `npm run dev` — start Vite dev server at `http://localhost:5173`
 
+### Environment Variables (`frontend/.env`)
+
+| Variable | Default | Description |
+|---|---|---|
+| `VITE_API_BASE_URL` | `http://localhost:5000/api` | Backend API base URL |
+| `VITE_CLIENT_URL` | `http://localhost:5173` | Base client URL used to construct invite/referral links. If unset, the app falls back to `window.location.origin` at runtime. |
+
 ### Pages / Routes
 
 #### Student Routes
@@ -234,14 +264,14 @@ To reset demo data: `npm run reset:demo`
 | `/` | Home / Landing | Public |
 | `/about-exams` | About Exams (NEET, JEE Main, KCET reference hub) | Public |
 | `/login` | Login | Public |
-| `/register` | Register | Public |
+| `/register` | Register (supports `?ref=` referral prefill) | Public |
 | `/dashboard` | Dashboard | ✅ |
-| `/practice` | Practice Quiz (+ AI Tutor sidebar) | ✅ |
+| `/practice` | Practice Quiz (+ AI Tutor sidebar & Content Protection) | ✅ |
 | `/learn` | Personalised Learning Hub | ✅ |
 | `/learn/:recommendationId` | Learning Content Detail | ✅ |
 | `/analytics` | Analytics & Charts | ✅ |
-| `/profile` | User Profile | ✅ |
-| `/exam-simulation` | Exam Simulation (+ Webcam & Focus Proctoring) | ✅ |
+| `/profile` | User Profile (+ Invite Friends modal) | ✅ |
+| `/exam-simulation` | Exam Simulation (+ Webcam, Focus Proctoring & Content Protection) | ✅ |
 | `/exam-simulation/result` | Exam Results | ✅ |
 | `/session-summary` | Session Summary | ✅ |
 | `/weak-topics` | Weak Topics | ✅ |
@@ -298,9 +328,14 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 ### Auth (`/api/auth`)
 | Method | Path | Description |
 |---|---|---|
-| `POST` | `/register` | Create account |
-| `POST` | `/login` | Authenticate, receive JWT |
+| `POST` | `/register` | Create account; accepts optional `ref` referral code. Asynchronously dispatches welcome email if SMTP is configured. |
+| `POST` | `/login` | Authenticate, receive JWT. Lazily backfills referral code if absent. Asynchronously dispatches login security confirmation email with IST timestamp. |
 | `GET` | `/profile` | Get current user profile (protected) |
+
+### Referrals (`/api/referrals`)
+| Method | Path | Description |
+|---|---|---|
+| `GET` | `/me` | Get current user's referral summary (`referralCode`, `friendsInvited`, `successfulSignups`). Protected. Rate-limited to 300 req / 15 min. |
 
 ### Questions (`/api/questions`)
 | Method | Path | Description |
@@ -475,15 +510,33 @@ Pre-existing users and seeded demo accounts are automatically backfilled via `ba
 
 ---
 
-## Security
+## Invite Friends & Referral System
+
+TutorMind provides a built-in peer invite program to encourage collaborative exam preparation:
+
+- **Collision-Resistant Referral Codes**: Every user receives an uppercase 8-character referral code drawn from an unambiguous character set (`ABCDEFGHJKMNPQRSTUVWXYZ23456789`). Pre-existing users are lazily backfilled upon login or referral query.
+- **Dynamic Referral URLs**: Referral URLs (`/register?ref=CODE`) are formed using the configurable `VITE_CLIENT_URL` (falling back safely to `window.location.origin` at runtime).
+- **One-Referrer-Per-Student Guarantee**: Stored in the `Referral` collection with a unique index on `referredUser`. A user can only be referred once, and self-referrals are prevented server-side.
+- **Multi-Channel Sharing & Live Metrics**: Accessible directly from the Profile page via `InviteFriendsModal`:
+  - One-click invite link copying with clipboard fallback.
+  - Native mobile/desktop share sheet (`navigator.share`).
+  - Native email launcher (`mailto:`) with pre-composed invitation text.
+  - Real-time counters for `friendsInvited` and `successfulSignups`.
+
+---
+
+## Security & Protection
 
 - **Helmet** — sets secure HTTP response headers
 - **CORS** — restricted to `CLIENT_URL` origins only (no wildcard + credentials)
-- **Rate limiting** — 300 req/15 min general API throttle; 20 req/15 min on `/auth/login` and `/auth/register`; 40 req/15 min on `/api/ai` (Gemini quota protection)
+- **Rate limiting** — 300 req/15 min general API throttle; 20 req/15 min on `/auth/login` and `/auth/register`; 40 req/15 min on `/api/ai` (Gemini quota protection); 300 req/15 min on `/api/referrals`
 - **Exam-session rate limiting** — per-session, per-question throttle with 3-second cooldown on 429; single-flight locks prevent request flooding
+- **Question Content Protection** — blocks text selection (`user-select: none`), clipboard copy (`onCopy`), cutting (`onCut`), dragging (`onDragStart`), and context menus (`onContextMenu`) across question stems and options in Practice and Exam Simulation modes
 - **Proctoring event idempotency** — client-generated UUID keys prevent duplicate counts or inflated violation state from network retries
 - **Privacy-first video handling** — camera streams remain purely local in browser memory; video frames are never recorded, transmitted, or uploaded to any server
 - **Anti-farming gamification ledger** — unique compound indexes prevent replay attacks, double-crediting, or inflated scores
+- **Non-blocking email delivery** — transactional emails run asynchronously in a fire-and-forget boundary; SMTP latency or connection errors never degrade or delay registration or login responses
+- **Referral integrity** — server-authoritative code lookup, strict database uniqueness constraints, and self-referral prevention
 - **express-mongo-sanitize** — strips `$`/`.` keys from request input to block NoSQL injection
 - **bcryptjs** — password hashing
 - **JWT** — stateless auth via `Authorization: Bearer <token>` header
@@ -494,7 +547,8 @@ Pre-existing users and seeded demo accounts are automatically backfilled via `ba
 
 | Model | Purpose |
 |---|---|
-| `User` | Account, role (`user`/`admin`), target exam |
+| `User` | Account, role (`user`/`admin`), target exam, unique auto-generated `referralCode` |
+| `Referral` | Tracks successful referred registrations (`referrer`, unique `referredUser`, `referralCode`) |
 | `Question` | Question bank — exam, subject, topic, options, answer, explanation |
 | `Attempt` | Individual practice attempt record |
 | `Performance` | Aggregated per-topic metrics (accuracy, attempts, avg time) |
@@ -520,6 +574,7 @@ Pre-existing users and seeded demo accounts are automatically backfilled via `ba
 | `examSimulationService` | Core exam session lifecycle, scoring, state reconciliation, focus & presence proctoring enforcement |
 | `recommendationService` | ML-backed + rule-based topic recommendations |
 | `gamification/` (3 modules) | Server-authoritative gamification engine: XP calculation & anti-farming deduplication (`gamificationService`), historical backfill reconstruction (`backfillService`), and central awards/level-curve/achievements config (`config`) |
+| `emailService` | Transactional email dispatcher for login notifications and registration welcome messages using Nodemailer with fail-safe error boundaries |
 | `analyticsService` | Per-topic and platform analytics aggregation, habit tracking, and gamification profile integration |
 | `analysisService` | Post-exam intelligence and adaptive study plan generation |
 | `feedbackService` | Practice attempt feedback and explanation delivery |
@@ -551,6 +606,8 @@ npm run test:backend
 | Test File | Coverage Area |
 |---|---|
 | `api.test.js` | Basic route smoke tests |
+| `authEmail.test.js` | Login security confirmation email delivery, graceful handling of SMTP failures, and offline fallback |
+| `emailService.test.js` | Nodemailer transport configuration, HTML/text formatting, and configuration guards |
 | `exam.simulation.test.js` | Full exam session lifecycle |
 | `exam.intent.ordering.test.js` | Question ordering, nonce rotation, and intent logic |
 | `exam.proctoring.test.js` | Focus violation recording, camera presence tracking, auto-submit reasons, duplicate prevention, and counter bounds |
@@ -560,6 +617,8 @@ npm run test:backend
 | `gamification.backfill.test.js` | Historical streak reconstruction, multi-source backfill, and idempotency guarantees |
 | `learning.engine.test.js` | Learning-content recommendation engine (ranking, need detection, lifecycle) |
 | `learning.api.test.js` | Learning recommendation REST API integration |
+| `referral.test.js` | Referral code generation, invite-based registration, self-referral prevention, and referral summary endpoints |
+| `registrationEmail.test.js` | Registration confirmation welcome email delivery and error boundaries |
 
 ### Frontend (Vitest + Testing Library)
 
@@ -569,13 +628,17 @@ npm --prefix frontend run test
 npm --prefix frontend run test:watch
 ```
 
-Key frontend test suites (13 test files, 68 tests):
+Comprehensive test coverage across 18 test files (81 passing tests):
+- `ExamSimulationPage.contentProtection.test.jsx` & `PracticePage.contentProtection.test.jsx` — Question text and option selection restrictions, copy/cut/drag blocking, and context menu suppression
+- `ProfilePage.inviteFriends.test.jsx` & `InviteFriendsModal.test.jsx` — Invite modal rendering, referral code loading, link copying, Web Share API, mailto composition, and live signup counters
+- `RegisterPage.referral.test.jsx` — Referral code prefill via `?ref=` query parameter and submission with registration payload
 - `ExamSimulationPage.proctoring.test.jsx` — Focus violations, blur grace confirmation, tab hidden detection, on-device presence detection, auto-submission flows, and duplicate prevention
-- `ExamSimulationPage.singleFlight.test.jsx` & `singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
-- `ExamSimulationPage.integrity.test.jsx` & `race.test.jsx` — State reconciliation, sequence ordering, out-of-order rejection, and duplicate suppression
+- `ExamSimulationPage.singleFlight.test.jsx` & `ExamSimulationPage.singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
+- `ExamSimulationPage.integrity.test.jsx` & `ExamSimulationPage.race.test.jsx` — State reconciliation, sequence ordering, out-of-order rejection, and duplicate suppression
 - `ExamSimulationPage.crossClient.integrity.test.jsx` — Multi-tab/device session conflict resolution
 - `LearnPage.test.jsx` — Learning hub rendering, section display, empty/error/cold-start states, and lifecycle interactions
 - Smoke tests for `HomePage`, `AboutExamPage`, `ProfilePage`, `Layout`, and `PasswordField`
+- Utility suites for `markdownLite`
 
 ---
 
@@ -589,6 +652,17 @@ Key frontend test suites (13 test files, 68 tests):
 
 ## Notes
 
+- **Question Content Protection & Anti-Leak**:
+  - Question text and options on both Practice and Exam Simulation pages are protected using CSS `user-select: none` (`.question-protected-content`) combined with explicit React event blockers (`onCopy`, `onCut`, `onDragStart`, and `onContextMenu`).
+  - Protection is strictly scoped to the text content; answer selection buttons, keyboard controls, and layout navigation remain completely interactive and accessible.
+- **Peer Referral Program**:
+  - Each student is assigned an unambiguous 8-character code (`generateReferralCode()`).
+  - Pre-existing user accounts automatically receive a referral code upon login or referral query through lazy backfill, avoiding required manual migrations.
+  - The `Referral` collection guarantees that each student is credited to at most one referrer via a unique index on `referredUser`.
+- **Transactional Security Emails**:
+  - Sent via Nodemailer over standard SMTP.
+  - Operates under a strict fire-and-forget pattern: emails are dispatched asynchronously without awaiting in authentication controllers, ensuring that slow SMTP servers never delay user responses.
+  - If SMTP configuration (`SMTP_HOST`, `SMTP_PORT`, `MAIL_FROM`) is absent, email delivery is safely bypassed without errors.
 - **Gamification & Habit Retention**:
   - XP awards are server-authoritative and completely shielded from client tampering. An append-only ledger (`GamificationEvent`) guarantees idempotency and blocks XP farming.
   - Streak shields safeguard consistent study habits by forgiving up to 3 inactive days without resetting the student's streak counter.

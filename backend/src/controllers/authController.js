@@ -1,6 +1,8 @@
 const User = require('../models/User');
+const Referral = require('../models/Referral');
 const generateToken = require('../utils/generateToken');
 const { normalizeExamType } = require('../config/examSubjectMap');
+const { sendLoginConfirmationEmail, sendRegistrationConfirmationEmail } = require('../services/emailService');
 const {
   getUserLastEvent,
   trackProductEvent,
@@ -14,11 +16,12 @@ const sanitizeUser = (user) => ({
   targetExam: user.targetExam,
   isAdmin: Boolean(user.isAdmin),
   isDemo: Boolean(user.isDemo),
+  referralCode: user.referralCode,
 });
 
 const registerUser = async (req, res, next) => {
   try {
-    const { name, email, password, targetExam, exam } = req.body;
+    const { name, email, password, targetExam, exam, ref } = req.body;
     const normalizedExam = normalizeExamType(targetExam || exam || '');
 
     if (!name || !email || !password) {
@@ -32,11 +35,51 @@ const registerUser = async (req, res, next) => {
       throw new Error('User already exists with this email');
     }
 
+    // Referral is resolved server-side, from the database, before the new
+    // account is created - the client only ever supplies the code string, never
+    // a referrer id or referral status. An unknown/invalid code is silently
+    // ignored rather than blocking registration.
+    let referrer = null;
+    const normalizedRef = typeof ref === 'string' ? ref.trim().toUpperCase() : '';
+    if (normalizedRef) {
+      referrer = await User.findOne({ referralCode: normalizedRef });
+    }
+
     const user = await User.create({
       name,
       email,
       password,
       targetExam: normalizedExam || 'JEE',
+    });
+
+    // Self-referral is structurally impossible here (the referrer has to already
+    // exist before this brand-new user does), but the check stays as defense in depth.
+    if (referrer && referrer._id.toString() !== user._id.toString()) {
+      try {
+        await Referral.create({
+          referrer: referrer._id,
+          referredUser: user._id,
+          referralCode: normalizedRef,
+        });
+      } catch (referralError) {
+        // E11000 here means a Referral record already exists for this
+        // referredUser (the unique index) - never let that block or duplicate
+        // the registration that already succeeded.
+        if (referralError?.code !== 11000) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to record referral:', referralError.message);
+        }
+      }
+    }
+
+    // Fire-and-forget, same pattern as the login confirmation email: a
+    // successful registration must never fail (or be delayed) because the
+    // welcome email couldn't be sent. sendRegistrationConfirmationEmail never
+    // throws, but this is additionally not awaited so a slow SMTP server
+    // can't hold up the registration response either.
+    sendRegistrationConfirmationEmail(user).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error('Unexpected error sending registration confirmation email:', error.message);
     });
 
     return res.status(201).json({
@@ -81,6 +124,12 @@ const loginUser = async (req, res, next) => {
       await user.save();
     }
 
+    if (!user.referralCode) {
+      // Lazy backfill for accounts created before the referral feature existed -
+      // the User model's pre-save hook generates the code.
+      await user.save();
+    }
+
     const lastEvent = await getUserLastEvent(user._id);
     if (lastEvent?.createdAt) {
       const today = new Date();
@@ -93,6 +142,15 @@ const loginUser = async (req, res, next) => {
         });
       }
     }
+
+    // Fire-and-forget: a successful login must never fail (or be delayed)
+    // because the confirmation email couldn't be sent. sendLoginConfirmationEmail
+    // never throws, but this is additionally not awaited so a slow SMTP server
+    // can't hold up the login response either.
+    sendLoginConfirmationEmail(user).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error('Unexpected error sending login confirmation email:', error.message);
+    });
 
     return res.json({
       user: sanitizeUser(user),

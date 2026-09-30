@@ -8,6 +8,7 @@ import EmptyState from '../components/EmptyState';
 import { subjectColor } from '../utils/subjectVisuals';
 import { emitAttemptSubmitted, emitGamificationEvent } from '../utils/appEvents';
 import AISidebar from '../components/AISidebar';
+import { PROTECTED_CONTENT_CLASS, protectedContentHandlers } from '../utils/protectedContent';
 
 const makeSessionId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -748,7 +749,12 @@ const PracticePage = () => {
               {question.difficulty && <span className="exam-tag-chip">{question.difficulty}</span>}
             </div>
 
-            <p className="practice-question-text">{question.text}</p>
+            <p
+              className={`practice-question-text ${PROTECTED_CONTENT_CLASS}`}
+              {...protectedContentHandlers}
+            >
+              {question.text}
+            </p>
 
             {(recommendedMode || focusMode) && (
               <div className="ai-meta-box">
@@ -774,7 +780,9 @@ const PracticePage = () => {
                   onClick={() => setSelectedAnswer(idx)}
                   disabled={Boolean(result)}
                 >
-                  {option}
+                  <span className={PROTECTED_CONTENT_CLASS} {...protectedContentHandlers}>
+                    {option}
+                  </span>
                 </button>
               ))}
             </div>

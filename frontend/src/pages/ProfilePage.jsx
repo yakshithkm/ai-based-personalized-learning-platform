@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
+import InviteFriendsModal from '../components/InviteFriendsModal';
 import { useToast } from '../context/ToastContext';
 import { useCountUp } from '../hooks/useScrollReveal';
 
@@ -93,6 +94,7 @@ const ProfilePage = () => {
   const [analytics, setAnalytics] = useState(null);
   const [error, setError] = useState('');
   const [isRingHovered, setIsRingHovered] = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
   const load = async () => {
     setError('');
@@ -328,6 +330,9 @@ const ProfilePage = () => {
               <span className="chip nav-badge">{profile?.targetExam} Aspirant</span>
             </div>
           </div>
+          <button type="button" className="outline-btn" onClick={() => setIsInviteModalOpen(true)}>
+            Invite Friends
+          </button>
         </section>
         <EmptyState
           icon="analytics"
@@ -336,6 +341,7 @@ const ProfilePage = () => {
           actionLabel="Start Practicing"
           onAction={() => navigate('/practice')}
         />
+        <InviteFriendsModal open={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
       </div>
     );
   }
@@ -357,14 +363,21 @@ const ProfilePage = () => {
             </div>
           </div>
         </div>
-        <button
-          type="button"
-          className="outline-btn"
-          onClick={() => toast?.showToast('Profile editing is coming soon', { type: 'info' })}
-        >
-          Edit Profile
-        </button>
+        <div className="profile-header-actions">
+          <button
+            type="button"
+            className="outline-btn"
+            onClick={() => toast?.showToast('Profile editing is coming soon', { type: 'info' })}
+          >
+            Edit Profile
+          </button>
+          <button type="button" className="outline-btn" onClick={() => setIsInviteModalOpen(true)}>
+            Invite Friends
+          </button>
+        </div>
       </section>
+
+      <InviteFriendsModal open={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
 
       {error && <section className="panel error-text">{error}</section>}
 
