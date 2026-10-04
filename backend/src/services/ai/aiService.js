@@ -1,4 +1,23 @@
 const { streamReply } = require('./geminiService');
+const { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } = require('../../config/languages');
+
+// Appended to the system instruction for every non-English UI language. Technical
+// vocabulary stays in its standard form: translating "API", "SQL" or a chemical formula
+// into another script would reduce clarity, not improve it.
+const buildLanguageDirective = (language) => {
+  const meta = SUPPORTED_LANGUAGES[language];
+  if (!meta || language === DEFAULT_LANGUAGE) return '';
+  return `
+
+Response language: write the entire reply in ${meta.name} (${meta.nativeName}), because that is the
+language the student has chosen for the app - even if the student's own message or the question is
+written in English. Keep standard technical terms, formulas, chemical symbols, units, variable names
+and code identifiers (for example H2O, ΔH, NaCl, m/s, DNA, pH, API, SQL, JavaScript) in their usual
+Latin/Unicode form rather than translating or transliterating them; you may add the ${meta.name} term in
+brackets on first use when it genuinely helps. Write all numbers with Western digits (0-9). Every
+formatting rule above (plain-text symbols, no LaTeX) still applies. If the student explicitly asks for
+a different language, follow that request.`;
+};
 
 // Deliberately narrow: this instruction (and the question payload built in
 // buildContextBlock below) are the *only* things that shape what the model
@@ -95,7 +114,7 @@ const buildContextBlock = ({ question, userAnswer, wasCorrect }) => {
  * (not just the first) so the model always has authoritative grounding
  * data and nothing can drift onto a different question over a long chat.
  */
-async function* streamDoubtResolutionReply({ question, userAnswer, wasCorrect, history, userMessage, signal }) {
+async function* streamDoubtResolutionReply({ question, userAnswer, wasCorrect, history, userMessage, signal, language }) {
   const contextBlock = buildContextBlock({ question, userAnswer, wasCorrect });
   const latestUserContent = `${contextBlock}\n\nStudent's message: ${userMessage}`;
 
@@ -107,7 +126,11 @@ async function* streamDoubtResolutionReply({ question, userAnswer, wasCorrect, h
     { role: 'user', parts: [{ text: latestUserContent }] },
   ];
 
-  yield* streamReply({ systemInstruction: SYSTEM_INSTRUCTION, contents, signal });
+  yield* streamReply({
+    systemInstruction: `${SYSTEM_INSTRUCTION}${buildLanguageDirective(language)}`,
+    contents,
+    signal,
+  });
 }
 
-module.exports = { streamDoubtResolutionReply };
+module.exports = { streamDoubtResolutionReply, buildLanguageDirective };

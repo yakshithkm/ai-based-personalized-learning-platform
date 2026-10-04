@@ -8,6 +8,13 @@
   grid-template-columns: auto 1fr auto;
 }
 
+/* Language selector + Back to Home sit together on the right. */
+.about-exam-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .about-exam-back-top {
   display: inline-flex;
   align-items: center;

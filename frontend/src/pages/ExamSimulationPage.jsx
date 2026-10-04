@@ -1,5 +1,8 @@
 import { memo, useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { translateExamMessage } from '../i18n/examMessages';
+import { subjectLabel } from '../i18n/labels';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -226,6 +229,7 @@ const QuestionPalette = memo(function QuestionPalette({
   disabled,
   onSelect,
 }) {
+  const { t } = useTranslation();
   return (
     <div className="palette-grid">
       {questions.map((question, index) => {
@@ -235,16 +239,16 @@ const QuestionPalette = memo(function QuestionPalette({
         const pending = Boolean(pendingByQuestion[question._id]);
         const failed = Boolean(failedByQuestion[question._id]);
         const paletteState = marked
-          ? 'Marked for Review'
+          ? t('examSim.palette.marked')
           : pending
-            ? 'Pending'
+            ? t('examSim.state.pending')
             : failed
-              ? 'Failed'
+              ? t('examSim.state.failed')
               : answered
-            ? 'Answered'
+            ? t('examSim.palette.answered')
             : visited
-              ? 'Visited'
-              : 'Not Visited';
+              ? t('examSim.palette.visited')
+              : t('examSim.palette.notVisited');
         const statusClass = pending
           ? 'pending'
           : failed
@@ -261,7 +265,7 @@ const QuestionPalette = memo(function QuestionPalette({
           >
             <span className="palette-number">{index + 1}</span>
             <span className="palette-state">{paletteState}</span>
-            {marked && <span className="palette-review-flag">Review</span>}
+            {marked && <span className="palette-review-flag">{t('examSim.palette.review')}</span>}
           </button>
         );
       })}
@@ -270,6 +274,7 @@ const QuestionPalette = memo(function QuestionPalette({
 });
 
 const ExamSimulationPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
   const isDevMode = Boolean(import.meta.env.DEV);
@@ -1550,7 +1555,7 @@ const ExamSimulationPage = () => {
 
   const submitSimulation = async () => {
     if (!session || session.status !== 'active' || isSubmitting || submitLocked) return;
-    const ok = window.confirm('Submit test now? You cannot change answers after submission.');
+    const ok = window.confirm(t('examSim.confirmSubmit'));
     if (!ok) return;
     await submitExam('MANUAL');
   };
@@ -1727,11 +1732,11 @@ const ExamSimulationPage = () => {
   }, [session, questions.length, navigationState.currentIndex, selectedAnswer, selectedOptionMap, isSubmitting, timeLeftSec, submitLocked]);
 
   const behaviorText = session?.strictNavigation
-    ? 'Strict navigation enabled: only current question can be answered in sequence.'
-    : 'Flexible navigation enabled: use the palette to jump between questions.';
+    ? t('examSim.strictOn')
+    : t('examSim.flexibleOn');
 
   const modeExplanation = session?.behavior?.modeExplanation ||
-    'Exam mode mirrors real test pressure. Practice mode is better for hints and on-the-spot explanations.';
+    t('examSim.modeExplanation');
 
   const currentDebugIntentSeq = currentQuestionId
     ? Number(latestIntentSeqByQuestionRef.current.get(currentQuestionId) || 0)
@@ -1743,36 +1748,36 @@ const ExamSimulationPage = () => {
   return (
     <div className="page-grid exam-page-grid">
       <section className="panel exam-setup-panel">
-        <h2>Exam Simulation</h2>
-        <p>Real exam environment with timer, palette, strict test flow, and post-test analysis.</p>
+        <h2>{t('navigation.examSimulation')}</h2>
+        <p>{t('examSim.intro')}</p>
 
         {!session && (
           <div className="exam-setup-grid">
             <label>
-              Exam Type
+              {t('examSim.examType')}
               <select value={examType} disabled aria-describedby="exam-type-locked-note">
                 <option value={userExam}>{userExam}</option>
               </select>
               <small id="exam-type-locked-note" className="exam-setup-note">
-                Matched to your enrolled exam
+                {t('examSim.matchedExam')}
               </small>
             </label>
 
             <label>
-              Mode
+              {t('examSim.mode')}
               <select value={mode} onChange={(e) => setMode(e.target.value)}>
-                <option value="full-length">Full-Length Mock Test</option>
-                <option value="section-wise">Section-Wise Test</option>
+                <option value="full-length">{t('examSim.fullLength')}</option>
+                <option value="section-wise">{t('examSim.sectionWise')}</option>
               </select>
             </label>
 
             {mode === 'section-wise' && (
               <label>
-                Section Subject
+                {t('examSim.sectionSubject')}
                 <select value={sectionSubject} onChange={(e) => setSectionSubject(e.target.value)}>
                   {allowedSectionSubjects.map((subject) => (
                     <option key={subject} value={subject}>
-                      {subject}
+                      {subjectLabel(t, subject)}
                     </option>
                   ))}
                 </select>
@@ -1786,19 +1791,19 @@ const ExamSimulationPage = () => {
                 onChange={(e) => setStrictNavigation(e.target.checked)}
               />
               <span className="checkbox-custom" aria-hidden="true" />
-              <span className="exam-toggle-label">Enable strict navigation</span>
+              <span className="exam-toggle-label">{t('examSim.enableStrict')}</span>
             </label>
 
-            <button className="solid-btn exam-start-btn" onClick={startSimulation}>Start Exam Simulation</button>
+            <button className="solid-btn exam-start-btn" onClick={startSimulation}>{t('examSim.start')}</button>
           </div>
         )}
       </section>
 
-      {error && <section className="panel error-text">{error}</section>}
-      {restoreNotice && <section className="panel">{restoreNotice}</section>}
-      {multiTabWarning && <section className="panel error-text">{multiTabWarning}</section>}
-      {answerState.syncWarning && <section className="panel error-text">{answerState.syncWarning}</section>}
-      {uiLocked && <section className="panel exam-resync-indicator">Resyncing...</section>}
+      {error && <section className="panel error-text">{translateExamMessage(t, error)}</section>}
+      {restoreNotice && <section className="panel">{translateExamMessage(t, restoreNotice)}</section>}
+      {multiTabWarning && <section className="panel error-text">{translateExamMessage(t, multiTabWarning)}</section>}
+      {answerState.syncWarning && <section className="panel error-text">{translateExamMessage(t, answerState.syncWarning)}</section>}
+      {uiLocked && <section className="panel exam-resync-indicator">{t('examSim.resyncing')}</section>}
 
       {session && (
         <>
@@ -1808,7 +1813,7 @@ const ExamSimulationPage = () => {
           <section className="panel exam-live-header exam-live-header-accent">
             <div>
               <h3>
-                {session.mode === 'full-length' ? 'Full-Length Mock Test' : `${session.sectionSubject} Section Test`}
+                {session.mode === 'full-length' ? t('examSim.fullLength') : t('examSim.sectionTest', { subject: subjectLabel(t, session.sectionSubject) })}
               </h3>
               <p>{behaviorText}</p>
               <p className="exam-mode-note">{modeExplanation}</p>
@@ -1816,7 +1821,7 @@ const ExamSimulationPage = () => {
             <div className="exam-header-metrics">
               <ViolationIndicator count={violations.violationCount} max={violations.maxViolations} />
               <div className={`exam-timer ${timeLeftSec < 300 ? 'danger' : ''}`}>
-                <span>Time Left</span>
+                <span>{t('examSim.timeLeft')}</span>
                 <strong>{formatTime(timeLeftSec)}</strong>
               </div>
             </div>
@@ -1827,42 +1832,42 @@ const ExamSimulationPage = () => {
           <div className="exam-live-grid">
           <section className="panel exam-question-panel">
             <div className="exam-meta-row">
-              <span>Question {navigationState.currentIndex + 1} / {session.questionCount}</span>
-              <span className="progress-pill">Question {navigationState.currentIndex + 1} / {questions.length || session.questionCount}</span>
-              <span>Hints: OFF</span>
-              <span>Explanations: OFF</span>
-              <span>Last confirmed save: {formatClockTime(currentQuestionLastConfirmedAt)}</span>
-              {uiLocked && <span className="exam-resync-badge">Resyncing...</span>}
+              <span>{t('practice.questionOf', { current: navigationState.currentIndex + 1, total: session.questionCount })}</span>
+              <span className="progress-pill">{t('practice.questionOf', { current: navigationState.currentIndex + 1, total: questions.length || session.questionCount })}</span>
+              <span>{t('examSim.hintsOff')}</span>
+              <span>{t('examSim.explanationsOff')}</span>
+              <span>{t('examSim.lastSave', { time: formatClockTime(currentQuestionLastConfirmedAt) })}</span>
+              {uiLocked && <span className="exam-resync-badge">{t('examSim.resyncing')}</span>}
               <span>
                 {answerState.saveStatus === 'pending'
-                  ? 'Saving...'
+                  ? t('examSim.saving')
                   : answerState.saveStatus === 'failed'
-                    ? 'Failed'
+                    ? t('examSim.state.failed')
                     : answerState.saveStatus === 'confirmed'
-                      ? 'Saved'
+                      ? t('examSim.saved')
                       : answerState.isSaving
-                        ? 'Saving...'
-                        : 'Ready'}
+                        ? t('examSim.saving')
+                        : t('examSim.ready')}
               </span>
             </div>
 
             <div className="exam-question-card question-transition" key={currentQuestion?._id || navigationState.currentIndex}>
-              <h3><span>{currentQuestion?.subject}</span> • <span>{currentQuestion?.topic}</span></h3>
+              <h3><span>{subjectLabel(t, currentQuestion?.subject)}</span> • <span>{currentQuestion?.topic}</span></h3>
               <p className="exam-question-state-line">
                 {currentQuestionPending
-                  ? 'Pending'
+                  ? t('examSim.state.pending')
                   : currentQuestionFailed
-                    ? 'Failed'
+                    ? t('examSim.state.failed')
                     : Number.isInteger(selectedAnswer)
-                      ? 'Selected'
-                      : 'Not visited'}
+                      ? t('examSim.state.selected')
+                      : t('examSim.state.notVisited')}
               </p>
               <div className="exam-question-tags">
                 <span className={`exam-tag-chip ${currentQuestion?.isPreviousYear ? 'pyq' : 'mock'}`}>
-                  {currentQuestion?.isPreviousYear ? 'PYQ Priority' : currentQuestion?.yearTag || 'Mock'}
+                  {currentQuestion?.isPreviousYear ? t('examSim.pyqPriority') : currentQuestion?.yearTag || t('examSim.mock')}
                 </span>
                 <span className="exam-tag-chip">{currentQuestion?.difficultyLevel || currentQuestion?.difficulty}</span>
-                <span className="exam-tag-chip">{currentQuestion?.weightage || 'Medium'} Weightage</span>
+                <span className="exam-tag-chip">{t('examSim.weightage', { level: t(`difficulty.${String(currentQuestion?.weightage || 'Medium').toLowerCase()}`, { defaultValue: currentQuestion?.weightage || 'Medium' }) })}</span>
               </div>
                <p
                 className={`exam-question-text ${PROTECTED_CONTENT_CLASS}`}
@@ -1899,7 +1904,7 @@ const ExamSimulationPage = () => {
                 onClick={handlePrevious}
                 disabled={inputsDisabled || currentQuestionSaving || navigationState.currentIndex === 0}
               >
-                Previous
+                {t('common.previous')}
               </button>
               <button
                 className="solid-btn"
@@ -1914,19 +1919,19 @@ const ExamSimulationPage = () => {
                 }
               >
                 {currentQuestionCooldown > 0
-                  ? `Wait ${currentQuestionCooldown}s`
+                  ? t('examSim.wait', { seconds: currentQuestionCooldown })
                   : answerState.isSaving
-                    ? 'Saving...'
-                    : 'Save & Next'}
+                    ? t('examSim.saving')
+                    : t('examSim.saveNext')}
               </button>
               <button className="outline-btn" onClick={goToFirstUnanswered} disabled={inputsDisabled || currentQuestionSaving}>
-                Jump to First Unanswered
+                {t('examSim.jumpFirst')}
               </button>
               <button className="outline-btn" onClick={toggleMarkForReview} disabled={inputsDisabled || currentQuestionSaving || !currentQuestion}>
-                {currentQuestion && metaState.reviewFlags[currentQuestion._id] ? 'Unmark Review' : 'Mark for Review'}
+                {currentQuestion && metaState.reviewFlags[currentQuestion._id] ? t('examSim.unmarkReview') : t('examSim.markReview')}
               </button>
               <button className="outline-btn" onClick={submitSimulation} disabled={inputsDisabled || currentQuestionSaving}>
-                Submit Test
+                {t('examSim.submitTest')}
               </button>
             </div>
           </section>
@@ -1939,7 +1944,7 @@ const ExamSimulationPage = () => {
               onRetry={camera.retry}
               presence={{ status: presence.status, count: presence.warningCount, max: presence.maxWarnings }}
             />
-            <h3>Question Palette</h3>
+            <h3>{t('examSim.palette.title')}</h3>
             <QuestionPalette
               questions={questions}
               currentIndex={navigationState.currentIndex}

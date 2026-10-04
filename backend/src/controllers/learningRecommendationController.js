@@ -1,4 +1,5 @@
 const { getLearningBundle, SECTION_META } = require('../services/learning');
+const { resolveRequestLanguage } = require('../config/languages');
 const lifecycle = require('../services/learning/lifecycle');
 const { getPracticeSet } = require('../services/learning/practiceSet');
 const { evaluateEffectiveness } = require('../services/learning/effectiveness');
@@ -21,7 +22,9 @@ const parseMinutes = (value) => {
 // Full bundle: Learn Next + every section + daily plan + measured improvements.
 const getLearning = async (req, res, next) => {
   try {
-    return res.json(await getLearningBundle(req.user, { minutes: parseMinutes(req.query.minutes) }));
+    return res.json(
+      await getLearningBundle(req.user, { minutes: parseMinutes(req.query.minutes), language: resolveRequestLanguage(req) })
+    );
   } catch (error) {
     return fail(res, next, error);
   }
@@ -30,7 +33,11 @@ const getLearning = async (req, res, next) => {
 // Thin, consistently-shaped views over the same engine.
 const sectionEndpoint = (sections, pick) => async (req, res, next) => {
   try {
-    const bundle = await getLearningBundle(req.user, { sections, minutes: parseMinutes(req.query.minutes) });
+    const bundle = await getLearningBundle(req.user, {
+      sections,
+      minutes: parseMinutes(req.query.minutes),
+      language: resolveRequestLanguage(req),
+    });
     return res.json({
       source: bundle.source,
       mode: bundle.mode,

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { EyeIcon, EyeOffIcon } from './landing/icons';
 
 // Shared password input with a show/hide toggle. Meant to sit inside an
@@ -14,6 +15,7 @@ const PasswordField = ({
   required = false,
   autoComplete,
 }) => {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   return (
@@ -32,7 +34,7 @@ const PasswordField = ({
         type="button"
         className="password-toggle-btn"
         onClick={() => setVisible((prev) => !prev)}
-        aria-label={visible ? 'Hide password' : 'Show password'}
+        aria-label={visible ? t('auth.hidePassword') : t('auth.showPassword')}
         aria-pressed={visible}
       >
         {visible ? <EyeOffIcon /> : <EyeIcon />}

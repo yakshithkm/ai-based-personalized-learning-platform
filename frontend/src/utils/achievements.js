@@ -40,6 +40,7 @@ export const computeAchievements = (analytics) => {
       tone: 'streak',
       label: '30 Day Streak',
       description: 'Practiced 30 days in a row at your peak.',
+      i18nKey: 'achievementDefs.streak30',
       earnedAt: anchorDate,
     });
   } else if ((habit.longestStreak || 0) >= 7) {
@@ -48,6 +49,7 @@ export const computeAchievements = (analytics) => {
       tone: 'streak',
       label: '7 Day Streak',
       description: 'Practiced 7 days in a row at your peak.',
+      i18nKey: 'achievementDefs.streak7',
       earnedAt: anchorDate,
     });
   } else if ((habit.currentStreak || 0) >= 3) {
@@ -56,6 +58,8 @@ export const computeAchievements = (analytics) => {
       tone: 'streak',
       label: 'Consistent Learner',
       description: `Completed ${habit.currentStreak} days streak.`,
+      i18nKey: 'achievementDefs.streak3',
+      i18nParams: { count: habit.currentStreak },
       earnedAt: anchorDate,
     });
   }
@@ -66,6 +70,7 @@ export const computeAchievements = (analytics) => {
       tone: 'volume',
       label: 'Practice Pro',
       description: 'Solved 1000 questions.',
+      i18nKey: 'achievementDefs.solved1000',
       earnedAt: latestAttemptAt || anchorDate,
     });
   } else if (totalCorrect >= 250) {
@@ -74,6 +79,7 @@ export const computeAchievements = (analytics) => {
       tone: 'volume',
       label: '250 Solved',
       description: 'Answered 250+ questions correctly.',
+      i18nKey: 'achievementDefs.solved250',
       earnedAt: latestAttemptAt || anchorDate,
     });
   } else if (totalCorrect >= 100) {
@@ -82,6 +88,7 @@ export const computeAchievements = (analytics) => {
       tone: 'volume',
       label: '100 Solved',
       description: 'Answered 100+ questions correctly.',
+      i18nKey: 'achievementDefs.solved100',
       earnedAt: latestAttemptAt || anchorDate,
     });
   } else if (totalCorrect >= 25) {
@@ -90,6 +97,7 @@ export const computeAchievements = (analytics) => {
       tone: 'volume',
       label: '25 Solved',
       description: 'Answered 25+ questions correctly.',
+      i18nKey: 'achievementDefs.solved25',
       earnedAt: latestAttemptAt || anchorDate,
     });
   }
@@ -100,6 +108,7 @@ export const computeAchievements = (analytics) => {
       tone: 'accuracy',
       label: 'Sharpshooter',
       description: '80%+ accuracy across 20+ attempts.',
+      i18nKey: 'achievementDefs.sharpshooter',
       earnedAt: latestAttemptAt || anchorDate,
     });
   }
@@ -111,6 +120,7 @@ export const computeAchievements = (analytics) => {
       tone: 'consistency',
       label: 'Consistency Pro',
       description: 'Practiced on 6+ days this week.',
+      i18nKey: 'achievementDefs.consistencyPro',
       earnedAt: anchorDate,
     });
   }
@@ -121,6 +131,8 @@ export const computeAchievements = (analytics) => {
       tone: 'level',
       label: `Level ${xp.level}`,
       description: `${xp.totalXp} total XP earned.`,
+      i18nKey: 'achievementDefs.level',
+      i18nParams: { level: xp.level, xp: xp.totalXp },
       earnedAt: latestAttemptAt || anchorDate,
     });
   }
@@ -129,19 +141,31 @@ export const computeAchievements = (analytics) => {
   return list.sort((a, b) => (b.earnedAt || 0) - (a.earnedAt || 0));
 };
 
-export const formatRelativeTime = (dateInput) => {
+// Resolves an achievement's display text in the active language. The English `label` /
+// `description` stay on the object as the fallback (and for callers without `t`).
+export const achievementText = (t, achievement) => {
+  if (!achievement?.i18nKey) return { label: achievement?.label, description: achievement?.description };
+  const params = achievement.i18nParams || {};
+  return {
+    label: t(`${achievement.i18nKey}.label`, { ...params, defaultValue: achievement.label }),
+    description: t(`${achievement.i18nKey}.description`, { ...params, defaultValue: achievement.description }),
+  };
+};
+
+// Pass `t` (from useTranslation) to localize; without it the original English is returned.
+export const formatRelativeTime = (dateInput, t) => {
   if (!dateInput) return '';
   const date = typeof dateInput === 'number' ? new Date(dateInput) : new Date(dateInput);
   const diffMs = Date.now() - date.getTime();
   const diffSec = Math.max(Math.floor(diffMs / 1000), 0);
 
-  if (diffSec < 60) return 'just now';
+  if (diffSec < 60) return t ? t('time.justNow') : 'just now';
   const diffMin = Math.floor(diffSec / 60);
-  if (diffMin < 60) return `${diffMin}m ago`;
+  if (diffMin < 60) return t ? t('time.minutesAgo', { count: diffMin }) : `${diffMin}m ago`;
   const diffHour = Math.floor(diffMin / 60);
-  if (diffHour < 24) return `${diffHour}h ago`;
+  if (diffHour < 24) return t ? t('time.hoursAgo', { count: diffHour }) : `${diffHour}h ago`;
   const diffDay = Math.floor(diffHour / 24);
-  if (diffDay < 30) return `${diffDay}d ago`;
+  if (diffDay < 30) return t ? t('time.daysAgo', { count: diffDay }) : `${diffDay}d ago`;
   const diffMonth = Math.floor(diffDay / 30);
-  return `${diffMonth}mo ago`;
+  return t ? t('time.monthsAgo', { count: diffMonth }) : `${diffMonth}mo ago`;
 };

@@ -1,38 +1,39 @@
+import { useTranslation } from 'react-i18next';
 import BrandLogo from './BrandLogo';
 import Reveal from './landing/Reveal';
 
 const footerColumns = [
   {
-    title: 'Product',
+    title: 'footer.product',
     links: [
-      { label: 'Dashboard', href: '/dashboard' },
-      { label: 'Practice', href: '/practice' },
-      { label: 'Exam Simulation', href: '/exam-simulation' },
-      { label: 'Analytics', href: '/analytics' },
+      { label: 'navigation.dashboard', href: '/dashboard' },
+      { label: 'navigation.practice', href: '/practice' },
+      { label: 'navigation.examSimulation', href: '/exam-simulation' },
+      { label: 'navigation.analytics', href: '/analytics' },
     ],
   },
   {
-    title: 'Resources',
+    title: 'footer.resources',
     links: [
-      { label: 'Study Roadmap', href: '/practice' },
-      { label: 'Weak Topic Analysis', href: '/analytics' },
-      { label: 'Mistake Review', href: '/practice' },
-      { label: 'Help Center', href: '#' },
+      { label: 'footer.studyRoadmap', href: '/practice' },
+      { label: 'footer.weakTopicAnalysis', href: '/analytics' },
+      { label: 'footer.mistakeReview', href: '/practice' },
+      { label: 'footer.helpCenter', href: '#' },
     ],
   },
   {
-    title: 'Company',
+    title: 'footer.company',
     links: [
-      { label: 'About', href: '#' },
-      { label: 'Contact', href: '#' },
-      { label: 'Careers', href: '#' },
+      { label: 'footer.about', href: '#' },
+      { label: 'footer.contact', href: '#' },
+      { label: 'footer.careers', href: '#' },
     ],
   },
   {
-    title: 'Legal',
+    title: 'footer.legal',
     links: [
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Service', href: '#' },
+      { label: 'footer.privacy', href: '#' },
+      { label: 'footer.terms', href: '#' },
     ],
   },
 ];
@@ -68,13 +69,14 @@ const socialLinks = [
 ];
 
 const Footer = ({ variant = 'full' }) => {
+  const { t } = useTranslation();
   const year = new Date().getFullYear();
 
   if (variant === 'minimal') {
     return (
       <footer className="app-footer app-footer-minimal">
         <span>
-          © {year} TutorMind. All rights reserved. Built for focused exam preparation.
+          {t('footer.minimal', { year })}
         </span>
       </footer>
     );
@@ -85,10 +87,7 @@ const Footer = ({ variant = 'full' }) => {
       <div className="app-footer-grid">
         <Reveal as="div" className="app-footer-brand">
           <BrandLogo className="footer-brand" to="/dashboard" />
-          <p>
-            AI-powered personalized learning for NEET, JEE, and CET aspirants — practice smarter,
-            track every weak spot, and walk into exam day ready.
-          </p>
+          <p>{t('footer.description')}</p>
           <div className="app-footer-social">
             {socialLinks.map((social) => (
               <a key={social.label} href={social.href} aria-label={social.label}>
@@ -100,10 +99,10 @@ const Footer = ({ variant = 'full' }) => {
 
         {footerColumns.map((column, index) => (
           <Reveal as="div" className="app-footer-col" key={column.title} delay={(index + 1) * 80}>
-            <h5>{column.title}</h5>
+            <h5>{t(column.title)}</h5>
             {column.links.map((link) => (
               <a key={link.label} href={link.href}>
-                {link.label}
+                {t(link.label)}
               </a>
             ))}
           </Reveal>
@@ -111,8 +110,8 @@ const Footer = ({ variant = 'full' }) => {
       </div>
 
       <div className="app-footer-bottom">
-        <span>© {year} TutorMind. All rights reserved.</span>
-        <span>Built for focused exam preparation.</span>
+        <span>{t('footer.rights', { year })}</span>
+        <span>{t('footer.builtFor')}</span>
       </div>
     </footer>
   );

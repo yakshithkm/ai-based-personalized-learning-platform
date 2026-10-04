@@ -1,21 +1,23 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import EmptyState from '../components/EmptyState';
 
 const FlashcardsPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
     <div className="page-grid">
       <section className="panel">
-        <h2>Flashcards</h2>
-        <p>Quick-fire spaced-repetition review cards for formulas, definitions, and reactions.</p>
+        <h2>{t('navigation.flashcards')}</h2>
+        <p>{t('flashcards.intro')}</p>
       </section>
 
       <EmptyState
         icon="practice"
-        title="Flashcards are coming soon"
-        description="This feature needs a bit more building on our end before it's ready — we didn't want to ship a fake deck of cards in the meantime. In the meantime, Mistake Bank gives you spaced-repetition review on questions you've actually gotten wrong."
-        actionLabel="Open Mistake Bank"
+        title={t('flashcards.comingSoonTitle')}
+        description={t('flashcards.comingSoonText')}
+        actionLabel={t('flashcards.openMistakeBank')}
         onAction={() => navigate('/mistake-bank')}
       />
     </div>

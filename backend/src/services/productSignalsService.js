@@ -226,6 +226,7 @@ const buildNotifications = ({
       tone: 'neutral',
       title: 'Daily Practice Reminder',
       text: `Complete ${habit.remainingToday} more questions to hit your daily goal.`,
+      params: { count: habit.remainingToday },
     });
   }
 
@@ -244,6 +245,7 @@ const buildNotifications = ({
       tone: 'danger',
       title: 'Review Due',
       text: `${dueMistakeCount} spaced-repetition reviews are due.`,
+      params: { count: dueMistakeCount },
     });
   }
 
@@ -260,6 +262,7 @@ const buildNotifications = ({
       tone: 'neutral',
       title: 'Smart Focus',
       text: `Your highest priority topic is ${weakTopicPriority[0].topic}.`,
+      params: { topic: weakTopicPriority[0].topic },
     });
   }
 

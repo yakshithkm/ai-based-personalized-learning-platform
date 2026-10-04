@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useScrollReveal, useCountUp } from '../../hooks/useScrollReveal';
 
 // Illustrative product preview only — mirrors the real Dashboard/Analytics
@@ -6,14 +7,15 @@ import { useScrollReveal, useCountUp } from '../../hooks/useScrollReveal';
 // generic mockup. Sample numbers are placeholders for the marketing
 // preview and are not tied to any real account.
 const weakTopics = [
-  { topic: 'Thermodynamics', accuracy: 54 },
-  { topic: 'Organic Reactions', accuracy: 61 },
-  { topic: 'Coordinate Geometry', accuracy: 68 },
+  { key: 'thermodynamics', accuracy: 54 },
+  { key: 'organicReactions', accuracy: 61 },
+  { key: 'coordinateGeometry', accuracy: 68 },
 ];
 
 const trend = [42, 55, 48, 63, 71, 66, 82];
 
 const DashboardPreview = () => {
+  const { t } = useTranslation();
   const [ref, isVisible] = useScrollReveal({ threshold: 0.3 });
   const readiness = useCountUp(78, { isActive: isVisible });
   const streak = useCountUp(12, { isActive: isVisible, duration: 900 });
@@ -23,23 +25,23 @@ const DashboardPreview = () => {
       <div className="dash-preview-glow" aria-hidden="true" />
 
       <div className="dash-preview-card dash-preview-readiness">
-        <span className="dash-preview-label">Exam readiness</span>
+        <span className="dash-preview-label">{t('dashboard.examReadiness')}</span>
         <span
           className="progress-ring dash-preview-ring"
           style={{ '--ring-value': readiness }}
           role="img"
-          aria-label={`Sample exam readiness score ${readiness} out of 100`}
+          aria-label={t('home.preview.readinessAria', { score: readiness })}
         >
           <span className="progress-ring-inner">
             {readiness}
             <small>/ 100</small>
           </span>
         </span>
-        <span className="dash-preview-caption">JEE Main · Preview</span>
+        <span className="dash-preview-caption">{t('home.preview.caption')}</span>
       </div>
 
       <div className="dash-preview-card dash-preview-trend">
-        <span className="dash-preview-label">Accuracy trend · last 7 sessions</span>
+        <span className="dash-preview-label">{t('home.preview.trend')}</span>
         <div className="dash-preview-bars" aria-hidden="true">
           {trend.map((value, index) => (
             <span
@@ -52,11 +54,11 @@ const DashboardPreview = () => {
       </div>
 
       <div className="dash-preview-card dash-preview-weak">
-        <span className="dash-preview-label">Weak topics detected</span>
+        <span className="dash-preview-label">{t('home.preview.weakDetected')}</span>
         <ul>
           {weakTopics.map((item) => (
-            <li key={item.topic}>
-              <span>{item.topic}</span>
+            <li key={item.key}>
+              <span>{t(`home.sampleTopics.${item.key}`)}</span>
               <span className="dash-preview-pill">{item.accuracy}%</span>
             </li>
           ))}
@@ -64,8 +66,8 @@ const DashboardPreview = () => {
       </div>
 
       <div className="dash-preview-card dash-preview-streak">
-        <span className="dash-preview-label">Practice streak</span>
-        <span className="dash-preview-streak-value">{streak} days</span>
+        <span className="dash-preview-label">{t('home.preview.streak')}</span>
+        <span className="dash-preview-streak-value">{t('dashboard.daysCount', { count: streak })}</span>
       </div>
     </div>
   );

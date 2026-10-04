@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const BrandLogo = ({
   to = '/',
@@ -9,9 +10,10 @@ const BrandLogo = ({
   textClassName = 'brand-text',
   onClick,
 }) => {
+  const { t } = useTranslation();
   return (
     <Link className={`brand-link ${className}`.trim()} to={to} onClick={onClick}>
-      <img className={imageClassName} src="/tutormind-logo.png" alt="TutorMind logo" />
+      <img className={imageClassName} src="/tutormind-logo.png" alt={t('common.logoAlt')} />
       {withText && <span className={textClassName}>{text}</span>}
     </Link>
   );

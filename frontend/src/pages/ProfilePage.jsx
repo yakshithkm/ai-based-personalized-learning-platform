@@ -1,8 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Trans, useTranslation } from 'react-i18next';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
 import InviteFriendsModal from '../components/InviteFriendsModal';
+import LanguageSelector from '../components/LanguageSelector';
+import { translateServerError } from '../i18n/serverErrors';
+import { mistakeTypeLabel, subjectLabel, difficultyLabel } from '../i18n/labels';
+import { useLocaleFormat } from '../i18n/format';
 import { useToast } from '../context/ToastContext';
 import { useCountUp } from '../hooks/useScrollReveal';
 
@@ -19,28 +24,28 @@ const FALLBACK_COLOR = '#94a3b8';
 
 const subjectColor = (subject) => SUBJECT_COLORS[subject] || FALLBACK_COLOR;
 
-const formatRelativeTime = (dateInput) => {
+const formatRelativeTime = (dateInput, t) => {
   if (!dateInput) return '';
   const date = new Date(dateInput);
   const diffMs = Date.now() - date.getTime();
   const diffSec = Math.max(Math.floor(diffMs / 1000), 0);
 
-  if (diffSec < 60) return 'just now';
+  if (diffSec < 60) return t('time.justNow');
   const diffMin = Math.floor(diffSec / 60);
-  if (diffMin < 60) return `${diffMin} minute${diffMin === 1 ? '' : 's'} ago`;
+  if (diffMin < 60) return t('time.minutesAgoLong', { count: diffMin });
   const diffHour = Math.floor(diffMin / 60);
-  if (diffHour < 24) return `${diffHour} hour${diffHour === 1 ? '' : 's'} ago`;
+  if (diffHour < 24) return t('time.hoursAgoLong', { count: diffHour });
   const diffDay = Math.floor(diffHour / 24);
-  if (diffDay < 30) return `${diffDay} day${diffDay === 1 ? '' : 's'} ago`;
+  if (diffDay < 30) return t('time.daysAgoLong', { count: diffDay });
   const diffMonth = Math.floor(diffDay / 30);
-  return `${diffMonth} month${diffMonth === 1 ? '' : 's'} ago`;
+  return t('time.monthsAgoLong', { count: diffMonth });
 };
 
-const formatJoinDate = (dateInput) => {
+const formatJoinDate = (dateInput, formatDate) => {
   if (!dateInput) return '';
   const date = new Date(dateInput);
   if (Number.isNaN(date.getTime())) return '';
-  return date.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+  return formatDate(date, { month: 'long', year: 'numeric' });
 };
 
 // Builds the stroke-dasharray/offset pair for one arc segment of the ring,
@@ -87,6 +92,8 @@ const BadgeIcon = ({ tone }) => (
 );
 
 const ProfilePage = () => {
+  const { t } = useTranslation();
+  const { formatDate, formatNumber, formatPercent } = useLocaleFormat();
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -106,7 +113,7 @@ const ProfilePage = () => {
       setProfile(profileRes.data?.user || null);
       setAnalytics(analyticsRes.data);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load profile');
+      setError(translateServerError(t, err?.response?.data?.message, 'profile.loadFailed'));
     }
   };
 
@@ -192,10 +199,7 @@ const ProfilePage = () => {
       const cells = [...Array(firstWeekday).fill(null), ...entries];
       while (cells.length % 7 !== 0) cells.push(null);
 
-      const label = new Date(`${entries[0].day}T00:00:00Z`).toLocaleDateString(undefined, {
-        month: 'short',
-        timeZone: 'UTC',
-      });
+      const label = formatDate(new Date(`${entries[0].day}T00:00:00Z`), { month: 'short', timeZone: 'UTC' });
 
       return { key: monthKey, cells, weeks: cells.length / 7, label };
     });
@@ -203,7 +207,7 @@ const ProfilePage = () => {
     const submissionsInYear = days.reduce((sum, entry) => sum + (entry.count || 0), 0);
 
     return { months, submissionsInYear };
-  }, [habit.heatmap]);
+  }, [habit.heatmap, formatDate]);
 
   // Default the heatmap's horizontal scroll position to the most recent
   // months (right end) rather than the oldest (left end) — on a phone,
@@ -226,7 +230,7 @@ const ProfilePage = () => {
   };
 
   const formatHeatmapDate = (dayKey) =>
-    new Date(`${dayKey}T00:00:00Z`).toLocaleDateString(undefined, {
+    formatDate(new Date(`${dayKey}T00:00:00Z`), {
       month: 'short',
       day: 'numeric',
       year: 'numeric',
@@ -252,43 +256,43 @@ const ProfilePage = () => {
     const list = [];
 
     if ((habit.longestStreak || 0) >= 30) {
-      list.push({ tone: 'streak', label: '30 Day Streak', detail: 'Practiced 30 days in a row at your peak.' });
+      list.push({ tone: 'streak', label: t('achievementDefs.streak30.label'), detail: t('achievementDefs.streak30.description') });
     } else if ((habit.longestStreak || 0) >= 7) {
-      list.push({ tone: 'streak', label: '7 Day Streak', detail: 'Practiced 7 days in a row at your peak.' });
+      list.push({ tone: 'streak', label: t('achievementDefs.streak7.label'), detail: t('achievementDefs.streak7.description') });
     } else if ((habit.currentStreak || 0) >= 3) {
-      list.push({ tone: 'streak', label: '3 Day Streak', detail: 'You are 3 days into a fresh streak.' });
+      list.push({ tone: 'streak', label: t('profile.badges.streak3Label'), detail: t('profile.badges.streak3Detail') });
     }
 
     if (totalCorrect >= 250) {
-      list.push({ tone: 'volume', label: '250 Solved', detail: 'Answered 250+ questions correctly.' });
+      list.push({ tone: 'volume', label: t('achievementDefs.solved250.label'), detail: t('achievementDefs.solved250.description') });
     } else if (totalCorrect >= 100) {
-      list.push({ tone: 'volume', label: '100 Solved', detail: 'Answered 100+ questions correctly.' });
+      list.push({ tone: 'volume', label: t('achievementDefs.solved100.label'), detail: t('achievementDefs.solved100.description') });
     } else if (totalCorrect >= 25) {
-      list.push({ tone: 'volume', label: '25 Solved', detail: 'Answered 25+ questions correctly.' });
+      list.push({ tone: 'volume', label: t('achievementDefs.solved25.label'), detail: t('achievementDefs.solved25.description') });
     }
 
     if (overallAccuracy >= 80 && totalAttempts >= 20) {
-      list.push({ tone: 'accuracy', label: 'Sharpshooter', detail: '80%+ accuracy across 20+ attempts.' });
+      list.push({ tone: 'accuracy', label: t('achievementDefs.sharpshooter.label'), detail: t('achievementDefs.sharpshooter.description') });
     }
 
     const practicedDaysThisWeek = (habit.streakDays || []).filter((day) => day.practiced).length;
     if (practicedDaysThisWeek >= 6) {
-      list.push({ tone: 'consistency', label: 'Consistency Pro', detail: 'Practiced on 6+ days this week.' });
+      list.push({ tone: 'consistency', label: t('achievementDefs.consistencyPro.label'), detail: t('achievementDefs.consistencyPro.description') });
     }
 
     if ((xp.level || 1) >= 5) {
-      list.push({ tone: 'level', label: `Level ${xp.level}`, detail: `${xp.totalXp} total XP earned.` });
+      list.push({ tone: 'level', label: t('achievementDefs.level.label', { level: xp.level }), detail: t('achievementDefs.level.description', { xp: xp.totalXp }) });
     }
 
     return list;
-  }, [habit, totalCorrect, overallAccuracy, totalAttempts, xp]);
+  }, [habit, totalCorrect, overallAccuracy, totalAttempts, xp, t]);
 
   const loading = !profile && !analytics && !error;
 
   if (loading) {
     return (
       <div className="page-grid">
-        <section className="panel" aria-busy="true" aria-label="Loading profile">
+        <section className="panel" aria-busy="true" aria-label={t('profile.loading')}>
           <div className="skeleton-chip" style={{ width: '160px', marginBottom: '0.7rem' }} />
           <div className="skeleton-chip" style={{ width: '320px' }} />
         </section>
@@ -308,10 +312,10 @@ const ProfilePage = () => {
     return (
       <div className="page-grid">
         <section className="panel error-state-card">
-          <h3>Couldn't load your profile</h3>
+          <h3>{t('profile.couldntLoad')}</h3>
           <p>{error}</p>
           <button type="button" className="solid-btn" onClick={load}>
-            Try again
+            {t('common.tryAgain')}
           </button>
         </section>
       </div>
@@ -327,18 +331,18 @@ const ProfilePage = () => {
             <div>
               <h2>{profile?.name}</h2>
               <p className="user-email">{profile?.email}</p>
-              <span className="chip nav-badge">{profile?.targetExam} Aspirant</span>
+              <span className="chip nav-badge">{t('layout.aspirant', { exam: profile?.targetExam })}</span>
             </div>
           </div>
           <button type="button" className="outline-btn" onClick={() => setIsInviteModalOpen(true)}>
-            Invite Friends
+            {t('common.inviteFriends')}
           </button>
         </section>
         <EmptyState
           icon="analytics"
-          title="No activity yet"
-          description="Solve a few practice questions or run an exam simulation and your profile stats, badges, and activity will show up here."
-          actionLabel="Start Practicing"
+          title={t('profile.noActivityTitle')}
+          description={t('profile.noActivityText')}
+          actionLabel={t('profile.startPracticing')}
           onAction={() => navigate('/practice')}
         />
         <InviteFriendsModal open={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
@@ -355,10 +359,10 @@ const ProfilePage = () => {
             <h2>{profile?.name}</h2>
             <p className="user-email">{profile?.email}</p>
             <div className="chip-wrap">
-              <span className="chip nav-badge">{profile?.targetExam} Aspirant</span>
-              {profile?.isAdmin && <span className="chip">Admin</span>}
-              {formatJoinDate(profile?.createdAt) && (
-                <span className="chip">Member since {formatJoinDate(profile.createdAt)}</span>
+              <span className="chip nav-badge">{t('layout.aspirant', { exam: profile?.targetExam })}</span>
+              {profile?.isAdmin && <span className="chip">{t('profile.admin')}</span>}
+              {formatJoinDate(profile?.createdAt, formatDate) && (
+                <span className="chip">{t('profile.memberSince', { date: formatJoinDate(profile.createdAt, formatDate) })}</span>
               )}
             </div>
           </div>
@@ -367,14 +371,20 @@ const ProfilePage = () => {
           <button
             type="button"
             className="outline-btn"
-            onClick={() => toast?.showToast('Profile editing is coming soon', { type: 'info' })}
+            onClick={() => toast?.showToast(t('profile.editComingSoon'), { type: 'info' })}
           >
-            Edit Profile
+            {t('profile.editProfile')}
           </button>
           <button type="button" className="outline-btn" onClick={() => setIsInviteModalOpen(true)}>
-            Invite Friends
+            {t('common.inviteFriends')}
           </button>
         </div>
+      </section>
+
+      <section className="panel profile-language-panel" aria-labelledby="profile-language-heading">
+        <h3 id="profile-language-heading">{t('language.settingsTitle')}</h3>
+        <p className="chart-caption">{t('language.settingsHint')}</p>
+        <LanguageSelector variant="field" align="left" />
       </section>
 
       <InviteFriendsModal open={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
@@ -384,7 +394,7 @@ const ProfilePage = () => {
       <section className="panel profile-ring-panel">
         <div className="profile-ring-column">
           <div className="profile-ring-wrap" onMouseEnter={() => setIsRingHovered(true)} onMouseLeave={() => setIsRingHovered(false)}>
-            <svg viewBox="0 0 180 180" className="profile-ring-svg" role="img" aria-label="Correct answers by subject">
+            <svg viewBox="0 0 180 180" className="profile-ring-svg" role="img" aria-label={t('profile.ringAria')}>
               <circle cx={ringSegments.cx} cy={ringSegments.cy} r={ringSegments.radius} className="profile-ring-track" />
               {ringSegments.segments.map((segment) => (
                 <circle
@@ -418,10 +428,10 @@ const ProfilePage = () => {
             <div className="profile-ring-center">
               {isRingHovered ? (
                 <>
-                  <strong>{overallAccuracy.toFixed(2)}%</strong>
-                  <p className="profile-ring-accept-label">Acceptance</p>
+                  <strong>{formatPercent(overallAccuracy.toFixed(2))}</strong>
+                  <p className="profile-ring-accept-label">{t('profile.acceptance')}</p>
                   <span className="profile-ring-submissions">
-                    {totalAttempts} submission{totalAttempts === 1 ? '' : 's'}
+                    {t('profile.submissions', { count: totalAttempts })}
                   </span>
                 </>
               ) : (
@@ -431,13 +441,13 @@ const ProfilePage = () => {
                     <span>/{solvedSummary.totalQuestions}</span>
                   </div>
                   <p className="profile-ring-solved-label">
-                    <CheckIcon /> Solved
+                    <CheckIcon /> {t('profile.solved')}
                   </p>
                 </>
               )}
             </div>
           </div>
-          <p className="profile-ring-attempting">{solvedSummary.attempting || 0} Attempting</p>
+          <p className="profile-ring-attempting">{t('profile.attempting', { count: solvedSummary.attempting || 0 })}</p>
         </div>
 
         <div className="profile-ring-legend">
@@ -446,20 +456,20 @@ const ProfilePage = () => {
               <article key={row.subject} className="profile-subject-box" style={{ borderColor: `${subjectColor(row.subject)}55` }}>
                 <span className="profile-subject-dot" style={{ background: subjectColor(row.subject) }} />
                 <div>
-                  <strong>{row.subject}</strong>
+                  <strong>{subjectLabel(t, row.subject)}</strong>
                   <p>{Math.round((Number(row.accuracy || 0) / 100) * Number(row.attempts || 0))}/{row.attempts}</p>
                 </div>
-                <span className="profile-subject-acc">{Number(row.accuracy || 0).toFixed(0)}%</span>
+                <span className="profile-subject-acc">{formatPercent(Number(row.accuracy || 0).toFixed(0))}</span>
               </article>
             ))
           ) : (
-            <p>No subject data yet.</p>
+            <p>{t('dashboard.noSubjectData')}</p>
           )}
 
           <article className="profile-subject-box profile-rank-box">
             <div>
-              <strong>Standing</strong>
-              <p>{benchmark.estimated ? `Ahead of ${benchmark.percentile}% of students` : 'Building your profile'}</p>
+              <strong>{t('profile.standing')}</strong>
+              <p>{benchmark.estimated ? t('profile.aheadOf', { percent: benchmark.percentile }) : t('profile.buildingProfile')}</p>
             </div>
           </article>
         </div>
@@ -468,11 +478,11 @@ const ProfilePage = () => {
       <section className="panel profile-heatmap-panel">
         <div className="profile-heatmap-head">
           <p>
-            <strong>{heatmapCalendar.submissionsInYear}</strong> submissions in the past one year
+            <Trans i18nKey="profile.submissionsInYear" values={{ count: heatmapCalendar.submissionsInYear }} components={{ strong: <strong /> }} />
           </p>
           <div className="profile-heatmap-summary">
-            <span>Total active days: <strong>{habit.totalActiveDays || 0}</strong></span>
-            <span>Max streak: <strong>{habit.longestStreak || 0}</strong></span>
+            <span>{t('profile.totalActiveDays')}: <strong>{habit.totalActiveDays || 0}</strong></span>
+            <span>{t('profile.maxStreak')}: <strong>{habit.longestStreak || 0}</strong></span>
           </div>
         </div>
 
@@ -487,7 +497,7 @@ const ProfilePage = () => {
                       <span
                         key={entry.day}
                         className={`profile-heatmap-cell level-${heatmapLevel(entry.count)}`}
-                        title={`${entry.count} attempt${entry.count === 1 ? '' : 's'} on ${formatHeatmapDate(entry.day)}`}
+                        title={t('profile.heatmapCell', { count: entry.count, date: formatHeatmapDate(entry.day) })}
                       />
                     ) : (
                       <span key={`${month.key}-empty-${index}`} className="profile-heatmap-cell is-empty" />
@@ -500,13 +510,13 @@ const ProfilePage = () => {
           </div>
           </div>
         ) : (
-          <p>No activity recorded yet.</p>
+          <p>{t('profile.noActivityRecorded')}</p>
         )}
       </section>
 
       <section className="panel">
         <div className="panel-head-row">
-          <h3>Badges</h3>
+          <h3>{t('profile.badgesTitle')}</h3>
           <span className="chip">{badges.length}</span>
         </div>
         {badges.length ? (
@@ -521,36 +531,36 @@ const ProfilePage = () => {
             ))}
           </div>
         ) : (
-          <p>Keep practicing — your first badge unlocks after a 3-day streak or 25 correct answers.</p>
+          <p>{t('profile.firstBadgeHint')}</p>
         )}
       </section>
 
       <section className="panel stats-grid profile-stats-grid">
         <div className="metric-card metric-neutral">
-          <h4>Level</h4>
+          <h4>{t('profile.level')}</h4>
           <strong>{xp.level}</strong>
-          <p>{xp.totalXp} total XP · {xp.weeklyXp} this week</p>
+          <p>{t('profile.xpSummary', { total: xp.totalXp, weekly: xp.weeklyXp })}</p>
         </div>
         <div className="metric-card metric-neutral">
-          <h4>Current Streak</h4>
-          <strong>{habit.currentStreak || 0} days</strong>
-          <p>Longest streak: {habit.longestStreak || 0} days</p>
+          <h4>{t('profile.currentStreak')}</h4>
+          <strong>{t('dashboard.daysCount', { count: habit.currentStreak || 0 })}</strong>
+          <p>{t('dashboard.longestStreak', { count: habit.longestStreak || 0 })}</p>
         </div>
         <div className="metric-card metric-neutral">
-          <h4>Overall Accuracy</h4>
-          <strong>{overallAccuracy.toFixed(1)}%</strong>
-          <p>Across {totalAttempts} attempts</p>
+          <h4>{t('profile.overallAccuracy')}</h4>
+          <strong>{formatPercent(overallAccuracy.toFixed(1))}</strong>
+          <p>{t('profile.acrossAttempts', { count: totalAttempts })}</p>
         </div>
       </section>
 
       <section className="panel">
-        <h3>Skills</h3>
-        <p className="chart-caption">Topic mastery built from your practice and mock-test history.</p>
+        <h3>{t('profile.skills')}</h3>
+        <p className="chart-caption">{t('profile.skillsHint')}</p>
         <div className="profile-skills-list">
           {['Advanced', 'Intermediate', 'Developing'].map((tier) =>
             skillTiers[tier].length ? (
               <div key={tier} className="profile-skill-tier">
-                <span className={`profile-skill-tier-label profile-skill-${tier.toLowerCase()}`}>{tier}</span>
+                <span className={`profile-skill-tier-label profile-skill-${tier.toLowerCase()}`}>{t(`profile.tiers.${tier.toLowerCase()}`)}</span>
                 <div className="chip-wrap">
                   {skillTiers[tier].slice(0, 12).map((entry) => (
                     <span key={`${entry.subject}-${entry.topic}-${entry.subtopic || 'General'}`} className="chip">
@@ -562,14 +572,14 @@ const ProfilePage = () => {
             ) : null
           )}
           {!skillTiers.Advanced.length && !skillTiers.Intermediate.length && !skillTiers.Developing.length && (
-            <p>No topic mastery data yet.</p>
+            <p>{t('profile.noMastery')}</p>
           )}
         </div>
       </section>
 
       <section className="panel">
-        <h3>Recent Activity</h3>
-        <p className="chart-caption">Your latest attempts across practice and exam simulation.</p>
+        <h3>{t('profile.recentActivity')}</h3>
+        <p className="chart-caption">{t('profile.recentActivityHint')}</p>
         <div className="profile-activity-list">
           {recentAttempts.length ? (
             recentAttempts.map((entry) => (
@@ -577,13 +587,13 @@ const ProfilePage = () => {
                 <span className={`profile-activity-dot ${entry.isCorrect ? 'is-correct' : 'is-incorrect'}`} />
                 <div className="profile-activity-main">
                   <strong>{entry.topic}</strong>
-                  <span>{entry.subject}{entry.difficulty ? ` · ${entry.difficulty}` : ''}</span>
+                  <span>{subjectLabel(t, entry.subject)}{entry.difficulty ? ` · ${difficultyLabel(t, entry.difficulty)}` : ''}</span>
                 </div>
-                <span className="profile-activity-time">{formatRelativeTime(entry.createdAt)}</span>
+                <span className="profile-activity-time">{formatRelativeTime(entry.createdAt, t)}</span>
               </article>
             ))
           ) : (
-            <p>No attempts yet.</p>
+            <p>{t('profile.noAttempts')}</p>
           )}
         </div>
       </section>

@@ -1,4 +1,6 @@
 // Small presentational pieces shared by the learning recommendation UI.
+import { useTranslation } from 'react-i18next';
+import { difficultyLabel, subjectLabel } from '../../i18n/labels';
 
 export const REASON_LABELS = {
   'weak-topic': 'Weak topic',
@@ -69,45 +71,73 @@ export const RepeatIcon = () => (
   </svg>
 );
 
-export const DifficultyBadge = ({ difficulty }) =>
-  difficulty ? (
-    <span className={`lr-badge lr-diff-${String(difficulty).toLowerCase()}`}>{difficulty}</span>
+export const DifficultyBadge = ({ difficulty }) => {
+  const { t } = useTranslation();
+  return difficulty ? (
+    <span className={`lr-badge lr-diff-${String(difficulty).toLowerCase()}`}>{difficultyLabel(t, difficulty)}</span>
   ) : null;
+};
 
-export const PriorityBadge = ({ priority }) =>
-  priority ? <span className={`lr-badge lr-priority-${priority}`}>{priority} priority</span> : null;
+export const PriorityBadge = ({ priority }) => {
+  const { t } = useTranslation();
+  return priority ? (
+    <span className={`lr-badge lr-priority-${priority}`}>
+      {t('learn.priorityBadge', { level: t(`learn.priorityLevel.${String(priority).toLowerCase()}`, { defaultValue: priority }) })}
+    </span>
+  ) : null;
+};
 
-export const ReasonBadge = ({ reason }) =>
-  reason ? <span className="lr-badge lr-reason">{REASON_LABELS[reason] || reason}</span> : null;
+export const ReasonBadge = ({ reason }) => {
+  const { t } = useTranslation();
+  return reason ? (
+    <span className="lr-badge lr-reason">{t(`learn.reasons.${reason}`, { defaultValue: REASON_LABELS[reason] || reason })}</span>
+  ) : null;
+};
 
-export const TypeBadge = ({ type }) => <span className="lr-badge lr-type">{TYPE_LABELS[type] || type}</span>;
+export const TypeBadge = ({ type }) => {
+  const { t } = useTranslation();
+  return <span className="lr-badge lr-type">{t(`learn.types.${type}`, { defaultValue: TYPE_LABELS[type] || type })}</span>;
+};
 
-export const itemTitle = (item) =>
-  item.content ? item.content.title : `Practice: ${item.target.concept || item.target.topic}`;
+// Stage label for a learning-path step (introduction, worked-example, ...).
+export const stageLabel = (t, stage) => t(`learn.stages.${stage}`, { defaultValue: STAGE_LABELS[stage] || stage });
 
-export const itemMeta = (item) => {
-  const parts = [item.target.subject, item.target.topic];
+// Content titles come from the content database (educational content, not UI) and stay as
+// authored. Only the "Practice:" prefix of practice-only recommendations is localized.
+export const itemTitle = (item, t) =>
+  item.content
+    ? item.content.title
+    : t
+      ? t('learn.practiceTitle', { topic: item.target.concept || item.target.topic })
+      : `Practice: ${item.target.concept || item.target.topic}`;
+
+export const itemMeta = (item, t) => {
+  const parts = [t ? subjectLabel(t, item.target.subject) : item.target.subject, item.target.topic];
   if (item.target.concept && item.target.concept !== item.target.topic) parts.push(item.target.concept);
   return parts.filter(Boolean).join(' • ');
 };
 
-export const ProgressBar = ({ percent = 0, label }) => (
-  <div className="lr-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent} aria-label={label || 'Progress'}>
-    <span style={{ width: `${Math.min(100, Math.max(0, percent))}%` }} />
-  </div>
-);
+export const ProgressBar = ({ percent = 0, label }) => {
+  const { t } = useTranslation();
+  return (
+    <div className="lr-progress" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent} aria-label={label || t('learn.progress')}>
+      <span style={{ width: `${Math.min(100, Math.max(0, percent))}%` }} />
+    </div>
+  );
+};
 
 // Measurable numbers behind a recommendation, shown as compact chips.
 export const SignalChips = ({ signals = {} }) => {
+  const { t } = useTranslation();
   const chips = [];
   if (signals.attempts > 0 && signals.accuracy !== undefined && signals.accuracy !== null) {
-    chips.push(`${Math.round(signals.accuracy)}% accuracy`, `${signals.attempts} attempts`);
+    chips.push(t('learn.signals.accuracy', { value: Math.round(signals.accuracy) }), t('learn.signals.attempts', { count: signals.attempts }));
   }
-  if (signals.openMistakes > 0) chips.push(`${signals.openMistakes} open mistake${signals.openMistakes === 1 ? '' : 's'}`);
-  if (signals.dueMistakes > 0) chips.push(`${signals.dueMistakes} due`);
+  if (signals.openMistakes > 0) chips.push(t('learn.signals.openMistakes', { count: signals.openMistakes }));
+  if (signals.dueMistakes > 0) chips.push(t('learn.signals.due', { count: signals.dueMistakes }));
   if (!chips.length) return null;
   return (
-    <ul className="lr-chips" aria-label="Signals behind this recommendation">
+    <ul className="lr-chips" aria-label={t('learn.signals.aria')}>
       {chips.map((chip) => (
         <li key={chip}>{chip}</li>
       ))}

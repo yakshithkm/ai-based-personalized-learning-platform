@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { translateServerError } from '../i18n/serverErrors';
+import { subjectLabel } from '../i18n/labels';
 import { getLearningBundle } from '../api/learning';
 import EmptyState from '../components/EmptyState';
 import LearnNextCard from '../components/learning/LearnNextCard';
@@ -8,17 +11,19 @@ import DailyPlan from '../components/learning/DailyPlan';
 import ImprovementBanner from '../components/learning/ImprovementBanner';
 
 const SECTION_ORDER = [
-  ['weakAreas', 'Review Your Weak Areas', 'Study material for concepts below your target accuracy.', 'Review'],
-  ['mistakeRecovery', 'Fix Your Mistakes', 'The ideas behind mistakes you repeat or are due to review.', 'Fix it'],
-  ['continueLearning', 'Continue Learning', 'Pick up what you started.', 'Continue'],
-  ['practiceAfterLearning', 'Practice After Learning', 'Test what you recently completed.', 'Start practice'],
-  ['challenges', 'Challenge Yourself', 'Advanced material for topics you have mastered.', 'Take the challenge'],
-  ['exploreNew', 'Explore New Topics', 'Syllabus areas you have not touched yet.', 'Explore'],
+  ['weakAreas', 'weakAreas'],
+  ['mistakeRecovery', 'mistakeRecovery'],
+  ['continueLearning', 'continueLearning'],
+  ['practiceAfterLearning', 'practiceAfterLearning'],
+  ['challenges', 'challenges'],
+  ['exploreNew', 'exploreNew'],
 ];
 
-const LearnSkeleton = () => (
+const LearnSkeleton = () => {
+  const { t } = useTranslation();
+  return (
   <div className="page-grid">
-    <section className="panel" aria-busy="true" aria-label="Loading your learning recommendations">
+    <section className="panel" aria-busy="true" aria-label={t('learn.loading')}>
       <div className="skeleton-chip" style={{ width: '160px', marginBottom: '0.8rem' }} />
       <div className="skeleton-block" style={{ minHeight: '280px' }} />
     </section>
@@ -26,7 +31,8 @@ const LearnSkeleton = () => (
       <div className="skeleton-block" style={{ minHeight: '140px' }} />
     </section>
   </div>
-);
+  );
+};
 
 const RecommendationSection = ({ title, description, items, ctaLabel }) => {
   if (!items?.length) return null;
@@ -46,6 +52,11 @@ const RecommendationSection = ({ title, description, items, ctaLabel }) => {
 };
 
 const LearnPage = () => {
+  const { t, i18n } = useTranslation();
+  // Server-authored copy (empty state / welcome) is English-only. Show it verbatim when the UI is
+  // English (unchanged behaviour); in other languages use the localized equivalents instead.
+  const isEnglish = (i18n.resolvedLanguage || i18n.language || 'en').startsWith('en');
+  const serverText = (value, key) => (isEnglish && value ? value : t(key));
   const navigate = useNavigate();
   const [bundle, setBundle] = useState(null);
   const [error, setError] = useState('');
@@ -55,7 +66,7 @@ const LearnPage = () => {
     try {
       setBundle(await getLearningBundle());
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load your learning recommendations');
+      setError(translateServerError(t, err?.response?.data?.message, 'learn.loadFailed'));
     }
   };
 
@@ -69,9 +80,9 @@ const LearnPage = () => {
     return (
       <div className="page-grid">
         <section className="panel error-state-card">
-          <h3>Couldn&apos;t load your recommendations</h3>
+          <h3>{t('learn.couldntLoad')}</h3>
           <p>{error}</p>
-          <button type="button" className="solid-btn" onClick={load}>Try again</button>
+          <button type="button" className="solid-btn" onClick={load}>{t('common.tryAgain')}</button>
         </section>
       </div>
     );
@@ -88,9 +99,9 @@ const LearnPage = () => {
       <div className="page-grid">
         <EmptyState
           icon="practice"
-          title={bundle.emptyState?.title || 'Nothing to recommend yet'}
-          description={bundle.emptyState?.message || 'Practice a few questions and personalized learning material will appear here.'}
-          actionLabel="Start practicing"
+          title={serverText(bundle.emptyState?.title, 'learn.emptyTitle')}
+          description={serverText(bundle.emptyState?.message, 'learn.emptyText')}
+          actionLabel={t('profile.startPracticing')}
           onAction={() => navigate('/practice?mode=recommended')}
         />
       </div>
@@ -101,28 +112,27 @@ const LearnPage = () => {
     <div className="page-grid lr-page">
       {bundle.mode === 'cold-start' && (
         <section className="panel lr-welcome">
-          <p className="eyebrow-label">{bundle.welcome?.title || 'Welcome to TutorMind'}</p>
-          <h2>{bundle.welcome?.message || "Let's establish your learning baseline."}</h2>
-          <p>Answer a short starter set so recommendations can adapt to how you actually perform. Until then, here is a balanced place to begin.</p>
+          <p className="eyebrow-label">{serverText(bundle.welcome?.title, 'learn.welcomeTitle')}</p>
+          <h2>{serverText(bundle.welcome?.message, 'learn.welcomeMessage')}</h2>
+          <p>{t('learn.welcomeText')}</p>
           {bundle.startingPath?.length > 0 && (
-            <ul className="lr-start-path" aria-label="Recommended starting path">
+            <ul className="lr-start-path" aria-label={t('learn.startingPathAria')}>
               {bundle.startingPath.map((step) => (
                 <li key={`${step.subject}-${step.topic}`}>
-                  <strong>{step.subject}</strong> → {step.topic}
-                  {!step.hasStudyMaterial && <small> · practice first</small>}
+                  <strong>{subjectLabel(t, step.subject)}</strong> → {step.topic}
+                  {!step.hasStudyMaterial && <small> · {t('learn.practiceFirst')}</small>}
                 </li>
               ))}
             </ul>
           )}
-          <Link className="solid-btn" to={bundle.welcome?.baselineRoute || '/practice?mode=recommended'}>Start baseline practice</Link>
+          <Link className="solid-btn" to={bundle.welcome?.baselineRoute || '/practice?mode=recommended'}>{t('learn.startBaseline')}</Link>
         </section>
       )}
 
       {bundle.mode === 'baseline' && bundle.baseline && (
         <section className="panel lr-baseline-note" role="status">
           <p>
-            Based on {bundle.baseline.attempts} answered question{bundle.baseline.attempts === 1 ? '' : 's'} so far.
-            Answer {Math.max(bundle.baseline.needed - bundle.baseline.attempts, 0)} more to unlock sharper recommendations.
+            {t('learn.baselineNote', { answered: bundle.baseline.attempts, count: bundle.baseline.attempts, remaining: Math.max(bundle.baseline.needed - bundle.baseline.attempts, 0) })}
           </p>
         </section>
       )}
@@ -136,11 +146,17 @@ const LearnPage = () => {
       ))}
 
       {alsoConsider.length > 0 && (
-        <RecommendationSection title="Also worth your time" description="Different topics, next in line." items={alsoConsider} />
+        <RecommendationSection title={t('learn.alsoWorth')} description={t('learn.alsoWorthSub')} items={alsoConsider} />
       )}
 
-      {SECTION_ORDER.map(([key, title, description, cta]) => (
-        <RecommendationSection key={key} title={title} description={description} items={sections[key]} ctaLabel={cta} />
+      {SECTION_ORDER.map(([key, i18nKey]) => (
+        <RecommendationSection
+          key={key}
+          title={t(`learn.sections.${i18nKey}.title`)}
+          description={t(`learn.sections.${i18nKey}.description`)}
+          items={sections[key]}
+          ctaLabel={t(`learn.sections.${i18nKey}.cta`)}
+        />
       ))}
     </div>
   );

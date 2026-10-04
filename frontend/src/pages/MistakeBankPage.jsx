@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
 import { subjectColor } from '../utils/subjectVisuals';
 import { formatRelativeTime } from '../utils/achievements';
+import { translateServerError } from '../i18n/serverErrors';
+import { mistakeTypeLabel, subjectLabel } from '../i18n/labels';
 
 const MistakeBankPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [analytics, setAnalytics] = useState(null);
   const [error, setError] = useState('');
@@ -16,7 +20,7 @@ const MistakeBankPage = () => {
       const { data } = await api.get('/analytics/me');
       setAnalytics(data);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load mistake bank');
+      setError(translateServerError(t, err?.response?.data?.message, 'mistakeBank.loadFailed'));
     }
   };
 
@@ -35,7 +39,7 @@ const MistakeBankPage = () => {
   if (!analytics && !error) {
     return (
       <div className="page-grid">
-        <section className="panel" aria-busy="true" aria-label="Loading mistake bank">
+        <section className="panel" aria-busy="true" aria-label={t('mistakeBank.loading')}>
           <div className="skeleton-chip" style={{ width: '200px', marginBottom: '0.7rem' }} />
           <div className="skeleton-block" style={{ minHeight: '260px' }} />
         </section>
@@ -47,9 +51,9 @@ const MistakeBankPage = () => {
     return (
       <div className="page-grid">
         <section className="panel error-state-card">
-          <h3>Couldn&apos;t load your mistake bank</h3>
+          <h3>{t('mistakeBank.couldntLoad')}</h3>
           <p>{error}</p>
-          <button type="button" className="solid-btn" onClick={load}>Try again</button>
+          <button type="button" className="solid-btn" onClick={load}>{t('common.tryAgain')}</button>
         </section>
       </div>
     );
@@ -58,14 +62,14 @@ const MistakeBankPage = () => {
   return (
     <div className="page-grid">
       <section className="panel">
-        <h2>Mistake Bank</h2>
-        <p>Every question you've gotten wrong, tracked for spaced-repetition review.</p>
+        <h2>{t('navigation.mistakeBank')}</h2>
+        <p>{t('mistakeBank.intro')}</p>
       </section>
 
       {repeatedMistakes.length > 0 && (
         <section className="panel">
-          <h3>Repeated Patterns</h3>
-          <p className="dash-card-subtitle">Topics where the same mistake keeps coming back.</p>
+          <h3>{t('mistakeBank.repeatedPatterns')}</h3>
+          <p className="dash-card-subtitle">{t('mistakeBank.repeatedSubtitle')}</p>
           <div className="repeated-mistake-list">
             {repeatedMistakes.map((entry, index) => (
               <button
@@ -77,9 +81,9 @@ const MistakeBankPage = () => {
                 <span className="subject-dot" style={{ background: subjectColor(entry.subject) }} />
                 <span className="repeated-mistake-info">
                   <strong>{entry.topic}</strong>
-                  <small>{entry.subject}</small>
+                  <small>{subjectLabel(t, entry.subject)}</small>
                 </span>
-                <span className="severity-badge severity-critical">{entry.failures}x missed</span>
+                <span className="severity-badge severity-critical">{t('mistakeBank.timesMissed', { count: entry.failures })}</span>
               </button>
             ))}
           </div>
@@ -87,7 +91,7 @@ const MistakeBankPage = () => {
       )}
 
       <section className="panel">
-        <h3>Recent Mistakes</h3>
+        <h3>{t('mistakeBank.recentMistakes')}</h3>
         {recentMistakes.length ? (
           <div className="mistake-list">
             {recentMistakes.map((mistake) => (
@@ -96,17 +100,17 @@ const MistakeBankPage = () => {
                 <div className="mistake-info">
                   <strong>{mistake.topic}</strong>
                   <small>
-                    {mistake.subject}
+                    {subjectLabel(t, mistake.subject)}
                     {mistake.subtopic && mistake.subtopic !== 'General' ? ` • ${mistake.subtopic}` : ''}
-                    {mistake.mistakeType ? ` • ${mistake.mistakeType.replace(/-/g, ' ')}` : ''}
+                    {mistake.mistakeType ? ` • ${mistakeTypeLabel(t, mistake.mistakeType)}` : ''}
                   </small>
                 </div>
                 <span className={`severity-badge ${mistake.resolved ? 'severity-moderate' : 'severity-weak'}`}>
-                  {mistake.resolved ? 'Resolved' : 'Pending Review'}
+                  {mistake.resolved ? t('mistakeBank.resolved') : t('mistakeBank.pendingReview')}
                 </span>
-                <span className="mistake-time">{formatRelativeTime(mistake.createdAt)}</span>
+                <span className="mistake-time">{formatRelativeTime(mistake.createdAt, t)}</span>
                 <button type="button" className="outline-btn dash-small-btn" onClick={() => goPractice(mistake.subject, mistake.topic)}>
-                  Retry
+                  {t('common.retry')}
                 </button>
               </article>
             ))}
@@ -114,9 +118,9 @@ const MistakeBankPage = () => {
         ) : (
           <EmptyState
             icon="practice"
-            title="No mistakes logged"
-            description="Strong consistency so far — every mistake you make in practice or exam simulation will show up here for review."
-            actionLabel="Go to Practice"
+            title={t('mistakeBank.emptyTitle')}
+            description={t('mistakeBank.emptyText')}
+            actionLabel={t('common.goToPractice')}
             onAction={() => navigate('/practice')}
           />
         )}

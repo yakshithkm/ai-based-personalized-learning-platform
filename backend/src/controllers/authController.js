@@ -2,6 +2,7 @@ const User = require('../models/User');
 const Referral = require('../models/Referral');
 const generateToken = require('../utils/generateToken');
 const { normalizeExamType } = require('../config/examSubjectMap');
+const { normalizeLanguage } = require('../config/languages');
 const { sendLoginConfirmationEmail, sendRegistrationConfirmationEmail } = require('../services/emailService');
 const {
   getUserLastEvent,
@@ -17,11 +18,12 @@ const sanitizeUser = (user) => ({
   isAdmin: Boolean(user.isAdmin),
   isDemo: Boolean(user.isDemo),
   referralCode: user.referralCode,
+  preferredLanguage: user.preferredLanguage || null,
 });
 
 const registerUser = async (req, res, next) => {
   try {
-    const { name, email, password, targetExam, exam, ref } = req.body;
+    const { name, email, password, targetExam, exam, ref, language } = req.body;
     const normalizedExam = normalizeExamType(targetExam || exam || '');
 
     if (!name || !email || !password) {
@@ -50,6 +52,7 @@ const registerUser = async (req, res, next) => {
       email,
       password,
       targetExam: normalizedExam || 'JEE',
+      ...(normalizeLanguage(language) ? { preferredLanguage: normalizeLanguage(language) } : {}),
     });
 
     // Self-referral is structurally impossible here (the referrer has to already
@@ -165,4 +168,19 @@ const getProfile = async (req, res) => {
   res.json({ user: req.user });
 };
 
-module.exports = { registerUser, loginUser, getProfile };
+const updatePreferences = async (req, res, next) => {
+  try {
+    const language = normalizeLanguage(req.body?.language);
+    if (!language) {
+      res.status(400);
+      throw new Error('A supported language is required');
+    }
+    req.user.preferredLanguage = language;
+    await req.user.save();
+    return res.json({ user: sanitizeUser(req.user) });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = { registerUser, loginUser, getProfile, updatePreferences };

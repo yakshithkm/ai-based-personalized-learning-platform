@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { renderMiniMarkdown } from '../utils/markdownLite';
 
-const AIChatMessage = ({ role, content, isStreaming }) => (
+const AIChatMessage = ({ role, content, isStreaming }) => {
+  const { t } = useTranslation();
+  return (
   <div className={`ai-chat-msg ai-chat-msg-${role}`}>
-    <span className="ai-chat-msg-label">{role === 'assistant' ? 'AI' : 'You'}</span>
+    <span className="ai-chat-msg-label">{role === 'assistant' ? t('aiTutor.aiLabel') : t('aiTutor.youLabel')}</span>
     {role === 'assistant' ? (
       <div className="ai-chat-msg-body">
         {renderMiniMarkdown(content)}
@@ -18,6 +21,7 @@ const AIChatMessage = ({ role, content, isStreaming }) => (
       <p className="ai-chat-msg-plain">{content}</p>
     )}
   </div>
-);
+  );
+};
 
 export default AIChatMessage;

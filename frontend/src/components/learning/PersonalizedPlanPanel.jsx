@@ -18,7 +18,7 @@ const PersonalizedPlanPanel = () => {
     };
   }, []);
 
-  return <DailyPlan plan={plan} title="Today's Personalized Plan" />;
+  return <DailyPlan plan={plan} />;
 };
 
 export default PersonalizedPlanPanel;

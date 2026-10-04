@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useTranslation } from 'react-i18next';
+import { translateServerError } from '../i18n/serverErrors';
+import { subjectLabel } from '../i18n/labels';
 import AIChatMessage from './AIChatMessage';
 
 const CloseIcon = () => (
@@ -57,6 +60,7 @@ const AISidebar = ({
   onClose,
   onRetryLast,
 }) => {
+  const { t } = useTranslation();
   const [draft, setDraft] = useState('');
   // Purely a display preference (not conversation state), so it lives here
   // rather than in PracticePage - it isn't reset by question navigation and
@@ -107,15 +111,15 @@ const AISidebar = ({
       <aside
         className={`ai-sidebar ${isOpen ? 'ai-sidebar-open' : ''} ${isMaximized ? 'ai-sidebar-maximized' : ''}`}
         role="complementary"
-        aria-label="Ask with AI doubt resolution chat"
+        aria-label={t('aiTutor.chatAria')}
         aria-hidden={!isOpen}
       >
         <div className="ai-sidebar-head">
           <div>
-            <h3>Ask with AI</h3>
+            <h3>{t('practice.askWithAi')}</h3>
             {question?.topic && (
               <p className="ai-sidebar-subtitle">
-                {question.subject} · {question.topic}
+                {subjectLabel(t, question.subject)} · {question.topic}
               </p>
             )}
           </div>
@@ -124,7 +128,7 @@ const AISidebar = ({
               type="button"
               className="ai-sidebar-maximize-btn"
               onClick={() => setIsMaximized((prev) => !prev)}
-              aria-label={isMaximized ? 'Restore sidebar size' : 'Maximize sidebar'}
+              aria-label={isMaximized ? t('aiTutor.restore') : t('aiTutor.maximize')}
               aria-pressed={isMaximized}
               tabIndex={isOpen ? 0 : -1}
             >
@@ -134,7 +138,7 @@ const AISidebar = ({
               type="button"
               className="ai-sidebar-close-btn"
               onClick={onClose}
-              aria-label="Close AI doubt resolution chat"
+              aria-label={t('aiTutor.closeChat')}
               tabIndex={isOpen ? 0 : -1}
             >
               <CloseIcon />
@@ -154,8 +158,8 @@ const AISidebar = ({
 
           {isLoading && (
             <div className="ai-chat-msg ai-chat-msg-assistant ai-chat-typing">
-              <span className="ai-chat-msg-label">AI</span>
-              <p aria-label="AI is thinking">
+              <span className="ai-chat-msg-label">{t('aiTutor.aiLabel')}</span>
+              <p aria-label={t('aiTutor.thinking')}>
                 <span className="ai-typing-dot" />
                 <span className="ai-typing-dot" />
                 <span className="ai-typing-dot" />
@@ -165,9 +169,9 @@ const AISidebar = ({
 
           {!!error && (
             <div className="ai-chat-error">
-              <p>{error}</p>
+              <p>{translateServerError(t, error, 'serverErrors.aiGeneric')}</p>
               <button type="button" className="outline-btn ai-chat-retry-btn" onClick={onRetryLast}>
-                Try again
+                {t('common.tryAgain')}
               </button>
             </div>
           )}
@@ -178,19 +182,19 @@ const AISidebar = ({
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask a follow-up question..."
+            placeholder={t('aiTutor.placeholder')}
             rows={1}
             maxLength={1000}
             disabled={isBusy}
             tabIndex={isOpen ? 0 : -1}
-            aria-label="Ask a follow-up question"
+            aria-label={t('aiTutor.followUpAria')}
           />
           <button
             type="button"
             className="ai-sidebar-send-btn"
             onClick={handleSend}
             disabled={isBusy || !draft.trim()}
-            aria-label="Send message"
+            aria-label={t('aiTutor.send')}
             tabIndex={isOpen ? 0 : -1}
           >
             <SendIcon />

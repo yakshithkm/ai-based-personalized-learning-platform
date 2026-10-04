@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import LanguageSelector from '../components/LanguageSelector';
 import BrandLogo from '../components/BrandLogo';
 import Footer from '../components/Footer';
 import Reveal from '../components/landing/Reveal';
@@ -16,39 +18,35 @@ import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, Tren
 // route link (`to`) is a real React Router navigation to a separate page
 // and is rendered as a <Link> instead of a scroll-spy anchor below.
 const navLinks = [
-  { label: 'Why TutorMind', href: 'why-tutormind' },
-  { label: 'Subjects', href: 'subjects-section' },
-  { label: 'About Exam', to: '/about-exams' },
-  { label: 'How it works', href: 'how-it-works' },
-  { label: 'Pricing', href: 'pricing-section' },
-  { label: 'FAQ', href: 'faq-section' },
+  { labelKey: 'home.nav.why', href: 'why-tutormind' },
+  { labelKey: 'home.nav.subjects', href: 'subjects-section' },
+  { labelKey: 'navigation.aboutExam', to: '/about-exams' },
+  { labelKey: 'home.nav.how', href: 'how-it-works' },
+  { labelKey: 'home.nav.pricing', href: 'pricing-section' },
+  { labelKey: 'home.nav.faq', href: 'faq-section' },
 ];
 
 const trustIndicators = [
-  { label: 'Built for NEET, JEE & KCET', Icon: TargetIcon },
-  { label: 'No credit card required', Icon: BoltIcon },
-  { label: 'Practice-first, not video-first', Icon: ChartIcon },
+  { key: 'builtFor', Icon: TargetIcon },
+  { key: 'noCard', Icon: BoltIcon },
+  { key: 'practiceFirst', Icon: ChartIcon },
 ];
 
 const pillars = [
   {
-    title: 'Adaptive practice engine',
-    copy: 'Every attempt updates a live model of your strengths, so the next question is always the right level of challenge — not too easy, not demoralizing.',
+    key: 'adaptive',
     Icon: BrainIcon,
   },
   {
-    title: 'Weak-topic detection',
-    copy: 'TutorMind watches accuracy and time-per-question across every subject to surface exactly where you\u2019re losing marks, before the exam does.',
+    key: 'weak',
     Icon: SearchIcon,
   },
   {
-    title: 'Exam-day simulation',
-    copy: 'Full-length, negative-marking-aware mock tests that mirror real NEET/JEE/KCET timing, so exam day feels like just another practice session.',
+    key: 'sim',
     Icon: ClockIcon,
   },
   {
-    title: 'Actionable analytics',
-    copy: 'No vanity charts — every insight comes with a next step: which topic to revise, which question type to drill, and when to retest.',
+    key: 'analytics',
     Icon: TrendUpIcon,
   },
 ];
@@ -56,121 +54,91 @@ const pillars = [
 const subjects = [
   {
     exam: 'NEET',
-    focus: 'Biology, Physics & Chemistry',
-    detail: 'NCERT-aligned question banks with diagram-heavy Botany & Zoology coverage.',
+    key: 'neet',
   },
   {
     exam: 'JEE',
-    focus: 'Physics, Chemistry & Mathematics',
-    detail: 'Concept-linked problem sets from JEE Main difficulty up through Advanced-style multi-step problems.',
+    key: 'jee',
   },
   {
     exam: 'KCET / CET',
-    focus: 'PCM/PCB tracks',
-    detail: 'State-syllabus-matched practice for Karnataka CET aspirants, alongside NEET/JEE prep.',
+    key: 'cet',
   },
 ];
 
 const steps = [
   {
     step: '01',
-    title: 'Practice questions',
-    copy: 'Start with a diagnostic set or jump straight into a subject and topic you want to drill.',
+    key: 'practice',
   },
   {
     step: '02',
-    title: 'System analyzes performance',
-    copy: 'Accuracy, timing, and attempt patterns are scored after every question — not just at the end of a test.',
+    key: 'analyze',
   },
   {
     step: '03',
-    title: 'Get personalized recommendations',
-    copy: 'Your next practice set adapts automatically, prioritizing the topics most likely to move your score.',
+    key: 'recommend',
   },
 ];
 
 // Placeholder testimonials — swap in real student quotes before launch.
 const testimonials = [
   {
-    quote:
-      'The weak-topic breakdown told me Organic Chemistry was quietly costing me marks weeks before I noticed it myself.',
+    key: 'sharma',
     name: 'A. Sharma',
-    role: 'NEET aspirant',
+    exam: 'NEET',
   },
   {
-    quote:
-      'Exam simulation mode is the closest thing to the real JEE timing pressure I found while prepping from home.',
+    key: 'patel',
     name: 'R. Patel',
-    role: 'JEE aspirant',
+    exam: 'JEE',
   },
   {
-    quote:
-      'I stopped guessing what to revise. The recommendations just tell me what to practice next.',
+    key: 'nair',
     name: 'K. Nair',
-    role: 'KCET aspirant',
+    exam: 'KCET',
   },
 ];
 
 // Placeholder pricing — replace with real plans/currency before launch.
 const pricingPlans = [
   {
-    name: 'Free',
+    key: 'free',
     priceValue: 0,
-    period: 'forever',
-    tagline: 'Get started and see how adaptive practice feels.',
-    features: ['Daily practice sets', 'Basic performance tracking', '1 exam simulation / month'],
-    cta: 'Start free',
+    featureCount: 3,
     highlighted: false,
   },
   {
-    name: 'Pro',
+    key: 'pro',
     priceValue: 499,
-    period: '/ month',
-    tagline: 'For students actively preparing for an upcoming exam.',
-    features: [
-      'Unlimited adaptive practice',
-      'Full weak-topic analytics',
-      'Unlimited exam simulations',
-      'Priority recommendation refresh',
-    ],
-    cta: 'Start Pro trial',
+    featureCount: 4,
     highlighted: true,
   },
   {
-    name: 'Premium',
+    key: 'premium',
     priceValue: 999,
-    period: '/ month',
-    tagline: 'Maximum support for the final exam stretch.',
-    features: ['Everything in Pro', 'Deep-dive performance reports', 'Custom revision roadmap'],
-    cta: 'Go Premium',
+    featureCount: 3,
     highlighted: false,
   },
 ];
 
 const faqs = [
   {
-    question: 'Which exams does TutorMind cover?',
-    answer:
-      'TutorMind is built specifically for NEET, JEE (Main-style), and Karnataka CET preparation, with subject coverage across Physics, Chemistry, Mathematics, and Biology.',
+    key: 'exams',
   },
   {
-    question: 'How does the recommendation engine decide what to show me next?',
-    answer:
-      'Every attempt updates a per-topic performance profile — accuracy, time taken, and recency. The system prioritizes topics where you\u2019re both weak and due for review, instead of repeating what you already know.',
+    key: 'engine',
   },
   {
-    question: 'Is there a free plan?',
-    answer:
-      'Yes — the Free plan includes daily practice sets and basic performance tracking so you can try the adaptive experience before upgrading.',
+    key: 'free',
   },
   {
-    question: 'Can I cancel or change plans anytime?',
-    answer:
-      'Yes, plans are month-to-month and you can upgrade, downgrade, or cancel from your account settings at any time.',
+    key: 'cancel',
   },
 ];
 
 const HomePage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const heroAccuracyValue = useCountUp(18, { duration: 1500 });
@@ -178,6 +146,10 @@ const HomePage = () => {
   const heroCtaRef = useMagneticHover();
   const finalCtaRef = useMagneticHover();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const faqItems = faqs.map((item) => ({
+    question: t(`home.faq.${item.key}.q`),
+    answer: t(`home.faq.${item.key}.a`),
+  }));
 
   const goToLogin = () => navigate('/login');
   const goToRegister = () => navigate('/register');
@@ -303,7 +275,7 @@ const HomePage = () => {
           {navLinks.map((link) =>
             link.to ? (
               <Link key={link.to} to={link.to}>
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ) : (
               <a
@@ -315,25 +287,26 @@ const HomePage = () => {
                   scrollToSection(link.href);
                 }}
               >
-                {link.label}
+                {t(link.labelKey)}
               </a>
             )
           )}
         </nav>
 
         <div className="landing-actions">
+          <LanguageSelector variant="compact" />
           <button className="outline-btn" type="button" onClick={() => goToLogin()}>
-            Login
+            {t('auth.login')}
           </button>
           <button className="solid-btn" type="button" onClick={() => goToRegister()}>
-            Start free trial
+            {t('home.startFreeTrial')}
           </button>
         </div>
 
         <button
           type="button"
           className={`landing-menu-btn ${mobileNavOpen ? 'is-open' : ''}`}
-          aria-label={mobileNavOpen ? 'Close menu' : 'Open menu'}
+          aria-label={mobileNavOpen ? t('home.closeMenu') : t('home.openMenu')}
           aria-expanded={mobileNavOpen}
           onClick={() => setMobileNavOpen((open) => !open)}
         >
@@ -352,13 +325,13 @@ const HomePage = () => {
         className={`landing-mobile-menu ${mobileNavOpen ? 'is-open' : ''}`}
         role="dialog"
         aria-modal="true"
-        aria-label="Site navigation"
+        aria-label={t('home.siteNavigation')}
       >
         <nav className="landing-mobile-nav">
           {navLinks.map((link) =>
             link.to ? (
               <Link key={link.to} to={link.to} onClick={() => setMobileNavOpen(false)}>
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ) : (
               <a
@@ -370,12 +343,13 @@ const HomePage = () => {
                   scrollToSection(link.href);
                 }}
               >
-                {link.label}
+                {t(link.labelKey)}
               </a>
             )
           )}
         </nav>
         <div className="landing-mobile-actions">
+          <LanguageSelector variant="field" align="left" />
           <button
             className="outline-btn"
             type="button"
@@ -384,7 +358,7 @@ const HomePage = () => {
               goToLogin();
             }}
           >
-            Login
+            {t('auth.login')}
           </button>
           <button
             className="solid-btn"
@@ -394,7 +368,7 @@ const HomePage = () => {
               goToRegister();
             }}
           >
-            Start free trial
+            {t('home.startFreeTrial')}
           </button>
         </div>
       </div>
@@ -410,13 +384,9 @@ const HomePage = () => {
         </div>
 
         <div className="hero-content centered">
-          <span className="hero-badge">AI-powered prep for NEET · JEE · KCET</span>
-          <h1>AI that understands how you learn</h1>
-          <p>
-            TutorMind tracks every practice attempt, finds the topics quietly costing you marks,
-            and builds your next session automatically — so you always know exactly what to
-            practice next.
-          </p>
+          <span className="hero-badge">{t('home.hero.badge')}</span>
+          <h1>{t('home.hero.title')}</h1>
+          <p>{t('home.hero.text')}</p>
 
           <div className="hero-cta-row">
             <button
@@ -425,19 +395,19 @@ const HomePage = () => {
               type="button"
               onClick={() => goToRegister()}
             >
-              Start Practicing
+              {t('profile.startPracticing')}
               <ArrowRightIcon className="btn-arrow" />
             </button>
             <button className="outline-btn" type="button" onClick={() => scrollToSection('how-it-works')}>
-              See how it works
+              {t('home.hero.seeHow')}
             </button>
           </div>
 
           <ul className="hero-trust-row">
             {trustIndicators.map((item) => (
-              <li key={item.label}>
+              <li key={item.key}>
                 <item.Icon className="hero-trust-icon" aria-hidden="true" />
-                {item.label}
+                {t(`home.trust.${item.key}`)}
               </li>
             ))}
           </ul>
@@ -448,34 +418,33 @@ const HomePage = () => {
         </div>
 
         <div className="hero-float-card hero-float-card-1" aria-hidden="true">
-          <span className="hero-float-label">Weak topic found</span>
-          <span className="hero-float-value">Thermodynamics</span>
+          <span className="hero-float-label">{t('home.hero.weakTopicFound')}</span>
+          <span className="hero-float-value">{t('home.hero.sampleTopic')}</span>
         </div>
         <div className="hero-float-card hero-float-card-2" aria-hidden="true">
-          <span className="hero-float-label">Accuracy this week</span>
+          <span className="hero-float-label">{t('home.hero.accuracyThisWeek')}</span>
           <span className="hero-float-value hero-float-value-up">+{heroAccuracyValue}%</span>
         </div>
         <div className="hero-float-card hero-float-card-3" aria-hidden="true">
-          <span className="hero-float-label">Exam readiness</span>
+          <span className="hero-float-label">{t('dashboard.examReadiness')}</span>
           <span className="hero-float-value">{heroReadinessValue} / 100</span>
         </div>
         <RecommendationCard />
       </section>
 
       <section className="landing-section" id="why-tutormind">
-        <Reveal as="h2">Why TutorMind</Reveal>
+        <Reveal as="h2">{t('home.nav.why')}</Reveal>
         <Reveal as="p" className="landing-section-subtext" delay={60}>
-          Every practice session is analyzed to improve exam-readiness with actionable guidance —
-          not just another question bank.
+          {t('home.why.subtext')}
         </Reveal>
         <div className="pillar-grid">
           {pillars.map((pillar, index) => (
-            <Reveal as="article" className="pillar-card" key={pillar.title} delay={index * 90}>
+            <Reveal as="article" className="pillar-card" key={pillar.key} delay={index * 90}>
               <span className="pillar-icon" aria-hidden="true">
                 <pillar.Icon />
               </span>
-              <h3>{pillar.title}</h3>
-              <p>{pillar.copy}</p>
+              <h3>{t(`home.pillars.${pillar.key}.title`)}</h3>
+              <p>{t(`home.pillars.${pillar.key}.copy`)}</p>
             </Reveal>
           ))}
         </div>
@@ -483,17 +452,13 @@ const HomePage = () => {
 
       <section className="landing-section landing-section-split" id="ai-personalization">
         <Reveal as="div" className="split-copy">
-          <span className="section-eyebrow">Personalized learning</span>
-          <h2>A study plan that rewrites itself around you</h2>
-          <p className="landing-section-subtext left">
-            Instead of a fixed syllabus checklist, TutorMind keeps a live performance profile per
-            topic — accuracy, response time, and how recently you practiced it — and uses that to
-            decide what you see next.
-          </p>
+          <span className="section-eyebrow">{t('home.personal.eyebrow')}</span>
+          <h2>{t('home.personal.title')}</h2>
+          <p className="landing-section-subtext left">{t('home.personal.text')}</p>
           <ul className="split-list">
-            <li>Detects weak topics before a mock test does</li>
-            <li>Prioritizes questions you're due to review</li>
-            <li>Adjusts difficulty as you improve, automatically</li>
+            <li>{t('home.personal.b1')}</li>
+            <li>{t('home.personal.b2')}</li>
+            <li>{t('home.personal.b3')}</li>
           </ul>
         </Reveal>
         <Reveal as="div" delay={120} className="split-visual">
@@ -502,45 +467,45 @@ const HomePage = () => {
       </section>
 
       <section className="landing-section" id="subjects-section">
-        <Reveal as="h2">Built for NEET, JEE, and KCET preparation</Reveal>
+        <Reveal as="h2">{t('home.subjects.title')}</Reveal>
         <Reveal as="p" className="landing-section-subtext" delay={60}>
-          Pick your exam track — every question bank is mapped to the syllabus that matters for it.
+          {t('home.subjects.subtext')}
         </Reveal>
         <div className="subject-grid">
           {subjects.map((subject, index) => (
             <Reveal as="article" className="subject-card" key={subject.exam} delay={index * 90}>
               <h3>{subject.exam}</h3>
-              <span className="subject-focus">{subject.focus}</span>
-              <p>{subject.detail}</p>
+              <span className="subject-focus">{t(`home.subjects.${subject.key}.focus`)}</span>
+              <p>{t(`home.subjects.${subject.key}.detail`)}</p>
             </Reveal>
           ))}
         </div>
       </section>
 
       <section className="landing-section" id="how-it-works">
-        <Reveal as="h2">How It Works</Reveal>
+        <Reveal as="h2">{t('home.how.title')}</Reveal>
         <div className="steps-timeline">
           {steps.map((item, index) => (
             <Reveal as="article" className="step-card" key={item.step} delay={index * 100}>
               <span>{item.step}</span>
-              <h3>{item.title}</h3>
-              <p>{item.copy}</p>
+              <h3>{t(`home.how.${item.key}.title`)}</h3>
+              <p>{t(`home.how.${item.key}.copy`)}</p>
             </Reveal>
           ))}
         </div>
       </section>
 
       <section className="landing-section" id="testimonials-section">
-        <Reveal as="h2">What students are saying</Reveal>
+        <Reveal as="h2">{t('home.testimonials.title')}</Reveal>
         <div className="testimonial-grid">
           {testimonials.map((item, index) => (
             <Reveal as="figure" className="testimonial-card" key={item.name} delay={index * 90}>
-              <div className="testimonial-stars" aria-label="5 out of 5 stars">
+              <div className="testimonial-stars" aria-label={t('home.testimonials.stars')}>
                 {Array.from({ length: 5 }).map((_, starIndex) => (
                   <StarIcon key={starIndex} />
                 ))}
               </div>
-              <blockquote>&ldquo;{item.quote}&rdquo;</blockquote>
+              <blockquote>{t('home.testimonials.quote', { quote: t(`home.testimonials.${item.key}`) })}</blockquote>
               <figcaption>
                 <span className="testimonial-avatar" aria-hidden="true">
                   {item.name
@@ -550,7 +515,7 @@ const HomePage = () => {
                 </span>
                 <span className="testimonial-meta">
                   <strong>{item.name}</strong>
-                  <span>{item.role}</span>
+                  <span>{t('home.testimonials.role', { exam: item.exam })}</span>
                 </span>
               </figcaption>
             </Reveal>
@@ -559,28 +524,28 @@ const HomePage = () => {
       </section>
 
       <section className="landing-section" id="pricing-section">
-        <Reveal as="h2">Simple, transparent pricing</Reveal>
+        <Reveal as="h2">{t('home.pricing.title')}</Reveal>
         <Reveal as="p" className="landing-section-subtext" delay={60}>
-          Start free. Upgrade when you're ready to go all-in on exam prep.
+          {t('home.pricing.subtext')}
         </Reveal>
         <div className="pricing-grid">
           {pricingPlans.map((plan, index) => (
             <Reveal
               as="article"
               className={`pricing-card ${plan.highlighted ? 'pricing-card-highlight' : ''}`}
-              key={plan.name}
+              key={plan.key}
               delay={index * 90}
             >
-              {plan.highlighted && <span className="pricing-badge">Most popular</span>}
-              <h3>{plan.name}</h3>
+              {plan.highlighted && <span className="pricing-badge">{t('home.pricing.mostPopular')}</span>}
+              <h3>{t(`home.pricing.${plan.key}.name`)}</h3>
               <p className="pricing-price">
                 <PriceCounter value={plan.priceValue} />
-                <span>{plan.period}</span>
+                <span>{t(`home.pricing.${plan.key}.period`)}</span>
               </p>
-              <p className="pricing-tagline">{plan.tagline}</p>
+              <p className="pricing-tagline">{t(`home.pricing.${plan.key}.tagline`)}</p>
               <ul className="pricing-features">
-                {plan.features.map((feature) => (
-                  <li key={feature}>{feature}</li>
+                {Array.from({ length: plan.featureCount }).map((_, featureIndex) => (
+                  <li key={featureIndex}>{t(`home.pricing.${plan.key}.f${featureIndex + 1}`)}</li>
                 ))}
               </ul>
               <button
@@ -588,7 +553,7 @@ const HomePage = () => {
                 className={plan.highlighted ? 'solid-btn' : 'outline-btn'}
                 onClick={() => goToRegister()}
               >
-                {plan.cta}
+                {t(`home.pricing.${plan.key}.cta`)}
               </button>
             </Reveal>
           ))}
@@ -596,25 +561,23 @@ const HomePage = () => {
       </section>
 
       <section className="landing-section" id="faq-section">
-        <Reveal as="h2">Frequently asked questions</Reveal>
+        <Reveal as="h2">{t('home.faq.title')}</Reveal>
         <Reveal as="div" delay={80} className="faq-wrap">
-          <FaqAccordion items={faqs} />
+          <FaqAccordion items={faqItems} />
         </Reveal>
       </section>
 
       <Reveal as="section" className="landing-section cta-strip">
         <div className="cta-strip-glow" aria-hidden="true" />
-        <h2>Start your smart preparation today</h2>
-        <p className="landing-section-subtext">
-          Join TutorMind and let your practice sessions tell you exactly what to study next.
-        </p>
+        <h2>{t('home.cta.title')}</h2>
+        <p className="landing-section-subtext">{t('home.cta.text')}</p>
         <button
           ref={finalCtaRef}
           className="solid-btn magnetic-btn cta-pulse-btn btn-with-arrow"
           type="button"
           onClick={() => goToRegister()}
         >
-          Get Started Free
+          {t('home.cta.button')}
           <ArrowRightIcon className="btn-arrow" />
         </button>
       </Reveal>

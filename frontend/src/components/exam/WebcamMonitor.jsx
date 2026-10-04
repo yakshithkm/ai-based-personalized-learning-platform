@@ -1,8 +1,11 @@
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { translateProctorMessage } from '../../i18n/proctorMessages';
 
 // Compact live camera preview + status indicator. Purely local: the stream is attached to a
 // <video> element and never recorded, uploaded, or analysed.
 const WebcamMonitor = ({ status, stream, hint, onRetry, presence }) => {
+  const { t } = useTranslation();
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -17,10 +20,10 @@ const WebcamMonitor = ({ status, stream, hint, onRetry, presence }) => {
   const isActive = status === 'active' && Boolean(stream);
   const isUnavailable = status === 'unavailable';
 
-  let label = 'Camera starts with the exam';
-  if (status === 'requesting') label = 'Requesting camera…';
-  if (isActive) label = '● Camera Active';
-  if (isUnavailable) label = '⚠ Camera Unavailable';
+  let label = t('proctor.cam.startsWithExam');
+  if (status === 'requesting') label = t('proctor.cam.requesting');
+  if (isActive) label = `● ${t('proctor.cam.active')}`;
+  if (isUnavailable) label = `⚠ ${t('proctor.cam.unavailable')}`;
 
   return (
     <div className={`exam-proctor-cam ${isActive ? 'active' : ''} ${isUnavailable ? 'unavailable' : ''}`}>
@@ -32,7 +35,7 @@ const WebcamMonitor = ({ status, stream, hint, onRetry, presence }) => {
             autoPlay
             muted
             playsInline
-            aria-label="Live camera preview"
+            aria-label={t('proctor.cam.preview')}
           />
         ) : (
           <div className="exam-proctor-cam-placeholder" aria-hidden="true">
@@ -49,21 +52,21 @@ const WebcamMonitor = ({ status, stream, hint, onRetry, presence }) => {
         {label}
       </p>
       {isActive && presence && presence.status === 'loading' && (
-        <p className="exam-proctor-cam-presence">Starting presence check…</p>
+        <p className="exam-proctor-cam-presence">{t('proctor.cam.presenceStarting')}</p>
       )}
       {isActive && presence && presence.status === 'ready' && (
         <p className="exam-proctor-cam-presence">
-          Presence warnings: {presence.count} / {presence.max}
+          {t('proctor.cam.presenceWarnings', { count: presence.count, max: presence.max })}
         </p>
       )}
       {isActive && presence && presence.status === 'unavailable' && (
-        <p className="exam-proctor-cam-presence">Presence check unavailable</p>
+        <p className="exam-proctor-cam-presence">{t('proctor.cam.presenceUnavailable')}</p>
       )}
       {isUnavailable && (
         <div className="exam-proctor-cam-help">
-          {hint && <p>{hint}</p>}
+          {hint && <p>{translateProctorMessage(t, hint)}</p>}
           <button type="button" className="outline-btn exam-proctor-retry" onClick={onRetry}>
-            Retry camera
+            {t('proctor.cam.retry')}
           </button>
         </div>
       )}

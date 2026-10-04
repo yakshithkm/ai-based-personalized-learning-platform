@@ -1,0 +1,1290 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "logout": "Logout",
+    "search": "Search",
+    "close": "Close",
+    "tryAgain": "Try again",
+    "retry": "Retry",
+    "previous": "Previous",
+    "accuracy": "Accuracy",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "all": "All",
+    "viewAll": "View All",
+    "viewDetails": "View Details",
+    "goToPractice": "Go to Practice",
+    "backToHome": "Back to Home",
+    "backToDashboard": "Back to Dashboard",
+    "inviteFriends": "Invite Friends",
+    "dismissNotification": "Dismiss notification",
+    "logoAlt": "TutorMind logo",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "questionCount_one": "{{count}} question",
+    "questionCount_other": "{{count}} questions"
+  },
+  "language": {
+    "label": "Language",
+    "settingsTitle": "Language",
+    "settingsHint": "Choose the language TutorMind is shown in. Your choice is saved to your account and applies on every device."
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "practice": "Practice",
+    "learn": "Learn",
+    "analytics": "Analytics",
+    "examSimulation": "Exam Simulation",
+    "weakTopics": "Weak Topics",
+    "studyPlan": "Study Plan",
+    "mistakeBank": "Mistake Bank",
+    "flashcards": "Flashcards",
+    "achievements": "Achievements",
+    "aboutExam": "About Exam"
+  },
+  "time": {
+    "justNow": "just now",
+    "minutesAgo": "{{count}}m ago",
+    "hoursAgo": "{{count}}h ago",
+    "daysAgo": "{{count}}d ago",
+    "monthsAgo": "{{count}}mo ago",
+    "minutesAgoLong_one": "{{count}} minute ago",
+    "minutesAgoLong_other": "{{count}} minutes ago",
+    "hoursAgoLong_one": "{{count}} hour ago",
+    "hoursAgoLong_other": "{{count}} hours ago",
+    "daysAgoLong_one": "{{count}} day ago",
+    "daysAgoLong_other": "{{count}} days ago",
+    "monthsAgoLong_one": "{{count}} month ago",
+    "monthsAgoLong_other": "{{count}} months ago",
+    "minutesShort": "{{count}}m",
+    "hoursMinutesShort": "{{hours}}h {{minutes}}m",
+    "minSec": "{{m}}m {{s}}s",
+    "secondsShort": "{{count}}s",
+    "secondsUnit": "s"
+  },
+  "layout": {
+    "tagline": "AI-Powered Learning",
+    "subject": "Subject",
+    "viewProfileAria": "View profile",
+    "demoAccount": "Demo Account",
+    "aspirant": "{{exam}} Aspirant",
+    "upgradeTitle": "Unlock Your Potential",
+    "upgradeText": "Get unlimited access to AI insights, mocks & more.",
+    "upgradeCta": "Upgrade to Pro",
+    "closeMenu": "Close navigation menu",
+    "openMenu": "Open navigation menu",
+    "closeSearch": "Close search",
+    "openSearch": "Open search",
+    "searchPlaceholder": "Search topics, questions, subjects...",
+    "streak_one": "{{count}} day streak",
+    "streak_other": "{{count}} day streak",
+    "streakCompact": "{{count}}d",
+    "levelTitle": "Level {{level}} · {{xp}} total XP",
+    "levelShort": "Lvl {{level}}",
+    "xpProgress": "{{current}}/{{next}} XP",
+    "notifications": "Notifications",
+    "allCaughtUp": "You're all caught up — nothing needs your attention right now.",
+    "openProfileMenu": "Open profile menu",
+    "viewProfile": "View Profile",
+    "notificationTypes": {
+      "daily-practice-reminder": {
+        "title": "Daily Practice Reminder",
+        "text_one": "Complete {{count}} more question to hit your daily goal.",
+        "text_other": "Complete {{count}} more questions to hit your daily goal."
+      },
+      "streak-warning": {
+        "title": "Streak Warning",
+        "text": "Practice now to protect your streak."
+      },
+      "review-due": {
+        "title": "Review Due",
+        "text_one": "{{count}} spaced-repetition review is due.",
+        "text_other": "{{count}} spaced-repetition reviews are due."
+      },
+      "advance-level": {
+        "title": "Advance Opportunity",
+        "text": "No weak topics detected. Advance to harder level now."
+      },
+      "focus-topic": {
+        "title": "Smart Focus",
+        "text": "Your highest priority topic is {{topic}}."
+      },
+      "consistency": {
+        "title": "Strong Consistency",
+        "text": "No unresolved mistakes right now. Keep this standard."
+      }
+    }
+  },
+  "footer": {
+    "product": "Product",
+    "resources": "Resources",
+    "company": "Company",
+    "legal": "Legal",
+    "studyRoadmap": "Study Roadmap",
+    "weakTopicAnalysis": "Weak Topic Analysis",
+    "mistakeReview": "Mistake Review",
+    "helpCenter": "Help Center",
+    "about": "About",
+    "contact": "Contact",
+    "careers": "Careers",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "description": "AI-powered personalized learning for NEET, JEE, and CET aspirants — practice smarter, track every weak spot, and walk into exam day ready.",
+    "minimal": "© {{year}} TutorMind. All rights reserved. Built for focused exam preparation.",
+    "rights": "© {{year}} TutorMind. All rights reserved.",
+    "builtFor": "Built for focused exam preparation."
+  },
+  "auth": {
+    "login": "Login",
+    "loggingIn": "Logging in...",
+    "loginFailed": "Login failed. Please try again.",
+    "registerFailed": "Registration failed. Please try again.",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "useDemo": "Use {{exam}} Demo",
+    "features": {
+      "plans": "AI-powered personalized study plans",
+      "adaptive": "Adaptive practice based on performance",
+      "analytics": "Performance analytics and weak-topic detection",
+      "simulations": "Realistic exam simulations"
+    },
+    "headlineLine1": "Learn Smarter.",
+    "headlineLine2": "Prepare Better.",
+    "subtext": "TutorMind gives you personalized preparation for NEET, JEE and CET — powered by performance analytics, adaptive practice, study recommendations, and realistic exam simulation.",
+    "welcomeBack": "Welcome back",
+    "signInSubtitle": "Sign in to continue your learning journey.",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "password": "Password",
+    "newToTutorMind": "New to TutorMind?",
+    "createAccountLink": "Create account",
+    "demoAccounts": "Demo Accounts",
+    "createYourAccount": "Create your account",
+    "registerSubtitle": "Start your personalized learning journey.",
+    "invitedWithCode": "Invited with code {{code}}",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your full name",
+    "passwordMinPlaceholder": "Min 6 characters",
+    "examGoal": "Exam / Goal",
+    "createAccount": "Create Account",
+    "creatingAccount": "Creating account...",
+    "alreadyHaveAccount": "Already have an account?"
+  },
+  "serverErrors": {
+    "invalidCredentials": "Invalid email or password.",
+    "emailPasswordRequired": "Email and password are required.",
+    "registerFieldsRequired": "Name, email and password are required.",
+    "userExists": "An account with this email already exists.",
+    "adminAccount": "This is an admin account. Please sign in at /admin/login instead.",
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "aiTooMany": "Too many AI tutor requests. Please wait a moment and try again.",
+    "aiRateLimited": "AI usage limit reached temporarily. Please try again later.",
+    "aiUnavailable": "AI explanation is temporarily unavailable.",
+    "aiNetwork": "Unable to connect to the AI service. Please try again.",
+    "aiGeneric": "Sorry, I couldn't generate an explanation right now. Please try again.",
+    "notAttempted": "This question has not been attempted yet.",
+    "questionNotFound": "Question not found.",
+    "examSessionNotFound": "Exam session not found.",
+    "examSessionInactive": "Exam session is not active."
+  },
+  "priority": {
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
+  "subjects": {
+    "Physics": "Physics",
+    "Chemistry": "Chemistry",
+    "Mathematics": "Mathematics",
+    "Biology": "Biology"
+  },
+  "mistakeTypes": {
+    "ConceptError": "Concept Error",
+    "CalculationError": "Calculation Error",
+    "CarelessMistake": "Careless Mistake"
+  },
+  "dashboard": {
+    "loadFailed": "Failed to load dashboard",
+    "couldntLoad": "Couldn't load your dashboard",
+    "goodMorning": "Good morning",
+    "goodAfternoon": "Good afternoon",
+    "goodEvening": "Good evening",
+    "thereFallback": "there",
+    "greeting": "{{greeting}}, {{name}}!",
+    "continueJourney": "Let's continue your journey towards success.",
+    "studyStreak": "Study Streak",
+    "daysUnit_one": "day",
+    "daysUnit_other": "days",
+    "daysCount_one": "{{count}} day",
+    "daysCount_other": "{{count}} days",
+    "keepItUp": "Keep it up!",
+    "longestStreak_one": "Longest streak: {{count}} day",
+    "longestStreak_other": "Longest streak: {{count}} days",
+    "questionsSolved": "Questions Solved",
+    "totalAttempts_one": "{{count}} total attempt",
+    "totalAttempts_other": "{{count}} total attempts",
+    "trendImproving": "↑ Improving",
+    "trendDeclining": "↓ Declining",
+    "trendStable": "→ Stable",
+    "examReadiness": "Exam Readiness",
+    "readinessAria": "Exam readiness score {{score}} out of 100",
+    "readyExam": "Exam ready!",
+    "goodProgress": "Good progress!",
+    "keepBuilding": "Keep building.",
+    "timeStudied": "Time Studied",
+    "avgPerQuestion": "Avg {{seconds}}s / question",
+    "aiStudyPlan": "AI Study Plan for You",
+    "aiStudyPlanSubtitle": "Focus on these topics to improve your score",
+    "viewFullPlan": "View Full Plan",
+    "noWeakTopicsYet": "No weak topics detected yet — keep practicing to unlock your AI study plan.",
+    "performanceOverview": "Performance Overview",
+    "selectRange": "Select time range",
+    "last7Days": "Last 7 Days",
+    "last30Days": "Last 30 Days",
+    "accuracyPercentSeries": "Accuracy (%)",
+    "chartNote30": "Accuracy trend is available for the 7-day view — showing questions solved per day over 30 days.",
+    "subjectWiseAccuracy": "Subject Wise Accuracy",
+    "overall": "Overall",
+    "noSubjectData": "No subject data yet.",
+    "noWeakTopics": "No weak topics detected. Advance to harder level.",
+    "recentAchievements": "Recent Achievements",
+    "firstAchievementHint": "Keep practicing — your first achievement unlocks after a 3-day streak or 25 correct answers.",
+    "nextUp": "Next Up: {{title}}",
+    "startPractice": "Start Practice",
+    "action": {
+      "mistakeReviewsTitle": "Mistake Reviews",
+      "mistakeReviewsText": "Retry the mistakes that are still costing you marks before they resurface on exam day.",
+      "weakTopicText": "Based on your performance, we recommend you to practice {{topic}} today.",
+      "difficultyTitle": "Difficulty Challenge",
+      "difficultyText": "Your strong topics are stable — take on a harder difficulty to keep growing.",
+      "focusTitle": "Focus Session",
+      "focusText": "Build consistency with a focused practice session picked for you."
+    }
+  },
+  "weakTopics": {
+    "loadFailed": "Failed to load weak topics",
+    "loading": "Loading weak topics",
+    "couldntLoad": "Couldn't load weak topics",
+    "intro": "Every topic where your accuracy is trailing, ranked by how urgently it needs attention.",
+    "emptyTitle": "No weak topics detected",
+    "emptyText": "Your accuracy is holding up across every topic you've attempted. Advance to harder difficulty or explore a new subject.",
+    "accuracyValue": "{{value}} accuracy",
+    "severity": {
+      "critical": "Critical",
+      "weak": "Weak",
+      "needsPractice": "Needs Practice"
+    }
+  },
+  "studyPlan": {
+    "loadFailed": "Failed to load study plan",
+    "loading": "Loading study plan",
+    "couldntLoad": "Couldn't load your study plan",
+    "timeAllocation": "Recommended Time Allocation",
+    "todaysSessions": "Today's Sessions",
+    "priorityTopics": "Priority Topics",
+    "emptyTitle": "No priority topics right now",
+    "emptyText": "Solve a few more practice questions and your personalized topic priority list will appear here."
+  },
+  "mistakeBank": {
+    "loadFailed": "Failed to load mistake bank",
+    "loading": "Loading mistake bank",
+    "couldntLoad": "Couldn't load your mistake bank",
+    "intro": "Every question you've gotten wrong, tracked for spaced-repetition review.",
+    "repeatedPatterns": "Repeated Patterns",
+    "repeatedSubtitle": "Topics where the same mistake keeps coming back.",
+    "timesMissed_one": "Missed {{count}} time",
+    "timesMissed_other": "Missed {{count}} times",
+    "recentMistakes": "Recent Mistakes",
+    "resolved": "Resolved",
+    "pendingReview": "Pending Review",
+    "emptyTitle": "No mistakes logged",
+    "emptyText": "Strong consistency so far — every mistake you make in practice or exam simulation will show up here for review."
+  },
+  "flashcards": {
+    "intro": "Quick-fire spaced-repetition review cards for formulas, definitions, and reactions.",
+    "comingSoonTitle": "Flashcards are coming soon",
+    "comingSoonText": "This feature needs a bit more building on our end before it's ready — we didn't want to ship a fake deck of cards in the meantime. In the meantime, Mistake Bank gives you spaced-repetition review on questions you've actually gotten wrong.",
+    "openMistakeBank": "Open Mistake Bank"
+  },
+  "achievements": {
+    "loadFailed": "Failed to load achievements",
+    "loading": "Loading achievements",
+    "couldntLoad": "Couldn't load achievements",
+    "intro_one": "Milestones you've unlocked through real practice — {{count}} earned so far.",
+    "intro_other": "Milestones you've unlocked through real practice — {{count}} earned so far.",
+    "emptyTitle": "No achievements yet",
+    "emptyText": "Your first achievement unlocks after a 3-day streak or 25 correct answers. Keep practicing!",
+    "upNext": "Up Next"
+  },
+  "achievementDefs": {
+    "streak30": {
+      "label": "30 Day Streak",
+      "description": "Practiced 30 days in a row at your peak."
+    },
+    "streak7": {
+      "label": "7 Day Streak",
+      "description": "Practiced 7 days in a row at your peak."
+    },
+    "streak3": {
+      "label": "Consistent Learner",
+      "description_one": "Completed {{count}} day streak.",
+      "description_other": "Completed {{count}} days streak."
+    },
+    "solved1000": {
+      "label": "Practice Pro",
+      "description": "Solved 1000 questions."
+    },
+    "solved250": {
+      "label": "250 Solved",
+      "description": "Answered 250+ questions correctly."
+    },
+    "solved100": {
+      "label": "100 Solved",
+      "description": "Answered 100+ questions correctly."
+    },
+    "solved25": {
+      "label": "25 Solved",
+      "description": "Answered 25+ questions correctly."
+    },
+    "sharpshooter": {
+      "label": "Sharpshooter",
+      "description": "80%+ accuracy across 20+ attempts."
+    },
+    "consistencyPro": {
+      "label": "Consistency Pro",
+      "description": "Practiced on 6+ days this week."
+    },
+    "level": {
+      "label": "Level {{level}}",
+      "description": "{{xp}} total XP earned."
+    },
+    "locked": {
+      "streak7": {
+        "label": "7 Day Streak",
+        "description": "Practice 7 days in a row."
+      },
+      "streak30": {
+        "label": "30 Day Streak",
+        "description": "Practice 30 days in a row."
+      },
+      "solved100": {
+        "label": "100 Solved",
+        "description": "Answer 100 questions correctly."
+      },
+      "solved1000": {
+        "label": "Practice Pro",
+        "description": "Solve 1000 questions."
+      }
+    }
+  },
+  "gamification": {
+    "achievementUnlocked": "Achievement Unlocked",
+    "nice": "Nice!",
+    "levelUp": "Level Up",
+    "levelRange": "Level {{from}} → Level {{to}}",
+    "earnedXp": "You earned {{xp}} XP to get here.",
+    "keepGoing": "Keep Going",
+    "xpGain": "+{{xp}} XP",
+    "achievements": {
+      "first-step": {
+        "label": "First Step",
+        "description": "Answer your first question."
+      },
+      "getting-started": {
+        "label": "Getting Started",
+        "description": "Answer 25 questions."
+      },
+      "question-crusher": {
+        "label": "Question Crusher",
+        "description": "Answer 100 questions."
+      },
+      "practice-pro": {
+        "label": "Practice Pro",
+        "description": "Answer 500 questions."
+      },
+      "master-solver": {
+        "label": "Master Solver",
+        "description": "Answer 1000 questions."
+      },
+      "sharpshooter": {
+        "label": "Sharpshooter",
+        "description": "Maintain 80%+ accuracy across 20+ attempts."
+      },
+      "precision": {
+        "label": "Precision",
+        "description": "Maintain 90%+ accuracy across 50+ attempts."
+      },
+      "streak-3": {
+        "label": "3-Day Learner",
+        "description": "Practice 3 days in a row."
+      },
+      "streak-7": {
+        "label": "7-Day Streak",
+        "description": "Practice 7 days in a row."
+      },
+      "streak-14": {
+        "label": "14-Day Streak",
+        "description": "Practice 14 days in a row."
+      },
+      "streak-30": {
+        "label": "30-Day Streak",
+        "description": "Practice 30 days in a row."
+      },
+      "streak-60": {
+        "label": "60-Day Streak",
+        "description": "Practice 60 days in a row."
+      },
+      "streak-100": {
+        "label": "100-Day Streak",
+        "description": "Practice 100 days in a row."
+      },
+      "first-lesson": {
+        "label": "First Lesson",
+        "description": "Complete your first learning item."
+      },
+      "knowledge-builder": {
+        "label": "Knowledge Builder",
+        "description": "Complete 10 learning items."
+      },
+      "deep-learner": {
+        "label": "Deep Learner",
+        "description": "Complete 50 learning items."
+      },
+      "first-exam": {
+        "label": "First Exam",
+        "description": "Complete your first exam simulation."
+      },
+      "exam-ready": {
+        "label": "Exam Ready",
+        "description": "Complete 5 exam simulations."
+      },
+      "high-performer": {
+        "label": "High Performer",
+        "description": "Score 80%+ in an exam."
+      },
+      "elite-performance": {
+        "label": "Elite Performance",
+        "description": "Score 90%+ in an exam."
+      },
+      "level-5": {
+        "label": "Rising Star",
+        "description": "Reach Level 5."
+      },
+      "level-10": {
+        "label": "Advanced Learner",
+        "description": "Reach Level 10."
+      },
+      "level-20": {
+        "label": "Master Learner",
+        "description": "Reach Level 20."
+      }
+    }
+  },
+  "profile": {
+    "loadFailed": "Failed to load profile",
+    "loading": "Loading profile",
+    "couldntLoad": "Couldn't load your profile",
+    "noActivityTitle": "No activity yet",
+    "noActivityText": "Solve a few practice questions or run an exam simulation and your profile stats, badges, and activity will show up here.",
+    "startPracticing": "Start Practicing",
+    "admin": "Admin",
+    "memberSince": "Member since {{date}}",
+    "editProfile": "Edit Profile",
+    "editComingSoon": "Profile editing is coming soon",
+    "acceptance": "Acceptance",
+    "submissions_one": "{{count}} submission",
+    "submissions_other": "{{count}} submissions",
+    "solved": "Solved",
+    "attempting": "{{count}} Attempting",
+    "standing": "Standing",
+    "aheadOf": "Ahead of {{percent}}% of students",
+    "buildingProfile": "Building your profile",
+    "submissionsInYear_one": "<strong>{{count}}</strong> submission in the past one year",
+    "submissionsInYear_other": "<strong>{{count}}</strong> submissions in the past one year",
+    "totalActiveDays": "Total active days",
+    "maxStreak": "Max streak",
+    "heatmapCell_one": "{{count}} attempt on {{date}}",
+    "heatmapCell_other": "{{count}} attempts on {{date}}",
+    "noActivityRecorded": "No activity recorded yet.",
+    "badgesTitle": "Badges",
+    "firstBadgeHint": "Keep practicing — your first badge unlocks after a 3-day streak or 25 correct answers.",
+    "badges": {
+      "streak3Label": "3 Day Streak",
+      "streak3Detail": "You are 3 days into a fresh streak."
+    },
+    "level": "Level",
+    "xpSummary": "{{total}} total XP · {{weekly}} this week",
+    "currentStreak": "Current Streak",
+    "overallAccuracy": "Overall Accuracy",
+    "acrossAttempts_one": "Across {{count}} attempt",
+    "acrossAttempts_other": "Across {{count}} attempts",
+    "skills": "Skills",
+    "skillsHint": "Topic mastery built from your practice and mock-test history.",
+    "tiers": {
+      "advanced": "Advanced",
+      "intermediate": "Intermediate",
+      "developing": "Developing"
+    },
+    "noMastery": "No topic mastery data yet.",
+    "recentActivity": "Recent Activity",
+    "recentActivityHint": "Your latest attempts across practice and exam simulation.",
+    "noAttempts": "No attempts yet.",
+    "ringAria": "Correct answers by subject"
+  },
+  "analytics": {
+    "loadFailed": "Failed to load analytics",
+    "couldntLoad": "Couldn't load your analytics",
+    "intro": "Understand your performance and improve where it matters.",
+    "emptyTitle": "Complete a few practice sessions to unlock personalized analytics",
+    "emptyText": "Solve a few practice questions or run an exam simulation and your accuracy, timing, and weak-topic trends will show up here.",
+    "avgTime": "Avg Time / Question",
+    "studiedOverall": "{{time}} studied overall",
+    "performanceTrend": "Performance Trend",
+    "performanceTrendSub": "Accuracy and questions solved over time.",
+    "subjectPerformance": "Subject Performance",
+    "attempts_one": "{{count}} attempt",
+    "attempts_other": "{{count}} attempts",
+    "noWeak": "No weak topics detected. Great work — keep raising the difficulty.",
+    "performanceInsight": "Performance Insight",
+    "performanceInsightSub": "Generated from your real attempt history — no filler stats.",
+    "topicMastery": "Topic Mastery",
+    "topicMasterySub": "Mastery combines accuracy and consistent practice volume.",
+    "masteryLine": "Mastery {{mastery}} | Acc {{acc}}",
+    "noMastery": "No mastery data yet. Solve more questions to build your mastery profile.",
+    "focusHeatmap": "Topic Focus Heatmap",
+    "focusHeatmapSub": "Higher focus score means the topic needs earlier revision.",
+    "focusLine": "Focus {{focus}} | Acc {{acc}}",
+    "noHeatmap": "No heatmap data yet. Solve more questions to unlock topic intensity insights.",
+    "insight": {
+      "strongest": "Your strongest subject is {{subject}} at {{value}} accuracy. Keep the momentum going.",
+      "weakest": "{{subject}} needs the most attention right now, sitting at {{value}} accuracy.",
+      "up": "Your accuracy is trending upward across recent attempts. Whatever you are doing is working.",
+      "down": "Your accuracy has been trending downward recently — consider slowing down and reviewing mistakes before moving on.",
+      "focus": "Next best topic to focus on: {{topic}}.",
+      "fast": "Solving faster tends to align with better accuracy for you — trust your first instinct more.",
+      "slow": "Rushing tends to hurt your accuracy — slowing down on tricky questions may help.",
+      "more": "Complete a few more practice sessions to unlock personalized insights."
+    }
+  },
+  "practice": {
+    "loadSubjectsFailed": "Failed to load subjects/topics",
+    "loadLessonFailed": "Failed to load the practice set for this lesson",
+    "loadRecommendedFailed": "Failed to load recommended practice set",
+    "loadFocusFailed": "Failed to load focus session",
+    "loadQuestionsFailed": "Failed to load questions",
+    "submitFailed": "Failed to submit attempt",
+    "loadAdaptiveFailed": "Failed to load adaptive question",
+    "noPracticeQuestions": "No practice questions are available for this topic yet.",
+    "noQuestionsMatched": "No questions matched those filters yet. Try a different subject, topic, or difficulty.",
+    "noAdaptive": "No adaptive follow-up question found for this action.",
+    "whySelected": "Selected based on your recent performance and adaptive strategy.",
+    "whyFilters": "Question loaded from your current filters.",
+    "mode": {
+      "focus": "Focus Session",
+      "afterLearning": "Practice After Learning",
+      "recommended": "Recommended Set",
+      "custom": "Custom Practice"
+    },
+    "modeSubtitle": {
+      "focus": "Focus session is active: weak topics + mistakes + one harder challenge.",
+      "afterLearning": "Practice after learning — questions chosen from the topic you just studied.",
+      "recommended": "Recommended adaptive set is active — questions chosen from your performance profile.",
+      "custom": "Choose a subject, topic, and difficulty, then start practice to begin."
+    },
+    "pickFilters": "Pick your filters and start a curated question set.",
+    "subject": "Subject",
+    "allSubjects": "All Subjects",
+    "topic": "Topic",
+    "allTopics": "All Topics",
+    "difficulty": "Difficulty",
+    "allDifficulties": "All Difficulties",
+    "questionCountLabel": "Question Count",
+    "questionOf": "Question {{current}} / {{total}}",
+    "percentComplete": "{{percent}}% Complete",
+    "why": "WHY: {{reason}}",
+    "adaptiveApplied": "Adaptive difficulty applied for this step.",
+    "aiLabels": {
+      "AI_selected_question": "AI-selected question",
+      "Adaptive_difficulty_applied": "Adaptive difficulty applied",
+      "Based_on_your_mistakes": "Based on your mistakes",
+      "Practice_after_learning": "Practice after learning",
+      "Easy_level": "Easy level",
+      "Medium_level": "Medium level",
+      "Hard_level": "Hard level",
+      "Mixed_level": "Mixed level"
+    },
+    "submitAnswer": "Submit Answer",
+    "correctAnswer": "Correct Answer",
+    "incorrectAnswer": "Incorrect Answer",
+    "correctAnswerIs": "Correct answer: {{answer}}",
+    "xpEarned": "+{{xp}} XP earned",
+    "tip": "Tip: {{tip}}",
+    "performance": "Performance: {{label}}",
+    "performanceLabels": {
+      "Strong": "Strong",
+      "Improving": "Improving",
+      "NeedsAttention": "Needs Attention"
+    },
+    "mistakeType": "Mistake Type: {{type}}",
+    "mistakeClassifications": {
+      "ConceptError": "Concept Error",
+      "CalculationError": "Calculation Error",
+      "CarelessMistake": "Careless Mistake"
+    },
+    "whyWrong": "Why you got it wrong: {{reason}}",
+    "retrySimilar": "Retry Similar Question",
+    "moveHarder": "Move to Harder Question",
+    "nextQuestion": "Next Question",
+    "setCompleted": "Practice set completed",
+    "viewSummary": "View Session Summary",
+    "askWithAi": "Ask with AI",
+    "performanceThisSession": "Performance This Session",
+    "timeTaken": "Time Taken",
+    "submitFirst": "Submit your first answer to see live session stats here.",
+    "recentQuestions": "Recent Questions",
+    "recentEmpty": "Your recently answered questions will appear here.",
+    "emptyTitle": "No questions loaded yet",
+    "emptyText": "Pick a subject and topic above, then start practice to begin."
+  },
+  "aiTutor": {
+    "chatAria": "Ask with AI doubt resolution chat",
+    "restore": "Restore sidebar size",
+    "maximize": "Maximize sidebar",
+    "closeChat": "Close AI doubt resolution chat",
+    "aiLabel": "AI",
+    "youLabel": "You",
+    "thinking": "AI is thinking",
+    "placeholder": "Ask a follow-up question...",
+    "followUpAria": "Ask a follow-up question",
+    "send": "Send message"
+  },
+  "summary": {
+    "title": "Session Summary",
+    "none": "No session summary available. Start a practice session first.",
+    "startFocus": "Start Focus Session",
+    "sessionEnd": "Session End",
+    "mentorJudged": "Your Mentor Judged This Session",
+    "mentorIntro": "Now the question is not what you solved, but what your result says about your preparation.",
+    "reward": "Session reward: +{{xp}} XP",
+    "mentorFeedback": "Mentor Feedback",
+    "mentorSays": "Your Mentor Says",
+    "score": "Score",
+    "scoreLine": "{{accuracy}} accuracy ({{correct}}/{{total}})",
+    "interpretation": "Interpretation",
+    "keyPattern": "Key Pattern",
+    "noFailurePattern": "No dominant failure pattern found.",
+    "noPattern": "No dominant pattern detected.",
+    "insightBreakdown": "Insight Breakdown",
+    "insightSub": "Strengths, weaknesses, key pattern",
+    "strengths": "Strengths",
+    "noStrength": "No clear strength yet.",
+    "weaknesses": "Weaknesses",
+    "noWeak": "No weak areas detected in this session.",
+    "readiness": {
+      "title": "Readiness",
+      "ready": "Exam Ready",
+      "improving": "Improving",
+      "notReady": "Not Ready"
+    },
+    "nextAction": "Next Action",
+    "continueSmart": "Continue Smart Practice",
+    "readyForPressure": "You are ready for exam pressure. Use it.",
+    "stayFocused": "Stay focused on the correction that will raise your score fastest.",
+    "keyPatternWeak": "You are repeating the same mistake pattern in {{topic}}. Practicing more without fixing the concept will not help.",
+    "keyPatternGood": "Your execution is controlled right now. Keep the same process and raise the difficulty.",
+    "mentor": {
+      "improving": "You are improving, and the results are becoming more dependable. Keep the method, but do not relax your error checks.",
+      "inconsistent": "Your performance is inconsistent — the issue is not effort, it is execution in {{topic}}.",
+      "stable": "The session is stable, but stable is not enough. Turn this into repeatable accuracy."
+    },
+    "interp": {
+      "improving": "Improving",
+      "trend": "Not ready yet, but the trend can be repaired quickly.",
+      "notReady": "Not ready — the current method is not converting into marks."
+    },
+    "improve": {
+      "weak": "Fix {{topic}} first. More volume will not help until the concept is corrected.",
+      "stable": "Your result is stable. Raise pressure with a full mock or harder set next."
+    },
+    "next": {
+      "learning": "See your learning progress",
+      "retry": "Retry Mistake Questions",
+      "mock": "Take Full Mock Test"
+    }
+  },
+  "examResult": {
+    "title": "Exam Result",
+    "complete": "Your simulation is complete. Review your performance summary below.",
+    "summaryUnavailable": "Result summary is not available yet for this session.",
+    "fetchFailed": "Unable to fetch exam result details.",
+    "reportFailed": "Unable to generate the exam report. Please try again.",
+    "certificateFailed": "Unable to generate the certificate. Please try again.",
+    "loadingAnalytics": "Loading full analytics...",
+    "notAvailable": "Result not available.",
+    "backToSimulation": "Back to Simulation",
+    "postTest": "Post-Test Result",
+    "totalScore": "Total Score",
+    "unanswered": "Unanswered",
+    "percentile": "Percentile Estimate",
+    "rankRange": "Estimated Rank Range",
+    "bySubject": "Performance by Subject",
+    "attemptedOf": "{{attempted}}/{{total}} attempted",
+    "interpretation": "Score Interpretation",
+    "noWeak": "No major weak topics detected.",
+    "mistakePatterns": "Mistake Patterns",
+    "noPattern": "No repeated mistake pattern detected.",
+    "repeatedLine": "{{subject}} - {{concept}}: {{count}} repeated",
+    "nextAction": "Next Recommended Action",
+    "defaultNext": "Continue with a balanced timed practice set.",
+    "generatingReport": "Generating Report...",
+    "downloadReport": "Download Report",
+    "generatingCertificate": "Generating Certificate...",
+    "downloadCertificate": "Download Certificate",
+    "practiceWeak": "Practice Weak Topics",
+    "takeAnother": "Take Another Exam"
+  },
+  "examSim": {
+    "confirmSubmit": "Submit test now? You cannot change answers after submission.",
+    "strictOn": "Strict navigation enabled: only current question can be answered in sequence.",
+    "flexibleOn": "Flexible navigation enabled: use the palette to jump between questions.",
+    "modeExplanation": "Exam mode mirrors real test pressure. Practice mode is better for hints and on-the-spot explanations.",
+    "intro": "Real exam environment with timer, palette, strict test flow, and post-test analysis.",
+    "examType": "Exam Type",
+    "matchedExam": "Matched to your enrolled exam",
+    "mode": "Mode",
+    "fullLength": "Full-Length Mock Test",
+    "sectionWise": "Section-Wise Test",
+    "sectionSubject": "Section Subject",
+    "enableStrict": "Enable strict navigation",
+    "start": "Start Exam Simulation",
+    "resyncing": "Resyncing...",
+    "sectionTest": "{{subject}} Section Test",
+    "timeLeft": "Time Left",
+    "hintsOff": "Hints: OFF",
+    "explanationsOff": "Explanations: OFF",
+    "lastSave": "Last confirmed save: {{time}}",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "ready": "Ready",
+    "state": {
+      "failed": "Failed",
+      "pending": "Pending",
+      "selected": "Selected",
+      "notVisited": "Not visited"
+    },
+    "pyqPriority": "PYQ Priority",
+    "mock": "Mock",
+    "weightage": "{{level}} Weightage",
+    "wait": "Wait {{seconds}}s",
+    "saveNext": "Save & Next",
+    "jumpFirst": "Jump to First Unanswered",
+    "markReview": "Mark for Review",
+    "unmarkReview": "Unmark Review",
+    "submitTest": "Submit Test",
+    "palette": {
+      "title": "Question Palette",
+      "marked": "Marked for Review",
+      "answered": "Answered",
+      "visited": "Visited",
+      "notVisited": "Not Visited",
+      "review": "Review"
+    },
+    "msg": {
+      "restoreExpired": "Session expired during restore and auto-submit failed. Please retry.",
+      "restored": "Your exam session was restored. Timer resumed.",
+      "hardSyncFailed": "Hard sync failed. Please reload the exam.",
+      "saveFailed": "Failed to save. Please try again.",
+      "authFailed": "Session authentication failed. Restarting exam session is required.",
+      "tooMany": "Too many attempts. Please wait.",
+      "stateMismatch": "Session state mismatch detected. State refreshed.",
+      "saveAndRefreshFailed": "Save failed and state refresh failed. Please reload the exam.",
+      "otherTab": "This exam is active in another tab. Interaction is disabled in this tab.",
+      "recovering": "Recovering an answer that was not confirmed before the exam session closed...",
+      "startFailed": "Failed to start exam simulation.",
+      "autoSubmitFailed": "Auto-submit failed. Please submit manually.",
+      "submitFailed": "Failed to submit exam simulation.",
+      "selectOption": "Select an option before moving to the next question.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "proctor": {
+    "violations": "Violations",
+    "violationsAria": "Focus violations: {{count}} of {{max}}",
+    "violationDetail": "Violation {{current}} of {{max}}",
+    "warningDetail": "Warning {{current}} of {{max}}",
+    "focusViolation": "Exam focus violation detected. Please remain on the Exam Simulation page.",
+    "finalViolation": "Maximum violation limit reached. Your exam is being submitted automatically.",
+    "retrySubmit": "Automatic submission could not be completed. Please press Submit Test to finish your exam.",
+    "noPerson": "No person detected in front of the camera. Please sit in front of your camera to continue the exam.",
+    "finalCamera": "Maximum camera warnings reached. Your exam is being submitted automatically.",
+    "cameraUnavailable": "Camera unavailable. Please enable or reconnect your webcam to continue the exam.",
+    "hint": {
+      "denied": "Camera permission is blocked. Allow camera access for this site in your browser, then press Retry.",
+      "notFound": "No camera was detected. Connect a webcam, then press Retry.",
+      "inUse": "Your camera may be in use by another application. Close it, then press Retry.",
+      "stopped": "Your camera stopped sending video. Reconnect it, then press Retry.",
+      "muted": "Your camera is not providing video. Check that it is connected and not covered or blocked, then press Retry.",
+      "unsupported": "This browser cannot access a camera here (a secure HTTPS connection is required).",
+      "error": "The camera could not be started. Press Retry."
+    },
+    "cameraWarning": "Camera Warning",
+    "cameraRestored": "Camera connection restored.",
+    "cameraCheck": "Camera check",
+    "noPersonTitle": "No person detected",
+    "dismissWarning": "Dismiss warning",
+    "cam": {
+      "startsWithExam": "Camera starts with the exam",
+      "requesting": "Requesting camera…",
+      "active": "Camera Active",
+      "unavailable": "Camera Unavailable",
+      "preview": "Live camera preview",
+      "presenceStarting": "Starting presence check…",
+      "presenceWarnings": "Presence warnings: {{count}} / {{max}}",
+      "presenceUnavailable": "Presence check unavailable",
+      "retry": "Retry camera"
+    }
+  },
+  "home": {
+    "nav": {
+      "why": "Why TutorMind",
+      "subjects": "Subjects",
+      "how": "How it works",
+      "pricing": "Pricing",
+      "faq": "FAQ"
+    },
+    "startFreeTrial": "Start free trial",
+    "closeMenu": "Close menu",
+    "openMenu": "Open menu",
+    "siteNavigation": "Site navigation",
+    "hero": {
+      "badge": "AI-powered prep for NEET · JEE · KCET",
+      "title": "AI that understands how you learn",
+      "text": "TutorMind tracks every practice attempt, finds the topics quietly costing you marks, and builds your next session automatically — so you always know exactly what to practice next.",
+      "seeHow": "See how it works",
+      "weakTopicFound": "Weak topic found",
+      "sampleTopic": "Thermodynamics",
+      "accuracyThisWeek": "Accuracy this week",
+      "todaysRecommendation": "Today's recommendation"
+    },
+    "trust": {
+      "builtFor": "Built for NEET, JEE & KCET",
+      "noCard": "No credit card required",
+      "practiceFirst": "Practice-first, not video-first"
+    },
+    "sampleTopics": {
+      "organicChemistry": "Organic Chemistry",
+      "coordinateGeometry": "Coordinate Geometry",
+      "electrostatics": "Electrostatics",
+      "thermodynamics": "Thermodynamics",
+      "organicReactions": "Organic Reactions"
+    },
+    "preview": {
+      "readinessAria": "Sample exam readiness score {{score}} out of 100",
+      "caption": "JEE Main · Preview",
+      "trend": "Accuracy trend · last 7 sessions",
+      "weakDetected": "Weak topics detected",
+      "streak": "Practice streak"
+    },
+    "why": {
+      "subtext": "Every practice session is analyzed to improve exam-readiness with actionable guidance — not just another question bank."
+    },
+    "pillars": {
+      "adaptive": {
+        "title": "Adaptive practice engine",
+        "copy": "Every attempt updates a live model of your strengths, so the next question is always the right level of challenge — not too easy, not demoralizing."
+      },
+      "weak": {
+        "title": "Weak-topic detection",
+        "copy": "TutorMind watches accuracy and time-per-question across every subject to surface exactly where you’re losing marks, before the exam does."
+      },
+      "sim": {
+        "title": "Exam-day simulation",
+        "copy": "Full-length, negative-marking-aware mock tests that mirror real NEET/JEE/KCET timing, so exam day feels like just another practice session."
+      },
+      "analytics": {
+        "title": "Actionable analytics",
+        "copy": "No vanity charts — every insight comes with a next step: which topic to revise, which question type to drill, and when to retest."
+      }
+    },
+    "personal": {
+      "eyebrow": "Personalized learning",
+      "title": "A study plan that rewrites itself around you",
+      "text": "Instead of a fixed syllabus checklist, TutorMind keeps a live performance profile per topic — accuracy, response time, and how recently you practiced it — and uses that to decide what you see next.",
+      "b1": "Detects weak topics before a mock test does",
+      "b2": "Prioritizes questions you're due to review",
+      "b3": "Adjusts difficulty as you improve, automatically"
+    },
+    "subjects": {
+      "title": "Built for NEET, JEE, and KCET preparation",
+      "subtext": "Pick your exam track — every question bank is mapped to the syllabus that matters for it.",
+      "neet": {
+        "focus": "Biology, Physics & Chemistry",
+        "detail": "NCERT-aligned question banks with diagram-heavy Botany & Zoology coverage."
+      },
+      "jee": {
+        "focus": "Physics, Chemistry & Mathematics",
+        "detail": "Concept-linked problem sets from JEE Main difficulty up through Advanced-style multi-step problems."
+      },
+      "cet": {
+        "focus": "PCM/PCB tracks",
+        "detail": "State-syllabus-matched practice for Karnataka CET aspirants, alongside NEET/JEE prep."
+      }
+    },
+    "how": {
+      "title": "How It Works",
+      "practice": {
+        "title": "Practice questions",
+        "copy": "Start with a diagnostic set or jump straight into a subject and topic you want to drill."
+      },
+      "analyze": {
+        "title": "System analyzes performance",
+        "copy": "Accuracy, timing, and attempt patterns are scored after every question — not just at the end of a test."
+      },
+      "recommend": {
+        "title": "Get personalized recommendations",
+        "copy": "Your next practice set adapts automatically, prioritizing the topics most likely to move your score."
+      }
+    },
+    "testimonials": {
+      "title": "What students are saying",
+      "stars": "5 out of 5 stars",
+      "quote": "“{{quote}}”",
+      "role": "{{exam}} aspirant",
+      "sharma": "The weak-topic breakdown told me Organic Chemistry was quietly costing me marks weeks before I noticed it myself.",
+      "patel": "Exam simulation mode is the closest thing to the real JEE timing pressure I found while prepping from home.",
+      "nair": "I stopped guessing what to revise. The recommendations just tell me what to practice next."
+    },
+    "pricing": {
+      "title": "Simple, transparent pricing",
+      "subtext": "Start free. Upgrade when you're ready to go all-in on exam prep.",
+      "mostPopular": "Most popular",
+      "free": {
+        "name": "Free",
+        "period": "forever",
+        "tagline": "Get started and see how adaptive practice feels.",
+        "f1": "Daily practice sets",
+        "f2": "Basic performance tracking",
+        "f3": "1 exam simulation / month",
+        "cta": "Start free"
+      },
+      "pro": {
+        "name": "Pro",
+        "period": "/ month",
+        "tagline": "For students actively preparing for an upcoming exam.",
+        "f1": "Unlimited adaptive practice",
+        "f2": "Full weak-topic analytics",
+        "f3": "Unlimited exam simulations",
+        "f4": "Priority recommendation refresh",
+        "cta": "Start Pro trial"
+      },
+      "premium": {
+        "name": "Premium",
+        "period": "/ month",
+        "tagline": "Maximum support for the final exam stretch.",
+        "f1": "Everything in Pro",
+        "f2": "Deep-dive performance reports",
+        "f3": "Custom revision roadmap",
+        "cta": "Go Premium"
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "exams": {
+        "q": "Which exams does TutorMind cover?",
+        "a": "TutorMind is built specifically for NEET, JEE (Main-style), and Karnataka CET preparation, with subject coverage across Physics, Chemistry, Mathematics, and Biology."
+      },
+      "engine": {
+        "q": "How does the recommendation engine decide what to show me next?",
+        "a": "Every attempt updates a per-topic performance profile — accuracy, time taken, and recency. The system prioritizes topics where you’re both weak and due for review, instead of repeating what you already know."
+      },
+      "free": {
+        "q": "Is there a free plan?",
+        "a": "Yes — the Free plan includes daily practice sets and basic performance tracking so you can try the adaptive experience before upgrading."
+      },
+      "cancel": {
+        "q": "Can I cancel or change plans anytime?",
+        "a": "Yes, plans are month-to-month and you can upgrade, downgrade, or cancel from your account settings at any time."
+      }
+    },
+    "cta": {
+      "title": "Start your smart preparation today",
+      "text": "Join TutorMind and let your practice sessions tell you exactly what to study next.",
+      "button": "Get Started Free"
+    }
+  },
+  "aboutExam": {
+    "statusNote": "Check the official website for the current registration status.",
+    "opensNewTab": "{{label}} (opens the official site in a new tab)",
+    "badge": "EXAM INFORMATION",
+    "title": "About Entrance Exams",
+    "subtitle": "Understand NEET, JEE and Karnataka CET, their purpose, applications, and official updates.",
+    "conductingAuthority": "Conducting authority",
+    "conductingAuthorityTitle": "Conducting Authority",
+    "applicationsUses": "Applications / Uses",
+    "subjects": "Subjects",
+    "whoShouldConsider": "Who should consider {{exam}}?",
+    "officialLinks": "Official Links",
+    "leavingNote": "Official links open the examination authority's own website in a new tab.",
+    "latestUpdate": "Latest Official Update",
+    "noticeGeneric": "Exam dates, registration windows, and eligibility rules can change at any time.",
+    "viewNotice": "View Official Notice",
+    "comparisonTitle": "Quick Comparison",
+    "comparisonSubtitle": "A quick side-by-side look at what each exam is for.",
+    "colExam": "Exam",
+    "colPurpose": "Main Purpose",
+    "colSubjects": "Major Subjects",
+    "colLevel": "Level",
+    "whichTitle": "Which Exam Should I Prepare For?",
+    "whichSubtitle": "Purely informational — no one exam is better than another; it depends on your target courses.",
+    "disclaimer": "Exam dates, eligibility, application deadlines and admission rules may change. Always verify the latest information on the official examination authority website.",
+    "exams": {
+      "neet": {
+        "purpose": "NEET-UG is the common entrance examination for undergraduate medical education in India, and also applies to specified AYUSH and other covered medical-related undergraduate admissions under the applicable rules.",
+        "uses": [
+          "Undergraduate medical admissions",
+          "MBBS",
+          "BDS",
+          "Relevant AYUSH undergraduate courses such as BAMS, BUMS and BSMS",
+          "Other applicable medical education admissions per current regulations"
+        ],
+        "whoText": "Students targeting undergraduate medical and covered healthcare-related programs should check NEET-UG requirements for their intended course.",
+        "linkWebsite": "Official Website",
+        "linkApply": "Apply / Candidate Portal",
+        "linkNotices": "Official Notices",
+        "noticeSummary": "Registration windows, admit cards, and exam-day circulars are published here as they go live.",
+        "cmpPurpose": "Medical/health-related undergraduate admissions",
+        "cmpSubjects": "Physics, Chemistry, Biology",
+        "cmpLevel": "National",
+        "whichExamText": "Choose NEET if your target courses require NEET-UG qualification, particularly undergraduate medical and covered healthcare-related programs."
+      },
+      "jee": {
+        "purpose": "JEE Main is used primarily for admission-related purposes to undergraduate engineering and architecture/planning programs, as specified by the relevant institutions and admission authorities.",
+        "uses": [
+          "B.E. / B.Tech admissions",
+          "B.Arch admissions",
+          "B.Planning admissions",
+          "Eligibility/qualification pathway for JEE Advanced where applicable",
+          "Admissions to participating institutions according to their rules"
+        ],
+        "subjectsNote": "Paper 1 (B.E. / B.Tech). Paper 2A covers B.Arch and Paper 2B covers B.Planning.",
+        "whoText": "Students targeting engineering, architecture, or planning pathways that use JEE Main should check its eligibility and admission requirements.",
+        "linkWebsite": "Official Website",
+        "linkApply": "Apply / Candidate Portal",
+        "linkNotices": "Official Notices",
+        "noticeSummary": "Session dates, information bulletins, and official documents are published here as they go live.",
+        "cmpPurpose": "Engineering/Architecture/Planning admissions",
+        "cmpSubjects": "Physics, Chemistry, Mathematics",
+        "cmpLevel": "National",
+        "whichExamText": "Choose JEE Main if you are targeting engineering, architecture or planning pathways that use JEE Main."
+      },
+      "kcet": {
+        "purpose": "KCET/UGCET is a Karnataka state-level entrance examination used for admission to various professional undergraduate courses according to KEA rules.",
+        "uses": [
+          "Engineering / B.E. / B.Tech",
+          "Pharmacy",
+          "Agriculture and allied courses",
+          "Veterinary-related admissions",
+          "Other professional undergraduate courses covered by KEA"
+        ],
+        "subjectsNote": "Mathematics is required for engineering courses and Biology for pharmacy/agriculture/veterinary courses — subject requirements differ depending on the course.",
+        "whoText": "Students targeting professional undergraduate admissions in Karnataka through KEA should check KCET/UGCET requirements for their intended course.",
+        "linkWebsite": "KEA Official Website",
+        "linkApply": "KCET / UGCET Application",
+        "linkNotices": "Official Notices / Information",
+        "noticeSummary": "Application cycles, eligibility rules, and admission-round updates are published here as they go live.",
+        "cmpPurpose": "Karnataka professional undergraduate admissions",
+        "cmpSubjects": "Depends on course, commonly PCM/PCB",
+        "cmpLevel": "Karnataka",
+        "whichExamText": "Consider KCET if you are targeting professional undergraduate admissions in Karnataka through KEA."
+      }
+    }
+  },
+  "invite": {
+    "loadFailed": "Failed to load your invite details",
+    "copied": "Invite link copied!",
+    "copyFailed": "Could not copy the link automatically. Please copy it manually.",
+    "shareTitle": "Join me on TutorMind",
+    "description": "Invite your friends to TutorMind and help them prepare smarter.",
+    "emailBody": "Hi,\n\nI've been preparing for my exams with TutorMind and thought you'd find it useful too.\n\nJoin using my invite link: {{link}}\n\nSee you there!",
+    "emailOpening": "Opening your email app... invite link copied too, just in case.",
+    "loading": "Loading your invite details...",
+    "linkAria": "Your invite link",
+    "copyLink": "Copy Invite Link",
+    "share": "Share",
+    "emailInvite": "Email Invite",
+    "code": "Your Invite Code",
+    "friendsInvited": "Friends Invited",
+    "signups": "Successful Signups",
+    "emptyLine1": "You haven't invited anyone yet.",
+    "emptyLine2": "Share your invite link to get started."
+  },
+  "learn": {
+    "loadFailed": "Failed to load your learning recommendations",
+    "couldntLoad": "Couldn't load your recommendations",
+    "loading": "Loading your learning recommendations",
+    "emptyTitle": "Nothing to recommend yet",
+    "emptyText": "Practice a few questions and personalized learning material will appear here.",
+    "welcomeTitle": "Welcome to TutorMind",
+    "welcomeMessage": "Let's establish your learning baseline.",
+    "welcomeText": "Answer a short starter set so recommendations can adapt to how you actually perform. Until then, here is a balanced place to begin.",
+    "startingPathAria": "Recommended starting path",
+    "practiceFirst": "practice first",
+    "startBaseline": "Start baseline practice",
+    "baselineNote_one": "Based on {{answered}} answered question so far. Answer {{remaining}} more to unlock sharper recommendations.",
+    "baselineNote_other": "Based on {{answered}} answered questions so far. Answer {{remaining}} more to unlock sharper recommendations.",
+    "alsoWorth": "Also worth your time",
+    "alsoWorthSub": "Different topics, next in line.",
+    "sections": {
+      "weakAreas": {
+        "title": "Review Your Weak Areas",
+        "description": "Study material for concepts below your target accuracy.",
+        "cta": "Review"
+      },
+      "mistakeRecovery": {
+        "title": "Fix Your Mistakes",
+        "description": "The ideas behind mistakes you repeat or are due to review.",
+        "cta": "Fix it"
+      },
+      "continueLearning": {
+        "title": "Continue Learning",
+        "description": "Pick up what you started.",
+        "cta": "Continue"
+      },
+      "practiceAfterLearning": {
+        "title": "Practice After Learning",
+        "description": "Test what you recently completed.",
+        "cta": "Start practice"
+      },
+      "challenges": {
+        "title": "Challenge Yourself",
+        "description": "Advanced material for topics you have mastered.",
+        "cta": "Take the challenge"
+      },
+      "exploreNew": {
+        "title": "Explore New Topics",
+        "description": "Syllabus areas you have not touched yet.",
+        "cta": "Explore"
+      }
+    },
+    "learnNext": "Learn Next",
+    "startHere": "Start here",
+    "seePlan": "See your plan",
+    "allRecommendations": "All recommendations",
+    "startLearning": "Start Learning",
+    "continueLearning": "Continue Learning",
+    "start": "Start",
+    "continue": "Continue",
+    "opening": "Opening...",
+    "startFailed": "Could not start this practice set. Please try again.",
+    "practiceTitle": "Practice: {{topic}}",
+    "practiceStep": "Practice",
+    "minutes": "{{count}} min",
+    "minutesOfBudget": "{{total}} of {{budget}} min",
+    "todaysPlan": "Today's Personalized Plan",
+    "whyRecommended": "Why this is recommended",
+    "yourProgress": "Your progress in this resource",
+    "progress": "Progress",
+    "recommendedPath": "Recommended path",
+    "pathAria": "Recommended learning path",
+    "priorityBadge": "{{level}} priority",
+    "status": {
+      "completed": "Completed",
+      "inProgress": "In progress",
+      "next": "Up next",
+      "upcoming": "Upcoming"
+    },
+    "signals": {
+      "aria": "Signals behind this recommendation",
+      "accuracy": "{{value}}% accuracy",
+      "attempts_one": "{{count}} attempt",
+      "attempts_other": "{{count}} attempts",
+      "openMistakes_one": "{{count}} open mistake",
+      "openMistakes_other": "{{count}} open mistakes",
+      "due": "{{count}} due"
+    },
+    "reasons": {
+      "weak-topic": "Weak topic",
+      "weak-concept": "Weak concept",
+      "mistake-recovery": "Fix mistakes",
+      "spaced-review": "Due for review",
+      "prerequisite": "Foundation first",
+      "new-topic": "New topic",
+      "mastery-progression": "Level up",
+      "exam-preparation": "Exam focus",
+      "revision": "Revision",
+      "advanced-challenge": "Challenge",
+      "stagnation-break": "Fresh approach",
+      "fallback": "Balanced pick",
+      "cold-start": "Getting started"
+    },
+    "types": {
+      "video": "Video",
+      "article": "Article",
+      "notes": "Notes",
+      "concept": "Concept",
+      "example": "Worked example",
+      "quiz": "Quiz",
+      "practice": "Practice",
+      "revision": "Revision",
+      "formula-sheet": "Formula sheet"
+    },
+    "stages": {
+      "introduction": "Concept",
+      "explanation": "Explanation",
+      "worked-example": "Worked example",
+      "practice": "Practice",
+      "revision": "Revision",
+      "advanced": "Advanced"
+    },
+    "feedback": {
+      "wasHelpful": "Was this helpful?",
+      "helpful": "Helpful",
+      "notHelpful": "Not helpful",
+      "howDifficulty": "How was the difficulty?",
+      "tooEasy": "Too easy",
+      "justRight": "Just right",
+      "tooDifficult": "Too difficult",
+      "thanks": "Thanks - this helps tune what you see next.",
+      "saveFailed": "Could not save your feedback. Please try again."
+    },
+    "improve": {
+      "title": "Learning progress",
+      "titleWith": "Learning progress: {{title}}",
+      "before": "Before",
+      "after": "After",
+      "points": "{{value}} pts"
+    },
+    "content": {
+      "openFailed": "Could not open this learning resource.",
+      "completeFailed": "Could not mark this as complete.",
+      "gone": "This resource is no longer available",
+      "couldntOpen": "Couldn't open this resource",
+      "backToLearn": "Back to Learn",
+      "opening": "Opening learning resource",
+      "whyThis": "Why this",
+      "willLearn": "What you will learn",
+      "openResource": "Open the resource",
+      "hostedBy": "This {{type}} is hosted by {{provider}}. It opens in a new tab.",
+      "externalProvider": "an external provider",
+      "openResourceBtn": "Open resource",
+      "halfway": "I am about halfway",
+      "finished": "I have finished this",
+      "notForMe": "Not for me",
+      "niceWork": "Nice work",
+      "completed": "You completed {{title}}.",
+      "testNow": "Now test your understanding while it is fresh.",
+      "startPractice_one": "Start {{count}} Question Practice",
+      "startPractice_other": "Start {{count}} Question Practice"
+    },
+    "priorityLevel": {
+      "high": "high",
+      "medium": "medium",
+      "low": "low"
+    },
+    "practiceStepLabel": "{{count}} {{difficulty}} questions"
+  }
+}

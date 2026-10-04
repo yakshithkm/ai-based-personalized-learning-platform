@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
-import { computeAchievements, formatRelativeTime } from '../utils/achievements';
+import { achievementText, computeAchievements, formatRelativeTime } from '../utils/achievements';
+import { translateServerError } from '../i18n/serverErrors';
 
 const StreakSparkIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -52,21 +54,22 @@ const buildLockedMilestones = (analytics) => {
 
   const locked = [];
   if ((habit.longestStreak || 0) < 7) {
-    locked.push({ id: 'locked-streak-7', label: '7 Day Streak', description: 'Practice 7 days in a row.' });
+    locked.push({ id: 'locked-streak-7', label: '7 Day Streak', description: 'Practice 7 days in a row.', i18nKey: 'achievementDefs.locked.streak7' });
   }
   if ((habit.longestStreak || 0) < 30) {
-    locked.push({ id: 'locked-streak-30', label: '30 Day Streak', description: 'Practice 30 days in a row.' });
+    locked.push({ id: 'locked-streak-30', label: '30 Day Streak', description: 'Practice 30 days in a row.', i18nKey: 'achievementDefs.locked.streak30' });
   }
   if (totalCorrect < 100) {
-    locked.push({ id: 'locked-solved-100', label: '100 Solved', description: 'Answer 100 questions correctly.' });
+    locked.push({ id: 'locked-solved-100', label: '100 Solved', description: 'Answer 100 questions correctly.', i18nKey: 'achievementDefs.locked.solved100' });
   }
   if (totalCorrect < 1000) {
-    locked.push({ id: 'locked-solved-1000', label: 'Practice Pro', description: 'Solve 1000 questions.' });
+    locked.push({ id: 'locked-solved-1000', label: 'Practice Pro', description: 'Solve 1000 questions.', i18nKey: 'achievementDefs.locked.solved1000' });
   }
   return locked;
 };
 
 const AchievementsPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [analytics, setAnalytics] = useState(null);
   const [error, setError] = useState('');
@@ -77,7 +80,7 @@ const AchievementsPage = () => {
       const { data } = await api.get('/analytics/me');
       setAnalytics(data);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load achievements');
+      setError(translateServerError(t, err?.response?.data?.message, 'achievements.loadFailed'));
     }
   };
 
@@ -91,7 +94,7 @@ const AchievementsPage = () => {
   if (!analytics && !error) {
     return (
       <div className="page-grid">
-        <section className="panel" aria-busy="true" aria-label="Loading achievements">
+        <section className="panel" aria-busy="true" aria-label={t('achievements.loading')}>
           <div className="skeleton-chip" style={{ width: '200px', marginBottom: '0.7rem' }} />
           <div className="skeleton-block" style={{ minHeight: '260px' }} />
         </section>
@@ -103,9 +106,9 @@ const AchievementsPage = () => {
     return (
       <div className="page-grid">
         <section className="panel error-state-card">
-          <h3>Couldn&apos;t load achievements</h3>
+          <h3>{t('achievements.couldntLoad')}</h3>
           <p>{error}</p>
-          <button type="button" className="solid-btn" onClick={load}>Try again</button>
+          <button type="button" className="solid-btn" onClick={load}>{t('common.tryAgain')}</button>
         </section>
       </div>
     );
@@ -114,8 +117,8 @@ const AchievementsPage = () => {
   return (
     <div className="page-grid">
       <section className="panel">
-        <h2>Achievements</h2>
-        <p>Milestones you've unlocked through real practice — {earned.length} earned so far.</p>
+        <h2>{t('navigation.achievements')}</h2>
+        <p>{t('achievements.intro', { count: earned.length })}</p>
       </section>
 
       {earned.length ? (
@@ -126,9 +129,9 @@ const AchievementsPage = () => {
                 <span className={`achievement-icon achievement-icon-${achievement.tone}`}>
                   {achievementIcon(achievement.tone)}
                 </span>
-                <strong>{achievement.label}</strong>
-                <p>{achievement.description}</p>
-                <small>{formatRelativeTime(achievement.earnedAt)}</small>
+                <strong>{achievementText(t, achievement).label}</strong>
+                <p>{achievementText(t, achievement).description}</p>
+                <small>{formatRelativeTime(achievement.earnedAt, t)}</small>
               </article>
             ))}
           </div>
@@ -136,22 +139,22 @@ const AchievementsPage = () => {
       ) : (
         <EmptyState
           icon="practice"
-          title="No achievements yet"
-          description="Your first achievement unlocks after a 3-day streak or 25 correct answers. Keep practicing!"
-          actionLabel="Go to Practice"
+          title={t('achievements.emptyTitle')}
+          description={t('achievements.emptyText')}
+          actionLabel={t('common.goToPractice')}
           onAction={() => navigate('/practice')}
         />
       )}
 
       {locked.length > 0 && (
         <section className="panel">
-          <h3>Up Next</h3>
+          <h3>{t('achievements.upNext')}</h3>
           <div className="achievement-grid">
             {locked.map((item) => (
               <article key={item.id} className="achievement-grid-card locked">
                 <span className="achievement-icon achievement-icon-locked"><LockIcon /></span>
-                <strong>{item.label}</strong>
-                <p>{item.description}</p>
+                <strong>{achievementText(t, item).label}</strong>
+                <p>{achievementText(t, item).description}</p>
               </article>
             ))}
           </div>

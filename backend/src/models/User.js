@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const generateReferralCode = require('../utils/generateReferralCode');
+const { SUPPORTED_CODES } = require('../config/languages');
 
 const userSchema = new mongoose.Schema(
   {
@@ -44,6 +45,12 @@ const userSchema = new mongoose.Schema(
       sparse: true,
       uppercase: true,
       trim: true,
+    },
+    preferredLanguage: {
+      type: String,
+      enum: SUPPORTED_CODES,
+      trim: true,
+      lowercase: true,
     },
   },
   { timestamps: true }

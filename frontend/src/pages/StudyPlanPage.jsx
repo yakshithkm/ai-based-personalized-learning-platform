@@ -1,9 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
 import PersonalizedPlanPanel from '../components/learning/PersonalizedPlanPanel';
 import { subjectColor, subjectIconPath } from '../utils/subjectVisuals';
+import { translateServerError } from '../i18n/serverErrors';
+import { subjectLabel } from '../i18n/labels';
+import { useLocaleFormat } from '../i18n/format';
 
 const priorityForAccuracy = (accuracy = 0) => {
   if (accuracy < 50) return 'High';
@@ -24,6 +28,8 @@ const SubjectIcon = ({ subject }) => (
 );
 
 const StudyPlanPage = () => {
+  const { t } = useTranslation();
+  const { formatPercent } = useLocaleFormat();
   const navigate = useNavigate();
   const [analytics, setAnalytics] = useState(null);
   const [recommendations, setRecommendations] = useState(null);
@@ -39,7 +45,7 @@ const StudyPlanPage = () => {
       setAnalytics(aRes.data);
       setRecommendations(rRes.data);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load study plan');
+      setError(translateServerError(t, err?.response?.data?.message, 'studyPlan.loadFailed'));
     }
   };
 
@@ -76,7 +82,7 @@ const StudyPlanPage = () => {
   if (!analytics && !error) {
     return (
       <div className="page-grid">
-        <section className="panel" aria-busy="true" aria-label="Loading study plan">
+        <section className="panel" aria-busy="true" aria-label={t('studyPlan.loading')}>
           <div className="skeleton-chip" style={{ width: '200px', marginBottom: '0.7rem' }} />
           <div className="skeleton-block" style={{ minHeight: '260px' }} />
         </section>
@@ -88,9 +94,9 @@ const StudyPlanPage = () => {
     return (
       <div className="page-grid">
         <section className="panel error-state-card">
-          <h3>Couldn&apos;t load your study plan</h3>
+          <h3>{t('studyPlan.couldntLoad')}</h3>
           <p>{error}</p>
-          <button type="button" className="solid-btn" onClick={load}>Try again</button>
+          <button type="button" className="solid-btn" onClick={load}>{t('common.tryAgain')}</button>
         </section>
       </div>
     );
@@ -99,24 +105,24 @@ const StudyPlanPage = () => {
   return (
     <div className="page-grid">
       <section className="panel">
-        <h2>AI Study Plan for You</h2>
-        <p>{studyStrategy.guidanceText || 'Focus on these topics to improve your score.'}</p>
+        <h2>{t('dashboard.aiStudyPlan')}</h2>
+        <p>{studyStrategy.guidanceText || t('dashboard.aiStudyPlanSubtitle')}</p>
       </section>
 
       <PersonalizedPlanPanel />
 
       {studyStrategy.timeAllocation?.length > 0 && (
         <section className="panel">
-          <h3>Recommended Time Allocation</h3>
+          <h3>{t('studyPlan.timeAllocation')}</h3>
           <div className="time-allocation-list">
             {studyStrategy.timeAllocation.map((entry) => (
               <div key={entry.subject} className="time-allocation-row">
                 <span className="subject-dot" style={{ background: subjectColor(entry.subject) }} />
-                <span className="time-allocation-subject">{entry.subject}</span>
+                <span className="time-allocation-subject">{subjectLabel(t, entry.subject)}</span>
                 <span className="subject-bar-track">
                   <span className="subject-bar-fill" style={{ width: `${entry.percent}%`, background: subjectColor(entry.subject) }} />
                 </span>
-                <span className="time-allocation-pct">{entry.percent}%</span>
+                <span className="time-allocation-pct">{formatPercent(entry.percent)}</span>
                 <small className="time-allocation-reason">{entry.reason}</small>
               </div>
             ))}
@@ -126,7 +132,7 @@ const StudyPlanPage = () => {
 
       {studyStrategy.dailyStudyPlan?.length > 0 && (
         <section className="panel">
-          <h3>Today&apos;s Sessions</h3>
+          <h3>{t('studyPlan.todaysSessions')}</h3>
           <div className="session-list">
             {studyStrategy.dailyStudyPlan.map((session) => (
               <article key={session.slot} className="session-row">
@@ -139,7 +145,7 @@ const StudyPlanPage = () => {
       )}
 
       <section className="panel">
-        <h3>Priority Topics</h3>
+        <h3>{t('studyPlan.priorityTopics')}</h3>
         {planItems.length ? (
           <div className="study-plan-list">
             {planItems.map((item) => (
@@ -149,18 +155,18 @@ const StudyPlanPage = () => {
                 </span>
                 <span className="study-plan-info">
                   <strong>{item.topic}</strong>
-                  <small>{item.subject} • {item.questionCount} Questions</small>
+                  <small>{subjectLabel(t, item.subject)} • {t('common.questionCount', { count: item.questionCount })}</small>
                 </span>
-                <span className={`priority-badge ${priorityClass(item.priority)}`}>{item.priority}</span>
+                <span className={`priority-badge ${priorityClass(item.priority)}`}>{t(`priority.${item.priority.toLowerCase()}`)}</span>
               </button>
             ))}
           </div>
         ) : (
           <EmptyState
             icon="practice"
-            title="No priority topics right now"
-            description="Solve a few more practice questions and your personalized topic priority list will appear here."
-            actionLabel="Go to Practice"
+            title={t('studyPlan.emptyTitle')}
+            description={t('studyPlan.emptyText')}
+            actionLabel={t('common.goToPractice')}
             onAction={() => navigate('/practice')}
           />
         )}

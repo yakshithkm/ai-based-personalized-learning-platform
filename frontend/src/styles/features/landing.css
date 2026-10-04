@@ -201,7 +201,7 @@
 }
 
 .hero-float-value {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', 'Noto Sans Kannada Variable', 'Noto Sans Devanagari Variable', 'Noto Sans Telugu Variable', 'Noto Sans Tamil Variable', 'Noto Sans Malayalam Variable', sans-serif;
   font-weight: 700;
   color: #f1f5f9;
   font-size: 0.92rem;
@@ -959,7 +959,7 @@
 }
 
 .dash-preview-streak-value {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', 'Noto Sans Kannada Variable', 'Noto Sans Devanagari Variable', 'Noto Sans Telugu Variable', 'Noto Sans Tamil Variable', 'Noto Sans Malayalam Variable', sans-serif;
   font-weight: 700;
   font-size: 1.6rem;
   color: #f1f5f9;
@@ -1281,7 +1281,7 @@
 
 .pricing-price {
   margin: 0 0 0.4rem;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', 'Noto Sans Kannada Variable', 'Noto Sans Devanagari Variable', 'Noto Sans Telugu Variable', 'Noto Sans Tamil Variable', 'Noto Sans Malayalam Variable', sans-serif;
   font-weight: 700;
   font-size: 1.9rem;
   color: #f1f5f9;

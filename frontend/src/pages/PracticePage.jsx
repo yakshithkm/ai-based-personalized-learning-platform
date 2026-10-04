@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
+import { translateServerError } from '../i18n/serverErrors';
+import { difficultyLabel, subjectLabel } from '../i18n/labels';
+import { useLocaleFormat } from '../i18n/format';
 import api, { API_BASE_URL } from '../api/client';
 import { trackProductEvent } from '../utils/productEvents';
 import { useAuth } from '../context/AuthContext';
@@ -27,13 +32,15 @@ const makeAiMessageId = () => {
 // Not shown in the chat UI as a "You:" bubble - this only exists to trigger
 // the automatic initial explanation when the sidebar opens for a question.
 const INITIAL_AI_PROMPT = 'Please explain this question to me so I understand it.';
+// Kept in English on purpose: it is also the lookup key for the translated message
+// (see translateServerError / serverErrors.js), so it renders in the student's language.
 const AI_ERROR_FALLBACK = "Sorry, I couldn't generate an explanation right now. Please try again.";
 
-const formatDuration = (totalSeconds = 0) => {
+const formatDuration = (totalSeconds = 0, t) => {
   const seconds = Math.max(0, Math.round(totalSeconds));
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
-  return `${m}m ${s}s`;
+  return t('time.minSec', { m, s });
 };
 
 const TargetIcon = () => (
@@ -67,6 +74,8 @@ const AIIcon = () => (
 );
 
 const PracticePage = () => {
+  const { t } = useTranslation();
+  const { formatPercent } = useLocaleFormat();
   const navigate = useNavigate();
   const { user } = useAuth();
   const toast = useToast();
@@ -121,7 +130,7 @@ const PracticePage = () => {
         });
         setSubjects(data.subjects || []);
       } catch (err) {
-        setError(err?.response?.data?.message || 'Failed to load subjects/topics');
+        setError(translateServerError(t, err?.response?.data?.message, 'practice.loadSubjectsFailed'));
       }
     };
     loadSubjects();
@@ -150,7 +159,7 @@ const PracticePage = () => {
             params: { count: searchParams.get('count') || 5 },
           });
           if (!(data.questions || []).length) {
-            setError('No practice questions are available for this topic yet.');
+            setError(t('practice.noPracticeQuestions'));
             return;
           }
           const newSessionId = makeSessionId();
@@ -168,7 +177,7 @@ const PracticePage = () => {
             totalQuestions: data.questions.length,
           });
         } catch (err) {
-          setError(err?.response?.data?.message || 'Failed to load the practice set for this lesson');
+          setError(translateServerError(t, err?.response?.data?.message, 'practice.loadLessonFailed'));
         }
       };
 
@@ -196,7 +205,7 @@ const PracticePage = () => {
             totalQuestions: (data.recommendations || []).length,
           });
         } catch (err) {
-          setError(err?.response?.data?.message || 'Failed to load recommended practice set');
+          setError(translateServerError(t, err?.response?.data?.message, 'practice.loadRecommendedFailed'));
         }
       };
 
@@ -230,7 +239,7 @@ const PracticePage = () => {
             totalQuestions: (data.questions || []).length,
           });
         } catch (err) {
-          setError(err?.response?.data?.message || 'Failed to load focus session');
+          setError(translateServerError(t, err?.response?.data?.message, 'practice.loadFocusFailed'));
         }
       };
 
@@ -280,10 +289,10 @@ const PracticePage = () => {
         difficulty: selectedDifficulty || null,
       });
       if (!(data.questions || []).length) {
-        toast?.showToast?.('No questions matched those filters yet. Try a different subject, topic, or difficulty.', { type: 'error' });
+        toast?.showToast?.(t('practice.noQuestionsMatched'), { type: 'error' });
       }
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load questions');
+      setError(translateServerError(t, err?.response?.data?.message, 'practice.loadQuestionsFailed'));
     } finally {
       setIsLoadingQuestions(false);
     }
@@ -341,7 +350,7 @@ const PracticePage = () => {
         },
       ]);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to submit attempt');
+      setError(translateServerError(t, err?.response?.data?.message, 'practice.submitFailed'));
     }
   };
 
@@ -375,7 +384,7 @@ const PracticePage = () => {
       const { data } = await api.get('/questions', { params: actionParams });
       const next = data.questions?.[0];
       if (!next) {
-        setError('No adaptive follow-up question found for this action.');
+        setError(t('practice.noAdaptive'));
         return;
       }
 
@@ -389,7 +398,7 @@ const PracticePage = () => {
       setSelectedAnswer(null);
       setStartTime(Date.now());
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load adaptive question');
+      setError(translateServerError(t, err?.response?.data?.message, 'practice.loadAdaptiveFailed'));
     }
   };
 
@@ -417,9 +426,11 @@ const PracticePage = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // The student's UI language: the backend instructs the AI tutor to reply in it.
+          'Accept-Language': i18n.language || 'en',
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ questionId: question._id, ...payload }),
+        body: JSON.stringify({ questionId: question._id, language: i18n.language || 'en', ...payload }),
         signal: abortController.signal,
       });
 
@@ -550,6 +561,17 @@ const PracticePage = () => {
     const keyPattern = weakAreas.length
       ? `You are repeating the same mistake pattern in ${weakAreas[0]}. Practicing more without fixing the concept will not help.`
       : 'Your execution is controlled right now. Keep the same process and raise the difficulty.';
+    // Language-neutral keys for the summary page, which renders them in the language
+    // active when it is viewed (so switching language there updates the text in place).
+    // The English strings above stay as the fallback.
+    const i18nKeys = {
+      keyPattern: weakAreas.length ? 'summary.keyPatternWeak' : 'summary.keyPatternGood',
+      mentorFeedback: accuracy >= 75 ? 'summary.mentor.improving' : weakAreas.length ? 'summary.mentor.inconsistent' : 'summary.mentor.stable',
+      scoreInterpretation: accuracy >= 75 ? 'summary.interp.improving' : accuracy >= 50 ? 'summary.interp.trend' : 'summary.interp.notReady',
+      improvementSuggestion: weakAreas.length ? 'summary.improve.weak' : 'summary.improve.stable',
+      nextAction: contentRecId ? 'summary.next.learning' : weakAreas.length ? 'summary.next.retry' : 'summary.next.mock',
+      params: { topic: weakAreas[0] || '' },
+    };
 
     const mentorFeedback = accuracy >= 75
       ? `You are improving, and the results are becoming more dependable. Keep the method, but do not relax your error checks.`
@@ -598,6 +620,7 @@ const PracticePage = () => {
           recommendationId: contentRecId || undefined,
           nextRecommendedSession: sessionMeta?.mix || null,
           nextAction,
+          i18nKeys,
         },
       },
     });
@@ -613,10 +636,11 @@ const PracticePage = () => {
   };
 
   const aiLabels = question?.aiSignals?.labels || (recommendedMode || focusMode ? ['AI-selected question'] : []);
+  const aiLabelText = (label) => t(`practice.aiLabels.${String(label).replace(/[^A-Za-z]+/g, '_')}`, { defaultValue: label });
   const aiWhy = question?.aiSignals?.why ||
     ((recommendedMode || focusMode)
-      ? 'Selected based on your recent performance and adaptive strategy.'
-      : 'Question loaded from your current filters.');
+      ? t('practice.whySelected')
+      : t('practice.whyFilters'));
 
   const sessionTotal = sessionResults.length;
   const sessionCorrect = sessionResults.filter((entry) => entry.isCorrect).length;
@@ -625,19 +649,19 @@ const PracticePage = () => {
   const sessionTimeSec = sessionResults.reduce((sum, entry) => sum + Number(entry.timeTakenSec || 0), 0);
   const recentQuestions = [...sessionResults].reverse().slice(0, 6);
 
-  const modeLabel = focusMode ? 'Focus Session' : contentRecId ? 'Practice After Learning' : recommendedMode ? 'Recommended Set' : 'Custom Practice';
+  const modeLabel = focusMode ? t('practice.mode.focus') : contentRecId ? t('practice.mode.afterLearning') : recommendedMode ? t('practice.mode.recommended') : t('practice.mode.custom');
   const modeSubtitle = focusMode
-    ? 'Focus session is active: weak topics + mistakes + one harder challenge.'
+    ? t('practice.modeSubtitle.focus')
     : contentRecId
-      ? 'Practice after learning — questions chosen from the topic you just studied.'
+      ? t('practice.modeSubtitle.afterLearning')
       : recommendedMode
-      ? 'Recommended adaptive set is active — questions chosen from your performance profile.'
-      : 'Choose a subject, topic, and difficulty, then start practice to begin.';
+      ? t('practice.modeSubtitle.recommended')
+      : t('practice.modeSubtitle.custom');
 
   return (
     <div className="dash-grid">
       <section className="dash-greeting practice-header">
-        <h1>Practice</h1>
+        <h1>{t('navigation.practice')}</h1>
         <p>{modeSubtitle}</p>
       </section>
 
@@ -645,27 +669,27 @@ const PracticePage = () => {
         <div className="dash-card-head">
           <div>
             <h3><BoltIcon /> {modeLabel}</h3>
-            <p className="dash-card-subtitle">Pick your filters and start a curated question set.</p>
+            <p className="dash-card-subtitle">{t('practice.pickFilters')}</p>
           </div>
         </div>
 
         <div className="practice-control-grid">
           <label className="practice-control-field">
-            <span>Subject</span>
+            <span>{t('practice.subject')}</span>
             <select value={selectedSubject} onChange={(e) => { setSelectedSubject(e.target.value); setSelectedTopic(''); }}>
-              <option value="">All Subjects</option>
+              <option value="">{t('practice.allSubjects')}</option>
               {subjects.map((s) => (
                 <option key={s.subject} value={s.subject}>
-                  {s.subject}
+                  {subjectLabel(t, s.subject)}
                 </option>
               ))}
             </select>
           </label>
 
           <label className="practice-control-field">
-            <span>Topic</span>
+            <span>{t('practice.topic')}</span>
             <select value={selectedTopic} onChange={(e) => setSelectedTopic(e.target.value)}>
-              <option value="">All Topics</option>
+              <option value="">{t('practice.allTopics')}</option>
               {topics.map((topic) => (
                 <option key={topic} value={topic}>
                   {topic}
@@ -675,21 +699,21 @@ const PracticePage = () => {
           </label>
 
           <label className="practice-control-field">
-            <span>Difficulty</span>
+            <span>{t('practice.difficulty')}</span>
             <select value={selectedDifficulty} onChange={(e) => setSelectedDifficulty(e.target.value)}>
-              <option value="">All Difficulties</option>
-              <option value="Easy">Easy</option>
-              <option value="Medium">Medium</option>
-              <option value="Hard">Hard</option>
+              <option value="">{t('practice.allDifficulties')}</option>
+              <option value="Easy">{t('difficulty.easy')}</option>
+              <option value="Medium">{t('difficulty.medium')}</option>
+              <option value="Hard">{t('difficulty.hard')}</option>
             </select>
           </label>
 
           <label className="practice-control-field">
-            <span>Question Count</span>
+            <span>{t('practice.questionCountLabel')}</span>
             <select value={questionCount} onChange={(e) => setQuestionCount(Number(e.target.value))}>
-              <option value={10}>10 Questions</option>
-              <option value={15}>15 Questions</option>
-              <option value={20}>20 Questions</option>
+              <option value={10}>{t('common.questionCount', { count: 10 })}</option>
+              <option value={15}>{t('common.questionCount', { count: 15 })}</option>
+              <option value={20}>{t('common.questionCount', { count: 20 })}</option>
             </select>
           </label>
 
@@ -702,10 +726,10 @@ const PracticePage = () => {
             {isLoadingQuestions ? (
               <>
                 <span className="btn-spinner" aria-hidden="true" />
-                Loading...
+                {t('common.loading')}
               </>
             ) : (
-              'Start Practice'
+              t('dashboard.startPractice')
             )}
           </button>
         </div>
@@ -733,9 +757,9 @@ const PracticePage = () => {
           <article className="dash-card question-card" key={question._id || `${sessionId}-${currentIndex}`}>
             <div className="progress-head">
               <h3>
-                Question {currentIndex + 1} / {questions.length}
+                {t('practice.questionOf', { current: currentIndex + 1, total: questions.length })}
               </h3>
-              <span className="progress-tag">{Math.round(progress)}% Complete</span>
+              <span className="progress-tag">{t('practice.percentComplete', { percent: Math.round(progress) })}</span>
             </div>
             <div className="progress-bar">
               <span className="progress-fill" style={{ width: `${progress}%` }} />
@@ -743,10 +767,10 @@ const PracticePage = () => {
 
             <div className="practice-question-tags">
               <span className="exam-tag-chip" style={{ borderColor: `${subjectColor(question.subject)}55`, color: subjectColor(question.subject) }}>
-                {question.subject}
+                {subjectLabel(t, question.subject)}
               </span>
               {question.topic && <span className="exam-tag-chip">{question.topic}</span>}
-              {question.difficulty && <span className="exam-tag-chip">{question.difficulty}</span>}
+              {question.difficulty && <span className="exam-tag-chip">{difficultyLabel(t, question.difficulty)}</span>}
             </div>
 
             <p
@@ -760,12 +784,12 @@ const PracticePage = () => {
               <div className="ai-meta-box">
                 <div className="chip-wrap">
                   {aiLabels.map((label) => (
-                    <span key={label} className="chip ai-chip">{label}</span>
+                    <span key={label} className="chip ai-chip">{aiLabelText(label)}</span>
                   ))}
                 </div>
-                <small>WHY: {aiWhy}</small>
+                <small>{t('practice.why', { reason: aiWhy })}</small>
                 {question?.aiSignals?.adaptiveDifficultyApplied && (
-                  <small>Adaptive difficulty applied for this step.</small>
+                  <small>{t('practice.adaptiveApplied')}</small>
                 )}
               </div>
             )}
@@ -789,50 +813,50 @@ const PracticePage = () => {
 
             {!result ? (
               <button className="solid-btn" onClick={submitCurrent} disabled={selectedAnswer === null}>
-                Submit Answer
+                {t('practice.submitAnswer')}
               </button>
             ) : (
               <div className={`feedback-box ${result.isCorrect ? 'feedback-correct' : 'feedback-wrong'}`}>
-                <strong>{result.isCorrect ? 'Correct Answer' : 'Incorrect Answer'}</strong>
-                <p className="correct-answer-text">Correct answer: {result.correctAnswer}</p>
-                {!!xpPulse && <p className="xp-pop">+{xpPulse} XP earned</p>}
+                <strong>{result.isCorrect ? t('practice.correctAnswer') : t('practice.incorrectAnswer')}</strong>
+                <p className="correct-answer-text">{t('practice.correctAnswerIs', { answer: result.correctAnswer })}</p>
+                {!!xpPulse && <p className="xp-pop">{t('practice.xpEarned', { xp: xpPulse })}</p>}
                 <p>{result.explanation}</p>
-                <p className="improvement-tip">Tip: {result.improvementTip}</p>
-                {result.performanceLabel && <p className="improvement-tip">Performance: {result.performanceLabel}</p>}
-                {result.mistakeClassification && <p className="why-wrong-text">Mistake Type: {result.mistakeClassification}</p>}
+                <p className="improvement-tip">{t('practice.tip', { tip: result.improvementTip })}</p>
+                {result.performanceLabel && <p className="improvement-tip">{t('practice.performance', { label: t(`practice.performanceLabels.${String(result.performanceLabel).replace(/\s+/g, '')}`, { defaultValue: result.performanceLabel }) })}</p>}
+                {result.mistakeClassification && <p className="why-wrong-text">{t('practice.mistakeType', { type: t(`practice.mistakeClassifications.${String(result.mistakeClassification).replace(/\s+/g, '')}`, { defaultValue: result.mistakeClassification }) })}</p>}
                 {result.motivationMessage && <p className="improvement-tip">{result.motivationMessage}</p>}
                 {!result.isCorrect && result.whyGotWrong && (
-                  <p className="why-wrong-text">Why you got it wrong: {result.whyGotWrong}</p>
+                  <p className="why-wrong-text">{t('practice.whyWrong', { reason: result.whyGotWrong })}</p>
                 )}
                 <div className="feedback-actions">
                   <button
                     className="outline-btn"
                     onClick={() => loadAdaptiveActionQuestion(result.actions?.retrySimilarQuestion?.params)}
                   >
-                    Retry Similar Question
+                    {t('practice.retrySimilar')}
                   </button>
                   <button
                     className="outline-btn"
                     onClick={() => loadAdaptiveActionQuestion(result.actions?.moveToHarderQuestion?.params)}
                     disabled={Boolean(result.actions?.moveToHarderQuestion?.disabled)}
                   >
-                    Move to Harder Question
+                    {t('practice.moveHarder')}
                   </button>
                 </div>
                 {currentIndex < questions.length - 1 && (
                   <button className="outline-btn" onClick={nextQuestion}>
-                    Next Question
+                    {t('practice.nextQuestion')}
                   </button>
                 )}
                 {currentIndex >= questions.length - 1 && (
                   <div className="feedback-actions">
-                    <span className="progress-tag">Practice set completed</span>
-                    <button className="solid-btn" onClick={openSessionSummary}>View Session Summary</button>
+                    <span className="progress-tag">{t('practice.setCompleted')}</span>
+                    <button className="solid-btn" onClick={openSessionSummary}>{t('practice.viewSummary')}</button>
                   </div>
                 )}
                 <div className="feedback-actions ai-sidebar-trigger-row">
                   <button type="button" className="outline-btn" onClick={openAiSidebar}>
-                    <AIIcon /> Ask with AI
+                    <AIIcon /> {t('practice.askWithAi')}
                   </button>
                 </div>
               </div>
@@ -842,7 +866,7 @@ const PracticePage = () => {
           <div className="practice-side-stack">
             <article className="dash-card practice-session-card">
               <div className="dash-card-head">
-                <h3>Performance This Session</h3>
+                <h3>{t('practice.performanceThisSession')}</h3>
               </div>
               {sessionTotal ? (
                 <div className="practice-session-ring-row">
@@ -863,8 +887,8 @@ const PracticePage = () => {
                       />
                     </svg>
                     <span className="overall-ring-label">
-                      {sessionAccuracy.toFixed(0)}%
-                      <small>Accuracy</small>
+                      {formatPercent(sessionAccuracy.toFixed(0))}
+                      <small>{t('common.accuracy')}</small>
                     </span>
                   </div>
                   <div className="practice-session-stats">
@@ -872,33 +896,33 @@ const PracticePage = () => {
                       <span className="practice-stat-icon practice-stat-correct"><CheckCircleIcon /></span>
                       <span>
                         <strong>{sessionCorrect}</strong>
-                        <small>Correct</small>
+                        <small>{t('common.correct')}</small>
                       </span>
                     </div>
                     <div className="practice-stat">
                       <span className="practice-stat-icon practice-stat-wrong"><XCircleIcon /></span>
                       <span>
                         <strong>{sessionIncorrect}</strong>
-                        <small>Incorrect</small>
+                        <small>{t('common.incorrect')}</small>
                       </span>
                     </div>
                     <div className="practice-stat">
                       <span className="practice-stat-icon practice-stat-time"><TargetIcon /></span>
                       <span>
-                        <strong>{formatDuration(sessionTimeSec)}</strong>
-                        <small>Time Taken</small>
+                        <strong>{formatDuration(sessionTimeSec, t)}</strong>
+                        <small>{t('practice.timeTaken')}</small>
                       </span>
                     </div>
                   </div>
                 </div>
               ) : (
-                <p className="dash-empty-line">Submit your first answer to see live session stats here.</p>
+                <p className="dash-empty-line">{t('practice.submitFirst')}</p>
               )}
             </article>
 
             <article className="dash-card practice-recent-card">
               <div className="dash-card-head">
-                <h3>Recent Questions</h3>
+                <h3>{t('practice.recentQuestions')}</h3>
               </div>
               {recentQuestions.length ? (
                 <div className="recent-question-list">
@@ -908,12 +932,12 @@ const PracticePage = () => {
                         {entry.isCorrect ? <CheckCircleIcon /> : <XCircleIcon />}
                       </span>
                       <span className="recent-question-topic">{entry.topic}</span>
-                      <span className="recent-question-time">{entry.timeTakenSec}s</span>
+                      <span className="recent-question-time">{t('time.secondsShort', { count: entry.timeTakenSec })}</span>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="dash-empty-line">Your recently answered questions will appear here.</p>
+                <p className="dash-empty-line">{t('practice.recentEmpty')}</p>
               )}
             </article>
           </div>
@@ -923,8 +947,8 @@ const PracticePage = () => {
       {!question && questions.length === 0 && (
         <EmptyState
           icon="practice"
-          title="No questions loaded yet"
-          description="Pick a subject and topic above, then start practice to begin."
+          title={t('practice.emptyTitle')}
+          description={t('practice.emptyText')}
         />
       )}
 

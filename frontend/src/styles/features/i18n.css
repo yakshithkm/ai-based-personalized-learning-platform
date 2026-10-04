@@ -1,0 +1,325 @@
+/* Language selector + multi-script (Kannada/Hindi/Telugu/Tamil/Malayalam) support.
+   Everything here is additive: existing components keep their own styles. */
+
+html[lang='kn'] body,
+html[lang='hi'] body,
+html[lang='te'] body,
+html[lang='ta'] body,
+html[lang='ml'] body {
+  line-height: 1.7;
+  letter-spacing: 0;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+html[lang='kn'] :is(h1, h2, h3, h4, h5, h6, button, label, th, .chip, .solid-btn, .outline-btn),
+html[lang='hi'] :is(h1, h2, h3, h4, h5, h6, button, label, th, .chip, .solid-btn, .outline-btn),
+html[lang='te'] :is(h1, h2, h3, h4, h5, h6, button, label, th, .chip, .solid-btn, .outline-btn),
+html[lang='ta'] :is(h1, h2, h3, h4, h5, h6, button, label, th, .chip, .solid-btn, .outline-btn),
+html[lang='ml'] :is(h1, h2, h3, h4, h5, h6, button, label, th, .chip, .solid-btn, .outline-btn) {
+  letter-spacing: 0;
+  line-height: 1.45;
+}
+
+/* Buttons may grow taller/wider for longer translations. */
+html:not([lang='en']) :is(.solid-btn, .outline-btn) {
+  height: auto;
+  min-height: 2.4rem;
+  white-space: normal;
+  text-align: center;
+}
+
+/* Chips/pills keep their compact size (they are not buttons, so no min-height). */
+html:not([lang='en']) .chip {
+  height: auto;
+  min-height: 0;
+  line-height: 1.35;
+  white-space: normal;
+  text-align: center;
+}
+
+/* Sidebar user card: the name and the "Demo Account" chip share one row. A translated
+   chip is wider than the English one, so let it wrap onto its own line under the name
+   instead of squeezing the name to nothing / overlapping it. */
+html:not([lang='en']) .user-name-row {
+  flex-wrap: wrap;
+  row-gap: 0.25rem;
+}
+
+html:not([lang='en']) .user-name-row .demo-account-chip {
+  margin-left: 0;
+}
+
+html:not([lang='en']) .user-name-row .user-name-text {
+  max-width: 100%;
+}
+
+html:not([lang='en']) .nav-menu a > span:last-child,
+html:not([lang='en']) .header-dropdown-item {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.lang-selector {
+  position: relative;
+  display: inline-flex;
+  min-width: 0;
+}
+
+.lang-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.25rem;
+  padding: 0.3rem 0.65rem;
+  border: 1px solid var(--border, rgba(148, 163, 184, 0.3));
+  border-radius: 999px;
+  background: var(--panel-soft, rgba(255, 255, 255, 0.04));
+  color: var(--text, inherit);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.lang-trigger:hover {
+  border-color: var(--accent, #3b82f6);
+}
+
+.lang-trigger:focus-visible,
+.lang-menu:focus-visible {
+  outline: 2px solid var(--accent, #3b82f6);
+  outline-offset: 2px;
+}
+
+.lang-globe,
+.lang-caret,
+.lang-check {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  fill: currentColor;
+}
+
+.lang-caret {
+  width: 0.9rem;
+  height: 0.9rem;
+  opacity: 0.7;
+}
+
+.lang-current {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 9rem;
+}
+
+.lang-menu {
+  /* Rendered in <body> via a portal; top/left/width/maxHeight are set inline by
+     LanguageSelector from the button's position and clamped to the viewport. */
+  position: fixed;
+  z-index: 1000;
+  box-sizing: border-box;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.35rem;
+  list-style: none;
+  border: 1px solid var(--border, rgba(148, 163, 184, 0.3));
+  border-radius: 0.85rem;
+  background: var(--panel, #131c31);
+  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+}
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  color: var(--text, inherit);
+  min-height: 2.5rem;
+}
+
+.lang-option.is-active {
+  background: var(--panel-soft, rgba(148, 163, 184, 0.14));
+}
+
+.lang-option.is-selected {
+  font-weight: 600;
+  color: var(--accent, #60a5fa);
+}
+
+.lang-flag {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.lang-native {
+  flex: 1;
+  min-width: 0;
+}
+
+.lang-selector-field {
+  display: flex;
+  width: 100%;
+}
+
+.lang-selector-field .lang-trigger {
+  width: 100%;
+  justify-content: flex-start;
+  border-radius: 0.75rem;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+}
+
+.lang-selector-field .lang-current {
+  flex: 1;
+  text-align: start;
+  max-width: none;
+}
+
+.lang-floating {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+}
+
+@media (max-width: 720px) {
+  .lang-current {
+    max-width: 5.5rem;
+  }
+}
+
+/* App header: on small screens the language button shows only the globe so the
+   notification bell and profile avatar always stay on screen. The language name remains
+   available to screen readers through the button's aria-label. */
+@media (max-width: 560px) {
+  .header-actions .lang-trigger {
+    width: 2.1rem;
+    height: 2.1rem;
+    min-height: 0;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .header-actions .lang-current,
+  .header-actions .lang-caret {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lang-menu {
+    animation: lang-menu-in 0.14s ease-out;
+  }
+  @keyframes lang-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+
+/* ------------------------------------------------------------------
+   Headline sizing for Indic scripts
+   The base styles size large headings for short Latin text. Kannada, Hindi, Telugu,
+   Tamil and Malayalam glyphs render visibly larger at the same size and the translated
+   copy is longer, so the same clamp() values wrap onto 4-5 lines. These rules scale the
+   big display headings down and give them the taller line-height Indic matras need.
+   Selectors are intentionally a little more specific than the originals in index.css /
+   landing.css / dashboard.css so they win without !important.
+   ------------------------------------------------------------------ */
+
+/* letter-spacing breaks Indic conjunct shaping - never apply it outside English */
+html:not([lang='en']) body * {
+  letter-spacing: 0;
+}
+
+html:not([lang='en']) .hero-content.centered {
+  max-width: 880px;
+}
+
+html:not([lang='en']) .hero-content.centered h1 {
+  font-size: clamp(1.9rem, 4.2vw, 3.1rem);
+  line-height: 1.3;
+  margin-bottom: 0.9rem;
+}
+
+html:not([lang='en']) .hero-content.centered p {
+  font-size: clamp(0.98rem, 1.5vw, 1.1rem);
+  line-height: 1.8;
+}
+
+html:not([lang='en']) .landing-section h2 {
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  line-height: 1.4;
+}
+
+html:not([lang='en']) .split-copy h2 {
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  line-height: 1.4;
+}
+
+html:not([lang='en']) .auth-headline {
+  font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+  line-height: 1.35;
+}
+
+html:not([lang='en']) .about-exam-header h1 {
+  font-size: clamp(1.6rem, 3.6vw, 2.3rem);
+  line-height: 1.35;
+}
+
+html:not([lang='en']) .dash-greeting h1 {
+  font-size: clamp(1.2rem, 1vw + 1rem, 1.5rem);
+  line-height: 1.4;
+}
+
+@media (max-width: 720px) {
+  html:not([lang='en']) .hero-content.centered h1 {
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
+  }
+}
+
+
+/* ------------------------------------------------------------------
+   AI tutor input (rows=1 textarea)
+   Indic text is drawn with a fallback font whose line box is taller than the one the
+   one-row textarea was sized for, so the browser added its default light scrollbar with
+   arrows. Give the box an explicit line-height / min-height so a single line fits, and
+   restyle the scrollbar (shown only for genuinely long input) to match the dark UI.
+   ------------------------------------------------------------------ */
+html:not([lang='en']) .ai-sidebar-input-row textarea {
+  line-height: 1.6;
+  min-height: 2.9rem;
+}
+
+.ai-sidebar-input-row textarea {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+}
+
+.ai-sidebar-input-row textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-sidebar-input-row textarea::-webkit-scrollbar-button {
+  display: none;
+}
+
+.ai-sidebar-input-row textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-sidebar-input-row textarea::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+}

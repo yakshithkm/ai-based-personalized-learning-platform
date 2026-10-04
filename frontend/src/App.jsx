@@ -1,4 +1,5 @@
 import { lazy, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
@@ -43,7 +44,10 @@ const AdminExamsPage = lazy(() => import('./pages/admin/AdminExamsPage'));
 const AdminExamDetailPage = lazy(() => import('./pages/admin/AdminExamDetailPage'));
 const AdminAnalyticsSectionPage = lazy(() => import('./pages/admin/AdminAnalyticsSectionPage'));
 
-const PageFallback = () => <div className="center-screen">Loading...</div>;
+const PageFallback = () => {
+  const { t } = useTranslation();
+  return <div className="center-screen">{t('common.loading')}</div>;
+};
 
 const App = () => {
   return (

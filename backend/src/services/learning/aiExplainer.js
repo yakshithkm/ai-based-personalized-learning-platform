@@ -12,7 +12,17 @@ const SYSTEM_INSTRUCTION =
   'Keep it to at most two friendly sentences. Keep every number exactly as given. Do not add facts, ' +
   'links, promises or numbers. Plain text only - no markdown, no LaTeX.';
 
-const polishExplanation = async (text, { timeoutMs = 3000, streamReply } = {}) => {
+const { SUPPORTED_LANGUAGES, DEFAULT_LANGUAGE } = require('../../config/languages');
+
+const languageSuffix = (language) => {
+  const meta = SUPPORTED_LANGUAGES[language];
+  if (!meta || language === DEFAULT_LANGUAGE) return '';
+  // Digits stay 0-9 on purpose: the guard below verifies every number from the rule-based
+  // text is still present, and native-script digits would (correctly) fail that check.
+  return ` Write the sentences in ${meta.name} (${meta.nativeName}), keeping subject names, formulas and technical terms in their standard form and all numbers as Western digits (0-9).`;
+};
+
+const polishExplanation = async (text, { timeoutMs = 3000, streamReply, language } = {}) => {
   if (!isEnabled() && !streamReply) return null;
   try {
     const stream = streamReply || require('../ai/geminiService').streamReply;
@@ -21,7 +31,7 @@ const polishExplanation = async (text, { timeoutMs = 3000, streamReply } = {}) =
     let out = '';
     try {
       for await (const chunk of stream({
-        systemInstruction: SYSTEM_INSTRUCTION,
+        systemInstruction: SYSTEM_INSTRUCTION + languageSuffix(language),
         contents: [{ role: 'user', parts: [{ text: `Rewrite: ${text}` }] }],
         signal: controller.signal,
       })) {

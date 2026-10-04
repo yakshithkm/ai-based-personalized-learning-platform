@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import api from '../api/client';
 import { useAuth } from './AuthContext';
 import { onGamificationEvent } from '../utils/appEvents';
@@ -28,6 +29,7 @@ let toastIdCounter = 0;
 // `gamification` result object any endpoint returns alongside its normal
 // response - no refetch needed for every small interaction.
 export const GamificationProvider = ({ children }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [gamification, setGamification] = useState(null);
   const [loaded, setLoaded] = useState(false);
@@ -157,36 +159,36 @@ export const GamificationProvider = ({ children }) => {
       <div className="xp-toast-stack" role="status" aria-live="polite">
         {xpToasts.map((toast) => (
           <div key={toast.id} className="xp-toast">
-            <span className="xp-toast-amount">+{toast.xpAwarded} XP</span>
+            <span className="xp-toast-amount">{t('gamification.xpGain', { xp: toast.xpAwarded })}</span>
             {toast.label && <span className="xp-toast-label">{toast.label}</span>}
           </div>
         ))}
       </div>
 
       {achievementQueue[0] && (
-        <div className="gam-modal-backdrop" role="dialog" aria-modal="true" aria-label="Achievement unlocked">
+        <div className="gam-modal-backdrop" role="dialog" aria-modal="true" aria-label={t('gamification.achievementUnlocked')}>
           <div className="gam-modal achievement-modal">
             <span className="gam-modal-icon" aria-hidden="true">🏆</span>
-            <p className="gam-modal-eyebrow">Achievement Unlocked</p>
-            <h3>{achievementQueue[0].label}</h3>
-            <p className="gam-modal-desc">{achievementQueue[0].description}</p>
-            {Boolean(achievementQueue[0].xp) && <p className="gam-modal-xp">+{achievementQueue[0].xp} XP</p>}
+            <p className="gam-modal-eyebrow">{t('gamification.achievementUnlocked')}</p>
+            <h3>{t(`gamification.achievements.${achievementQueue[0].id}.label`, { defaultValue: achievementQueue[0].label })}</h3>
+            <p className="gam-modal-desc">{t(`gamification.achievements.${achievementQueue[0].id}.description`, { defaultValue: achievementQueue[0].description })}</p>
+            {Boolean(achievementQueue[0].xp) && <p className="gam-modal-xp">{t('gamification.xpGain', { xp: achievementQueue[0].xp })}</p>}
             <button type="button" className="solid-btn" onClick={dismissAchievement} autoFocus>
-              Nice!
+              {t('gamification.nice')}
             </button>
           </div>
         </div>
       )}
 
       {levelUp && (
-        <div className="gam-modal-backdrop" role="dialog" aria-modal="true" aria-label="Level up">
+        <div className="gam-modal-backdrop" role="dialog" aria-modal="true" aria-label={t('gamification.levelUp')}>
           <div className="gam-modal levelup-modal">
             <span className="gam-modal-icon" aria-hidden="true">⭐</span>
-            <p className="gam-modal-eyebrow">Level Up</p>
-            <h3>Level {levelUp.previousLevel} → Level {levelUp.newLevel}</h3>
-            <p className="gam-modal-desc">You earned {levelUp.xpAwarded} XP to get here.</p>
+            <p className="gam-modal-eyebrow">{t('gamification.levelUp')}</p>
+            <h3>{t('gamification.levelRange', { from: levelUp.previousLevel, to: levelUp.newLevel })}</h3>
+            <p className="gam-modal-desc">{t('gamification.earnedXp', { xp: levelUp.xpAwarded })}</p>
             <button type="button" className="solid-btn" onClick={dismissLevelUp} autoFocus>
-              Keep Going
+              {t('gamification.keepGoing')}
             </button>
           </div>
         </div>

@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import LanguageSelector from '../components/LanguageSelector';
+import { translateServerError } from '../i18n/serverErrors';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
 import PasswordField from '../components/PasswordField';
 import { BrainIcon, SearchIcon, ChartIcon, ClockIcon, ArrowLeftIcon } from '../components/landing/icons';
 
 const FEATURES = [
-  { text: 'AI-powered personalized study plans', Icon: BrainIcon },
-  { text: 'Adaptive practice based on performance', Icon: ChartIcon },
-  { text: 'Performance analytics and weak-topic detection', Icon: SearchIcon },
-  { text: 'Realistic exam simulations', Icon: ClockIcon },
+  { textKey: 'auth.features.plans', Icon: BrainIcon },
+  { textKey: 'auth.features.adaptive', Icon: ChartIcon },
+  { textKey: 'auth.features.analytics', Icon: SearchIcon },
+  { textKey: 'auth.features.simulations', Icon: ClockIcon },
 ];
 
 const RegisterPage = () => {
+  const { t, i18n } = useTranslation();
   const { register } = useAuth();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -39,10 +43,10 @@ const RegisterPage = () => {
     setBusy(true);
 
     try {
-      await register(referralCode ? { ...form, ref: referralCode } : form);
+      await register({ ...form, ...(referralCode ? { ref: referralCode } : {}), language: i18n.language });
       navigate('/dashboard');
     } catch (err) {
-      setError(err?.response?.data?.message || 'Registration failed');
+      setError(translateServerError(t, err?.response?.data?.message, 'auth.registerFailed'));
     } finally {
       setBusy(false);
     }
@@ -54,24 +58,20 @@ const RegisterPage = () => {
         <div className="auth-left-glow" aria-hidden="true" />
         <div className="auth-left-content">
           <BrandLogo className="landing-logo" to="/" />
-          <span className="auth-eyebrow">AI-Powered Learning</span>
+          <span className="auth-eyebrow">{t('layout.tagline')}</span>
           <h1 className="auth-headline">
-            Learn Smarter.
+            {t('auth.headlineLine1')}
             <br />
-            Prepare Better.
+            {t('auth.headlineLine2')}
           </h1>
-          <p className="auth-subtext">
-            TutorMind gives you personalized preparation for NEET, JEE and CET — powered by
-            performance analytics, adaptive practice, study recommendations, and realistic exam
-            simulation.
-          </p>
+          <p className="auth-subtext">{t('auth.subtext')}</p>
           <ul className="auth-feature-list">
-            {FEATURES.map(({ text, Icon }) => (
-              <li key={text}>
+            {FEATURES.map(({ textKey, Icon }) => (
+              <li key={textKey}>
                 <span className="auth-feature-icon">
                   <Icon />
                 </span>
-                {text}
+                {t(textKey)}
               </li>
             ))}
           </ul>
@@ -79,50 +79,51 @@ const RegisterPage = () => {
       </section>
 
       <section className="auth-right">
+        <LanguageSelector variant="compact" className="lang-floating" />
         <div className="auth-right-inner">
           <Link to="/" className="auth-back-link">
             <ArrowLeftIcon />
-            Back to Home
+            {t('common.backToHome')}
           </Link>
 
           <form className="auth-card" onSubmit={onSubmit}>
-            <h3>Create your account</h3>
-            <p>Start your personalized learning journey.</p>
+            <h3>{t('auth.createYourAccount')}</h3>
+            <p>{t('auth.registerSubtitle')}</p>
             {!!referralCode && (
               <p className="chip nav-badge" style={{ marginBottom: '0.6rem' }}>
-                Invited with code {referralCode}
+                {t('auth.invitedWithCode', { code: referralCode })}
               </p>
             )}
 
             <label htmlFor="register-name">
-              Full Name
+              {t('auth.fullName')}
               <input
                 id="register-name"
                 name="name"
-                placeholder="Your full name"
+                placeholder={t('auth.fullNamePlaceholder')}
                 value={form.name}
                 onChange={onChange}
                 required
               />
             </label>
             <label htmlFor="register-email">
-              Email
+              {t('auth.email')}
               <input
                 id="register-email"
                 name="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t('auth.emailPlaceholder')}
                 value={form.email}
                 onChange={onChange}
                 required
               />
             </label>
             <label htmlFor="register-password">
-              Password
+              {t('auth.password')}
               <PasswordField
                 id="register-password"
                 name="password"
-                placeholder="Min 6 characters"
+                placeholder={t('auth.passwordMinPlaceholder')}
                 value={form.password}
                 onChange={onChange}
                 autoComplete="new-password"
@@ -130,7 +131,7 @@ const RegisterPage = () => {
               />
             </label>
             <label htmlFor="register-exam">
-              Exam / Goal
+              {t('auth.examGoal')}
               <select id="register-exam" name="targetExam" value={form.targetExam} onChange={onChange}>
                 <option value="NEET">NEET</option>
                 <option value="JEE">JEE</option>
@@ -141,11 +142,11 @@ const RegisterPage = () => {
             {error && <div className="error-text">{error}</div>}
 
             <button className="solid-btn" type="submit" disabled={busy}>
-              {busy ? 'Creating account...' : 'Create Account'}
+              {busy ? t('auth.creatingAccount') : t('auth.createAccount')}
             </button>
 
             <small>
-              Already have an account? <Link to="/login">Login</Link>
+              {t('auth.alreadyHaveAccount')} <Link to="/login">{t('auth.login')}</Link>
             </small>
           </form>
         </div>

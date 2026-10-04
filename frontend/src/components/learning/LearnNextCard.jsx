@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { translateServerError } from '../../i18n/serverErrors';
 import { startRecommendation } from '../../api/learning';
 import LearningPath from './LearningPath';
 import {
@@ -15,7 +17,8 @@ import {
 
 // The single most important recommendation: visually dominant, explains itself with the real
 // numbers behind it, and shows the learning path it belongs to.
-const LearnNextCard = ({ item, eyebrow = 'Learn Next' }) => {
+const LearnNextCard = ({ item, eyebrow }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -23,7 +26,7 @@ const LearnNextCard = ({ item, eyebrow = 'Learn Next' }) => {
 
   const inProgress = item.progress?.status === 'in-progress';
   const isContent = Boolean(item.content);
-  const ctaLabel = !isContent ? 'Start Practice' : inProgress ? 'Continue Learning' : 'Start Learning';
+  const ctaLabel = !isContent ? t('dashboard.startPractice') : inProgress ? t('learn.continueLearning') : t('learn.startLearning');
 
   // Practice-only recommendations (no study material yet) are opened via /start so the click
   // and start are recorded, then the practice set loads.
@@ -34,7 +37,7 @@ const LearnNextCard = ({ item, eyebrow = 'Learn Next' }) => {
       await startRecommendation(item.id);
       navigate(item.practice.route);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Could not start this practice set. Please try again.');
+      setError(translateServerError(t, err?.response?.data?.message, 'learn.startFailed'));
       setBusy(false);
     }
   };
@@ -42,39 +45,39 @@ const LearnNextCard = ({ item, eyebrow = 'Learn Next' }) => {
   return (
     <section className="panel lr-hero" aria-labelledby="lr-hero-title">
       <div className="lr-hero-top">
-        <p className="eyebrow-label lr-eyebrow">{eyebrow}</p>
+        <p className="eyebrow-label lr-eyebrow">{eyebrow || t('learn.learnNext')}</p>
         <div className="lr-badge-row">
           <PriorityBadge priority={item.priority} />
           <ReasonBadge reason={item.recommendationReason} />
         </div>
       </div>
 
-      <h2 id="lr-hero-title" className="lr-hero-title">{itemTitle(item)}</h2>
-      <p className="lr-meta">{itemMeta(item)}</p>
+      <h2 id="lr-hero-title" className="lr-hero-title">{itemTitle(item, t)}</h2>
+      <p className="lr-meta">{itemMeta(item, t)}</p>
       <div className="lr-badge-row">
         {isContent && <TypeBadge type={item.content.contentType} />}
-        {isContent && <span className="lr-badge lr-time">{item.content.estimatedMinutes} min</span>}
+        {isContent && <span className="lr-badge lr-time">{t('learn.minutes', { count: item.content.estimatedMinutes })}</span>}
         {isContent && <DifficultyBadge difficulty={item.content.difficulty} />}
         {!isContent && item.practice?.difficulty && <DifficultyBadge difficulty={item.practice.difficulty} />}
-        {!isContent && item.practice?.count && <span className="lr-badge lr-time">{item.practice.count} questions</span>}
+        {!isContent && item.practice?.count && <span className="lr-badge lr-time">{t('common.questionCount', { count: item.practice.count })}</span>}
       </div>
 
       <div className="lr-why">
-        <h3>Why this is recommended</h3>
+        <h3>{t('learn.whyRecommended')}</h3>
         <p>{item.reason}</p>
         <SignalChips signals={item.signals} />
       </div>
 
       {inProgress && (
         <div className="lr-resume">
-          <ProgressBar percent={item.progress.progressPercent} label="Your progress in this resource" />
-          <small>{item.progress.progressPercent}% complete</small>
+          <ProgressBar percent={item.progress.progressPercent} label={t('learn.yourProgress')} />
+          <small>{t('practice.percentComplete', { percent: item.progress.progressPercent })}</small>
         </div>
       )}
 
       {item.path?.length > 0 && (
         <div className="lr-path-wrap">
-          <h3>Recommended path</h3>
+          <h3>{t('learn.recommendedPath')}</h3>
           <LearningPath steps={item.path} practiceRecommendationId={item.id} />
         </div>
       )}
@@ -84,7 +87,7 @@ const LearnNextCard = ({ item, eyebrow = 'Learn Next' }) => {
           <Link className="solid-btn lr-cta" to={`/learn/${item.id}`}>{ctaLabel}</Link>
         ) : (
           <button type="button" className="solid-btn lr-cta" onClick={startPractice} disabled={busy}>
-            {busy ? 'Opening...' : ctaLabel}
+            {busy ? t('learn.opening') : ctaLabel}
           </button>
         )}
       </div>

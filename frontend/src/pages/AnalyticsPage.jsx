@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   CartesianGrid,
   Line,
@@ -12,6 +13,9 @@ import {
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
 import { subjectColor } from '../utils/subjectVisuals';
+import { translateServerError } from '../i18n/serverErrors';
+import { subjectLabel } from '../i18n/labels';
+import { useLocaleFormat } from '../i18n/format';
 
 const chartTooltipStyle = {
   backgroundColor: '#111827',
@@ -58,28 +62,26 @@ const BulbIcon = () => (
 );
 
 const severityLabel = (accuracy) => {
-  if (accuracy < 40) return { label: 'Critical', tone: 'critical' };
-  if (accuracy < 60) return { label: 'Weak', tone: 'weak' };
-  return { label: 'Needs Practice', tone: 'moderate' };
+  if (accuracy < 40) return { labelKey: 'weakTopics.severity.critical', tone: 'critical' };
+  if (accuracy < 60) return { labelKey: 'weakTopics.severity.weak', tone: 'weak' };
+  return { labelKey: 'weakTopics.severity.needsPractice', tone: 'moderate' };
 };
 
-const formatDayLabel = (dayKey) => {
+const formatDayLabel = (dayKey, formatDate) => {
   if (!dayKey) return '';
-  return new Date(`${dayKey}T00:00:00Z`).toLocaleDateString(undefined, {
-    month: 'short',
-    day: 'numeric',
-    timeZone: 'UTC',
-  });
+  return formatDate(new Date(`${dayKey}T00:00:00Z`), { month: 'short', day: 'numeric', timeZone: 'UTC' });
 };
 
-const formatMinutesLabel = (totalMinutes) => {
+const formatMinutesLabel = (totalMinutes, t) => {
   const hours = Math.floor(totalMinutes / 60);
   const minutes = Math.round(totalMinutes % 60);
-  if (hours <= 0) return `${minutes}m`;
-  return `${hours}h ${minutes}m`;
+  if (hours <= 0) return t('time.minutesShort', { count: minutes });
+  return t('time.hoursMinutesShort', { hours, minutes });
 };
 
 const AnalyticsPage = () => {
+  const { t } = useTranslation();
+  const { formatDate, formatNumber, formatPercent } = useLocaleFormat();
   const navigate = useNavigate();
   const [payload, setPayload] = useState(null);
   const [error, setError] = useState('');
@@ -91,7 +93,7 @@ const AnalyticsPage = () => {
       const { data } = await api.get('/analytics/me');
       setPayload(data);
     } catch (err) {
-      setError(err?.response?.data?.message || 'Failed to load analytics');
+      setError(translateServerError(t, err?.response?.data?.message, 'analytics.loadFailed'));
     }
   };
 
@@ -117,7 +119,7 @@ const AnalyticsPage = () => {
   const chartData = useMemo(() => {
     if (chartRange === '30d') {
       return (habit.heatmap || []).slice(-30).map((entry) => ({
-        day: formatDayLabel(entry.day),
+        day: formatDayLabel(entry.day, formatDate),
         questionsSolved: entry.count || 0,
         accuracy: null,
       }));
@@ -127,7 +129,7 @@ const AnalyticsPage = () => {
       questionsSolved: entry.attempts || 0,
       accuracy: entry.accuracy || 0,
     }));
-  }, [chartRange, habit.heatmap, weeklyImprovement]);
+  }, [chartRange, habit.heatmap, weeklyImprovement, formatDate]);
 
   const maxFocusScore = weakTopicPriority.length
     ? Math.max(...weakTopicPriority.map((entry) => entry.focusScore || 0), 1)
@@ -148,33 +150,33 @@ const AnalyticsPage = () => {
     if (strongestSubject) {
       list.push({
         tone: 'good',
-        text: `Your strongest subject is ${strongestSubject.subject} at ${Number(strongestSubject.accuracy || 0).toFixed(0)}% accuracy. Keep the momentum going.`,
+        text: t('analytics.insight.strongest', { subject: subjectLabel(t, strongestSubject.subject), value: formatPercent(Number(strongestSubject.accuracy || 0).toFixed(0)) }),
       });
     }
     if (weakestSubject && (!strongestSubject || weakestSubject.subject !== strongestSubject.subject)) {
       list.push({
         tone: Number(weakestSubject.accuracy || 0) < 50 ? 'bad' : 'mid',
-        text: `${weakestSubject.subject} needs the most attention right now, sitting at ${Number(weakestSubject.accuracy || 0).toFixed(0)}% accuracy.`,
+        text: t('analytics.insight.weakest', { subject: subjectLabel(t, weakestSubject.subject), value: formatPercent(Number(weakestSubject.accuracy || 0).toFixed(0)) }),
       });
     }
     if (accuracyTrend === 'improving') {
-      list.push({ tone: 'good', text: 'Your accuracy is trending upward across recent attempts. Whatever you are doing is working.' });
+      list.push({ tone: 'good', text: t('analytics.insight.up') });
     } else if (accuracyTrend === 'declining') {
-      list.push({ tone: 'bad', text: 'Your accuracy has been trending downward recently — consider slowing down and reviewing mistakes before moving on.' });
+      list.push({ tone: 'bad', text: t('analytics.insight.down') });
     }
     if (focusSuggestion) {
-      list.push({ tone: 'mid', text: `Next best topic to focus on: ${focusSuggestion}.` });
+      list.push({ tone: 'mid', text: t('analytics.insight.focus', { topic: focusSuggestion }) });
     }
     if (timeAccuracyCorrelation < -0.2) {
-      list.push({ tone: 'good', text: 'Solving faster tends to align with better accuracy for you — trust your first instinct more.' });
+      list.push({ tone: 'good', text: t('analytics.insight.fast') });
     } else if (timeAccuracyCorrelation > 0.2) {
-      list.push({ tone: 'mid', text: 'Rushing tends to hurt your accuracy — slowing down on tricky questions may help.' });
+      list.push({ tone: 'mid', text: t('analytics.insight.slow') });
     }
     if (!list.length) {
-      list.push({ tone: 'mid', text: 'Complete a few more practice sessions to unlock personalized insights.' });
+      list.push({ tone: 'mid', text: t('analytics.insight.more') });
     }
     return list.slice(0, 4);
-  }, [strongestSubject, weakestSubject, accuracyTrend, focusSuggestion, timeAccuracyCorrelation]);
+  }, [strongestSubject, weakestSubject, accuracyTrend, focusSuggestion, timeAccuracyCorrelation, t, formatPercent]);
 
   const goToTopic = (subject, topic) => {
     navigate(`/practice?topic=${encodeURIComponent(`${subject} - ${topic}`)}`);
@@ -206,10 +208,10 @@ const AnalyticsPage = () => {
     return (
       <div className="dash-grid">
         <section className="dash-card error-state-card">
-          <h3>Couldn&apos;t load your analytics</h3>
+          <h3>{t('analytics.couldntLoad')}</h3>
           <p>{error}</p>
           <button type="button" className="solid-btn" onClick={load}>
-            Try again
+            {t('common.tryAgain')}
           </button>
         </section>
       </div>
@@ -220,14 +222,14 @@ const AnalyticsPage = () => {
     return (
       <div className="dash-grid">
         <section className="dash-greeting">
-          <h1>Analytics</h1>
-          <p>Understand your performance and improve where it matters.</p>
+          <h1>{t('navigation.analytics')}</h1>
+          <p>{t('analytics.intro')}</p>
         </section>
         <EmptyState
           icon="analytics"
-          title="Complete a few practice sessions to unlock personalized analytics"
-          description="Solve a few practice questions or run an exam simulation and your accuracy, timing, and weak-topic trends will show up here."
-          actionLabel="Go to Practice"
+          title={t('analytics.emptyTitle')}
+          description={t('analytics.emptyText')}
+          actionLabel={t('common.goToPractice')}
           onAction={() => navigate('/practice')}
         />
       </div>
@@ -237,51 +239,51 @@ const AnalyticsPage = () => {
   return (
     <div className="dash-grid">
       <section className="dash-greeting">
-        <h1>Analytics</h1>
-        <p>Understand your performance and improve where it matters.</p>
+        <h1>{t('navigation.analytics')}</h1>
+        <p>{t('analytics.intro')}</p>
       </section>
 
       <section className="dash-metric-row">
         <article className="dash-card metric-card-v2">
           <div className="metric-card-head">
             <span className="metric-icon metric-icon-purple"><TargetIcon /></span>
-            <span className="metric-title">Accuracy</span>
+            <span className="metric-title">{t('common.accuracy')}</span>
           </div>
-          <p className="metric-value">{Number(performance.overallAccuracy || 0).toFixed(1)}%</p>
+          <p className="metric-value">{formatPercent(Number(performance.overallAccuracy || 0).toFixed(1))}</p>
           <p className={`metric-caption metric-trend-${accuracyTrend}`}>
-            {accuracyTrend === 'improving' ? '↑ Improving' : accuracyTrend === 'declining' ? '↓ Declining' : '→ Stable'}
+            {accuracyTrend === 'improving' ? t('dashboard.trendImproving') : accuracyTrend === 'declining' ? t('dashboard.trendDeclining') : t('dashboard.trendStable')}
           </p>
         </article>
 
         <article className="dash-card metric-card-v2">
           <div className="metric-card-head">
             <span className="metric-icon metric-icon-blue"><BookIcon /></span>
-            <span className="metric-title">Questions Solved</span>
+            <span className="metric-title">{t('dashboard.questionsSolved')}</span>
           </div>
-          <p className="metric-value">{solvedSummary.uniqueSolved.toLocaleString()}</p>
-          <p className="metric-caption">{performance.totalAttempts || 0} total attempts</p>
+          <p className="metric-value">{formatNumber(solvedSummary.uniqueSolved)}</p>
+          <p className="metric-caption">{t('dashboard.totalAttempts', { count: performance.totalAttempts || 0 })}</p>
         </article>
 
         <article className="dash-card metric-card-v2">
           <div className="metric-card-head">
             <span className="metric-icon metric-icon-orange"><StreakIcon /></span>
-            <span className="metric-title">Current Streak</span>
+            <span className="metric-title">{t('profile.currentStreak')}</span>
           </div>
-          <p className="metric-value">{habit.currentStreak || 0} <small>days</small></p>
-          <p className="metric-caption">Longest streak: {habit.longestStreak || 0} days</p>
+          <p className="metric-value">{formatNumber(habit.currentStreak || 0)} <small>{t('dashboard.daysUnit', { count: habit.currentStreak || 0 })}</small></p>
+          <p className="metric-caption">{t('dashboard.longestStreak', { count: habit.longestStreak || 0 })}</p>
         </article>
 
         <article className="dash-card metric-card-v2 metric-card-readiness">
           <div className="metric-card-head">
             <span className="metric-icon metric-icon-teal"><SparkleIcon /></span>
-            <span className="metric-title">Exam Readiness</span>
+            <span className="metric-title">{t('dashboard.examReadiness')}</span>
           </div>
           <div className="readiness-ring-row">
             <span
               className="metric-ring"
               style={{ '--ring-value': Number(examReadiness.score || 0) }}
               role="img"
-              aria-label={`Exam readiness score ${Number(examReadiness.score || 0).toFixed(0)} out of 100`}
+              aria-label={t('dashboard.readinessAria', { score: Number(examReadiness.score || 0).toFixed(0) })}
             >
               <span className="metric-ring-inner">
                 {Number(examReadiness.score || 0).toFixed(0)}
@@ -294,27 +296,27 @@ const AnalyticsPage = () => {
         <article className="dash-card metric-card-v2">
           <div className="metric-card-head">
             <span className="metric-icon metric-icon-amber"><ClockIcon /></span>
-            <span className="metric-title">Avg Time / Question</span>
+            <span className="metric-title">{t('analytics.avgTime')}</span>
           </div>
-          <p className="metric-value">{Math.round(performance.averageTimeTakenSec || 0)}<small>s</small></p>
-          <p className="metric-caption">{formatMinutesLabel(totalMinutesStudied)} studied overall</p>
+          <p className="metric-value">{Math.round(performance.averageTimeTakenSec || 0)}<small>{t('time.secondsUnit')}</small></p>
+          <p className="metric-caption">{t('analytics.studiedOverall', { time: formatMinutesLabel(totalMinutesStudied, t) })}</p>
         </article>
       </section>
 
       <section className="dash-card chart-panel">
         <div className="dash-card-head">
           <div>
-            <h3>Performance Trend</h3>
-            <p className="dash-card-subtitle">Accuracy and questions solved over time.</p>
+            <h3>{t('analytics.performanceTrend')}</h3>
+            <p className="dash-card-subtitle">{t('analytics.performanceTrendSub')}</p>
           </div>
           <select
             className="range-select"
             value={chartRange}
             onChange={(event) => setChartRange(event.target.value)}
-            aria-label="Select time range"
+            aria-label={t('dashboard.selectRange')}
           >
-            <option value="7d">Last 7 Days</option>
-            <option value="30d">Last 30 Days</option>
+            <option value="7d">{t('dashboard.last7Days')}</option>
+            <option value="30d">{t('dashboard.last30Days')}</option>
           </select>
         </div>
         <ResponsiveContainer width="100%" height={300}>
@@ -329,7 +331,7 @@ const AnalyticsPage = () => {
                 yAxisId="left"
                 type="monotone"
                 dataKey="accuracy"
-                name="Accuracy (%)"
+                name={t('dashboard.accuracyPercentSeries')}
                 stroke="#60a5fa"
                 strokeWidth={3}
                 dot={{ r: 4, fill: '#60a5fa' }}
@@ -342,7 +344,7 @@ const AnalyticsPage = () => {
               yAxisId="right"
               type="monotone"
               dataKey="questionsSolved"
-              name="Questions Solved"
+              name={t('dashboard.questionsSolved')}
               stroke="#a78bfa"
               strokeWidth={3}
               dot={{ r: 4, fill: '#a78bfa' }}
@@ -353,7 +355,7 @@ const AnalyticsPage = () => {
           </LineChart>
         </ResponsiveContainer>
         {chartRange === '30d' && (
-          <p className="dash-chart-note">Accuracy trend is available for the 7-day view — showing questions solved per day over 30 days.</p>
+          <p className="dash-chart-note">{t('dashboard.chartNote30')}</p>
         )}
       </section>
 
@@ -362,7 +364,7 @@ const AnalyticsPage = () => {
       <section className="dash-main-grid">
         <article className="dash-card">
           <div className="dash-card-head">
-            <h3>Subject Performance</h3>
+            <h3>{t('analytics.subjectPerformance')}</h3>
           </div>
           <div className="subject-accuracy-body">
             <div className="overall-ring-wrap">
@@ -382,8 +384,8 @@ const AnalyticsPage = () => {
                 />
               </svg>
               <span className="overall-ring-label">
-                {Number(performance.overallAccuracy || 0).toFixed(1)}%
-                <small>Overall</small>
+                {formatPercent(Number(performance.overallAccuracy || 0).toFixed(1))}
+                <small>{t('dashboard.overall')}</small>
               </span>
             </div>
             <div className="subject-list">
@@ -391,19 +393,19 @@ const AnalyticsPage = () => {
                 bySubject.map((row) => (
                   <div className="subject-row" key={row.subject}>
                     <span className="subject-dot" style={{ background: subjectColor(row.subject) }} />
-                    <span className="subject-name">{row.subject}</span>
+                    <span className="subject-name">{subjectLabel(t, row.subject)}</span>
                     <span className="subject-bar-track">
                       <span
                         className="subject-bar-fill"
                         style={{ width: `${Math.min(100, Number(row.accuracy || 0))}%`, background: subjectColor(row.subject) }}
                       />
                     </span>
-                    <span className="subject-pct">{Number(row.accuracy || 0).toFixed(0)}%</span>
-                    {Number.isFinite(row.attempts) && <span className="subject-attempts">{row.attempts} attempts</span>}
+                    <span className="subject-pct">{formatPercent(Number(row.accuracy || 0).toFixed(0))}</span>
+                    {Number.isFinite(row.attempts) && <span className="subject-attempts">{t('analytics.attempts', { count: row.attempts })}</span>}
                   </div>
                 ))
               ) : (
-                <p className="dash-empty-line">No subject data yet.</p>
+                <p className="dash-empty-line">{t('dashboard.noSubjectData')}</p>
               )}
             </div>
           </div>
@@ -411,8 +413,8 @@ const AnalyticsPage = () => {
 
         <article className="dash-card">
           <div className="dash-card-head">
-            <h3>Weak Topics</h3>
-            <button type="button" className="link-btn" onClick={() => navigate('/weak-topics')}>View All</button>
+            <h3>{t('navigation.weakTopics')}</h3>
+            <button type="button" className="link-btn" onClick={() => navigate('/weak-topics')}>{t('common.viewAll')}</button>
           </div>
           {weakTopicPriority.length ? (
             <div className="weak-topics-table">
@@ -422,32 +424,32 @@ const AnalyticsPage = () => {
                   <div className="weak-topics-row-v2" key={`${entry.subject}-${entry.topic}`}>
                     <div className="weak-topics-info">
                       <strong>{entry.topic}</strong>
-                      <small>{entry.subject}</small>
+                      <small>{subjectLabel(t, entry.subject)}</small>
                     </div>
                     <div className="weak-topics-metric">
                       <span className="subject-bar-track weak-bar-track">
                         <span className="subject-bar-fill weak-bar-fill" style={{ width: `${Math.min(100, Number(entry.accuracy || 0))}%` }} />
                       </span>
-                      <span>{Number(entry.accuracy || 0).toFixed(0)}%</span>
+                      <span>{formatPercent(Number(entry.accuracy || 0).toFixed(0))}</span>
                     </div>
-                    <span className={`severity-badge severity-${severity.tone}`}>{severity.label}</span>
+                    <span className={`severity-badge severity-${severity.tone}`}>{t(severity.labelKey)}</span>
                     <button type="button" className="outline-btn dash-small-btn" onClick={() => goToTopic(entry.subject, entry.topic)}>
-                      Practice
+                      {t('navigation.practice')}
                     </button>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <p className="dash-empty-line">No weak topics detected. Great work — keep raising the difficulty.</p>
+            <p className="dash-empty-line">{t('analytics.noWeak')}</p>
           )}
         </article>
       </section>
 
       <section className="dash-card">
         <div className="dash-card-head">
-          <h3><BulbIcon /> Performance Insight</h3>
-          <p className="dash-card-subtitle">Generated from your real attempt history — no filler stats.</p>
+          <h3><BulbIcon /> {t('analytics.performanceInsight')}</h3>
+          <p className="dash-card-subtitle">{t('analytics.performanceInsightSub')}</p>
         </div>
         <div className="insight-list">
           {insights.map((insight, idx) => (
@@ -461,8 +463,8 @@ const AnalyticsPage = () => {
 
       <section className="dash-card">
         <div className="dash-card-head">
-          <h3>Topic Mastery</h3>
-          <p className="dash-card-subtitle">Mastery combines accuracy and consistent practice volume.</p>
+          <h3>{t('analytics.topicMastery')}</h3>
+          <p className="dash-card-subtitle">{t('analytics.topicMasterySub')}</p>
         </div>
         <div className="heatmap-grid">
           {topicMastery.length ? (
@@ -471,8 +473,8 @@ const AnalyticsPage = () => {
               return (
                 <article key={`${entry.subject}-${entry.topic}-${entry.subtopic || 'General'}`} className="heatmap-row">
                   <div className="heatmap-labels">
-                    <h4>{entry.subject} - {entry.topic}{entry.subtopic && entry.subtopic !== 'General' ? ` (${entry.subtopic})` : ''}</h4>
-                    <small>Mastery {mastery.toFixed(1)} | Acc {Number(entry.accuracy || 0).toFixed(1)}%</small>
+                    <h4>{subjectLabel(t, entry.subject)} - {entry.topic}{entry.subtopic && entry.subtopic !== 'General' ? ` (${entry.subtopic})` : ''}</h4>
+                    <small>{t('analytics.masteryLine', { mastery: mastery.toFixed(1), acc: formatPercent(Number(entry.accuracy || 0).toFixed(1)) })}</small>
                   </div>
                   <div className="heatmap-track">
                     <span className="heatmap-fill" style={{ width: `${Math.max(8, mastery)}%` }} />
@@ -481,15 +483,15 @@ const AnalyticsPage = () => {
               );
             })
           ) : (
-            <p className="dash-empty-line">No mastery data yet. Solve more questions to build your mastery profile.</p>
+            <p className="dash-empty-line">{t('analytics.noMastery')}</p>
           )}
         </div>
       </section>
 
       <section className="dash-card">
         <div className="dash-card-head">
-          <h3>Topic Focus Heatmap</h3>
-          <p className="dash-card-subtitle">Higher focus score means the topic needs earlier revision.</p>
+          <h3>{t('analytics.focusHeatmap')}</h3>
+          <p className="dash-card-subtitle">{t('analytics.focusHeatmapSub')}</p>
         </div>
         <div className="heatmap-grid">
           {weakTopicPriority.length ? (
@@ -500,8 +502,8 @@ const AnalyticsPage = () => {
               return (
                 <article key={`focus-${entry.subject}-${entry.topic}`} className="heatmap-row">
                   <div className="heatmap-labels">
-                    <h4>{entry.subject} - {entry.topic}</h4>
-                    <small>Focus {focusScore.toFixed(1)} | Acc {accuracyValue.toFixed(1)}%</small>
+                    <h4>{subjectLabel(t, entry.subject)} - {entry.topic}</h4>
+                    <small>{t('analytics.focusLine', { focus: focusScore.toFixed(1), acc: formatPercent(accuracyValue.toFixed(1)) })}</small>
                   </div>
                   <div className="heatmap-track">
                     <span className="heatmap-fill" style={{ width: `${width}%` }} />
@@ -510,7 +512,7 @@ const AnalyticsPage = () => {
               );
             })
           ) : (
-            <p className="dash-empty-line">No heatmap data yet. Solve more questions to unlock topic intensity insights.</p>
+            <p className="dash-empty-line">{t('analytics.noHeatmap')}</p>
           )}
         </div>
       </section>

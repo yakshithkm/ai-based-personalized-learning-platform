@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useGamification } from '../context/GamificationContext';
@@ -6,11 +7,12 @@ import api from '../api/client';
 import { onAttemptSubmitted } from '../utils/appEvents';
 import BrandLogo from './BrandLogo';
 import Footer from './Footer';
+import LanguageSelector from './LanguageSelector';
 
 const menuItems = [
   {
     to: '/dashboard',
-    label: 'Dashboard',
+    labelKey: 'navigation.dashboard',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-10h8V3h-8v8z" />
@@ -19,7 +21,7 @@ const menuItems = [
   },
   {
     to: '/practice',
-    label: 'Practice',
+    labelKey: 'navigation.practice',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 4h16v14H4V4zm2 2v10h12V6H6zm3 14h6v2H9z" />
@@ -28,7 +30,7 @@ const menuItems = [
   },
   {
     to: '/learn',
-    label: 'Learn',
+    labelKey: 'navigation.learn',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 3L1 9l11 6 9-4.9V17h2V9L12 3zM5 13.2v3.6c0 1.7 3.1 3.2 7 3.2s7-1.5 7-3.2v-3.6l-7 3.8-7-3.8z" />
@@ -37,7 +39,7 @@ const menuItems = [
   },
   {
     to: '/analytics',
-    label: 'Analytics',
+    labelKey: 'navigation.analytics',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 9h3v10H5V9zm5-4h3v14h-3V5zm5 7h3v7h-3v-7z" />
@@ -46,7 +48,7 @@ const menuItems = [
   },
   {
     to: '/exam-simulation',
-    label: 'Exam Simulation',
+    labelKey: 'navigation.examSimulation',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 3h14l4 4v14H4V3zm2 2v14h14V8h-4V5H6zm2 6h8v2H8v-2zm0 4h8v2H8v-2zm0-8h5v2H8V7z" />
@@ -55,7 +57,7 @@ const menuItems = [
   },
   {
     to: '/weak-topics',
-    label: 'Weak Topics',
+    labelKey: 'navigation.weakTopics',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42A6.92 6.92 0 0119 12a7 7 0 11-3.41-6.01l-1.46 1.46A5 5 0 1017 12a4.93 4.93 0 00-1.59-3.66l1.42-1.42A6.95 6.95 0 0118.83 12 7 7 0 015 12a6.92 6.92 0 012.59-5.41L6.17 5.17A9 9 0 1021 12a8.94 8.94 0 00-3.17-6.83z" />
@@ -64,7 +66,7 @@ const menuItems = [
   },
   {
     to: '/study-plan',
-    label: 'Study Plan',
+    labelKey: 'navigation.studyPlan',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M7 2h10a1 1 0 011 1v18a1 1 0 01-1 1H7a1 1 0 01-1-1V3a1 1 0 011-1zm1 2v16h8V4H8zm1 3h6v2H9V7zm0 4h6v2H9v-2zm0 4h4v2H9v-2z" />
@@ -73,7 +75,7 @@ const menuItems = [
   },
   {
     to: '/mistake-bank',
-    label: 'Mistake Bank',
+    labelKey: 'navigation.mistakeBank',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
@@ -82,7 +84,7 @@ const menuItems = [
   },
   {
     to: '/flashcards',
-    label: 'Flashcards',
+    labelKey: 'navigation.flashcards',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M3 5h14v12H3V5zm2 2v8h10V7H5zm4 12h14V7h-2v10H9v2z" />
@@ -91,7 +93,7 @@ const menuItems = [
   },
   {
     to: '/achievements',
-    label: 'Achievements',
+    labelKey: 'navigation.achievements',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M12 1l9 4v6c0 5.5-3.8 10.7-9 12-5.2-1.3-9-6.5-9-12V5l9-4zm-1 12l6-6-1.4-1.4L11 10.2 8.8 8 7.4 9.4 11 13z" />
@@ -142,12 +144,15 @@ const ChevronIcon = () => (
 // means the sidebar/header stay mounted and visible instead of the whole
 // app flashing to a blank "Loading..." screen on first navigation to a
 // route.
-const PageContentFallback = () => (
-  <div className="page-content-fallback" role="status" aria-live="polite">
-    <span className="page-content-spinner" aria-hidden="true" />
-    <span>Loading...</span>
-  </div>
-);
+const PageContentFallback = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="page-content-fallback" role="status" aria-live="polite">
+      <span className="page-content-spinner" aria-hidden="true" />
+      <span>{t('common.loading')}</span>
+    </div>
+  );
+};
 
 const CrownIcon = () => (
   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -163,6 +168,7 @@ const toneToClass = (tone) => {
 };
 
 const Layout = ({ children }) => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { gamification } = useGamification();
   const navigate = useNavigate();
@@ -334,7 +340,7 @@ const Layout = ({ children }) => {
     const results = [];
     subjectTopics.forEach((entry) => {
       if (entry.subject?.toLowerCase().includes(query)) {
-        results.push({ label: entry.subject, kind: 'Subject', topic: `${entry.subject}` });
+        results.push({ label: entry.subject, kind: t('layout.subject'), topic: `${entry.subject}` });
       }
       (entry.topics || []).forEach((topic) => {
         if (topic?.toLowerCase().includes(query)) {
@@ -343,7 +349,7 @@ const Layout = ({ children }) => {
       });
     });
     return results.slice(0, 8);
-  }, [searchTerm, subjectTopics]);
+  }, [searchTerm, subjectTopics, t]);
 
   const goToSuggestion = (suggestion) => {
     setSearchOpen(false);
@@ -379,7 +385,7 @@ const Layout = ({ children }) => {
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`} ref={sidebarRef}>
         <div className="brand-wrap">
           <BrandLogo className="sidebar-brand" to="/dashboard" />
-          <p className="sidebar-subtitle">AI-Powered Learning</p>
+          <p className="sidebar-subtitle">{t('layout.tagline')}</p>
         </div>
 
         <button
@@ -389,15 +395,15 @@ const Layout = ({ children }) => {
             setSidebarOpen(false);
             navigate('/profile');
           }}
-          aria-label="View profile"
+          aria-label={t('layout.viewProfileAria')}
         >
           <span className="user-avatar">{initials}</span>
           <div className="user-block-info">
             <p className="user-name user-name-row">
               <span className="user-name-text">{user?.name}</span>
-              {user?.isDemo && <span className="chip demo-account-chip">Demo Account</span>}
+              {user?.isDemo && <span className="chip demo-account-chip">{t('layout.demoAccount')}</span>}
             </p>
-            <p className="user-email sidebar-user-exam">{user?.targetExam} Aspirant</p>
+            <p className="user-email sidebar-user-exam">{t('layout.aspirant', { exam: user?.targetExam })}</p>
           </div>
           <span className="user-block-chevron"><ChevronIcon /></span>
         </button>
@@ -406,7 +412,7 @@ const Layout = ({ children }) => {
           {menuItems.map((item) => (
             <NavLink key={item.to} to={item.to} onClick={() => setSidebarOpen(false)}>
               <span className="nav-icon">{item.icon}</span>
-              <span>{item.label}</span>
+              <span>{t(item.labelKey)}</span>
             </NavLink>
           ))}
         </nav>
@@ -414,16 +420,16 @@ const Layout = ({ children }) => {
         <div className="sidebar-bottom">
           <div className="upgrade-card">
             <span className="upgrade-card-icon"><CrownIcon /></span>
-            <strong>Unlock Your Potential</strong>
-            <p>Get unlimited access to AI insights, mocks &amp; more.</p>
+            <strong>{t('layout.upgradeTitle')}</strong>
+            <p>{t('layout.upgradeText')}</p>
             <a className="solid-btn upgrade-cta" href="/#pricing-section">
-              Upgrade to Pro
+              {t('layout.upgradeCta')}
               <ChevronIcon />
             </a>
           </div>
 
           <button className="outline-btn sidebar-logout" onClick={onLogout}>
-            Logout
+            {t('common.logout')}
           </button>
         </div>
 
@@ -438,7 +444,7 @@ const Layout = ({ children }) => {
         <button
           type="button"
           className={`header-menu-btn ${sidebarOpen ? 'is-open' : ''}`}
-          aria-label={sidebarOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-label={sidebarOpen ? t('layout.closeMenu') : t('layout.openMenu')}
           aria-expanded={sidebarOpen}
           onClick={() => setSidebarOpen((open) => {
             const next = !open;
@@ -452,7 +458,7 @@ const Layout = ({ children }) => {
         <button
           type="button"
           className="header-search-toggle-btn"
-          aria-label={mobileSearchOpen ? 'Close search' : 'Open search'}
+          aria-label={mobileSearchOpen ? t('layout.closeSearch') : t('layout.openSearch')}
           aria-expanded={mobileSearchOpen}
           ref={searchToggleRef}
           onClick={() => {
@@ -476,8 +482,8 @@ const Layout = ({ children }) => {
               ref={searchInputRef}
               type="search"
               name="q"
-              placeholder="Search topics, questions, subjects..."
-              aria-label="Search"
+              placeholder={t('layout.searchPlaceholder')}
+              aria-label={t('common.search')}
               value={searchTerm}
               onChange={(event) => {
                 setSearchTerm(event.target.value);
@@ -506,6 +512,8 @@ const Layout = ({ children }) => {
         </div>
 
         <div className="header-actions">
+          <LanguageSelector variant="compact" />
+
           {/* Deliberately still the legacy analytics-derived streak (not
               gamification.profile.currentStreak) so this pill always agrees
               with the Profile page's "Max streak" figure. A historical
@@ -519,19 +527,19 @@ const Layout = ({ children }) => {
               pill to the gamification streak is a real product decision
               (which definition should the header reflect), not a bug fix -
               revisit deliberately, not by default. */}
-          <span className="streak-pill" title={`${streak} day ${streak === 1 ? 'streak' : 'streaks'}`}>
+          <span className="streak-pill" title={t('layout.streak', { count: streak })}>
             <FlameIcon />
-            <span className="streak-label">{streak} day {streak === 1 ? 'streak' : 'streaks'}</span>
-            <span className="streak-label-compact">{streak}d</span>
+            <span className="streak-label">{t('layout.streak', { count: streak })}</span>
+            <span className="streak-label-compact">{t('layout.streakCompact', { count: streak })}</span>
           </span>
 
           {gamification?.profile && (
             <span
               className="gam-header-pill"
-              title={`Level ${gamification.profile.level} · ${gamification.profile.totalXp} total XP`}
+              title={t('layout.levelTitle', { level: gamification.profile.level, xp: gamification.profile.totalXp })}
             >
-              <span className="gam-header-level">Lvl {gamification.profile.level}</span>
-              <span className="gam-header-xp">{gamification.profile.currentLevelXp}/{gamification.profile.xpForNextLevel} XP</span>
+              <span className="gam-header-level">{t('layout.levelShort', { level: gamification.profile.level })}</span>
+              <span className="gam-header-xp">{t('layout.xpProgress', { current: gamification.profile.currentLevelXp, next: gamification.profile.xpForNextLevel })}</span>
             </span>
           )}
 
@@ -539,7 +547,7 @@ const Layout = ({ children }) => {
             <button
               type="button"
               className="icon-btn header-notif-btn"
-              aria-label="Notifications"
+              aria-label={t('layout.notifications')}
               onClick={() => setNotifOpen((open) => !open)}
             >
               <BellIcon />
@@ -549,21 +557,23 @@ const Layout = ({ children }) => {
             {notifOpen && (
               <div className="header-dropdown" role="menu">
                 <div className="header-dropdown-head">
-                  <strong>Notifications</strong>
+                  <strong>{t('layout.notifications')}</strong>
                 </div>
                 {notifications.length ? (
                   notifications.map((note) => (
                     <div key={note.type} className={`header-dropdown-item notification-item ${toneToClass(note.tone)}`}>
                       <span>
-                        <strong className="notification-title">{note.title}</strong>
+                        <strong className="notification-title">
+                          {t(`layout.notificationTypes.${note.type}.title`, { defaultValue: note.title })}
+                        </strong>
                         <br />
-                        {note.text}
+                        {t(`layout.notificationTypes.${note.type}.text`, { ...(note.params || {}), defaultValue: note.text })}
                       </span>
                     </div>
                   ))
                 ) : (
                   <div className="header-dropdown-item notification-item">
-                    <span>You&apos;re all caught up — nothing needs your attention right now.</span>
+                    <span>{t('layout.allCaughtUp')}</span>
                   </div>
                 )}
               </div>
@@ -575,7 +585,7 @@ const Layout = ({ children }) => {
               type="button"
               className="header-profile-trigger"
               onClick={() => setProfileOpen((open) => !open)}
-              aria-label="Open profile menu"
+              aria-label={t('layout.openProfileMenu')}
             >
               <span className="user-avatar">{initials}</span>
             </button>
@@ -594,7 +604,7 @@ const Layout = ({ children }) => {
                     navigate('/profile');
                   }}
                 >
-                  View Profile
+                  {t('layout.viewProfile')}
                 </button>
                 <button
                   type="button"
@@ -604,10 +614,10 @@ const Layout = ({ children }) => {
                     navigate('/dashboard');
                   }}
                 >
-                  Dashboard
+                  {t('navigation.dashboard')}
                 </button>
                 <button type="button" className="header-dropdown-item danger" onClick={onLogout}>
-                  Logout
+                  {t('common.logout')}
                 </button>
               </div>
             )}

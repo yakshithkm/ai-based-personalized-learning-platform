@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { translateServerError } from '../i18n/serverErrors';
 import api from '../api/client';
 import { useToast } from '../context/ToastContext';
 
@@ -21,6 +23,7 @@ const ShareIcon = () => (
 );
 
 const InviteFriendsModal = ({ open, onClose }) => {
+  const { t } = useTranslation();
   const toast = useToast();
   const [summary, setSummary] = useState(null);
   const [error, setError] = useState('');
@@ -36,7 +39,7 @@ const InviteFriendsModal = ({ open, onClose }) => {
         const { data } = await api.get('/referrals/me');
         setSummary(data);
       } catch (err) {
-        setError(err?.response?.data?.message || 'Failed to load your invite details');
+        setError(translateServerError(t, err?.response?.data?.message, 'invite.loadFailed'));
       } finally {
         setLoading(false);
       }
@@ -54,9 +57,9 @@ const InviteFriendsModal = ({ open, onClose }) => {
     if (!inviteLink) return;
     try {
       await navigator.clipboard.writeText(inviteLink);
-      toast?.showToast('Invite link copied!', { type: 'success' });
+      toast?.showToast(t('invite.copied'), { type: 'success' });
     } catch {
-      toast?.showToast('Could not copy the link automatically. Please copy it manually.', {
+      toast?.showToast(t('invite.copyFailed'), {
         type: 'error',
       });
     }
@@ -65,8 +68,8 @@ const InviteFriendsModal = ({ open, onClose }) => {
   const shareLink = async () => {
     if (!inviteLink) return;
     const shareData = {
-      title: 'Join me on TutorMind',
-      text: 'Invite your friends to TutorMind and help them prepare smarter.',
+      title: t('invite.shareTitle'),
+      text: t('invite.description'),
       url: inviteLink,
     };
     if (navigator.share) {
@@ -82,9 +85,9 @@ const InviteFriendsModal = ({ open, onClose }) => {
 
   const emailInvite = async () => {
     if (!inviteLink) return;
-    const subject = encodeURIComponent('Join me on TutorMind');
+    const subject = encodeURIComponent(t('invite.shareTitle'));
     const body = encodeURIComponent(
-      `Hi,\n\nI've been preparing for my exams with TutorMind and thought you'd find it useful too.\n\nJoin using my invite link: ${inviteLink}\n\nSee you there!`
+      t('invite.emailBody', { link: inviteLink, interpolation: { escapeValue: false } })
     );
 
     // Hands off to the OS/browser's default mail client via a temporary
@@ -98,7 +101,7 @@ const InviteFriendsModal = ({ open, onClose }) => {
     mailtoAnchor.click();
     try {
       await navigator.clipboard.writeText(inviteLink);
-      toast?.showToast('Opening your email app... invite link copied too, just in case.', {
+      toast?.showToast(t('invite.emailOpening'), {
         type: 'info',
       });
     } catch {
@@ -116,15 +119,15 @@ const InviteFriendsModal = ({ open, onClose }) => {
         aria-labelledby="invite-friends-title"
         onClick={(event) => event.stopPropagation()}
       >
-        <button type="button" className="invite-modal-close" aria-label="Close" onClick={onClose}>
+        <button type="button" className="invite-modal-close" aria-label={t('common.close')} onClick={onClose}>
           ×
         </button>
-        <h3 id="invite-friends-title">Invite Friends</h3>
+        <h3 id="invite-friends-title">{t('common.inviteFriends')}</h3>
         <p className="invite-modal-desc">
-          Invite your friends to TutorMind and help them prepare smarter.
+          {t('invite.description')}
         </p>
 
-        {loading && <p className="invite-modal-status">Loading your invite details...</p>}
+        {loading && <p className="invite-modal-status">{t('invite.loading')}</p>}
         {!!error && <p className="error-text">{error}</p>}
 
         {!loading && !error && summary && (
@@ -134,43 +137,43 @@ const InviteFriendsModal = ({ open, onClose }) => {
                 type="text"
                 readOnly
                 value={inviteLink}
-                aria-label="Your invite link"
+                aria-label={t('invite.linkAria')}
                 onFocus={(event) => event.target.select()}
               />
               <button type="button" className="outline-btn" onClick={copyLink}>
-                <CopyIcon /> Copy Invite Link
+                <CopyIcon /> {t('invite.copyLink')}
               </button>
             </div>
 
             <div className="invite-modal-actions">
               <button type="button" className="solid-btn" onClick={shareLink}>
-                <ShareIcon /> Share
+                <ShareIcon /> {t('invite.share')}
               </button>
               <button type="button" className="outline-btn" onClick={emailInvite}>
-                Email Invite
+                {t('invite.emailInvite')}
               </button>
             </div>
 
             <div className="invite-stats-grid">
               <div className="invite-stat-box">
-                <span>Your Invite Code</span>
+                <span>{t('invite.code')}</span>
                 <strong>{referralCode}</strong>
               </div>
               <div className="invite-stat-box">
-                <span>Friends Invited</span>
+                <span>{t('invite.friendsInvited')}</span>
                 <strong>{summary.friendsInvited}</strong>
               </div>
               <div className="invite-stat-box">
-                <span>Successful Signups</span>
+                <span>{t('invite.signups')}</span>
                 <strong>{summary.successfulSignups}</strong>
               </div>
             </div>
 
             {summary.friendsInvited === 0 && (
               <p className="invite-modal-empty">
-                You haven't invited anyone yet.
+                {t('invite.emptyLine1')}
                 <br />
-                Share your invite link to get started.
+                {t('invite.emptyLine2')}
               </p>
             )}
           </>

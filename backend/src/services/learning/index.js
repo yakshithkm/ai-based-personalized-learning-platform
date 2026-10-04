@@ -571,7 +571,7 @@ const getLearningBundle = async (user, options = {}) => {
   if (primary && requested.has('learnNext') && (aiEnabled() || options.aiExplainer)) {
     try {
       const polish = options.aiExplainer || polishExplanation;
-      const better = await polish(primary.reason);
+      const better = await polish(primary.reason, { language: options.language });
       if (better && typeof better === 'string') {
         primary.reason = better;
         primary.reasonSource = 'ai-polished';

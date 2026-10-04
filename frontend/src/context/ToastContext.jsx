@@ -1,10 +1,12 @@
 import { createContext, useCallback, useContext, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ToastContext = createContext(null);
 
 let idCounter = 0;
 
 export const ToastProvider = ({ children }) => {
+  const { t } = useTranslation();
   const [toasts, setToasts] = useState([]);
   const timersRef = useRef(new Map());
 
@@ -38,7 +40,7 @@ export const ToastProvider = ({ children }) => {
             <button
               type="button"
               className="toast-dismiss"
-              aria-label="Dismiss notification"
+              aria-label={t('common.dismissNotification')}
               onClick={() => dismissToast(toast.id)}
             >
               ×

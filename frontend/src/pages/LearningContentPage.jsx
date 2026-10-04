@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { translateServerError } from '../i18n/serverErrors';
+import { subjectLabel } from '../i18n/labels';
 import {
   completeRecommendation,
   reportProgress,
@@ -14,6 +17,7 @@ import { emitGamificationEvent } from '../utils/appEvents';
 const HEARTBEAT_MS = 30000;
 
 const LearningContentPage = () => {
+  const { t } = useTranslation();
   const { recommendationId } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
@@ -55,7 +59,8 @@ const LearningContentPage = () => {
         if (!cancelled) {
           setError({
             status: err?.response?.status,
-            message: err?.response?.data?.message || 'Could not open this learning resource.',
+            message: err?.response?.data?.message,
+            fallbackKey: 'learn.content.openFailed',
           });
         }
       }
@@ -123,7 +128,7 @@ const LearningContentPage = () => {
       setPercent(100);
       emitGamificationEvent(res?.gamification);
     } catch (err) {
-      setError({ status: err?.response?.status, message: err?.response?.data?.message || 'Could not mark this as complete.', soft: true });
+      setError({ status: err?.response?.status, message: err?.response?.data?.message, fallbackKey: 'learn.content.completeFailed', soft: true });
     } finally {
       setCompleting(false);
     }
@@ -143,9 +148,9 @@ const LearningContentPage = () => {
     return (
       <div className="page-grid">
         <section className="panel error-state-card">
-          <h3>{error.status === 410 ? 'This resource is no longer available' : "Couldn't open this resource"}</h3>
-          <p>{error.message}</p>
-          <Link className="solid-btn" to="/learn">Back to Learn</Link>
+          <h3>{error.status === 410 ? t('learn.content.gone') : t('learn.content.couldntOpen')}</h3>
+          <p>{translateServerError(t, error.message, error.fallbackKey)}</p>
+          <Link className="solid-btn" to="/learn">{t('learn.content.backToLearn')}</Link>
         </section>
       </div>
     );
@@ -154,7 +159,7 @@ const LearningContentPage = () => {
   if (!data) {
     return (
       <div className="page-grid">
-        <section className="panel" aria-busy="true" aria-label="Opening learning resource">
+        <section className="panel" aria-busy="true" aria-label={t('learn.content.opening')}>
           <div className="skeleton-chip" style={{ width: '220px', marginBottom: '0.8rem' }} />
           <div className="skeleton-block" style={{ minHeight: '320px' }} />
         </section>
@@ -167,34 +172,34 @@ const LearningContentPage = () => {
   return (
     <div className="page-grid lr-page">
       <section className="panel lr-content-head">
-        <Link className="lr-back" to="/learn">← Back to Learn</Link>
+        <Link className="lr-back" to="/learn">← {t('learn.content.backToLearn')}</Link>
         <h2>{content.title}</h2>
-        <p className="lr-meta">{[content.subject, content.topic, content.concept].filter(Boolean).join(' • ')}</p>
+        <p className="lr-meta">{[subjectLabel(t, content.subject), content.topic, content.concept].filter(Boolean).join(' • ')}</p>
         <div className="lr-badge-row">
           <TypeBadge type={content.contentType} />
-          <span className="lr-badge lr-time">{content.estimatedMinutes} min</span>
+          <span className="lr-badge lr-time">{t('learn.minutes', { count: content.estimatedMinutes })}</span>
           <DifficultyBadge difficulty={content.difficulty} />
           {content.provider && <span className="lr-badge lr-type">{content.provider}</span>}
         </div>
-        {recommendation?.reason && <p className="lr-why-inline"><strong>Why this:</strong> {recommendation.reason}</p>}
-        {!completed && <ProgressBar percent={percent} label="Your progress" />}
+        {recommendation?.reason && <p className="lr-why-inline"><strong>{t('learn.content.whyThis')}:</strong> {recommendation.reason}</p>}
+        {!completed && <ProgressBar percent={percent} label={t('learn.yourProgress')} />}
       </section>
 
       {content.learningObjectives?.length > 0 && !completed && (
         <section className="panel lr-objectives">
-          <h3>What you will learn</h3>
+          <h3>{t('learn.content.willLearn')}</h3>
           <ul>{content.learningObjectives.map((o) => <li key={o}>{o}</li>)}</ul>
         </section>
       )}
 
       {content.url && (
         <section className="panel">
-          <h3>Open the resource</h3>
-          <p>This {content.contentType} is hosted by {content.provider || 'an external provider'}. It opens in a new tab.</p>
-          <a className="solid-btn" href={content.url} target="_blank" rel="noopener noreferrer">Open resource</a>
+          <h3>{t('learn.content.openResource')}</h3>
+          <p>{t('learn.content.hostedBy', { type: t(`learn.types.${content.contentType}`, { defaultValue: content.contentType }), provider: content.provider || t('learn.content.externalProvider') })}</p>
+          <a className="solid-btn" href={content.url} target="_blank" rel="noopener noreferrer">{t('learn.content.openResourceBtn')}</a>
           {!completed && (
             <p className="lr-inline-actions">
-              <button type="button" className="outline-btn" onClick={markHalfway}>I am about halfway</button>
+              <button type="button" className="outline-btn" onClick={markHalfway}>{t('learn.content.halfway')}</button>
             </p>
           )}
         </section>
@@ -208,24 +213,24 @@ const LearningContentPage = () => {
         <section className="panel lr-finish">
           <div className="lr-cta-row">
             <button type="button" className="solid-btn" onClick={finish} disabled={completing}>
-              {completing ? 'Saving...' : 'I have finished this'}
+              {completing ? t('examSim.saving') : t('learn.content.finished')}
             </button>
-            <button type="button" className="outline-btn" onClick={skip}>Not for me</button>
+            <button type="button" className="outline-btn" onClick={skip}>{t('learn.content.notForMe')}</button>
           </div>
-          {error?.soft && <p className="error-text" role="alert">{error.message}</p>}
+          {error?.soft && <p className="error-text" role="alert">{translateServerError(t, error.message, error.fallbackKey)}</p>}
         </section>
       )}
 
       {completed && (
         <section className="panel lr-complete" aria-live="polite">
-          <p className="eyebrow-label">Nice work</p>
-          <h3>You completed {content.title}.</h3>
-          <p>Now test your understanding while it is fresh.</p>
+          <p className="eyebrow-label">{t('learn.content.niceWork')}</p>
+          <h3>{t('learn.content.completed', { title: content.title })}</h3>
+          <p>{t('learn.content.testNow')}</p>
           <div className="lr-cta-row">
             <Link className="solid-btn" to={completed.practice?.route || '/practice?mode=recommended'}>
-              Start {completed.practice?.count || 5} Question Practice
+              {t('learn.content.startPractice', { count: completed.practice?.count || 5 })}
             </Link>
-            <Link className="outline-btn" to="/learn">Back to Learn</Link>
+            <Link className="outline-btn" to="/learn">{t('learn.content.backToLearn')}</Link>
           </div>
           <ContentFeedback recommendationId={recommendationId} initial={completed.progress || {}} />
         </section>

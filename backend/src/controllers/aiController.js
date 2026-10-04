@@ -2,6 +2,7 @@ const Question = require('../models/Question');
 const Attempt = require('../models/Attempt');
 const isValidObjectId = require('../utils/isValidObjectId');
 const { streamDoubtResolutionReply } = require('../services/ai/aiService');
+const { resolveRequestLanguage } = require('../config/languages');
 
 const MAX_HISTORY_MESSAGES = 12;
 const MAX_MESSAGE_LENGTH = 1000;
@@ -109,6 +110,7 @@ const explainQuestion = async (req, res, next) => {
         history: safeHistory,
         userMessage: trimmedMessage,
         signal: abortController.signal,
+        language: resolveRequestLanguage(req),
       })) {
         sendEvent({ type: 'chunk', text: chunkText });
       }

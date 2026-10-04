@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { translateServerError } from '../i18n/serverErrors';
+import { subjectLabel } from '../i18n/labels';
+import { useLocaleFormat } from '../i18n/format';
 import api from '../api/client';
 import { downloadExamCertificate, downloadExamReport } from '../api/examClient';
 import { CertificateIcon, DownloadIcon } from '../components/ResultIcons';
 import { useToast } from '../context/ToastContext';
 import { emitAttemptSubmitted } from '../utils/appEvents';
 
-const formatDuration = (totalSeconds = 0) => {
+const formatDuration = (totalSeconds = 0, t) => {
   const seconds = Math.max(0, Math.round(totalSeconds));
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
-  return `${m}m ${s}s`;
+  return t('time.minSec', { m, s });
 };
 
 const ExamSimulationResultPage = () => {
+  const { t } = useTranslation();
+  const { formatPercent } = useLocaleFormat();
   const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
@@ -38,16 +44,17 @@ const ExamSimulationResultPage = () => {
         if (data?.resultSummary) {
           setResult(data.resultSummary);
         } else {
-          setFetchError('Result summary is not available yet for this session.');
+          setFetchError(t('examResult.summaryUnavailable'));
         }
       } catch (error) {
-        setFetchError(error?.response?.data?.message || 'Unable to fetch exam result details.');
+        setFetchError(translateServerError(t, error?.response?.data?.message, 'examResult.fetchFailed'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchResultSummary();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sessionId]);
 
   // Notify the app shell once a result is showing (whether it arrived via
@@ -68,11 +75,11 @@ const ExamSimulationResultPage = () => {
     return (
       <div className="page-grid">
         <section className="panel">
-          <h2>Exam Result</h2>
-          <p>{loading ? 'Loading full analytics...' : fetchError || 'Result not available.'}</p>
+          <h2>{t('examResult.title')}</h2>
+          <p>{loading ? t('examResult.loadingAnalytics') : fetchError || t('examResult.notAvailable')}</p>
           <div className="exam-action-row">
             <button className="outline-btn" onClick={() => navigate('/exam-simulation')}>
-              Back to Simulation
+              {t('examResult.backToSimulation')}
             </button>
           </div>
         </section>
@@ -101,7 +108,7 @@ const ExamSimulationResultPage = () => {
     try {
       await downloadExamReport(sessionId);
     } catch (error) {
-      toast?.showToast?.(error.message || 'Unable to generate the exam report. Please try again.', { type: 'error' });
+      toast?.showToast?.(translateServerError(t, error.message, 'examResult.reportFailed'), { type: 'error' });
     } finally {
       setDownloadingReport(false);
     }
@@ -113,7 +120,7 @@ const ExamSimulationResultPage = () => {
     try {
       await downloadExamCertificate(sessionId);
     } catch (error) {
-      toast?.showToast?.(error.message || 'Unable to generate the certificate. Please try again.', { type: 'error' });
+      toast?.showToast?.(translateServerError(t, error.message, 'examResult.certificateFailed'), { type: 'error' });
     } finally {
       setDownloadingCertificate(false);
     }
@@ -122,45 +129,45 @@ const ExamSimulationResultPage = () => {
   return (
     <div className="page-grid">
       <section className="panel">
-        <h2>Exam Result</h2>
-        <p>Your simulation is complete. Review your performance summary below.</p>
+        <h2>{t('examResult.title')}</h2>
+        <p>{t('examResult.complete')}</p>
       </section>
 
       <section className="panel">
-        <h3>Post-Test Result</h3>
+        <h3>{t('examResult.postTest')}</h3>
         <div className="exam-score-grid">
           <div className="score-box">
-            <span>Total Score</span>
+            <span>{t('examResult.totalScore')}</span>
             <strong>{result.scoreSummary.totalScore} / {result.scoreSummary.maxScore}</strong>
           </div>
           <div className="score-box">
-            <span>Accuracy</span>
-            <strong>{examAccuracy.toFixed(1)}%</strong>
+            <span>{t('common.accuracy')}</span>
+            <strong>{formatPercent(examAccuracy.toFixed(1))}</strong>
           </div>
           <div className="score-box">
-            <span>Correct</span>
+            <span>{t('common.correct')}</span>
             <strong>{correct}</strong>
           </div>
           <div className="score-box">
-            <span>Incorrect</span>
+            <span>{t('common.incorrect')}</span>
             <strong>{wrong}</strong>
           </div>
           <div className="score-box">
-            <span>Unanswered</span>
+            <span>{t('examResult.unanswered')}</span>
             <strong>{unattempted}</strong>
           </div>
           {totalTimeSpentSec > 0 && (
             <div className="score-box">
-              <span>Time Taken</span>
-              <strong>{formatDuration(totalTimeSpentSec)}</strong>
+              <span>{t('practice.timeTaken')}</span>
+              <strong>{formatDuration(totalTimeSpentSec, t)}</strong>
             </div>
           )}
           <div className="score-box">
-            <span>Percentile Estimate</span>
-            <strong>{result.scoreSummary.percentileEstimate}%</strong>
+            <span>{t('examResult.percentile')}</span>
+            <strong>{formatPercent(result.scoreSummary.percentileEstimate)}</strong>
           </div>
           <div className="score-box">
-            <span>Estimated Rank Range</span>
+            <span>{t('examResult.rankRange')}</span>
             <strong>
               {result.scoreSummary.rankRange.low} - {result.scoreSummary.rankRange.high}
             </strong>
@@ -169,13 +176,13 @@ const ExamSimulationResultPage = () => {
 
         {!!accuracyPerSubject.length && (
           <div className="exam-interpretation-box">
-            <h4>Performance by Subject</h4>
+            <h4>{t('examResult.bySubject')}</h4>
             <div className="mistake-grid">
               {accuracyPerSubject.map((row) => (
                 <div className="score-box" key={row.subject}>
-                  <span>{row.subject}</span>
-                  <strong>{Number(row.accuracy || 0).toFixed(0)}%</strong>
-                  <small>{row.attempted}/{row.total} attempted</small>
+                  <span>{subjectLabel(t, row.subject)}</span>
+                  <strong>{formatPercent(Number(row.accuracy || 0).toFixed(0))}</strong>
+                  <small>{t('examResult.attemptedOf', { attempted: row.attempted, total: row.total })}</small>
                 </div>
               ))}
             </div>
@@ -183,7 +190,7 @@ const ExamSimulationResultPage = () => {
         )}
 
         <div className="exam-interpretation-box">
-          <h4>Score Interpretation</h4>
+          <h4>{t('examResult.interpretation')}</h4>
           <p>{result.scoreInterpretation?.message}</p>
           <p>{result.scoreInterpretation?.rankMessage}</p>
           <p>{result.scoreInterpretation?.strengthWeaknessMessage}</p>
@@ -193,29 +200,29 @@ const ExamSimulationResultPage = () => {
 
         <div className="exam-result-split">
           <div className="exam-interpretation-box">
-            <h4>Weak Topics</h4>
-            {weakTopics.length === 0 && <p>No major weak topics detected.</p>}
+            <h4>{t('navigation.weakTopics')}</h4>
+            {weakTopics.length === 0 && <p>{t('examResult.noWeak')}</p>}
             {weakTopics.map((item) => (
               <p key={`${item.subject}-${item.concept}`}>
-                {item.subject}: {item.concept}
+                {subjectLabel(t, item.subject)}: {item.concept}
               </p>
             ))}
           </div>
 
           <div className="exam-interpretation-box">
-            <h4>Mistake Patterns</h4>
-            {mistakePatterns.length === 0 && <p>No repeated mistake pattern detected.</p>}
+            <h4>{t('examResult.mistakePatterns')}</h4>
+            {mistakePatterns.length === 0 && <p>{t('examResult.noPattern')}</p>}
             {mistakePatterns.map((item) => (
               <p key={`${item.subject}-${item.concept}-pattern`}>
-                {item.subject} - {item.concept}: {item.count} repeated
+                {t('examResult.repeatedLine', { subject: subjectLabel(t, item.subject), concept: item.concept, count: item.count })}
               </p>
             ))}
           </div>
         </div>
 
         <div className="exam-interpretation-box">
-          <h4>Next Recommended Action</h4>
-          {nextActions.length === 0 && <p>Continue with a balanced timed practice set.</p>}
+          <h4>{t('examResult.nextAction')}</h4>
+          {nextActions.length === 0 && <p>{t('examResult.defaultNext')}</p>}
           {nextActions.map((action, index) => (
             <p key={`${action.type}-${index}`}>
               {action.label}: {action.reason}
@@ -234,12 +241,12 @@ const ExamSimulationResultPage = () => {
               {downloadingReport ? (
                 <>
                   <span className="btn-spinner" aria-hidden="true" />
-                  Generating Report...
+                  {t('examResult.generatingReport')}
                 </>
               ) : (
                 <>
                   <DownloadIcon />
-                  Download Report
+                  {t('examResult.downloadReport')}
                 </>
               )}
             </button>
@@ -254,25 +261,25 @@ const ExamSimulationResultPage = () => {
               {downloadingCertificate ? (
                 <>
                   <span className="btn-spinner" aria-hidden="true" />
-                  Generating Certificate...
+                  {t('examResult.generatingCertificate')}
                 </>
               ) : (
                 <>
                   <CertificateIcon />
-                  Download Certificate
+                  {t('examResult.downloadCertificate')}
                 </>
               )}
             </button>
           )}
           {!!result.postTestAnalysis?.weakSubjects?.length && (            <button className="outline-btn" onClick={goPracticeWeakSubject}>
-              Practice Weak Topics
+              {t('examResult.practiceWeak')}
             </button>
           )}
           <button className="outline-btn" onClick={() => navigate('/exam-simulation')}>
-            Take Another Exam
+            {t('examResult.takeAnother')}
           </button>
           <button className="solid-btn" onClick={() => navigate('/dashboard')}>
-            Back to Dashboard
+            {t('common.backToDashboard')}
           </button>
         </div>
       </section>

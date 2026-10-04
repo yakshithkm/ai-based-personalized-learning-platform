@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Cycles through a few sample "next up" recommendations rather than
 // repeatedly fading the same one — reinforces that this card is a live
 // output of the AI, not static decoration.
 const recommendations = [
-  { subject: 'Organic Chemistry', count: 15 },
-  { subject: 'Coordinate Geometry', count: 12 },
-  { subject: 'Electrostatics', count: 18 },
+  { key: 'organicChemistry', count: 15 },
+  { key: 'coordinateGeometry', count: 12 },
+  { key: 'electrostatics', count: 18 },
 ];
 
 const prefersReducedMotion = () =>
@@ -18,6 +19,7 @@ const CYCLE_MS = 4500;
 const FADE_MS = 450;
 
 const RecommendationCard = () => {
+  const { t } = useTranslation();
   const [index, setIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
 
@@ -44,14 +46,14 @@ const RecommendationCard = () => {
       className={`hero-float-card hero-float-card-4 ${isVisible ? 'is-swap-visible' : 'is-swap-hidden'}`}
       aria-hidden="true"
     >
-      <span className="hero-float-label">Today's recommendation</span>
+      <span className="hero-float-label">{t('home.hero.todaysRecommendation')}</span>
       <span className="hero-float-value">
-        {current.subject}
+        {t(`home.sampleTopics.${current.key}`)}
         <svg className="hero-float-check" viewBox="0 0 20 20" width="13" height="13" aria-hidden="true">
           <path d="M4 10.5l3.5 3.5L16 5" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
-      <span className="hero-float-subvalue">{current.count} questions</span>
+      <span className="hero-float-subvalue">{t('common.questionCount', { count: current.count })}</span>
     </div>
   );
 };

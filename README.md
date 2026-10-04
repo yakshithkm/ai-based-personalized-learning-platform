@@ -1,21 +1,22 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, question content protection, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, a peer referral/invite program, non-blocking transactional security emails, and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, question content protection, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, a peer referral/invite program, non-blocking transactional security emails, multilingual internationalization (English, Kannada, Hindi, Telugu, Tamil, Malayalam) with on-demand font and locale loading, and a dedicated admin portal.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | React 18 + Vite + React Router v6 + Recharts + `@vladmandic/face-api` (on-device TensorFlow.js) |
+| **Frontend** | React 18 + Vite + React Router v6 + Recharts + `@vladmandic/face-api` (on-device TensorFlow.js) + `i18next` + `react-i18next` + Noto Sans Variable Fonts (Devanagari, Kannada, Malayalam, Tamil, Telugu) |
 | **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit + Nodemailer |
-| **AI Tutor** | Google Gemini API (`@google/genai`) — streaming, server-side only |
+| **Multilingual & i18n** | 6 supported languages (`en`, `kn`, `hi`, `te`, `ta`, `ml`) · dynamic on-demand chunk loading · zero-reload in-place switching · user preference persistence · localized date/number/error formatting |
+| **AI Tutor** | Google Gemini API (`@google/genai`) — streaming, server-side only, with multilingual reasoning (6 languages) and scientific/technical notation preservation |
 | **Exam Proctoring & Content Protection** | On-device face presence detection (`@vladmandic/face-api`) + browser focus/visibility monitoring + client-side question anti-copy/anti-leak shield |
 | **Learning Engine** | Deterministic 0–100 ranking engine + prerequisite expansion + before/after effectiveness tracker |
 | **Gamification** | Server-authoritative XP ledger (`GamificationEvent`) + level curve + streak shields + achievement engine + historical backfill |
 | **Referrals & Community** | Server-authoritative referral codes (`User.referralCode`) + unique referral tracking (`Referral`) + dynamic Web Share & clipboard invite links |
 | **Transactional Email** | Nodemailer with non-blocking fire-and-forget SMTP delivery + fail-safe offline degradation |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
-| **Testing** | Jest + Supertest + mongodb-memory-server (backend: 14 test suites) · Vitest + Testing Library (frontend: 18 test files, 81 tests) |
+| **Testing** | Jest + Supertest + mongodb-memory-server (backend: 15 test suites, 125 tests) · Vitest + Testing Library (frontend: 20 test files, 104 tests) |
 | **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs · Idempotent event reporting · Privacy-first local video stream · Question content protection · Non-blocking email boundary |
 
 ---
@@ -23,10 +24,10 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 ## Features
 
 ### Student-Facing
-1. **User Authentication** — Register, login, profile via JWT (Bearer token); supports referral code tracking (`?ref=`) and non-blocking transactional security emails (welcome email on registration and login confirmation with IST timestamp)
+1. **User Authentication** — Register, login, profile via JWT (Bearer token); supports referral code tracking (`?ref=`), preferred UI language selection & persistence (`PATCH /api/auth/preferences`), and non-blocking transactional security emails (welcome email on registration and login confirmation with IST timestamp)
 2. **Question Bank** — Exam-wise (NEET/JEE/CET), subject-topic hierarchical question sets
 3. **Practice Quiz Flow** — Per-question attempt submission with correctness and explanation feedback
-4. **Ask with AI (AI Tutor)** — Streaming Gemini-powered doubt-resolution sidebar on the Practice Page; multi-turn conversation scoped to the currently attempted question
+4. **Ask with AI (AI Tutor)** — Streaming Gemini-powered doubt-resolution sidebar on the Practice Page; multi-turn conversation scoped to the currently attempted question with multilingual response generation (English, Kannada, Hindi, Telugu, Tamil, Malayalam) preserving standard formulas, units, chemical symbols, and code identifiers
 5. **Performance Tracking** — Accuracy, attempt count, and time-per-topic persistence
 6. **Weak Topic Detection** — Threshold-based identification of underperforming topics
 7. **Personalized Recommendations** — ML-driven suggestions with rule-based fallback
@@ -48,7 +49,7 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 18. **Flashcards** — Lightweight review interface
 19. **Session Summary** — Post-practice session breakdown
 20. **Profile Page** — User stats, target exam, account settings, and an **Invite Friends** entry point with referral code display and statistics
-21. **Learn Page** — Personalised learning hub (`/learn`): curated study-material recommendations organised into sections (Weak Areas, Mistake Recovery, Continue Learning, Practice After Learning, Challenges, Explore New); includes a LearnNext hero card, daily plan, and improvement banners
+21. **Learn Page** — Personalised learning hub (`/learn`): curated study-material recommendations organised into sections (Weak Areas, Mistake Recovery, Continue Learning, Practice After Learning, Challenges, Explore New); includes a LearnNext hero card with localized AI rationale rephrasing, daily plan, and improvement banners
 22. **Learning Content Detail** — Individual content page (`/learn/:recommendationId`): start, progress, complete, skip, and feedback lifecycle actions with before/after practice measurement
 23. **Gamification & Engagement Engine** — Server-authoritative motivation architecture:
     - **XP & Dynamic Level Progression**: Non-linear level progression formula (`250 + (level - 1) * 100` incremental XP per level) driven by verified learning actions (practice attempts with difficulty/speed/weak-topic bonuses, completed study content, legitimate exam scores, daily learning activity, and streak days).
@@ -71,17 +72,25 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
     - **Verified Direct Portals**: Links directly to official candidate portals and public notice boards for circulars, admit cards, and application forms without fragile year-specific URLs.
     - **Side-by-Side Comparison Matrix**: Cross-exam comparison table contrasting conducting bodies, purposes, subject combinations, and national vs. state eligibility scopes.
     - **Exam Chooser Guide & FAQ**: Decision frameworks and answers to common queries to help candidates select their target entrance examination based on career pathways.
+27. **Multilingual & Regional Language Support (i18n)** — Full internationalization across the platform:
+    - **6 Supported Languages**: English (`en`), Kannada (`kn` — ಕನ್ನಡ), Hindi (`hi` — हिन्दी), Telugu (`te` — తెలుగు), Tamil (`ta` — தமிழ்), and Malayalam (`ml` — മലയാളം).
+    - **High-Fidelity Native Typography**: Self-hosted Fontsource variable font packages (`@fontsource-variable/noto-sans-*`) for Devanagari, Kannada, Malayalam, Tamil, and Telugu to guarantee crisp, authentic Indic script rendering across desktop and mobile.
+    - **Zero-Reload Dynamic Switching**: Instantaneous in-place UI re-rendering without page refreshes, retaining all form inputs, ongoing quiz attempts, and active routes while synchronizing document attributes (`<html lang="..." dir="ltr">`).
+    - **Optimized Dynamic Chunk Loading**: English translation strings are bundled initially (~57 KB); non-English locale bundles (`kn`, `hi`, `te`, `ta`, `ml`) are lazily loaded on demand via Vite dynamic imports.
+    - **Multi-Tier Preference Resolution**: Prioritizes `localStorage` (`tutormind-language`), authenticated user profile setting (`User.preferredLanguage`), browser language (`navigator.languages`), with robust fallback to English.
+    - **Comprehensive Platform Localization**: Full localization across all 18 student pages, navigation chrome, exam simulation countdowns, proctoring warnings, XP toasts, and translated backend error messages (`serverErrors.js`).
+    - **Accessible Language Selector**: Top navigation and mobile drawer dropdown with native script names, flags, ARIA attributes (`role="listbox"`, `aria-selected`), and full keyboard navigation (ArrowUp/Down, Enter, Escape).
 
 ### Admin Portal
-27. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-28. **Admin Dashboard** — Platform-wide stats overview
-29. **Student Management** — List all students, drill into individual student detail
-30. **Question Bank CRUD** — Create, read, update, and delete questions
-31. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-32. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-33. **Admin Analytics** — Platform-wide analytics section
-34. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
-35. **Product Event Tracking** — Internal telemetry for key user actions
+28. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+29. **Admin Dashboard** — Platform-wide stats overview
+30. **Student Management** — List all students, drill into individual student detail
+31. **Question Bank CRUD** — Create, read, update, and delete questions
+32. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+33. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+34. **Admin Analytics** — Platform-wide analytics section
+35. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`)
+36. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -99,8 +108,8 @@ ai-based-personalized-learning-platform/
 │       │   ├── (19 pages: 18 student/public pages incl. AboutExamPage, LearnPage & LearningContentPage + 1 legacy admin analytics)
 │       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
 │       │   └── __tests__/  # Vitest integration, proctoring, content protection & single-flight suites (14 suites)
-│       ├── components/     # Layout, AdminLayout, ProtectedRoute, AISidebar,
-│       │   │               # AIChatMessage, BrandLogo, EmptyState, Footer,
+│       ├── components/     # Layout, AdminLayout, ProtectedRoute, LanguageSelector,
+│       │   │               # AISidebar, AIChatMessage, BrandLogo, EmptyState, Footer,
 │       │   │               # InviteFriendsModal, PasswordField, ResultIcons
 │       │   ├── exam/       # PresenceToast, ProctorAlerts, ViolationIndicator, WebcamMonitor
 │       │   ├── admin/      # AdminLayout, AdminQuestionFormModal, ConfirmDialog, Pagination
@@ -109,18 +118,21 @@ ai-based-personalized-learning-platform/
 │       │   │               # ContentFeedback, learningUi
 │       │   ├── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
 │       │   │               # FaqAccordion, PriceCounter, Reveal, icons
-│       │   ├── __smoke__/  # Layout and PasswordField smoke tests
-│       │   └── __tests__/  # InviteFriendsModal integration tests
+│       │   ├── __smoke__/  # Layout and PasswordField smoke tests (2 suites)
+│       │   └── __tests__/  # InviteFriendsModal & LanguageSelector integration tests (2 suites)
+│       ├── i18n/           # i18n engine: index.js, languages.js, detect.js, format.js,
+│       │   │               # examMessages.js, proctorMessages.js, serverErrors.js, labels.js,
+│       │   │               # locales/ (en, hi, kn, ml, ta, te), __tests__/i18n.test.jsx
 │       ├── api/            # Axios API clients (client.js, examClient.js,
 │       │                   # examProctoringClient.js, learning.js)
-│       ├── context/        # AuthContext, GamificationContext, ThemeContext (dark-only), ToastContext
+│       ├── context/        # AuthContext, GamificationContext, LanguageContext, ThemeContext (dark-only), ToastContext
 │       ├── hooks/          # useExamViolationMonitor, usePresenceMonitor, useWebcamMonitor,
 │       │                   # useMagneticHover, useScrollReveal
 │       ├── lib/            # faceDetector.js (lazy on-device TensorFlow.js TinyFaceDetector)
 │       ├── styles/         # Style modules:
 │       │   ├── features/   # about-exams.css, admin.css, ai-tutor.css, analytics.css,
 │       │   │               # app-shell.css, dashboard.css, exam.css, gamification.css,
-│       │   │               # landing.css, learning.css, practice.css, profile.css, subpages.css
+│       │   │               # i18n.css, landing.css, learning.css, practice.css, profile.css, subpages.css
 │       │   ├── components.css # Shared components + question content protection styling
 │       │   └── global.css
 │       └── utils/          # Shared utilities, appEvents.js & protectedContent.js
@@ -129,11 +141,11 @@ ai-based-personalized-learning-platform/
 │   │   ├── controllers/    # 19 route handlers (auth, referral, questions, attempts,
 │   │   │                   # analytics, exam, examReport, recommendation,
 │   │   │                   # learningRecommendation, gamification, ai, admin × 8)
-│   │   ├── models/         # 17 Mongoose models — see Database Models (incl. Referral)
+│   │   ├── models/         # 17 Mongoose models — see Database Models (incl. Referral & User.preferredLanguage)
 │   │   ├── routes/         # 10 Express routers (auth, referral, questions, attempts,
 │   │   │                   # analytics, recommendations, exams, gamification, admin, ai)
 │   │   ├── services/       # 17 service modules — see Service Layer
-│   │   │   ├── ai/         # aiService.js, geminiService.js
+│   │   │   ├── ai/         # aiService.js (multilingual directives), geminiService.js
 │   │   │   ├── gamification/ # gamificationService.js, backfillService.js, config.js
 │   │   │   ├── learning/   # index.js + 14 focused modules (ranking, needDetection,
 │   │   │   │               # learnerProfile, lifecycle, practiceSet, dailyPlan,
@@ -142,12 +154,12 @@ ai-based-personalized-learning-platform/
 │   │   │   ├── pdf/        # examCertificatePdf.js, examReportPdf.js, pdfHelpers.js
 │   │   │   └── emailService.js # Nodemailer transactional email delivery
 │   │   ├── middleware/     # authMiddleware, errorMiddleware, validateObjectIdParam
-│   │   ├── config/         # DB connection, examConfig.js, examSubjectMap.js
+│   │   ├── config/         # DB connection, examConfig.js, examSubjectMap.js, languages.js
 │   │   ├── assets/         # Static backend assets
 │   │   ├── data/           # Seed/reference data
 │   │   └── utils/          # adminBootstrap, generateCertificateId, generateReferralCode,
 │   │                       # generateToken, isValidObjectId
-│   ├── tests/              # Jest + Supertest test suites (14 test suites)
+│   ├── tests/              # Jest + Supertest test suites (15 test suites, 125 tests)
 │   ├── seedQuestions.js    # Question bank seed script
 │   ├── seedDemo.js         # Demo user + data seed script
 │   ├── seedAdmin.js        # Admin user seed script
@@ -328,9 +340,10 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 ### Auth (`/api/auth`)
 | Method | Path | Description |
 |---|---|---|
-| `POST` | `/register` | Create account; accepts optional `ref` referral code. Asynchronously dispatches welcome email if SMTP is configured. |
+| `POST` | `/register` | Create account; accepts optional `ref` referral code and initial `language` preference (`en`, `kn`, `hi`, `te`, `ta`, `ml`). Asynchronously dispatches welcome email if SMTP is configured. |
 | `POST` | `/login` | Authenticate, receive JWT. Lazily backfills referral code if absent. Asynchronously dispatches login security confirmation email with IST timestamp. |
-| `GET` | `/profile` | Get current user profile (protected) |
+| `GET` | `/profile` | Get current user profile including `preferredLanguage` (protected) |
+| `PATCH` | `/preferences` | Update account preferences (sets `preferredLanguage` to one of `en`, `kn`, `hi`, `te`, `ta`, `ml`). Protected. |
 
 ### Referrals (`/api/referrals`)
 | Method | Path | Description |
@@ -359,8 +372,8 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 |---|---|---|
 | `GET` | `/me` | ML-backed personalized topic recommendations (`?include=learning` additionally returns the learning-content bundle) |
 | `GET` | `/focus-session` | Returns a focused practice set for the current session |
-| `GET` | `/learning` | Full learning-content recommendation bundle (sections, learnNext, dailyPlan) |
-| `GET` | `/learn-next` | Top single learning-content recommendation |
+| `GET` | `/learning` | Full learning-content recommendation bundle (sections, learnNext, dailyPlan). Resolves request language (`?language=` query or `Accept-Language` header) for localized AI-polished rationale. |
+| `GET` | `/learn-next` | Top single learning-content recommendation (with localized AI explanation if enabled) |
 | `GET` | `/weak-areas` | Learning content targeting weak topics |
 | `GET` | `/mistake-recovery` | Learning content for repeatedly missed concepts |
 | `GET` | `/challenges` | Advanced content for mastered topics |
@@ -386,7 +399,7 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 ### AI Tutor (`/api/ai`)
 | Method | Path | Description |
 |---|---|---|
-| `POST` | `/explain` | Streams a Gemini-powered doubt-resolution reply (SSE) for the currently attempted question. Protected. Rate-limited to 40 req / 15 min. |
+| `POST` | `/explain` | Streams a Gemini-powered doubt-resolution reply (SSE) for the currently attempted question in the student's chosen language (`language`: `en`, `kn`, `hi`, `te`, `ta`, `ml`), preserving scientific formulas, chemical notations, units, and code identifiers in standard notation. Protected. Rate-limited to 40 req / 15 min. |
 
 ### Exam Simulation (`/api/exams`)
 | Method | Path | Description |
@@ -547,7 +560,7 @@ TutorMind provides a built-in peer invite program to encourage collaborative exa
 
 | Model | Purpose |
 |---|---|
-| `User` | Account, role (`user`/`admin`), target exam, unique auto-generated `referralCode` |
+| `User` | Account, role (`user`/`admin`), target exam, unique auto-generated `referralCode`, `preferredLanguage` (`en`, `kn`, `hi`, `te`, `ta`, `ml`) |
 | `Referral` | Tracks successful referred registrations (`referrer`, unique `referredUser`, `referralCode`) |
 | `Question` | Question bank — exam, subject, topic, options, answer, explanation |
 | `Attempt` | Individual practice attempt record |
@@ -585,9 +598,9 @@ TutorMind provides a built-in peer invite program to encourage collaborative exa
 | `productSignalsService` | Aggregated product signal computation |
 | `examDownloadService` | PDF report and certificate generation (PDFKit) |
 | `mlClient` | HTTP client for the Flask ML microservice |
-| `aiService` | Streaming doubt-resolution chat orchestration (question context + conversation history) |
+| `aiService` | Streaming doubt-resolution chat orchestration (question context + conversation history + multilingual language directives) |
 | `geminiService` | Low-level Google Gemini API client — SSE streaming, error translation, quota handling |
-| `learning/` (15 modules) | Learning-content recommendation engine: need detection, learner profiling, candidate retrieval & ranking, prerequisite expansion, lifecycle management, practice sets, daily plans, effectiveness tracking, AI explainer, and serialization |
+| `learning/` (15 modules) | Learning-content recommendation engine: need detection, learner profiling, candidate retrieval & ranking, prerequisite expansion, lifecycle management, practice sets, daily plans, effectiveness tracking, multilingual AI explainer, and serialization |
 
 ---
 
@@ -615,6 +628,7 @@ npm run test:backend
 | `intelligence.adversarial.test.js` | Adversarial / edge-case scenarios |
 | `gamification.test.js` | XP calculation, speed & difficulty bonuses, anti-farming deduplication, level curve progression, and achievement unlocks |
 | `gamification.backfill.test.js` | Historical streak reconstruction, multi-source backfill, and idempotency guarantees |
+| `language.test.js` | Language configuration normalization, request language resolution, AI language directive construction, and preferred language profile persistence (`PATCH /api/auth/preferences`) |
 | `learning.engine.test.js` | Learning-content recommendation engine (ranking, need detection, lifecycle) |
 | `learning.api.test.js` | Learning recommendation REST API integration |
 | `referral.test.js` | Referral code generation, invite-based registration, self-referral prevention, and referral summary endpoints |
@@ -628,9 +642,11 @@ npm --prefix frontend run test
 npm --prefix frontend run test:watch
 ```
 
-Comprehensive test coverage across 18 test files (81 passing tests):
+Comprehensive test coverage across 20 test files (104 passing tests):
 - `ExamSimulationPage.contentProtection.test.jsx` & `PracticePage.contentProtection.test.jsx` — Question text and option selection restrictions, copy/cut/drag blocking, and context menu suppression
 - `ProfilePage.inviteFriends.test.jsx` & `InviteFriendsModal.test.jsx` — Invite modal rendering, referral code loading, link copying, Web Share API, mailto composition, and live signup counters
+- `LanguageSelector.test.jsx` — Dropdown rendering, native language labels, route and input state retention during switches, localStorage persistence, and keyboard accessibility (Arrow keys, Enter, Escape)
+- `i18n.test.jsx` — Language configuration, translation key parity across all 6 locales (en, kn, hi, te, ta, ml), placeholder consistency, zero-reload switching, fallback hierarchy, and server error translation
 - `RegisterPage.referral.test.jsx` — Referral code prefill via `?ref=` query parameter and submission with registration payload
 - `ExamSimulationPage.proctoring.test.jsx` — Focus violations, blur grace confirmation, tab hidden detection, on-device presence detection, auto-submission flows, and duplicate prevention
 - `ExamSimulationPage.singleFlight.test.jsx` & `ExamSimulationPage.singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
@@ -652,6 +668,15 @@ Comprehensive test coverage across 18 test files (81 passing tests):
 
 ## Notes
 
+- **Multilingual & Regional Language Architecture (i18n)**:
+  - **Six Supported Languages**: English (`en`), Kannada (`kn` — ಕನ್ನಡ), Hindi (`hi` — हिन्दी), Telugu (`te` — తెలుగు), Tamil (`ta` — தமிழ்), and Malayalam (`ml` — മലയാളം).
+  - **Typography & Fontsource Variable Fonts**: Self-hosted `@fontsource-variable` packages for Devanagari, Kannada, Malayalam, Tamil, and Telugu avoid external CDN requests and render crisp native glyphs across all operating systems without layout shifts or font clipping.
+  - **Dynamic Chunk Splitting**: The English translation dictionary (~57 KB) is included directly in the core bundle. Regional language bundles (`kn`, `hi`, `te`, `ta`, `ml`) are lazily fetched as separate chunks on demand via Vite dynamic imports (`loadAndActivateLanguage`), preserving lean initial bundle sizes.
+  - **Zero-Reload In-Place Re-Rendering**: Language changes trigger immediate React state updates via `react-i18next` without reloading the browser window or clearing in-flight component state. Active form fields, quiz draft answers, and current URL route paths are fully preserved while `<html lang="..." dir="ltr">` attributes are synchronized.
+  - **Preference Resolution & Backend Sync**: Preference selection cascades through `localStorage` (`tutormind-language`) → authenticated user profile setting (`User.preferredLanguage`) → browser headers (`navigator.languages` / `Accept-Language`) → English default. Logged-in users automatically synchronize their choice to the database via `PATCH /api/auth/preferences`.
+  - **Multilingual AI Tutor Prompting**: When querying the AI Tutor in non-English modes, a dedicated language directive is injected into the Gemini system prompt instructing the model to respond entirely in the student's chosen language while maintaining scientific formulas (e.g. $H_2O$, $\Delta H$, $NaCl$), units ($m/s$, $pH$), chemical symbols, and code identifiers in their standard Unicode/Latin form, with Western numerals (0-9).
+  - **Localized Formatting & Error Guarding**: Native `Intl.NumberFormat` and `Intl.DateTimeFormat` handle localized numbers, percentages, and timestamps. Server-side error messages from the backend API are intercepted and translated via `serverErrors.js` to prevent untranslated English error banners from bleeding into regional language sessions.
+  - **Accessible Language Selector**: The `LanguageSelector` dropdown component includes full keyboard support (ArrowUp/ArrowDown navigation, Enter selection, Escape dismissal, auto-focus management) and explicit ARIA semantics (`role="listbox"`, `role="option"`, `aria-selected`, `aria-expanded`).
 - **Question Content Protection & Anti-Leak**:
   - Question text and options on both Practice and Exam Simulation pages are protected using CSS `user-select: none` (`.question-protected-content`) combined with explicit React event blockers (`onCopy`, `onCut`, `onDragStart`, and `onContextMenu`).
   - Protection is strictly scoped to the text content; answer selection buttons, keyboard controls, and layout navigation remain completely interactive and accessible.
@@ -681,3 +706,4 @@ Comprehensive test coverage across 18 test files (81 passing tests):
 - The admin portal has its own separate authentication (`/admin/login`) and layout (`AdminLayout` with sidebar), isolated from the student shell.
 - PDF reports and certificates are generated server-side via PDFKit and streamed directly to the client.
 - The UI is dark-mode only — the entire design (including the landing page) uses a dark glass/aurora aesthetic. `ThemeContext` always applies `data-theme="dark"` and exposes `theme: 'dark'` to consumers.
+
