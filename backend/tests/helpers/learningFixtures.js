@@ -11,7 +11,9 @@ let counter = 0;
 const uid = () => `${Date.now()}_${(counter += 1)}_${Math.random().toString(36).slice(2, 6)}`;
 
 const createUser = (overrides = {}) =>
-  User.create({ name: 'Learner', email: `learner_${uid()}@test.com`, password: 'pass1234', targetExam: 'JEE', ...overrides });
+  // PREMIUM by default: the learning/gamification suites test engine behaviour, not tier limits
+  // (those live in tier.*.test.js), so they must not trip Free-tier quotas or section caps.
+  User.create({ name: 'Learner', email: `learner_${uid()}@test.com`, password: 'pass1234', targetExam: 'JEE', tier: 'PREMIUM', ...overrides });
 
 const tokenFor = (user) => generateToken(user._id);
 

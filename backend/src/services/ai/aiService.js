@@ -114,7 +114,16 @@ const buildContextBlock = ({ question, userAnswer, wasCorrect }) => {
  * (not just the first) so the model always has authoritative grounding
  * data and nothing can drift onto a different question over a long chat.
  */
-async function* streamDoubtResolutionReply({ question, userAnswer, wasCorrect, history, userMessage, signal, language }) {
+// PREMIUM "advanced tutor" mode: same grounding and safety rules as the standard tutor (it is
+// appended to, never replaces, SYSTEM_INSTRUCTION), but coaches deeper.
+const ADVANCED_TUTOR_DIRECTIVE = `
+
+Advanced tutor mode: after resolving the student's doubt, briefly (1) name the underlying concept
+and how it connects to related ideas, (2) point out the most likely trap for this kind of question,
+and (3) suggest one short follow-up the student could try next. Keep it concise and stay strictly
+within the question being discussed.`;
+
+async function* streamDoubtResolutionReply({ question, userAnswer, wasCorrect, history, userMessage, signal, language, tutorMode = 'standard' }) {
   const contextBlock = buildContextBlock({ question, userAnswer, wasCorrect });
   const latestUserContent = `${contextBlock}\n\nStudent's message: ${userMessage}`;
 
@@ -127,7 +136,7 @@ async function* streamDoubtResolutionReply({ question, userAnswer, wasCorrect, h
   ];
 
   yield* streamReply({
-    systemInstruction: `${SYSTEM_INSTRUCTION}${buildLanguageDirective(language)}`,
+    systemInstruction: `${SYSTEM_INSTRUCTION}${tutorMode === 'advanced' ? ADVANCED_TUTOR_DIRECTIVE : ''}${buildLanguageDirective(language)}`,
     contents,
     signal,
   });

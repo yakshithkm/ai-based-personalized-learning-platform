@@ -94,6 +94,10 @@ const sanitizePayload = (body, { partial = false } = {}) => {
   if (has('learningObjectives')) data.learningObjectives = cleanList(body.learningObjectives, 12, 300);
   if (has('tags')) data.tags = cleanList(body.tags, 20, 50);
   if (has('isActive')) data.isActive = Boolean(body.isActive);
+  if (has('accessTier')) {
+    if (!['FREE', 'PRO', 'PREMIUM'].includes(body.accessTier)) return { error: 'accessTier must be FREE, PRO or PREMIUM' };
+    data.accessTier = body.accessTier;
+  }
 
   return { data };
 };
@@ -182,6 +186,7 @@ const listContent = async (req, res, next) => {
       items: rows.map((row) => ({
         ...serializeContent(row),
         isActive: row.isActive,
+        accessTier: row.accessTier || 'FREE',
         qualityScore: row.qualityScore,
         popularityScore: row.popularityScore,
         prerequisites: row.prerequisites || [],
@@ -206,6 +211,7 @@ const getContent = async (req, res, next) => {
     return res.json({
       ...serializeContent(content, { includeBody: true }),
       isActive: content.isActive,
+      accessTier: content.accessTier || 'FREE',
       qualityScore: content.qualityScore,
       popularityScore: content.popularityScore,
       prerequisites: content.prerequisites || [],

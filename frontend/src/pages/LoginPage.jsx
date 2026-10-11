@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '../components/LanguageSelector';
 import { translateServerError } from '../i18n/serverErrors';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
 import PasswordField from '../components/PasswordField';
+import TierBadge from '../components/tier/TierBadge';
+import { TIER_DEMO_ACCOUNTS } from '../components/tier/demoAccounts';
+import { getPostAuthPath, normalizePlan, withPlan } from '../utils/planSelection';
 import { BrainIcon, SearchIcon, ChartIcon, ClockIcon, ArrowLeftIcon } from '../components/landing/icons';
 
 const DEMO_ACCOUNTS = [
@@ -25,6 +28,9 @@ const LoginPage = () => {
   const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  // Plan chosen on the pricing section (?plan=PRO). Validated here; the server never trusts it.
+  const selectedPlan = normalizePlan(searchParams.get('plan'));
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -38,6 +44,20 @@ const LoginPage = () => {
     setForm({ email: account.email, password: account.password });
   };
 
+  const signInAsTierDemo = async (account) => {
+    setError('');
+    setBusy(true);
+    setForm({ email: account.email, password: account.password });
+    try {
+      await login({ email: account.email, password: account.password });
+      navigate('/dashboard');
+    } catch (err) {
+      setError(translateServerError(t, err?.response?.data?.message, 'auth.loginFailed'));
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     setError('');
@@ -45,7 +65,7 @@ const LoginPage = () => {
 
     try {
       await login(form);
-      navigate('/dashboard');
+      navigate(getPostAuthPath(selectedPlan));
     } catch (err) {
       setError(translateServerError(t, err?.response?.data?.message, 'auth.loginFailed'));
     } finally {
@@ -123,7 +143,7 @@ const LoginPage = () => {
             </button>
 
             <small>
-              {t('auth.newToTutorMind')} <Link to="/register">{t('auth.createAccountLink')}</Link>
+              {t('auth.newToTutorMind')} <Link to={withPlan('/register', selectedPlan)}>{t('auth.createAccountLink')}</Link>
             </small>
           </form>
 
@@ -144,6 +164,26 @@ const LoginPage = () => {
                     {t(account.labelKey, { exam: account.tag })}
                   </button>
                 </div>
+              ))}
+            </div>
+
+          </div>
+
+          <div className="auth-demo-section auth-demo-section-tier">
+            <div className="auth-demo-title">{t('tier.demo.heading')}</div>
+            <div className="auth-tier-demo-grid">
+              {TIER_DEMO_ACCOUNTS.map((account) => (
+                <button
+                  type="button"
+                  key={account.email}
+                  className="auth-tier-demo-btn"
+                  data-tier={account.tier}
+                  disabled={busy}
+                  onClick={() => signInAsTierDemo(account)}
+                >
+                  <span>{t(account.labelKey)}</span>
+                  <TierBadge tier={account.tier} demo size="sm" />
+                </button>
               ))}
             </div>
           </div>

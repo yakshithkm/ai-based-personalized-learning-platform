@@ -20,6 +20,7 @@ import { translateServerError } from '../i18n/serverErrors';
 import { useLocaleFormat } from '../i18n/format';
 import { subjectLabel } from '../i18n/labels';
 import { subjectColor, subjectIconPath } from '../utils/subjectVisuals';
+import UsageMeters from '../components/tier/UsageMeters';
 
 const chartTooltipStyle = {
   backgroundColor: '#111827',
@@ -286,6 +287,8 @@ const DashboardPage = () => {
         <h1>{t('dashboard.greeting', { greeting: greetingWord, name: firstName })}</h1>
         <p>{t('dashboard.continueJourney')}</p>
       </section>
+
+      <UsageMeters />
 
       <section className="dash-metric-row">
         <article className="dash-card metric-card-v2">

@@ -68,6 +68,9 @@ const learningContentSchema = new mongoose.Schema(
     popularityScore: { type: Number, default: 0, min: 0, max: 100 },
 
     isActive: { type: Boolean, default: true },
+    // Lowest subscription tier that may see this resource (FREE = everyone). Resources above a
+    // user's tier are excluded from recommendations and refused when opened directly.
+    accessTier: { type: String, enum: ['FREE', 'PRO', 'PREMIUM'], default: 'FREE' },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     metadata: { type: mongoose.Schema.Types.Mixed, default: {} },
   },

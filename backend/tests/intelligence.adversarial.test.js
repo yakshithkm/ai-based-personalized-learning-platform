@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const request = require('supertest');
 
 const app = require('../src/app');
+const User = require('../src/models/User');
 const Attempt = require('../src/models/Attempt');
 const Mistake = require('../src/models/Mistake');
 const Question = require('../src/models/Question');
@@ -88,6 +89,9 @@ const registerUser = async ({
     password,
     targetExam,
   });
+  // These suites exercise the intelligence engine (many attempts, full recommendations), not tier
+  // quotas - those are covered in tier.*.test.js - so their users run as PREMIUM.
+  await User.updateOne({ email }, { $set: { tier: 'PREMIUM' } });
 
   return {
     token: res.body.token,

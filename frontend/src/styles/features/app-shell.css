@@ -3,6 +3,10 @@
 /* Keep the sidebar scrollable but hide the scrollbar chrome — the raw
    browser scrollbar looked out of place against the rest of the UI. */
 .sidebar {
+  /* Flex column (was a top-aligned grid) so .sidebar-bottom's margin-top:auto pins the logout
+     button - and the upgrade card, when shown - to the very bottom of the sidebar. */
+  display: flex;
+  flex-direction: column;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* legacy Edge/IE */
 
@@ -22,6 +26,10 @@
   background-repeat: no-repeat;
   background-size: 100% 42px, 100% 42px, 100% 42px, 100% 42px, 100% 100%;
   background-attachment: local, local, scroll, scroll, scroll;
+}
+
+.sidebar > * {
+  flex-shrink: 0;
 }
 
 .sidebar::-webkit-scrollbar {

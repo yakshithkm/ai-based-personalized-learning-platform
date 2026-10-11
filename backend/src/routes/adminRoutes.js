@@ -7,7 +7,7 @@ const {
 } = require('../controllers/analyticsController');
 const { adminLogin, getAdminProfile } = require('../controllers/adminAuthController');
 const { getDashboardStats } = require('../controllers/adminDashboardController');
-const { listStudents, getStudentDetail } = require('../controllers/adminStudentController');
+const { listStudents, getStudentDetail, updateStudentTier } = require('../controllers/adminStudentController');
 const {
 	listQuestions,
 	getQuestion,
@@ -57,6 +57,7 @@ router.delete('/learning-content/:id', validateId, deleteContent);
 // --- Students ---
 router.get('/students', listStudents);
 router.get('/students/:id', validateId, getStudentDetail);
+router.patch('/students/:id/tier', validateId, updateStudentTier);
 
 // --- Question bank ---
 router.get('/questions', listQuestions);

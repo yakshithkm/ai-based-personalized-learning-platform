@@ -10,6 +10,9 @@ const {
   dayKey,
 } = require('../services/eventTrackingService');
 
+const { resolveTierContext } = require('../services/tier/tierService');
+const { describeSubscription } = require('../services/tier/subscriptionService');
+
 const sanitizeUser = (user) => ({
   _id: user._id,
   name: user.name,
@@ -19,6 +22,9 @@ const sanitizeUser = (user) => ({
   isDemo: Boolean(user.isDemo),
   referralCode: user.referralCode,
   preferredLanguage: user.preferredLanguage || null,
+  // Always the server-resolved, effective tier (see tierService.resolveTierContext).
+  tier: resolveTierContext(user).tier,
+  subscription: describeSubscription(user),
 });
 
 const registerUser = async (req, res, next) => {
@@ -165,7 +171,16 @@ const loginUser = async (req, res, next) => {
 };
 
 const getProfile = async (req, res) => {
-  res.json({ user: req.user });
+  const plain = typeof req.user.toObject === 'function' ? req.user.toObject() : req.user;
+  // Provider identifiers are billing internals - never sent to the client.
+  const { subscriptionProvider, subscriptionExternalId, ...safe } = plain;
+  res.json({
+    user: {
+      ...safe,
+      tier: resolveTierContext(req.user).tier,
+      subscription: describeSubscription(req.user),
+    },
+  });
 };
 
 const updatePreferences = async (req, res, next) => {

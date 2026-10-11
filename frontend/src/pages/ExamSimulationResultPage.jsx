@@ -9,6 +9,9 @@ import { downloadExamCertificate, downloadExamReport } from '../api/examClient';
 import { CertificateIcon, DownloadIcon } from '../components/ResultIcons';
 import { useToast } from '../context/ToastContext';
 import { emitAttemptSubmitted } from '../utils/appEvents';
+import { useTier } from '../context/TierContext';
+import { emitTierBlocked, lockedDetail } from '../utils/tierErrors';
+import PremiumBadge from '../components/tier/PremiumBadge';
 
 const formatDuration = (totalSeconds = 0, t) => {
   const seconds = Math.max(0, Math.round(totalSeconds));
@@ -26,6 +29,8 @@ const ExamSimulationResultPage = () => {
   const [result, setResult] = useState(location.state?.result || null);
   const [loading, setLoading] = useState(false);
   const [fetchError, setFetchError] = useState('');
+  const { tier, can } = useTier();
+  const canDownloadReports = can('DETAILED_EXAM_REPORT');
   const [downloadingReport, setDownloadingReport] = useState(false);
   const [downloadingCertificate, setDownloadingCertificate] = useState(false);
   // The result summary itself carries the session id it was generated for, so once a
@@ -104,6 +109,12 @@ const ExamSimulationResultPage = () => {
 
   const handleDownloadReport = async () => {
     if (!sessionId || downloadingReport) return;
+    // Detailed reports are a Pro feature. The endpoint is refused server-side regardless; this just
+    // shows the upgrade dialog instead of firing a request that is known to fail.
+    if (!canDownloadReports) {
+      emitTierBlocked(lockedDetail('DETAILED_EXAM_REPORT', 'PRO', tier));
+      return;
+    }
     setDownloadingReport(true);
     try {
       await downloadExamReport(sessionId);
@@ -116,6 +127,10 @@ const ExamSimulationResultPage = () => {
 
   const handleDownloadCertificate = async () => {
     if (!sessionId || downloadingCertificate) return;
+    if (!canDownloadReports) {
+      emitTierBlocked(lockedDetail('DETAILED_EXAM_REPORT', 'PRO', tier));
+      return;
+    }
     setDownloadingCertificate(true);
     try {
       await downloadExamCertificate(sessionId);
@@ -247,6 +262,7 @@ const ExamSimulationResultPage = () => {
                 <>
                   <DownloadIcon />
                   {t('examResult.downloadReport')}
+                  {!canDownloadReports && <PremiumBadge tier="PRO" />}
                 </>
               )}
             </button>
@@ -267,6 +283,7 @@ const ExamSimulationResultPage = () => {
                 <>
                   <CertificateIcon />
                   {t('examResult.downloadCertificate')}
+                  {!canDownloadReports && <PremiumBadge tier="PRO" />}
                 </>
               )}
             </button>

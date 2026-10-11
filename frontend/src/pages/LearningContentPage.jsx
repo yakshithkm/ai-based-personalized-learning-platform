@@ -1,3 +1,5 @@
+import UpgradePrompt from '../components/tier/UpgradePrompt';
+import { isTierError } from '../utils/tierErrors';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -61,6 +63,9 @@ const LearningContentPage = () => {
             status: err?.response?.status,
             message: err?.response?.data?.message,
             fallbackKey: 'learn.content.openFailed',
+            // Premium resource reached directly (e.g. a guessed id / bookmarked link): the server
+            // refused it, so show what unlocks it.
+            tier: isTierError(err?.response?.data) ? err.response.data : null,
           });
         }
       }
@@ -143,6 +148,19 @@ const LearningContentPage = () => {
     }
     navigate('/learn');
   };
+
+  if (error && !error.soft && error.tier) {
+    return (
+      <div className="page-grid">
+        <UpgradePrompt
+          requiredTier={error.tier.requiredTier || 'PREMIUM'}
+          currentTier={error.tier.currentTier}
+          expired={error.tier.code === 'SUBSCRIPTION_EXPIRED'}
+        />
+        <Link className="outline-btn" to="/learn">{t('learn.content.backToLearn')}</Link>
+      </div>
+    );
+  }
 
   if (error && !error.soft) {
     return (

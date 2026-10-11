@@ -57,6 +57,27 @@ const AdminStudentDetailPage = () => {
         </div>
       </header>
 
+      <section className="panel admin-panel">
+        <h3>Subscription &amp; usage</h3>
+        <p>
+          Plan: <strong>{student.tier}</strong>
+          {student.effectiveTier !== student.tier && <> (effective: {student.effectiveTier})</>}
+          {' · '}Status: {student.subscriptionStatus}
+          {student.subscriptionEndDate && <> · Ends {new Date(student.subscriptionEndDate).toLocaleDateString()}</>}
+          {student.isDemo && <> · Demo account (fixed plan)</>}
+        </p>
+        {data.usage && (
+          <ul>
+            {Object.entries(data.usage).map(([key, row]) => (
+              <li key={key}>
+                {key}: {row.used}
+                {row.unlimited ? ' (no plan limit)' : ` / ${row.limit}`} ({row.period === 'month' ? 'this month' : 'today'})
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
       <section className="admin-stats-grid">
         <article className="metric-card metric-neutral admin-stat-card">
           <h4>Overall Accuracy</h4>

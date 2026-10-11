@@ -1323,6 +1323,23 @@
   color: #4ade80;
 }
 
+/* Pricing: "your plan" marker + disabled (current-plan) button. Visual design is otherwise unchanged. */
+.pricing-current-tag {
+  align-self: flex-start;
+  margin: 0 0 0.55rem;
+  font-size: 0.68rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(74, 222, 128, 0.45);
+  background: rgba(74, 222, 128, 0.08);
+  color: #4ade80;
+}
+
+.pricing-card button:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
 /* ---- FAQ ---- */
 .faq-wrap {
   max-width: 760px;

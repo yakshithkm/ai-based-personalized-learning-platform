@@ -8,6 +8,8 @@ const AdminStudentsPage = () => {
   const [pagination, setPagination] = useState({ total: 0, page: 1, totalPages: 1 });
   const [search, setSearch] = useState('');
   const [targetExam, setTargetExam] = useState('');
+  const [tierFilter, setTierFilter] = useState('');
+  const [savingTier, setSavingTier] = useState('');
   const [sortBy, setSortBy] = useState('registeredAt');
   const [order, setOrder] = useState('desc');
   const [page, setPage] = useState(1);
@@ -21,7 +23,7 @@ const AdminStudentsPage = () => {
       setError('');
       try {
         const { data } = await api.get('/admin/students', {
-          params: { search, targetExam, sortBy, order, page, pageSize: 20 },
+          params: { search, targetExam, tier: tierFilter, sortBy, order, page, pageSize: 20 },
         });
         if (!cancelled) {
           setStudents(data.students);
@@ -38,7 +40,23 @@ const AdminStudentsPage = () => {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [search, targetExam, sortBy, order, page]);
+  }, [search, targetExam, tierFilter, sortBy, order, page]);
+
+  // Admin-only endpoint (PATCH /admin/students/:id/tier). The server validates the tier, refuses
+  // admin targets and demo accounts, and is the only place a tier can change.
+  const changeTier = async (student, tier) => {
+    if (tier === student.tier) return;
+    setSavingTier(student._id);
+    setError('');
+    try {
+      const { data } = await api.patch(`/admin/students/${student._id}/tier`, { tier });
+      setStudents((prev) => prev.map((row) => (row._id === student._id ? { ...row, ...data.student } : row)));
+    } catch (err) {
+      setError(err?.response?.data?.message || 'Failed to change plan');
+    } finally {
+      setSavingTier('');
+    }
+  };
 
   const toggleSort = (field) => {
     if (sortBy === field) {
@@ -83,6 +101,19 @@ const AdminStudentsPage = () => {
           <option value="JEE">JEE</option>
           <option value="CET">CET</option>
         </select>
+        <select
+          className="admin-select"
+          value={tierFilter}
+          onChange={(e) => {
+            setTierFilter(e.target.value);
+            setPage(1);
+          }}
+        >
+          <option value="">All plans</option>
+          <option value="FREE">FREE</option>
+          <option value="PRO">PRO</option>
+          <option value="PREMIUM">PREMIUM</option>
+        </select>
       </div>
 
       {error && <div className="admin-page-error">{error}</div>}
@@ -99,6 +130,7 @@ const AdminStudentsPage = () => {
                   Email {sortBy === 'email' && (order === 'asc' ? '↑' : '↓')}
                 </th>
                 <th>Exam</th>
+                <th>Plan</th>
                 <th onClick={() => toggleSort('registeredAt')} className="admin-sortable">
                   Registered {sortBy === 'registeredAt' && (order === 'asc' ? '↑' : '↓')}
                 </th>
@@ -118,14 +150,14 @@ const AdminStudentsPage = () => {
             <tbody>
               {loading && (
                 <tr>
-                  <td colSpan={9} className="admin-table-loading">
+                  <td colSpan={10} className="admin-table-loading">
                     Loading students...
                   </td>
                 </tr>
               )}
               {!loading && students.length === 0 && (
                 <tr>
-                  <td colSpan={9} className="admin-table-empty">
+                  <td colSpan={10} className="admin-table-empty">
                     No students match your filters.
                   </td>
                 </tr>
@@ -136,6 +168,29 @@ const AdminStudentsPage = () => {
                     <td>{student.name}</td>
                     <td>{student.email}</td>
                     <td>{student.targetExam}</td>
+                    <td>
+                      {/* Demo accounts are locked server-side (409); the control is disabled to match. */}
+                      <select
+                        className="admin-tier-select"
+                        value={student.tier}
+                        disabled={student.isDemo || savingTier === student._id}
+                        title={
+                          student.isDemo
+                            ? 'Demo accounts have a fixed plan'
+                            : student.tier === 'FREE'
+                              ? 'Free plan (no paid subscription)'
+                              : `Subscription: ${student.subscriptionStatus}`
+                        }
+                        onChange={(e) => changeTier(student, e.target.value)}
+                      >
+                        <option value="FREE">FREE</option>
+                        <option value="PRO">PRO</option>
+                        <option value="PREMIUM">PREMIUM</option>
+                      </select>
+                      {student.subscriptionStatus !== 'ACTIVE' && (
+                        <span className="admin-badge-pill admin-badge-neutral" style={{ marginLeft: 6 }}>{student.subscriptionStatus}</span>
+                      )}
+                    </td>
                     <td>{new Date(student.registeredAt).toLocaleDateString()}</td>
                     <td>{student.overallAccuracy}%</td>
                     <td>{student.currentStreak}</td>

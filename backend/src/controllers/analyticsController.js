@@ -1,4 +1,5 @@
 const { getAdaptiveAnalytics } = require('../services/analyticsService');
+const { shapeAnalyticsForTier } = require('../services/tier/analyticsShaper');
 const Question = require('../models/Question');
 const { EXAM_SUBJECT_MAP } = require('../config/examSubjectMap');
 const {
@@ -9,7 +10,7 @@ const {
 const getMyAnalytics = async (req, res, next) => {
   try {
     const analytics = await getAdaptiveAnalytics(req.user._id, req.user.targetExam);
-    return res.json(analytics);
+    return res.json(shapeAnalyticsForTier(analytics, req.tierContext.tier));
   } catch (error) {
     return next(error);
   }

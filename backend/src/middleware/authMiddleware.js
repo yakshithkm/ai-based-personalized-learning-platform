@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const { resolveTierContext } = require('../services/tier/tierService');
 
 const protect = async (req, res, next) => {
   try {
@@ -21,6 +22,9 @@ const protect = async (req, res, next) => {
     }
 
     req.user = user;
+    // Effective tier is derived from the database row on every request (see tierService) -
+    // never from the token or anything else the client controls.
+    req.tierContext = resolveTierContext(user);
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Not authorized, token invalid' });

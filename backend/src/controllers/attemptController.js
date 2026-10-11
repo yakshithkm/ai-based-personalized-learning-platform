@@ -21,6 +21,7 @@ const {
 } = require('../services/progressTracker');
 const { trackProductEvent } = require('../services/eventTrackingService');
 const { processEvent: processGamificationEvent } = require('../services/gamification/gamificationService');
+const { shapeAnalyticsForTier } = require('../services/tier/analyticsShaper');
 
 // Legacy, pre-gamification flat XP estimate. No longer the source of truth
 // for result.xpEarned (see the gamification block below) - kept only as a
@@ -377,7 +378,8 @@ const submitAttempt = async (req, res, next) => {
 const getMyMistakeBank = async (req, res, next) => {
   try {
     const mistakeBank = await getMistakeBankForUser(req.user._id);
-    return res.json(mistakeBank);
+    // Reuse the analytics shaper so the Free-tier mistake-bank cap is defined in exactly one place.
+    return res.json(shapeAnalyticsForTier({ mistakeBank }, req.tierContext.tier).mistakeBank);
   } catch (error) {
     return next(error);
   }

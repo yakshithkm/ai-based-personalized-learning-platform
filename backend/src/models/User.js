@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const generateReferralCode = require('../utils/generateReferralCode');
 const { SUPPORTED_CODES } = require('../config/languages');
+const { TIER_ORDER, DEFAULT_TIER, SUBSCRIPTION_STATUSES } = require('../config/tiers');
 
 const userSchema = new mongoose.Schema(
   {
@@ -35,6 +36,27 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // --- Subscription / access tier --------------------------------------------------------
+    // Never written from request bodies: the only writers are subscriptionService (admin
+    // changes, demo provisioning, and - later - payment webhooks). Documents created before
+    // this feature have no value stored and read back as FREE via the schema default.
+    tier: {
+      type: String,
+      enum: TIER_ORDER,
+      default: DEFAULT_TIER,
+      index: true,
+    },
+    subscriptionStatus: {
+      type: String,
+      enum: Object.values(SUBSCRIPTION_STATUSES),
+      default: SUBSCRIPTION_STATUSES.ACTIVE,
+    },
+    subscriptionStartDate: { type: Date, default: null },
+    // null = does not expire (admin grant / demo account). A payment provider sets this each cycle.
+    subscriptionEndDate: { type: Date, default: null },
+    // Reserved for the payment integration: which provider owns the subscription and its id there.
+    subscriptionProvider: { type: String, default: null, trim: true },
+    subscriptionExternalId: { type: String, default: null, trim: true },
     // Stable, auto-generated invite code for the "Invite Friends" feature (see
     // referralController.js / Referral model). Sparse+unique so existing users
     // predating this feature don't collide on a shared `null` before they get

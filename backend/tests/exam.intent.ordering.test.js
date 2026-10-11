@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../src/app');
+const User = require('../src/models/User');
 const Question = require('../src/models/Question');
 const ExamSession = require('../src/models/ExamSession');
 
@@ -52,6 +53,8 @@ const registerAndLogin = async ({ targetExam = 'JEE', email }) => {
 
   const registerRes = await request(app).post('/api/auth/register').send(payload);
   expect(registerRes.status).toBe(201);
+  // Exam suites test exam behaviour, not tier quotas (see tier.*.test.js): run them as PREMIUM.
+  await User.updateOne({ email: payload.email }, { $set: { tier: 'PREMIUM' } });
   return registerRes.body.token;
 };
 

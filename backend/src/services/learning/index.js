@@ -67,7 +67,7 @@ const SECTION_LIMITS = { weakAreas: 4, mistakeRecovery: 4, challenges: 3, explor
 // --- candidate retrieval ---------------------------------------------------------------------
 // One indexed query for every (subject, topic) the student has a need in; body text is
 // excluded from list queries (it is only served when a resource is opened).
-const retrieveContents = async (examType, needs) => {
+const retrieveContents = async (examType, needs, accessTiers = null) => {
   const seen = new Set();
   const pairs = [];
   needs.forEach((need) => {
@@ -79,7 +79,15 @@ const retrieveContents = async (examType, needs) => {
   if (!pairs.length) return [];
   return LearningContent.find({
     isActive: true,
-    $and: [{ $or: pairs }, { $or: [{ examTypes: examType }, { examTypes: { $size: 0 } }] }],
+    $and: [
+      { $or: pairs },
+      { $or: [{ examTypes: examType }, { examTypes: { $size: 0 } }] },
+      // Tier gating: only resources the user's tier may open. Documents that predate the
+      // accessTier field count as FREE.
+      ...(accessTiers
+        ? [{ $or: [{ accessTier: { $in: accessTiers } }, { accessTier: { $exists: false } }] }]
+        : []),
+    ],
   })
     .select('-body')
     .limit(400)
@@ -100,12 +108,12 @@ const coldNeed = (row) =>
 
 // Balanced starting path: one high-weightage topic per subject of the target exam, preferring
 // topics that already have introductory study material.
-const buildColdStart = async (profile, user) => {
+const buildColdStart = async (profile, user, accessTiers = null) => {
   const subjects = getAllowedSubjectsForExam(user.targetExam);
   const candidates = subjects.flatMap((subject) =>
     profile.syllabus.filter((s) => s.subject === subject && !isPseudoTopic(s.topic)).slice(0, 3)
   );
-  const contents = await retrieveContents(user.targetExam, candidates.map(coldNeed));
+  const contents = await retrieveContents(user.targetExam, candidates.map(coldNeed), accessTiers);
   const withContent = new Set(contents.map((c) => topicKey(c.subject, c.topic)));
 
   const chosen = subjects
@@ -219,17 +227,17 @@ const getLearningBundle = async (user, options = {}) => {
   let contents;
   let startingPath = null;
   if (mode === 'cold-start') {
-    ({ needs, contents, startingPath } = await buildColdStart(profile, user));
+    ({ needs, contents, startingPath } = await buildColdStart(profile, user, options.accessTiers || null));
   } else {
     needs = detectNeeds(profile);
-    contents = await retrieveContents(user.targetExam, needs);
+    contents = await retrieveContents(user.targetExam, needs, options.accessTiers || null);
     for (let hop = 0; hop < 2; hop += 1) {
       const extra = derivePrerequisiteNeeds({ contents, needs, profile });
       if (!extra.length) break;
       needs = [...needs, ...extra];
       const known = new Set(contents.map((c) => String(c._id)));
       // eslint-disable-next-line no-await-in-loop
-      const more = await retrieveContents(user.targetExam, extra);
+      const more = await retrieveContents(user.targetExam, extra, options.accessTiers || null);
       more.forEach((c) => {
         if (!known.has(String(c._id))) contents.push(c);
       });
@@ -568,7 +576,7 @@ const getLearningBundle = async (user, options = {}) => {
   }
 
   // ---- optional AI polish of the single top explanation (never required, never blocking) ----
-  if (primary && requested.has('learnNext') && (aiEnabled() || options.aiExplainer)) {
+  if (primary && requested.has('learnNext') && options.aiPolish !== false && (aiEnabled() || options.aiExplainer)) {
     try {
       const polish = options.aiExplainer || polishExplanation;
       const better = await polish(primary.reason, { language: options.language });

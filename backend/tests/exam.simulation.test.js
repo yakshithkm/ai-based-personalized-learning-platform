@@ -1,6 +1,7 @@
 const request = require('supertest');
 const http = require('http');
 const app = require('../src/app');
+const User = require('../src/models/User');
 const Question = require('../src/models/Question');
 const ExamAuditLog = require('../src/models/ExamAuditLog');
 
@@ -55,6 +56,8 @@ const registerAndLogin = async ({ targetExam = 'NEET', email = 'examtest@example
   };
 
   const registerRes = await request(app).post('/api/auth/register').send(payload);
+  // Exam suites test exam behaviour, not tier quotas (see tier.*.test.js): run them as PREMIUM.
+  await User.updateOne({ email: payload.email }, { $set: { tier: 'PREMIUM' } });
   return registerRes.body.token;
 };
 

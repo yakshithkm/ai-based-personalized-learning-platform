@@ -6,6 +6,8 @@ const {
 	getHistory,
 } = require('../controllers/gamificationController');
 const { protect } = require('../middleware/authMiddleware');
+const { requireFeature } = require('../middleware/tierMiddleware');
+const { FEATURES } = require('../config/tiers');
 
 const router = express.Router();
 
@@ -15,6 +17,6 @@ const router = express.Router();
 router.get('/summary', protect, getSummary);
 router.get('/profile', protect, getProfile);
 router.get('/achievements', protect, getAchievements);
-router.get('/history', protect, getHistory);
+router.get('/history', protect, requireFeature(FEATURES.ADVANCED_GAMIFICATION), getHistory);
 
 module.exports = router;

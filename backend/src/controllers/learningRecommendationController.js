@@ -7,6 +7,13 @@ const { serializeContent, serializeProgress, serializeRecommendation } = require
 const LearningContent = require('../models/LearningContent');
 const LearningContentProgress = require('../models/LearningContentProgress');
 const { processEvent: processGamificationEvent } = require('../services/gamification/gamificationService');
+const { FEATURES } = require('../config/tiers');
+const { denyFeature, consumeUsageOnce } = require('../middleware/tierMiddleware');
+const {
+  learningOptionsForTier,
+  sectionsForTier,
+  shapeLearningBundleForTier,
+} = require('../services/tier/learningTiering');
 
 // Services signal client errors with HttpError(statusCode); anything else is a real 500.
 const fail = (res, next, error) => {
@@ -22,9 +29,17 @@ const parseMinutes = (value) => {
 // Full bundle: Learn Next + every section + daily plan + measured improvements.
 const getLearning = async (req, res, next) => {
   try {
-    return res.json(
-      await getLearningBundle(req.user, { minutes: parseMinutes(req.query.minutes), language: resolveRequestLanguage(req) })
-    );
+    const { tier } = req.tierContext;
+    // Each Learn-page load is one use of the daily recommendation quota. A burst of duplicate
+    // requests (React StrictMode runs effects twice in dev) is charged once.
+    if (!(await consumeUsageOnce(req, res, 'RECOMMENDATIONS'))) return undefined;
+    const bundle = await getLearningBundle(req.user, {
+      sections: sectionsForTier(tier),
+      minutes: parseMinutes(req.query.minutes),
+      language: resolveRequestLanguage(req),
+      ...learningOptionsForTier(tier),
+    });
+    return res.json(shapeLearningBundleForTier(bundle, tier));
   } catch (error) {
     return fail(res, next, error);
   }
@@ -33,11 +48,20 @@ const getLearning = async (req, res, next) => {
 // Thin, consistently-shaped views over the same engine.
 const sectionEndpoint = (sections, pick) => async (req, res, next) => {
   try {
-    const bundle = await getLearningBundle(req.user, {
-      sections,
-      minutes: parseMinutes(req.query.minutes),
-      language: resolveRequestLanguage(req),
-    });
+    const { tier } = req.tierContext;
+    const allowed = sectionsForTier(tier, sections);
+    // Defence in depth behind the route-level requireFeature: never let an empty list through,
+    // because the engine reads [] as "every section".
+    if (!allowed.length) return denyFeature(req, res, FEATURES.ADVANCED_RECOMMENDATIONS);
+    const bundle = shapeLearningBundleForTier(
+      await getLearningBundle(req.user, {
+        sections: allowed,
+        minutes: parseMinutes(req.query.minutes),
+        language: resolveRequestLanguage(req),
+        ...learningOptionsForTier(tier),
+      }),
+      tier
+    );
     return res.json({
       source: bundle.source,
       mode: bundle.mode,

@@ -272,8 +272,9 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-md, 12px);
   padding: 0.85rem;
-  background: linear-gradient(180deg, var(--surface-0, rgba(15, 23, 42, 0.6)), var(--surface-1, rgba(15, 23, 42, 0.75)));
-  box-shadow: var(--elevation-1, 0 6px 16px rgba(2, 6, 23, 0.3));
+  background: var(--question-card-bg);
+  border-color: var(--question-card-border);
+  box-shadow: var(--question-card-shadow);
 }
 
 .question-transition {

@@ -6,6 +6,7 @@ import { translateServerError } from '../i18n/serverErrors';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
 import PasswordField from '../components/PasswordField';
+import { getPostAuthPath, normalizePlan, withPlan } from '../utils/planSelection';
 import { BrainIcon, SearchIcon, ChartIcon, ClockIcon, ArrowLeftIcon } from '../components/landing/icons';
 
 const FEATURES = [
@@ -24,6 +25,9 @@ const RegisterPage = () => {
   // form and sent to the backend on submit. The backend re-validates it
   // against the database - this is only ever used to prefill the request.
   const referralCode = (searchParams.get('ref') || '').trim();
+  // Plan chosen on the pricing section (?plan=PRO). It only decides where to land after sign-up;
+  // it is not sent to the API - every new account starts on FREE regardless.
+  const selectedPlan = normalizePlan(searchParams.get('plan'));
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -44,7 +48,7 @@ const RegisterPage = () => {
 
     try {
       await register({ ...form, ...(referralCode ? { ref: referralCode } : {}), language: i18n.language });
-      navigate('/dashboard');
+      navigate(getPostAuthPath(selectedPlan));
     } catch (err) {
       setError(translateServerError(t, err?.response?.data?.message, 'auth.registerFailed'));
     } finally {
@@ -146,7 +150,7 @@ const RegisterPage = () => {
             </button>
 
             <small>
-              {t('auth.alreadyHaveAccount')} <Link to="/login">{t('auth.login')}</Link>
+              {t('auth.alreadyHaveAccount')} <Link to={withPlan('/login', selectedPlan)}>{t('auth.login')}</Link>
             </small>
           </form>
         </div>

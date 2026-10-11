@@ -6,6 +6,7 @@ import { translateServerError } from '../i18n/serverErrors';
 import { difficultyLabel, subjectLabel } from '../i18n/labels';
 import { useLocaleFormat } from '../i18n/format';
 import api, { API_BASE_URL } from '../api/client';
+import { isTierError, emitTierBlocked } from '../utils/tierErrors';
 import { trackProductEvent } from '../utils/productEvents';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -442,6 +443,8 @@ const PracticePage = () => {
         try {
           const data = await response.json();
           message = data?.message || message;
+          // Plan / quota refusal (403 / 429): same app-wide upgrade dialog as every other request.
+          if (isTierError(data)) emitTierBlocked(data);
         } catch {
           // Body wasn't JSON (or was already consumed) - keep the fallback.
         }
@@ -797,7 +800,7 @@ const PracticePage = () => {
             <div className="option-list">
               {question.options.map((option, idx) => (
                 <button
-                  key={option}
+                  key={`${idx}-${option}`}
                   className={`option-btn ${selectedAnswer === idx ? 'selected' : ''} ${
                     result && idx === result.correctAnswerIndex ? 'correct' : ''
                   } ${result && selectedAnswer === idx && !result.isCorrect ? 'wrong' : ''}`}

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useGamification } from '../context/GamificationContext';
 import api from '../api/client';
@@ -8,6 +8,9 @@ import { onAttemptSubmitted } from '../utils/appEvents';
 import BrandLogo from './BrandLogo';
 import Footer from './Footer';
 import LanguageSelector from './LanguageSelector';
+import { useTier } from '../context/TierContext';
+import TierBadge from './tier/TierBadge';
+import TierBlockedModal from './tier/TierBlockedModal';
 
 const menuItems = [
   {
@@ -170,6 +173,7 @@ const toneToClass = (tone) => {
 const Layout = ({ children }) => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
+  const { tier, isDemo } = useTier();
   const { gamification } = useGamification();
   const navigate = useNavigate();
   const location = useLocation();
@@ -418,15 +422,18 @@ const Layout = ({ children }) => {
         </nav>
 
         <div className="sidebar-bottom">
-          <div className="upgrade-card">
-            <span className="upgrade-card-icon"><CrownIcon /></span>
-            <strong>{t('layout.upgradeTitle')}</strong>
-            <p>{t('layout.upgradeText')}</p>
-            <a className="solid-btn upgrade-cta" href="/#pricing-section">
-              {t('layout.upgradeCta')}
-              <ChevronIcon />
-            </a>
-          </div>
+          {/* Upgrade promo is only for FREE accounts; PRO / PREMIUM (and demo) users already have a paid plan. */}
+          {tier === 'FREE' && (
+            <div className="upgrade-card">
+              <span className="upgrade-card-icon"><CrownIcon /></span>
+              <strong>{t('layout.upgradeTitle')}</strong>
+              <p>{t('layout.upgradeText')}</p>
+              <Link className="solid-btn upgrade-cta" to="/plans?plan=PRO" onClick={() => setSidebarOpen(false)}>
+                {t('layout.upgradeCta')}
+                <ChevronIcon />
+              </Link>
+            </div>
+          )}
 
           <button className="outline-btn sidebar-logout" onClick={onLogout}>
             {t('common.logout')}
@@ -513,6 +520,12 @@ const Layout = ({ children }) => {
 
         <div className="header-actions">
           <LanguageSelector variant="compact" />
+
+          {tier && (
+            <Link to="/plans" className="header-tier-link" title={t('tier.plans.title')}>
+              <TierBadge tier={tier} demo={isDemo} size="sm" />
+            </Link>
+          )}
 
           {/* Deliberately still the legacy analytics-derived streak (not
               gamification.profile.currentStreak) so this pill always agrees
@@ -616,6 +629,16 @@ const Layout = ({ children }) => {
                 >
                   {t('navigation.dashboard')}
                 </button>
+                <button
+                  type="button"
+                  className="header-dropdown-item"
+                  onClick={() => {
+                    setProfileOpen(false);
+                    navigate('/plans');
+                  }}
+                >
+                  {t('tier.plans.title')}
+                </button>
                 <button type="button" className="header-dropdown-item danger" onClick={onLogout}>
                   {t('common.logout')}
                 </button>
@@ -630,6 +653,7 @@ const Layout = ({ children }) => {
           <Suspense fallback={<PageContentFallback />}>{children}</Suspense>
         </div>
         <Footer variant="minimal" />
+        <TierBlockedModal />
       </main>
     </div>
   );

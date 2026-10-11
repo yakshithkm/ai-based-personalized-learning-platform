@@ -11,6 +11,9 @@ import RecommendationCard from '../components/landing/RecommendationCard';
 import FaqAccordion from '../components/landing/FaqAccordion';
 import AiNetworkHero from '../components/landing/AiNetworkHero';
 import { useCountUp } from '../hooks/useScrollReveal';
+import { useAuth } from '../context/AuthContext';
+import { useTier } from '../context/TierContext';
+import { resolvePricingAction } from '../utils/planSelection';
 import { useMagneticHover } from '../hooks/useMagneticHover';
 import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, ArrowRightIcon, MenuIcon, CloseIcon } from '../components/landing/icons';
 
@@ -153,6 +156,13 @@ const HomePage = () => {
 
   const goToLogin = () => navigate('/login');
   const goToRegister = () => navigate('/register');
+
+  // Pricing buttons: choosing a plan is navigation only. Logged-out visitors go to register with the
+  // plan preserved (?plan=PRO); signed-in users are routed by their *actual* tier. Nothing here
+  // changes a tier - the server decides entitlements (see utils/planSelection.js).
+  const { user, loading: authLoading } = useAuth();
+  const { tier: liveTier } = useTier();
+  const pricingUser = user ? { ...user, tier: liveTier || user.tier } : null;
 
   const scrollToSection = (id) => {
     setMobileNavOpen(false);
@@ -529,34 +539,40 @@ const HomePage = () => {
           {t('home.pricing.subtext')}
         </Reveal>
         <div className="pricing-grid">
-          {pricingPlans.map((plan, index) => (
-            <Reveal
-              as="article"
-              className={`pricing-card ${plan.highlighted ? 'pricing-card-highlight' : ''}`}
-              key={plan.key}
-              delay={index * 90}
-            >
-              {plan.highlighted && <span className="pricing-badge">{t('home.pricing.mostPopular')}</span>}
-              <h3>{t(`home.pricing.${plan.key}.name`)}</h3>
-              <p className="pricing-price">
-                <PriceCounter value={plan.priceValue} />
-                <span>{t(`home.pricing.${plan.key}.period`)}</span>
-              </p>
-              <p className="pricing-tagline">{t(`home.pricing.${plan.key}.tagline`)}</p>
-              <ul className="pricing-features">
-                {Array.from({ length: plan.featureCount }).map((_, featureIndex) => (
-                  <li key={featureIndex}>{t(`home.pricing.${plan.key}.f${featureIndex + 1}`)}</li>
-                ))}
-              </ul>
-              <button
-                type="button"
-                className={plan.highlighted ? 'solid-btn' : 'outline-btn'}
-                onClick={() => goToRegister()}
+          {pricingPlans.map((plan, index) => {
+            const action = resolvePricingAction({ plan: plan.key, user: pricingUser });
+            return (
+              <Reveal
+                as="article"
+                className={`pricing-card ${plan.highlighted ? 'pricing-card-highlight' : ''}`}
+                key={plan.key}
+                delay={index * 90}
               >
-                {t(`home.pricing.${plan.key}.cta`)}
-              </button>
-            </Reveal>
-          ))}
+                {plan.highlighted && <span className="pricing-badge">{t('home.pricing.mostPopular')}</span>}
+                {action.isCurrent && <span className="pricing-current-tag">{t('home.pricing.yourPlan')}</span>}
+                <h3>{t(`home.pricing.${plan.key}.name`)}</h3>
+                <p className="pricing-price">
+                  <PriceCounter value={plan.priceValue} />
+                  <span>{t(`home.pricing.${plan.key}.period`)}</span>
+                </p>
+                <p className="pricing-tagline">{t(`home.pricing.${plan.key}.tagline`)}</p>
+                <ul className="pricing-features">
+                  {Array.from({ length: plan.featureCount }).map((_, featureIndex) => (
+                    <li key={featureIndex}>{t(`home.pricing.${plan.key}.f${featureIndex + 1}`)}</li>
+                  ))}
+                </ul>
+                <button
+                  type="button"
+                  className={plan.highlighted ? 'solid-btn' : 'outline-btn'}
+                  disabled={authLoading || action.disabled}
+                  data-plan={plan.key.toUpperCase()}
+                  onClick={() => navigate(action.to)}
+                >
+                  {t(action.labelKey || `home.pricing.${plan.key}.cta`)}
+                </button>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 

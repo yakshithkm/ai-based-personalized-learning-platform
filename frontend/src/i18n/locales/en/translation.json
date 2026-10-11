@@ -979,7 +979,7 @@
         "f2": "Full weak-topic analytics",
         "f3": "Unlimited exam simulations",
         "f4": "Priority recommendation refresh",
-        "cta": "Start Pro trial"
+        "cta": "Upgrade to Pro"
       },
       "premium": {
         "name": "Premium",
@@ -988,8 +988,11 @@
         "f1": "Everything in Pro",
         "f2": "Deep-dive performance reports",
         "f3": "Custom revision roadmap",
-        "cta": "Go Premium"
-      }
+        "cta": "Upgrade to Premium"
+      },
+      "openDashboard": "Open dashboard",
+      "viewMyPlan": "View my plan",
+      "yourPlan": "Your current plan"
     },
     "faq": {
       "title": "Frequently asked questions",
@@ -1286,5 +1289,137 @@
       "low": "low"
     },
     "practiceStepLabel": "{{count}} {{difficulty}} questions"
+  },
+  "tier": {
+    "names": {
+      "free": "Free",
+      "pro": "Pro",
+      "premium": "Premium"
+    },
+    "demoAccount": "Demo Account",
+    "currentPlan": "Current Plan",
+    "upgrade": "Upgrade",
+    "upgradeTo": "Upgrade to {{plan}}",
+    "locked": "Locked",
+    "included": "Included",
+    "notIncluded": "Not included",
+    "limited": "Limited",
+    "unlimited": "Unlimited",
+    "viewPlans": "View plans",
+    "close": "Close",
+    "lock": {
+      "title": "{{plan}} feature",
+      "body": "This feature is available with the {{plan}} plan.",
+      "unlockHeading": "Upgrade to {{plan}} to unlock:"
+    },
+    "benefits": {
+      "pro": {
+        "advancedAnalytics": "Advanced analytics",
+        "aiLimits": "Higher AI limits",
+        "recommendations": "Advanced recommendations",
+        "exams": "More exam simulations"
+      },
+      "premium": {
+        "tutor": "Advanced AI tutor",
+        "unlimited": "Unlimited practice and exams",
+        "readiness": "Readiness predictions",
+        "content": "All premium learning content"
+      }
+    },
+    "limit": {
+      "title": "Limit reached",
+      "body": "{{what}}: {{used}} of {{limit}} used.",
+      "resets": "Resets on {{when}}.",
+      "fairUse": "You have reached today's fair-use limit. Please try again later.",
+      "upgradeHint": "Upgrade to {{plan}} for higher limits."
+    },
+    "expired": {
+      "title": "Subscription expired",
+      "body": "Your {{plan}} subscription has expired. Renew it to use this feature again."
+    },
+    "usage": {
+      "title": "Your plan usage",
+      "PRACTICE": "Practice questions today",
+      "AI": "AI questions today",
+      "RECOMMENDATIONS": "Recommendations today",
+      "EXAMS": "Exam simulations this month",
+      "of": "{{used}} / {{limit}}",
+      "unlimitedUsed": "{{used}} used · Unlimited"
+    },
+    "plans": {
+      "title": "Plans",
+      "subtitle": "Choose the plan that fits your preparation.",
+      "compare": "Compare plans",
+      "checkoutTitle": "Checkout is not available yet",
+      "checkoutBody": "Online subscription checkout is not available yet. You can continue using your current plan or explore the demo experience.",
+      "demoNote": "Demo accounts have a fixed plan that cannot be changed.",
+      "tagline": {
+        "free": "Core learning features",
+        "pro": "Advanced learning with higher limits",
+        "premium": "The complete TutorMind experience"
+      },
+      "limit": {
+        "practice": "Practice questions per day: {{value}}",
+        "ai": "AI questions per day: {{value}}",
+        "exams": "Exam simulations per month: {{value}}",
+        "recommendations": "Recommendations per day: {{value}}"
+      },
+      "upgrade": {
+        "title": "Upgrade to {{plan}}",
+        "currentTitle": "{{plan}} is your current plan",
+        "includedTitle": "Your {{current}} plan already includes {{plan}}",
+        "current": "Current plan",
+        "selected": "Selected plan",
+        "status": "Subscription status",
+        "statusNone": "No active paid subscription",
+        "billing": "Billing period",
+        "billingMonthly": "Monthly",
+        "activationNote": "Selecting a plan does not change your account. Paid access is only activated after our system confirms an authorized subscription, which is not available yet.",
+        "checkoutCta": "Continue to {{plan}} checkout",
+        "demoHeading": "Project demo",
+        "demoHint": "Demo only. Opens the shared {{plan}} demo account instead of your own account.",
+        "demoCta": "Explore {{plan}} Demo",
+        "demoConfirm": "This signs you out of your account and opens the {{plan}} demo. Continue?",
+        "demoConfirmYes": "Yes, open demo",
+        "demoCancel": "Cancel",
+        "demoFailed": "Could not open the demo account. Please try again."
+      }
+    },
+    "features": {
+      "practice": "Practice",
+      "analytics": "Basic analytics",
+      "advancedAnalytics": "Advanced analytics",
+      "recommendations": "Basic recommendations",
+      "advancedRecommendations": "Advanced recommendations",
+      "studyPlan": "Study plan",
+      "mistakeBank": "Mistake bank",
+      "flashcards": "Flashcards",
+      "examSimulation": "Exam simulation",
+      "examReports": "Detailed exam reports",
+      "aiDoubt": "AI doubt solving",
+      "aiPersonalized": "AI personalized learning",
+      "advancedTutor": "Advanced AI tutor",
+      "readiness": "Readiness predictions",
+      "adaptivePaths": "Adaptive learning paths",
+      "premiumContent": "Premium learning content",
+      "advancedGamification": "Advanced gamification"
+    },
+    "demo": {
+      "heading": "Tier demo accounts",
+      "free": "Continue as Free Demo",
+      "pro": "Continue as Pro Demo",
+      "premium": "Continue as Premium Demo"
+    },
+    "profile": {
+      "title": "Your plan"
+    },
+    "status": {
+      "ACTIVE": "Active",
+      "EXPIRED": "Expired",
+      "CANCELLED": "Cancelled",
+      "PAST_DUE": "Payment due"
+    },
+    "validUntil": "Valid until {{date}}",
+    "noExpiry": "No expiry date"
   }
 }

@@ -3,6 +3,8 @@ const Attempt = require('../models/Attempt');
 const isValidObjectId = require('../utils/isValidObjectId');
 const { streamDoubtResolutionReply } = require('../services/ai/aiService');
 const { resolveRequestLanguage } = require('../config/languages');
+const { FEATURES } = require('../config/tiers');
+const { hasFeatureAccess, getTierLimits } = require('../services/tier/tierService');
 
 const MAX_HISTORY_MESSAGES = 12;
 const MAX_MESSAGE_LENGTH = 1000;
@@ -72,7 +74,7 @@ const explainQuestion = async (req, res, next) => {
               typeof entry.content === 'string' &&
               entry.content.trim().length > 0
           )
-          .slice(-MAX_HISTORY_MESSAGES)
+          .slice(-Math.min(MAX_HISTORY_MESSAGES, getTierLimits(req.tierContext?.tier).aiHistoryMessages))
           .map((entry) => ({ role: entry.role, content: entry.content.slice(0, MAX_MESSAGE_LENGTH) }))
       : [];
 
@@ -93,6 +95,8 @@ const explainQuestion = async (req, res, next) => {
     // (closed the sidebar mid-stream, navigated away) rather than
     // finishing generation into a connection nobody is reading anymore.
     const abortController = new AbortController();
+    // A refund is only fair when the student received nothing; a streamed answer stays charged.
+    let streamedAny = false;
     req.on('close', () => abortController.abort());
 
     try {
@@ -111,7 +115,9 @@ const explainQuestion = async (req, res, next) => {
         userMessage: trimmedMessage,
         signal: abortController.signal,
         language: resolveRequestLanguage(req),
+        tutorMode: hasFeatureAccess(req.tierContext?.tier, FEATURES.ADVANCED_AI_TUTOR) ? 'advanced' : 'standard',
       })) {
+        streamedAny = true;
         sendEvent({ type: 'chunk', text: chunkText });
       }
       sendEvent({ type: 'done' });
@@ -119,6 +125,9 @@ const explainQuestion = async (req, res, next) => {
       // GeminiServiceError instances already carry a student-safe message
       // (see geminiService.js) - never leaked details like stack traces or
       // the API key reach this event.
+      // The student got no answer, so the AI quota they were charged is handed back (see
+      // checkUsageLimit in tierMiddleware).
+      if (!streamedAny) res.locals.refundUsage = true;
       sendEvent({ type: 'error', message: streamError.message || GENERIC_STREAM_ERROR_MESSAGE });
     } finally {
       if (!res.writableEnded) res.end();

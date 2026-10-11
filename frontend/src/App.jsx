@@ -29,6 +29,7 @@ const MistakeBankPage = lazy(() => import('./pages/MistakeBankPage'));
 const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
 const AchievementsPage = lazy(() => import('./pages/AchievementsPage'));
 const AboutExamPage = lazy(() => import('./pages/AboutExamPage'));
+const PlansPage = lazy(() => import('./pages/PlansPage'));
 
 // Admin portal - its own dedicated shell/sidebar (components/admin/AdminLayout),
 // loaded on demand so student-facing bundles never pull in admin-only code.
@@ -196,6 +197,17 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <FlashcardsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/plans"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <PlansPage />
             </Layout>
           </ProtectedRoute>
         }

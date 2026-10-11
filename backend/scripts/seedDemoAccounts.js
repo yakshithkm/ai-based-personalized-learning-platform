@@ -5,9 +5,11 @@ const Mistake = require('../src/models/Mistake');
 const Performance = require('../src/models/Performance');
 const ExamSession = require('../src/models/ExamSession');
 const ProductEvent = require('../src/models/ProductEvent');
+const UsageCounter = require('../src/models/UsageCounter');
 const { rebuildPerformanceForUser } = require('../src/services/performanceService');
 const { classifyMistake } = require('../src/services/feedbackService');
 const { DEMO_PROFILES } = require('../src/data/demoProfiles');
+const { applySubscription } = require('../src/services/tier/subscriptionService');
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const REPETITION_DAYS = [1, 3, 7];
@@ -65,6 +67,7 @@ const cleanupDemoUser = async (email) => {
     Performance.deleteMany({ user: userId }),
     ExamSession.deleteMany({ user: userId }),
     ProductEvent.deleteMany({ user: userId }),
+    UsageCounter.deleteMany({ user: userId }),
   ]);
   await User.deleteOne({ _id: userId });
   return userId;
@@ -349,6 +352,14 @@ const seedOneProfile = async (profile, now) => {
     updatedAt: joinedAt,
   });
 
+  // Provision the demo tier through the same service a real subscription change would use. No
+  // end date: demo tiers do not expire, and nothing at request time treats demo users specially.
+  await applySubscription(user._id, {
+    tier: profile.tier || 'FREE',
+    status: 'ACTIVE',
+    provider: 'demo',
+  });
+
   const attemptDocs = events.map((evt) => ({
     user: user._id,
     question: evt.question._id,
@@ -383,6 +394,7 @@ const seedOneProfile = async (profile, now) => {
     email: user.email,
     name: user.name,
     targetExam: user.targetExam,
+    tier: profile.tier || 'FREE',
     attempts: attemptDocs.length,
     correctAttempts: attemptDocs.filter((a) => a.isCorrect).length,
     mistakes: mistakeDocs.length,

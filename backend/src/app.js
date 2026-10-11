@@ -15,6 +15,7 @@ const examRoutes = require('./routes/examRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 const gamificationRoutes = require('./routes/gamificationRoutes');
 const referralRoutes = require('./routes/referralRoutes');
+const tierRoutes = require('./routes/tierRoutes');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
 const { protect } = require('./middleware/authMiddleware');
 const { validateObjectIdParam } = require('./middleware/validateObjectIdParam');
@@ -54,7 +55,9 @@ app.use(mongoSanitize());
 // throttling at all - including login/register.
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  limit: 300,
+  // Default 300 requests / 15 min per IP. For local development set API_RATE_LIMIT_MAX=3000 in
+  // .env: React StrictMode doubles every request there, so normal testing can use up the budget.
+  limit: Number(process.env.API_RATE_LIMIT_MAX) > 0 ? Number(process.env.API_RATE_LIMIT_MAX) : 300,
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -65,6 +68,7 @@ app.use('/api/analytics', apiLimiter);
 app.use('/api/recommendations', apiLimiter);
 app.use('/api/admin', apiLimiter);
 app.use('/api/referrals', apiLimiter);
+app.use('/api/tier', apiLimiter);
 
 // AI tutor calls hit Gemini's free-tier quota per request (unlike the other
 // routes above, which only hit MongoDB), so it gets its own tighter limit
@@ -104,6 +108,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/gamification', gamificationRoutes);
 app.use('/api/referrals', referralRoutes);
+app.use('/api/tier', tierRoutes);
 
 app.get(
   '/api/exam/session/:sessionId/debug-intents',

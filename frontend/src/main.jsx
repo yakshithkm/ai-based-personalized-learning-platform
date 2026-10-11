@@ -6,6 +6,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { ToastProvider } from './context/ToastContext';
 import { GamificationProvider } from './context/GamificationContext';
+import { TierProvider } from './context/TierContext';
 import { LanguageProvider } from './context/LanguageContext';
 import { initI18n } from './i18n';
 import '@fontsource-variable/noto-sans-kannada';
@@ -30,6 +31,8 @@ import './styles/features/learning.css';
 import './styles/features/gamification.css';
 import './styles/features/about-exams.css';
 import './styles/features/i18n.css';
+import './styles/features/tier.css';
+import './styles/features/scrollbar.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -41,9 +44,11 @@ const render = () =>
           <AuthProvider>
             <LanguageProvider>
               <ToastProvider>
-                <GamificationProvider>
-                  <App />
-                </GamificationProvider>
+                <TierProvider>
+                  <GamificationProvider>
+                    <App />
+                  </GamificationProvider>
+                </TierProvider>
               </ToastProvider>
             </LanguageProvider>
           </AuthProvider>

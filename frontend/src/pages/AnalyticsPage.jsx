@@ -16,6 +16,7 @@ import { subjectColor } from '../utils/subjectVisuals';
 import { translateServerError } from '../i18n/serverErrors';
 import { subjectLabel } from '../i18n/labels';
 import { useLocaleFormat } from '../i18n/format';
+import FeatureLock from '../components/tier/FeatureLock';
 
 const chartTooltipStyle = {
   backgroundColor: '#111827',
@@ -106,6 +107,9 @@ const AnalyticsPage = () => {
   const habit = payload?.habit || { dailyGoal: 10, todayCompleted: 0, currentStreak: 0, longestStreak: 0, heatmap: [] };
   const solvedSummary = payload?.solvedSummary || { uniqueSolved: 0, totalQuestions: 0 };
   const examReadiness = payload?.examReadiness || { score: 0, breakdown: {} };
+  // The server removes advanced analytics from the payload for plans without them and says so here;
+  // the UI just shows what that means instead of an empty chart.
+  const advancedLocked = payload?.tierAccess?.advancedAnalytics === false;
   const bySubject = payload?.attemptsBySubject || [];
   const weakTopicPriority = payload?.weakTopicPriority || [];
   const weeklyImprovement = payload?.weeklyImprovement || [];
@@ -461,6 +465,13 @@ const AnalyticsPage = () => {
         </div>
       </section>
 
+      {advancedLocked ? (
+        <>
+          <FeatureLock title={t('analytics.topicMastery')} requiredTier="PRO" />
+          <FeatureLock title={t('analytics.focusHeatmap')} requiredTier="PRO" />
+        </>
+      ) : (
+        <>
       <section className="dash-card">
         <div className="dash-card-head">
           <h3>{t('analytics.topicMastery')}</h3>
@@ -516,6 +527,8 @@ const AnalyticsPage = () => {
           )}
         </div>
       </section>
+        </>
+      )}
     </div>
   );
 };

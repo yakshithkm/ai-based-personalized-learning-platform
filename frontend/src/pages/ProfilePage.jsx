@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import api from '../api/client';
 import EmptyState from '../components/EmptyState';
@@ -9,6 +9,8 @@ import { translateServerError } from '../i18n/serverErrors';
 import { mistakeTypeLabel, subjectLabel, difficultyLabel } from '../i18n/labels';
 import { useLocaleFormat } from '../i18n/format';
 import { useToast } from '../context/ToastContext';
+import { useTier } from '../context/TierContext';
+import TierBadge from '../components/tier/TierBadge';
 import { useCountUp } from '../hooks/useScrollReveal';
 
 // Subject accent colors reused across the ring, legend, and skill chips so a
@@ -94,6 +96,7 @@ const BadgeIcon = ({ tone }) => (
 const ProfilePage = () => {
   const { t } = useTranslation();
   const { formatDate, formatNumber, formatPercent } = useLocaleFormat();
+  const { tier, isDemo, subscription } = useTier();
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -380,6 +383,24 @@ const ProfilePage = () => {
           </button>
         </div>
       </section>
+
+      {tier && (
+        <section className="panel profile-plan-card" aria-labelledby="profile-plan-heading">
+          <h3 id="profile-plan-heading">{t('tier.profile.title')}</h3>
+          <div className="profile-plan-row">
+            <TierBadge tier={tier} demo={isDemo} size="lg" />
+            {subscription?.status && (
+              <span className="profile-plan-meta">{t(`tier.status.${subscription.status}`, { defaultValue: subscription.status })}</span>
+            )}
+            <span className="profile-plan-meta">
+              {subscription?.endDate
+                ? t('tier.validUntil', { date: formatDate(new Date(subscription.endDate), { dateStyle: 'medium' }) })
+                : tier !== 'FREE' ? t('tier.noExpiry') : ''}
+            </span>
+          </div>
+          {!isDemo && <Link to="/plans" className="outline-btn" style={{ justifySelf: 'start', textDecoration: 'none' }}>{t('tier.plans.title')}</Link>}
+        </section>
+      )}
 
       <section className="panel profile-language-panel" aria-labelledby="profile-language-heading">
         <h3 id="profile-language-heading">{t('language.settingsTitle')}</h3>

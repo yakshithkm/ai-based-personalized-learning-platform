@@ -13,7 +13,10 @@
     "seed:content": "node seedLearningContent.js",
     "reset:demo": "node resetDemo.js",
     "backfill:gamification": "node backfillGamification.js",
-    "test": "cross-env NODE_ENV=test jest --runInBand"
+    "migrate:tiers": "node migrateTiers.js",
+    "reset:usage": "node resetUsage.js",
+    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "test:unit": "cross-env NODE_ENV=test jest --config jest.unit.config.js"
   },
   "dependencies": {
     "@google/genai": "^2.23.0",

@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { translateServerError } from '../i18n/serverErrors';
 import { subjectLabel } from '../i18n/labels';
 import { getLearningBundle } from '../api/learning';
+import { newVisitId } from '../utils/visitId';
 import EmptyState from '../components/EmptyState';
 import LearnNextCard from '../components/learning/LearnNextCard';
 import RecommendationCard from '../components/learning/RecommendationCard';
@@ -61,10 +62,15 @@ const LearnPage = () => {
   const [bundle, setBundle] = useState(null);
   const [error, setError] = useState('');
 
-  const load = async () => {
+  // One id per visit to this page: the two effect runs of React StrictMode share it (charged once);
+  // coming back to the page later mounts a new instance with a new id (charged again).
+  const visitIdRef = useRef(null);
+
+  const load = async ({ fresh = false } = {}) => {
     setError('');
+    if (!visitIdRef.current || fresh) visitIdRef.current = newVisitId();
     try {
-      setBundle(await getLearningBundle());
+      setBundle(await getLearningBundle({ visit: visitIdRef.current }));
     } catch (err) {
       setError(translateServerError(t, err?.response?.data?.message, 'learn.loadFailed'));
     }
@@ -82,7 +88,7 @@ const LearnPage = () => {
         <section className="panel error-state-card">
           <h3>{t('learn.couldntLoad')}</h3>
           <p>{error}</p>
-          <button type="button" className="solid-btn" onClick={load}>{t('common.tryAgain')}</button>
+          <button type="button" className="solid-btn" onClick={() => load({ fresh: true })}>{t('common.tryAgain')}</button>
         </section>
       </div>
     );

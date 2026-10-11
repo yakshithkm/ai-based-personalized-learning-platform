@@ -1,0 +1,97 @@
+/* App-wide scrollbar, styled for the dark theme (page, panels, tables, modals, chat, textareas):
+ * slim rounded thumb, a thin outlined track and small arrow buttons at both ends.
+ *
+ * Specific rules elsewhere keep winning on purpose: the sidebar hides its scrollbar (app-shell.css),
+ * and the admin table / AI textarea have their own thin variants. Everything else that scrolls uses
+ * this one design, so a raw OS scrollbar never shows up against the dark UI.
+ */
+:root {
+  --scrollbar-size: 12px;
+  --scrollbar-track: rgb(0, 0, 0);
+  --scrollbar-thumb: rgba(100, 116, 139, 0.75);
+  --scrollbar-thumb-hover: rgba(96, 165, 250, 0.8);
+  --scrollbar-thumb-active: #60a5fa;
+}
+
+/* Chromium / Safari / Edge: full control (rounded thumb, outlined track, arrow buttons). */
+::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+  /* Solid, never transparent: whatever is behind the page (e.g. a white canvas) must not show
+     through around the arrows or the corner. */
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  box-shadow: inset 0 0 0 1px var(--scrollbar-track-line);
+}
+
+::-webkit-scrollbar-thumb {
+  /* A transparent border + content-box clip draws a slimmer, floating pill inside the track. */
+  background-color: var(--scrollbar-thumb);
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  min-height: 36px;
+  min-width: 36px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: var(--scrollbar-thumb-active);
+}
+
+/* Arrow buttons at both ends (small triangles, blue on hover). */
+::-webkit-scrollbar-button:single-button {
+  display: block;
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+  background-color: var(--scrollbar-track);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 8px 8px;
+}
+::-webkit-scrollbar-button:single-button:horizontal:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M7 1.5v7L2.5 5z' fill='%2364748b'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar-button:single-button:horizontal:decrement:hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M7 1.5v7L2.5 5z' fill='%2360a5fa'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar-button:single-button:horizontal:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M3 1.5v7L7.5 5z' fill='%2364748b'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar-button:single-button:horizontal:increment:hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M3 1.5v7L7.5 5z' fill='%2360a5fa'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 7h7L5 2.5z' fill='%2364748b'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar-button:single-button:vertical:decrement:hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 7h7L5 2.5z' fill='%2360a5fa'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar-button:single-button:vertical:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 3h7L5 7.5z' fill='%2364748b'/%3E%3C/svg%3E");
+}
+::-webkit-scrollbar-button:single-button:vertical:increment:hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 3h7L5 7.5z' fill='%2360a5fa'/%3E%3C/svg%3E");
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--scrollbar-track);
+}
+
+/* Firefox (no ::-webkit-scrollbar support): the standard properties give the closest equivalent
+   (thin thumb; Firefox cannot draw arrow buttons). Scoped with @supports so Chromium keeps using
+   the richer rules above (it ignores the pseudo elements on any element that sets scrollbar-color /
+   scrollbar-width). Class rules such as .sidebar { scrollbar-width: none } are more specific than
+   `*` and still win. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.8) transparent;
+  }
+}

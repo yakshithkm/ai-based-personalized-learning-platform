@@ -15,7 +15,7 @@ const run = async () => {
         ? Math.round((r.correctAttempts / r.attempts) * 1000) / 10
         : 0;
       console.log(
-        `- ${r.email} (${r.targetExam}) - ${r.name}\n` +
+        `- ${r.email} (${r.targetExam}, ${r.tier}) - ${r.name}\n` +
           `    attempts: ${r.attempts}, accuracy: ${accuracy}%, ` +
           `mistakes logged: ${r.mistakes}, active days: ${r.activeDays}`
       );

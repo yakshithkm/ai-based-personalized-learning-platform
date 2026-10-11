@@ -51,6 +51,12 @@ body {
   --surface-glass: rgba(15, 23, 42, 0.55);
   --header-glass: rgba(8, 13, 28, 0.72);
 
+  /* Question cards (Practice + Exam Simulation): an indigo-tinted navy that stands apart from the
+     slate page/panels while staying in the same blue family as --primary. */
+  --question-card-bg: linear-gradient(160deg, rgba(55, 48, 163, 0.38), rgba(30, 58, 138, 0.24));
+  --question-card-border: rgba(129, 140, 248, 0.38);
+  --question-card-shadow: 0 10px 28px rgba(67, 56, 202, 0.18);
+
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 18px;
@@ -2200,6 +2206,12 @@ button:focus-visible {
 
 .question-card {
   min-width: 0;
+}
+
+.dash-card.question-card {
+  background: var(--question-card-bg);
+  border-color: var(--question-card-border);
+  box-shadow: var(--question-card-shadow);
 }
 
 .question-card .option-btn {
