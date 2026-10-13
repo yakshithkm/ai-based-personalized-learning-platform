@@ -8,6 +8,7 @@ import { onAttemptSubmitted } from '../utils/appEvents';
 import BrandLogo from './BrandLogo';
 import Footer from './Footer';
 import LanguageSelector from './LanguageSelector';
+import ThemeToggle from './ThemeToggle';
 import { useTier } from '../context/TierContext';
 import TierBadge from './tier/TierBadge';
 import TierBlockedModal from './tier/TierBlockedModal';
@@ -294,10 +295,14 @@ const Layout = ({ children }) => {
   // independently via the sidebar's own overflow-y.
   useEffect(() => {
     if (!sidebarOpen) return undefined;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    // Lock <html> (the real page scroller here: html uses overflow-x: clip, so an
+    // overflow on <body> alone never reaches the viewport and the page keeps scrolling
+    // once the drawer hits its end). Locking <html> also keeps the sticky header working.
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    root.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = previousOverflow;
+      root.style.overflow = previousOverflow;
     };
   }, [sidebarOpen]);
 
@@ -520,6 +525,7 @@ const Layout = ({ children }) => {
 
         <div className="header-actions">
           <LanguageSelector variant="compact" />
+          <ThemeToggle />
 
           {tier && (
             <Link to="/plans" className="header-tier-link" title={t('tier.plans.title')}>

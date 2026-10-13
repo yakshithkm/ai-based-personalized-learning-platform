@@ -7,8 +7,10 @@ import { subjectColor } from '../utils/subjectVisuals';
 import { formatRelativeTime } from '../utils/achievements';
 import { translateServerError } from '../i18n/serverErrors';
 import { mistakeTypeLabel, subjectLabel } from '../i18n/labels';
+import { useTheme } from '../context/ThemeContext';
 
 const MistakeBankPage = () => {
+  useTheme(); // re-render on theme switch so theme-dependent chart/subject colours update
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [analytics, setAnalytics] = useState(null);

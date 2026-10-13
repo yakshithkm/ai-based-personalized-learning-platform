@@ -7,10 +7,6 @@
  */
 :root {
   --scrollbar-size: 12px;
-  --scrollbar-track: rgb(0, 0, 0);
-  --scrollbar-thumb: rgba(100, 116, 139, 0.75);
-  --scrollbar-thumb-hover: rgba(96, 165, 250, 0.8);
-  --scrollbar-thumb-active: #60a5fa;
 }
 
 /* Chromium / Safari / Edge: full control (rounded thumb, outlined track, arrow buttons). */
@@ -92,6 +88,6 @@
 @supports not selector(::-webkit-scrollbar) {
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(100, 116, 139, 0.8) transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
   }
 }

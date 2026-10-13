@@ -18,14 +18,19 @@
      local) and mask the fixed shadow layers underneath except right at
      the edges where there's more to reveal. */
   background:
-    linear-gradient(rgba(2, 6, 23, 0.92), rgba(2, 6, 23, 0.92)) center top,
-    linear-gradient(rgba(2, 6, 23, 0.92), rgba(2, 6, 23, 0.92)) center bottom,
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)) center top,
-    linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)) center bottom,
-    linear-gradient(180deg, rgba(2, 6, 23, 0.95), rgba(2, 6, 23, 0.75)) center top;
+    linear-gradient(rgba(var(--surface-deep-rgb), var(--sidebar-cover)), rgba(var(--surface-deep-rgb), var(--sidebar-cover))) center top,
+    linear-gradient(rgba(var(--surface-deep-rgb), var(--sidebar-cover)), rgba(var(--surface-deep-rgb), var(--sidebar-cover))) center bottom,
+    linear-gradient(to bottom, rgba(var(--shadow-rgb), calc(0.5 * var(--shadow-k))), rgba(var(--shadow-rgb), 0)) center top,
+    linear-gradient(to top, rgba(var(--shadow-rgb), calc(0.5 * var(--shadow-k))), rgba(var(--shadow-rgb), 0)) center bottom,
+    linear-gradient(180deg, rgba(var(--surface-deep-rgb), var(--sidebar-a)), rgba(var(--surface-deep-rgb), var(--sidebar-b))) center top;
   background-repeat: no-repeat;
   background-size: 100% 42px, 100% 42px, 100% 42px, 100% 42px, 100% 100%;
   background-attachment: local, local, scroll, scroll, scroll;
+}
+
+.sidebar {
+  /* Never hand leftover scroll to the page behind the drawer (touch scroll chaining). */
+  overscroll-behavior: contain;
 }
 
 .sidebar > * {
@@ -53,10 +58,10 @@
   width: 2.1rem;
   height: 2.1rem;
   border-radius: 50%;
-  background: rgba(96, 165, 250, 0.18);
-  border: 1px solid rgba(96, 165, 250, 0.4);
-  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.55);
-  color: #93c5fd;
+  background: rgba(var(--primary-rgb), 0.18);
+  border: 1px solid rgba(var(--primary-rgb), 0.4);
+  box-shadow: 0 6px 16px rgba(var(--shadow-rgb), calc(0.55 * var(--shadow-k)));
+  color: var(--accent-text);
   pointer-events: none;
   z-index: 2;
   animation: sidebarHintBounce 1.6s ease-in-out infinite;
@@ -141,9 +146,9 @@
   gap: 0.35rem;
   padding: 1rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(167, 139, 250, 0.35);
-  background: radial-gradient(220px 120px at 15% 0%, rgba(167, 139, 250, 0.22), transparent),
-    linear-gradient(180deg, rgba(76, 29, 149, 0.28), rgba(15, 23, 42, 0.6));
+  border: 1px solid rgba(var(--violet-rgb), 0.35);
+  background: radial-gradient(220px 120px at 15% 0%, rgba(var(--violet-rgb), 0.22), transparent),
+    linear-gradient(180deg, rgba(var(--violet-deep-rgb), 0.28), rgba(var(--surface-rgb), 0.6));
   overflow: hidden;
 }
 
@@ -154,8 +159,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(167, 139, 250, 0.22);
-  color: #ddd6fe;
+  background: rgba(var(--violet-rgb), 0.22);
+  color: var(--violet-text);
   margin-bottom: 0.2rem;
 }
 
@@ -173,7 +178,7 @@
 .upgrade-card p {
   margin: 0 0 0.35rem;
   font-size: 0.78rem;
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .upgrade-cta {
@@ -184,7 +189,7 @@
   text-decoration: none;
   padding: 0.55rem 0.8rem;
   font-size: 0.84rem;
-  background: linear-gradient(180deg, #818cf8, #6366f1);
+  background: linear-gradient(180deg, var(--indigo-a), var(--indigo-b));
 }
 
 .upgrade-cta svg {
@@ -256,7 +261,7 @@
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 0.1rem 0.4rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(var(--surface-rgb), 0.6);
 }
 
 .search-dropdown {
@@ -287,9 +292,9 @@
   gap: 0.35rem;
   padding: 0.4rem 0.75rem;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(251, 146, 60, 0.4);
-  background: rgba(251, 146, 60, 0.14);
-  color: #fdba74;
+  border: 1px solid rgba(var(--orange-rgb), 0.4);
+  background: rgba(var(--orange-rgb), 0.14);
+  color: var(--orange-text-soft);
   font-size: 0.8rem;
   font-weight: 700;
   white-space: nowrap;
@@ -377,8 +382,8 @@
   width: 1.15rem;
   height: 1.15rem;
   border-radius: 50%;
-  border: 2px solid rgba(96, 165, 250, 0.25);
-  border-top-color: #60a5fa;
+  border: 2px solid rgba(var(--primary-rgb), 0.25);
+  border-top-color: var(--primary);
   animation: pageContentSpin 0.7s linear infinite;
 }
 

@@ -1,0 +1,382 @@
+/* =====================================================================
+   TutorMind theme tokens — single source of truth for colour.
+
+   Both themes define the SAME semantic token names. Component CSS must
+   only consume these tokens (var(--…) or rgba(var(--…-rgb), a)); it must
+   not hardcode theme colours.
+
+   Selection: <html data-theme="dark|light"> (set by the inline script in
+   index.html before first paint, then owned by ThemeContext).
+   Dark is the default and the fallback when no preference is saved; the
+   values in the dark block are the application's original palette.
+===================================================================== */
+
+/* ---------------------------------------------------------------------
+   DARK (default)
+--------------------------------------------------------------------- */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Page + surfaces */
+  --bg: #0f172a;
+  --bg-soft: #111827;
+  --panel: #0b1220;
+  --surface-0: rgba(15, 23, 42, 0.75);
+  --surface-1: rgba(15, 23, 42, 0.86);
+  --surface-2: rgba(2, 6, 23, 0.9);
+  --surface-glass: rgba(15, 23, 42, 0.55);
+  --header-glass: rgba(8, 13, 28, 0.72);
+  --body-bg: radial-gradient(1200px 600px at 80% -20%, rgba(59, 130, 246, 0.2), transparent),
+    radial-gradient(900px 450px at -20% 20%, rgba(30, 64, 175, 0.2), transparent),
+    linear-gradient(180deg, #111827 0%, #0f172a 100%);
+  --aurora-opacity: 1;
+
+  /* Channel triplets — used as rgba(var(--x-rgb), alpha) for tints */
+  --surface-rgb: 15, 23, 42;
+  --surface-deep-rgb: 2, 6, 23;
+  --neutral-rgb: 148, 163, 184;
+  --primary-rgb: 96, 165, 250;
+  --primary-strong-rgb: 37, 99, 235;
+  --success-rgb: 34, 197, 94;
+  --danger-rgb: 239, 68, 68;
+  --warning-rgb: 245, 158, 11;
+  --caution-rgb: 250, 204, 21;
+  --violet-rgb: 167, 139, 250;
+  --indigo-rgb: 129, 140, 248;
+  --violet-deep-rgb: 76, 29, 149;
+  --cyan-rgb: 34, 211, 238;
+  --premium-rgb: 245, 196, 81;
+  --shadow-rgb: 2, 6, 23;
+  --scrim-rgb: 2, 6, 23;
+  --shadow-k: 1;
+
+  /* Text */
+  --text: #e5e7eb;
+  --text-strong: #f1f5f9;
+  --text-bright: #e2e8f0;
+  --text-soft: #cbd5e1;
+  --text-mid: #aab8d8;
+  --muted: #94a3b8;
+  --text-faint: #7c8db5;
+  --on-primary: #eff6ff;
+
+  /* Borders + controls */
+  --border: rgba(148, 163, 184, 0.22);
+  --control-border: rgba(148, 163, 184, 0.22);
+  --ring: rgba(96, 165, 250, 0.35);
+
+  /* Brand accent */
+  --primary: #60a5fa;
+  --primary-strong: #3b82f6;
+  --accent-text: #93c5fd;
+  --accent-text-soft: #bfdbfe;
+  --accent-text-bright: #dbeafe;
+  --violet: #a78bfa;
+  --violet-text: #c7d2fe;
+
+  /* Status */
+  --success: #22c55e;
+  --success-text: #4ade80;
+  --success-text-mid: #86efac;
+  --success-text-soft: #bbf7d0;
+  --danger: #ef4444;
+  --danger-text: #f87171;
+  --danger-text-mid: #fca5a5;
+  --danger-text-soft: #fecaca;
+  --warning: #f59e0b;
+  --caution-text: #facc15;
+  --caution-text-soft: #fde68a;
+  --orange-text: #fb923c;
+  --emerald: #34d399;
+  --rose: #f472b6;
+
+  /* Elevation */
+  --shadow: 0 16px 34px rgba(2, 6, 23, 0.45);
+  --elevation-1: 0 6px 16px rgba(2, 6, 23, 0.32);
+  --elevation-2: 0 16px 34px rgba(2, 6, 23, 0.45);
+  --elevation-3: 0 24px 60px rgba(2, 6, 23, 0.55);
+
+  /* Question cards (Practice + Exam Simulation) */
+  --question-card-bg: linear-gradient(160deg, rgba(55, 48, 163, 0.38), rgba(30, 58, 138, 0.24));
+  --question-card-border: rgba(129, 140, 248, 0.38);
+  --question-card-shadow: 0 10px 28px rgba(67, 56, 202, 0.18);
+
+  /* Charts */
+  --chart-grid: rgba(148, 163, 184, 0.2);
+  --chart-axis: #94a3b8;
+  --chart-line-a: #60a5fa;
+  --chart-line-b: #a78bfa;
+  --chart-ring-track: rgba(148, 163, 184, 0.18);
+  --chart-tooltip-bg: #111827;
+  --chart-tooltip-border: rgba(96, 165, 250, 0.4);
+  --chart-tooltip-text: #dbeafe;
+  --chart-tooltip-shadow: 0 14px 30px rgba(15, 23, 42, 0.6);
+
+  /* Hero illustration gradient (landing) */
+  --hero-grad-a: #60a5fa;
+  --hero-grad-b: #a78bfa;
+
+  /* Scrollbars */
+  --scrollbar-track: rgb(0, 0, 0);
+  --scrollbar-thumb: rgba(100, 116, 139, 0.75);
+  --scrollbar-thumb-hover: rgba(96, 165, 250, 0.8);
+  --scrollbar-thumb-active: #60a5fa;
+
+  /* Selection */
+  --selection-bg: rgba(96, 165, 250, 0.35);
+  --selection-text: #f1f5f9;
+
+  /* Tiers */
+  --tier-free: #94a3b8;
+  --tier-pro: #60a5fa;
+  --tier-premium: #f5c451;
+  --tier-premium-soft: rgba(245, 196, 81, 0.14);
+
+  /* Extended tints (second-tier hues used by specific components) */
+  --primary-mid-rgb: 59, 130, 246;
+  --primary-deep-rgb: 30, 58, 138;
+  --primary-deeper-rgb: 30, 64, 175;
+  --surface-raised-rgb: 30, 41, 59;
+  --danger-soft-rgb: 248, 113, 113;
+  --danger-deep-rgb: 185, 28, 28;
+  --success-soft-rgb: 74, 222, 128;
+  --success-deep-rgb: 22, 101, 52;
+  --orange-rgb: 251, 146, 60;
+  --orange-strong-rgb: 249, 115, 22;
+  --orange-deep-rgb: 194, 65, 12;
+  --amber-deep-rgb: 161, 98, 7;
+  --sky-rgb: 125, 211, 252;
+  --sky-strong-rgb: 56, 189, 248;
+  --cyan-deep-rgb: 14, 116, 144;
+  --blue-soft-rgb: 147, 197, 253;
+  --emerald-rgb: 16, 185, 129;
+  --emerald-soft-rgb: 52, 211, 153;
+  --teal-rgb: 45, 212, 191;
+  --indigo-strong-rgb: 99, 102, 241;
+  --sky-text: #bae6fd;
+  --mint-text: #a7f3d0;
+  --periwinkle-text: #a9b8ff;
+  --caution-text-mid: #fcd34d;
+  --orange-text-soft: #fdba74;
+  --teal: #2dd4bf;
+  --amber-bright: #fbbf24;
+  --indigo-a: #818cf8;
+  --indigo-b: #6366f1;
+  --sky-bright: #38bdf8;
+  --primary-press: #2563eb;
+  --primary-press-2: #1d4ed8;
+
+  --landing-bg: radial-gradient(900px 440px at 50% -8%, rgba(99, 102, 241, 0.23), transparent),
+    radial-gradient(1300px 600px at 50% 65%, rgba(76, 29, 149, 0.18), transparent),
+    linear-gradient(180deg, #07081a 0%, #090a24 55%, #080818 100%);
+  --landing-menu-rgb: 9, 12, 32;
+  --cyan-bright: #22d3ee;
+  --heat-1: #14532d;
+  --heat-2: #15803d;
+  --on-vivid: #0b1220;
+  --premium-btn-a: #f8d77f;
+  --premium-btn-b: #f5c451;
+  --on-premium: #2b1d00;
+  --hero-particle-in: #7dd3fc;
+  --hero-particle-out: #c4b5fd;
+  --hero-particle-out-rgb: 196, 181, 253;
+  --dust-rgb: 191, 219, 254;
+  --ink-soft-rgb: 8, 13, 28;
+  --banner-title: #94a3b8;
+  --sidebar-cover: 0.92;
+  --sidebar-a: 0.95;
+  --sidebar-b: 0.75;
+}
+
+/* ---------------------------------------------------------------------
+   LIGHT — warm, editorial, restrained. Not an inversion of dark: warm
+   ivory page, white surfaces, hairline warm borders, soft low-contrast
+   shadows, and a deepened version of the brand blue as the only accent.
+   The violet/indigo accents of the dark theme resolve to a muted teal so
+   the light theme never shows a blue→purple blend.
+--------------------------------------------------------------------- */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f7f6f2;
+  --bg-soft: #f0efe9;
+  --panel: #ffffff;
+  --surface-0: rgba(255, 255, 255, 0.86);
+  --surface-1: rgba(255, 255, 255, 0.95);
+  --surface-2: rgba(240, 239, 233, 0.96);
+  --surface-glass: rgba(255, 255, 255, 0.7);
+  --header-glass: rgba(247, 246, 242, 0.84);
+  --body-bg: radial-gradient(1100px 520px at 85% -20%, rgba(43, 91, 176, 0.06), transparent),
+    linear-gradient(180deg, #f9f8f4 0%, #f7f6f2 100%);
+  --aurora-opacity: 0.4;
+
+  --surface-rgb: 255, 255, 255;
+  --surface-deep-rgb: 240, 239, 233;
+  --neutral-rgb: 120, 113, 95;
+  --primary-rgb: 43, 91, 176;
+  --primary-strong-rgb: 31, 74, 150;
+  --success-rgb: 47, 133, 90;
+  --danger-rgb: 194, 65, 52;
+  --warning-rgb: 183, 121, 31;
+  --caution-rgb: 176, 128, 0;
+  --violet-rgb: 30, 112, 118;
+  --indigo-rgb: 34, 100, 140;
+  --violet-deep-rgb: 90, 150, 155;
+  --cyan-rgb: 30, 112, 118;
+  --premium-rgb: 176, 128, 0;
+  --shadow-rgb: 70, 58, 30;
+  --scrim-rgb: 36, 38, 32;
+  --shadow-k: 0.3;
+
+  --text: #242620;
+  --text-strong: #181a15;
+  --text-bright: #2b2d27;
+  --text-soft: #3e403a;
+  --text-mid: #55574f;
+  --muted: #62645d;
+  --text-faint: #6c6e66;
+  --on-primary: #ffffff;
+
+  --border: #e5e3db;
+  --control-border: #8e8b80;
+  --ring: rgba(43, 91, 176, 0.35);
+
+  --primary: #2b5bb0;
+  --primary-strong: #1f4a96;
+  --accent-text: #2b5bb0;
+  --accent-text-soft: #244d99;
+  --accent-text-bright: #1d4082;
+  --violet: #1e7076;
+  --violet-text: #1a5f65;
+
+  --success: #2f855a;
+  --success-text: #2a7650;
+  --success-text-mid: #236443;
+  --success-text-soft: #1d5538;
+  --danger: #c24134;
+  --danger-text: #b03a2e;
+  --danger-text-mid: #9b3126;
+  --danger-text-soft: #85281f;
+  --warning: #b7791f;
+  --caution-text: #8a6100;
+  --caution-text-soft: #755200;
+  --orange-text: #a8541a;
+  --emerald: #2f855a;
+  --rose: #b8456f;
+
+  --shadow: 0 2px 4px rgba(70, 58, 30, 0.06), 0 12px 28px rgba(70, 58, 30, 0.09);
+  --elevation-1: 0 1px 2px rgba(70, 58, 30, 0.06), 0 4px 12px rgba(70, 58, 30, 0.06);
+  --elevation-2: 0 2px 4px rgba(70, 58, 30, 0.06), 0 12px 28px rgba(70, 58, 30, 0.09);
+  --elevation-3: 0 8px 16px rgba(70, 58, 30, 0.08), 0 24px 48px rgba(70, 58, 30, 0.13);
+
+  --question-card-bg: linear-gradient(180deg, #ffffff, #fcfbf8);
+  --question-card-border: rgba(43, 91, 176, 0.28);
+  --question-card-shadow: 0 2px 4px rgba(70, 58, 30, 0.05), 0 10px 24px rgba(70, 58, 30, 0.07);
+
+  --chart-grid: rgba(120, 113, 95, 0.22);
+  --chart-axis: #62645d;
+  --chart-line-a: #2b5bb0;
+  --chart-line-b: #1e7076;
+  --chart-ring-track: rgba(120, 113, 95, 0.18);
+  --chart-tooltip-bg: #ffffff;
+  --chart-tooltip-border: #d9d6cb;
+  --chart-tooltip-text: #242620;
+  --chart-tooltip-shadow: 0 12px 28px rgba(70, 58, 30, 0.14);
+
+  --hero-grad-a: #2b5bb0;
+  --hero-grad-b: #1e7076;
+
+  --scrollbar-track: #f0efe9;
+  --scrollbar-thumb: rgba(120, 113, 95, 0.55);
+  --scrollbar-thumb-hover: rgba(43, 91, 176, 0.75);
+  --scrollbar-thumb-active: #2b5bb0;
+
+  --selection-bg: rgba(43, 91, 176, 0.22);
+  --selection-text: #181a15;
+
+  --tier-free: #62645d;
+  --tier-pro: #2b5bb0;
+  --tier-premium: #8a6100;
+  --tier-premium-soft: rgba(176, 128, 0, 0.14);
+
+  --primary-mid-rgb: 96, 135, 205;
+  --primary-deep-rgb: 110, 145, 205;
+  --primary-deeper-rgb: 96, 135, 205;
+  --surface-raised-rgb: 232, 230, 222;
+  --danger-soft-rgb: 194, 65, 52;
+  --danger-deep-rgb: 220, 120, 108;
+  --success-soft-rgb: 47, 133, 90;
+  --success-deep-rgb: 90, 170, 125;
+  --orange-rgb: 168, 84, 26;
+  --orange-strong-rgb: 200, 110, 40;
+  --orange-deep-rgb: 215, 140, 80;
+  --amber-deep-rgb: 210, 160, 70;
+  --sky-rgb: 34, 100, 140;
+  --sky-strong-rgb: 34, 100, 140;
+  --cyan-deep-rgb: 30, 112, 118;
+  --blue-soft-rgb: 43, 91, 176;
+  --emerald-rgb: 47, 133, 90;
+  --emerald-soft-rgb: 47, 133, 90;
+  --teal-rgb: 30, 112, 118;
+  --indigo-strong-rgb: 34, 100, 140;
+  --sky-text: #1d5a82;
+  --mint-text: #236443;
+  --periwinkle-text: #2b5bb0;
+  --caution-text-mid: #7a5500;
+  --orange-text-soft: #8f4614;
+  --teal: #1e7076;
+  --amber-bright: #b7791f;
+  --indigo-a: #2b5bb0;
+  --indigo-b: #1f4a96;
+  --sky-bright: #4b82cf;
+  --primary-press: #1f4a96;
+  --primary-press-2: #193f80;
+
+  --landing-bg: radial-gradient(900px 440px at 50% -8%, rgba(43, 91, 176, 0.07), transparent),
+    linear-gradient(180deg, #faf9f5 0%, #f7f6f2 55%, #f3f2ec 100%);
+  --landing-menu-rgb: 255, 255, 255;
+  --cyan-bright: #2b5bb0;
+  --heat-1: #cfe6d9;
+  --heat-2: #8fc6a8;
+  --on-vivid: #ffffff;
+  --premium-btn-a: #f4cf70;
+  --premium-btn-b: #e0a82a;
+  --on-premium: #2b1d00;
+  --hero-particle-in: #2b6a9a;
+  --hero-particle-out: #1e7076;
+  --hero-particle-out-rgb: 30, 112, 118;
+  --dust-rgb: 43, 91, 176;
+  --ink-soft-rgb: 240, 239, 233;
+  --banner-title: #181a15;
+  /* Opaque in light: a translucent drawer lets the white header and page cards show
+     through it (dark hides this because everything behind it is dark too). */
+  --sidebar-cover: 1;
+  --sidebar-a: 1;
+  --sidebar-b: 1;
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* Smooth theme switching: applied only for the short moment a user
+   toggles (ThemeContext adds/removes .theme-transition), so ordinary
+   hover/animation transitions are never affected. */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 240ms ease, border-color 240ms ease, color 240ms ease,
+    fill 240ms ease, stroke 240ms ease, box-shadow 240ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition: none !important;
+  }
+}

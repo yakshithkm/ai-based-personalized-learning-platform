@@ -14,6 +14,7 @@ import '@fontsource-variable/noto-sans-devanagari';
 import '@fontsource-variable/noto-sans-telugu';
 import '@fontsource-variable/noto-sans-tamil';
 import '@fontsource-variable/noto-sans-malayalam';
+import './styles/theme.css';
 import './index.css';
 import './styles/global.css';
 import './styles/components.css';
@@ -31,6 +32,7 @@ import './styles/features/learning.css';
 import './styles/features/gamification.css';
 import './styles/features/about-exams.css';
 import './styles/features/i18n.css';
+import './styles/features/theme-toggle.css';
 import './styles/features/tier.css';
 import './styles/features/scrollbar.css';
 

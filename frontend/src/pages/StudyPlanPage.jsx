@@ -8,6 +8,7 @@ import { subjectColor, subjectIconPath } from '../utils/subjectVisuals';
 import { translateServerError } from '../i18n/serverErrors';
 import { subjectLabel } from '../i18n/labels';
 import { useLocaleFormat } from '../i18n/format';
+import { useTheme } from '../context/ThemeContext';
 
 const priorityForAccuracy = (accuracy = 0) => {
   if (accuracy < 50) return 'High';
@@ -28,6 +29,7 @@ const SubjectIcon = ({ subject }) => (
 );
 
 const StudyPlanPage = () => {
+  useTheme(); // re-render on theme switch so theme-dependent chart/subject colours update
   const { t } = useTranslation();
   const { formatPercent } = useLocaleFormat();
   const navigate = useNavigate();

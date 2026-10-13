@@ -1421,5 +1421,11 @@
     },
     "validUntil": "{{date}} तक मान्य",
     "noExpiry": "कोई समाप्ति तिथि नहीं"
+  },
+  "theme": {
+    "switchToLight": "लाइट थीम पर जाएँ",
+    "switchToDark": "डार्क थीम पर जाएँ",
+    "light": "लाइट",
+    "dark": "डार्क"
   }
 }

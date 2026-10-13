@@ -1421,5 +1421,11 @@
     },
     "validUntil": "Valid until {{date}}",
     "noExpiry": "No expiry date"
+  },
+  "theme": {
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme",
+    "light": "Light",
+    "dark": "Dark"
   }
 }

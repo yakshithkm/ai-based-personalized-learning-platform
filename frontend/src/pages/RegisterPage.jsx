@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '../components/LanguageSelector';
+import ThemeToggle from '../components/ThemeToggle';
 import { translateServerError } from '../i18n/serverErrors';
 import { useAuth } from '../context/AuthContext';
 import BrandLogo from '../components/BrandLogo';
@@ -83,7 +84,10 @@ const RegisterPage = () => {
       </section>
 
       <section className="auth-right">
-        <LanguageSelector variant="compact" className="lang-floating" />
+        <div className="auth-float-actions">
+          <ThemeToggle />
+          <LanguageSelector variant="compact" />
+        </div>
         <div className="auth-right-inner">
           <Link to="/" className="auth-back-link">
             <ArrowLeftIcon />

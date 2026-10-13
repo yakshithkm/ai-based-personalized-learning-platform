@@ -5,14 +5,14 @@
 
 .exam-setup-panel {
   background:
-    radial-gradient(600px 200px at 15% -10%, rgba(96, 165, 250, 0.12), transparent),
+    radial-gradient(600px 200px at 15% -10%, rgba(var(--primary-rgb), 0.12), transparent),
     linear-gradient(180deg, var(--surface-0), var(--surface-1));
 }
 
 .exam-live-header-accent {
-  border-color: rgba(96, 165, 250, 0.3);
+  border-color: rgba(var(--primary-rgb), 0.3);
   background:
-    radial-gradient(500px 180px at 0% 0%, rgba(96, 165, 250, 0.1), transparent),
+    radial-gradient(500px 180px at 0% 0%, rgba(var(--primary-rgb), 0.1), transparent),
     linear-gradient(180deg, var(--surface-0), var(--surface-1));
 }
 
@@ -51,18 +51,18 @@
 .exam-setup-grid label {
   display: grid;
   gap: 0.35rem;
-  color: #cbd5e1;
+  color: var(--text-soft);
   font-size: 0.9rem;
 }
 
 .exam-setup-grid select:disabled {
   opacity: 0.75;
   cursor: not-allowed;
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(var(--surface-rgb), 0.5);
 }
 
 .exam-setup-note {
-  color: #7c8db5;
+  color: var(--text-faint);
   font-size: 0.76rem;
   font-weight: 400;
 }
@@ -103,52 +103,70 @@
   white-space: nowrap;
 }
 
+/* Toggle switch (replaces the old checkbox look). The native <input type="checkbox"> stays in
+   the DOM (visually hidden above), so keyboard + screen-reader behaviour is unchanged; only the
+   <span class="checkbox-custom"> is drawn as a sliding switch. State is shown by the knob
+   position as well as the colour. */
 .checkbox-custom {
-  width: 20px;
-  height: 20px;
-  border-radius: 6px;
-  flex: 0 0 20px;
+  --toggle-w: 3rem;
+  --toggle-h: 1.6rem;
+  width: var(--toggle-w);
+  height: var(--toggle-h);
+  flex: 0 0 var(--toggle-w);
   display: inline-block;
-  box-shadow: inset 0 0 0 1px rgba(148,163,184,0.18), 0 2px 6px rgba(2,6,23,0.4);
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(15,23,42,0.6));
-  transition: background 180ms ease, transform 150ms ease, box-shadow 180ms ease;
   position: relative;
-  margin-left: 63px;
-}
-
-.exam-toggle-row input:focus + .checkbox-custom {
-  box-shadow: 0 0 0 4px rgba(59,130,246,0.12), inset 0 0 0 1px rgba(59,130,246,0.25);
-}
-
-.exam-toggle-row input:checked + .checkbox-custom {
-  background: linear-gradient(180deg, #60a5fa, #2563eb);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 4px 12px rgba(37,99,235,0.24);
-  transform: translateY(-1px);
+  border-radius: 999px;
+  background: rgba(var(--neutral-rgb), 0.28);
+  box-shadow: inset 0 0 0 1px rgba(var(--neutral-rgb), 0.5);
+  transition: background 0.35s ease, box-shadow 0.2s ease;
 }
 
 .checkbox-custom::after {
   content: '';
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 10px;
-  height: 6px;
-  border-left: 2px solid rgba(255,255,255,0);
-  border-bottom: 2px solid rgba(255,255,255,0);
-  transform: translate(-50%, -60%) rotate(-45deg) scale(0.8);
-  transition: border-color 180ms ease, transform 180ms ease, opacity 120ms ease;
-  opacity: 0;
+  top: 3px;
+  left: 3px;
+  width: calc(var(--toggle-h) - 6px);
+  height: calc(var(--toggle-h) - 6px);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(var(--shadow-rgb), calc(0.45 * var(--shadow-k)));
+  transition: transform 0.2s ease;
+}
+
+.exam-toggle-row input:checked + .checkbox-custom {
+  background: var(--success);
+  box-shadow: inset 0 0 0 1px rgba(var(--success-rgb), 0.6);
 }
 
 .exam-toggle-row input:checked + .checkbox-custom::after {
-  border-left-color: rgba(255,255,255,0.95);
-  border-bottom-color: rgba(255,255,255,0.95);
-  opacity: 1;
-  transform: translate(-50%, -60%) rotate(-45deg) scale(1);
+  transform: translateX(calc(var(--toggle-w) - var(--toggle-h)));
+}
+
+/* Inside the setup grid the row is stacked (switch above its text): centre the switch over the
+   label instead of relying on a fixed margin. */
+.exam-setup-grid .exam-toggle-row {
+  text-align: center;
+}
+
+.exam-setup-grid .exam-toggle-row .checkbox-custom {
+  justify-self: center;
+}
+
+.exam-toggle-row input:focus-visible + .checkbox-custom {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkbox-custom,
+  .checkbox-custom::after {
+    transition: none;
+  }
 }
 
 .exam-toggle-label {
-  color: #cbd5e1;
+  color: var(--text-soft);
   font-size: 0.95rem;
   line-height: 1;
   margin-right: 0.4rem;
@@ -174,14 +192,14 @@
 }
 
 .exam-timer {
-  border: 1px solid rgba(96, 165, 250, 0.42);
+  border: 1px solid rgba(var(--primary-rgb), 0.42);
   border-radius: 12px;
   padding: 0.55rem 0.8rem;
   display: grid;
   gap: 0.2rem;
   min-width: 140px;
-  text-align: right;
-  background: rgba(30, 58, 138, 0.22);
+  text-align: center;
+  background: rgba(var(--primary-deep-rgb), 0.22);
 }
 
 .exam-timer strong {
@@ -194,18 +212,18 @@
 }
 
 .exam-timer.danger {
-  border-color: rgba(239, 68, 68, 0.55);
-  background: rgba(185, 28, 28, 0.24);
+  border-color: rgba(var(--danger-rgb), 0.55);
+  background: rgba(var(--danger-deep-rgb), 0.24);
   animation: timerPulse 1.6s ease-in-out infinite;
 }
 
 @keyframes timerPulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.35);
+    box-shadow: 0 0 0 0 rgba(var(--danger-rgb), calc(0.35 * var(--shadow-k)));
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+    box-shadow: 0 0 0 6px rgba(var(--danger-rgb), calc(0 * var(--shadow-k)));
   }
 }
 
@@ -213,13 +231,13 @@
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
-  color: #bfdbfe;
+  color: var(--accent-text-soft);
   margin-bottom: 0.6rem;
 }
 
 .exam-resync-indicator,
 .exam-resync-badge {
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .exam-resync-indicator {
@@ -247,25 +265,25 @@
   gap: 0.2rem;
   padding: 0.7rem;
   border-radius: 12px;
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(var(--neutral-rgb), 0.2);
+  background: rgba(var(--surface-rgb), 0.45);
 }
 
 .exam-debug-grid span {
-  color: #94a3b8;
+  color: var(--muted);
   font-size: 0.82rem;
 }
 
 .exam-debug-grid strong {
-  color: #eff6ff;
+  color: var(--text-strong);
   font-size: 1.1rem;
 }
 
 .progress-pill {
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  border: 1px solid rgba(96, 165, 250, 0.45);
-  background: rgba(30, 58, 138, 0.22);
+  border: 1px solid rgba(var(--primary-rgb), 0.45);
+  background: rgba(var(--primary-deep-rgb), 0.22);
 }
 
 .exam-question-card {
@@ -294,13 +312,13 @@
 }
 
 .exam-question-text {
-  color: #dbeafe;
+  color: var(--accent-text-bright);
   margin-top: 0.4rem;
 }
 
 .exam-mode-note {
   margin-top: 0.3rem;
-  color: #cbd5e1;
+  color: var(--text-soft);
   font-size: 0.88rem;
 }
 
@@ -312,22 +330,22 @@
 }
 
 .exam-tag-chip {
-  border: 1px solid rgba(96, 165, 250, 0.35);
-  background: rgba(30, 58, 138, 0.24);
-  color: #dbeafe;
+  border: 1px solid rgba(var(--primary-rgb), 0.35);
+  background: rgba(var(--primary-deep-rgb), 0.24);
+  color: var(--accent-text-bright);
   font-size: 0.76rem;
   padding: 0.2rem 0.45rem;
   border-radius: 999px;
 }
 
 .exam-tag-chip.pyq {
-  border-color: rgba(34, 197, 94, 0.55);
-  background: rgba(22, 101, 52, 0.32);
+  border-color: rgba(var(--success-rgb), 0.55);
+  background: rgba(var(--success-deep-rgb), 0.32);
 }
 
 .exam-tag-chip.mock {
-  border-color: rgba(148, 163, 184, 0.45);
-  background: rgba(30, 41, 59, 0.35);
+  border-color: rgba(var(--neutral-rgb), 0.45);
+  background: rgba(var(--surface-raised-rgb), 0.35);
 }
 
 .exam-action-row {
@@ -357,8 +375,8 @@
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.5rem;
-  background: rgba(15, 23, 42, 0.7);
-  color: #e2e8f0;
+  background: rgba(var(--surface-rgb), 0.7);
+  color: var(--text-bright);
   cursor: pointer;
   display: grid;
   gap: 0.12rem;
@@ -388,7 +406,7 @@
 
 .palette-state {
   font-size: 0.62rem;
-  color: #cbd5e1;
+  color: var(--text-soft);
   text-align: center;
   overflow-wrap: anywhere;
 }
@@ -397,18 +415,18 @@
   font-size: 0.58rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #facc15;
+  color: var(--caution-text);
 }
 
 .palette-btn.answered {
-  border-color: rgba(59, 130, 246, 0.62);
-  background: rgba(30, 64, 175, 0.3);
+  border-color: rgba(var(--primary-mid-rgb), 0.62);
+  background: rgba(var(--primary-deeper-rgb), 0.3);
 }
 
 .palette-btn.pending,
 .option-btn.pending {
-  border-color: rgba(249, 115, 22, 0.62);
-  background: rgba(249, 115, 22, 0.18);
+  border-color: rgba(var(--orange-strong-rgb), 0.62);
+  background: rgba(var(--orange-strong-rgb), 0.18);
 }
 
 .option-btn.saving {
@@ -418,32 +436,32 @@
 
 .palette-btn.confirmed,
 .option-btn.confirmed {
-  border-color: rgba(59, 130, 246, 0.72);
-  background: rgba(59, 130, 246, 0.28);
+  border-color: rgba(var(--primary-mid-rgb), 0.72);
+  background: rgba(var(--primary-mid-rgb), 0.28);
 }
 
 .palette-btn.failed,
 .option-btn.failed {
-  border-color: rgba(239, 68, 68, 0.7);
-  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(var(--danger-rgb), 0.7);
+  background: rgba(var(--danger-rgb), 0.2);
 }
 
 .palette-btn.unanswered {
-  border-color: rgba(148, 163, 184, 0.45);
+  border-color: rgba(var(--neutral-rgb), 0.45);
 }
 
 .palette-btn.review {
-  border-color: rgba(250, 204, 21, 0.65);
-  box-shadow: inset 0 0 0 1px rgba(250, 204, 21, 0.25);
+  border-color: rgba(var(--caution-rgb), 0.65);
+  box-shadow: inset 0 0 0 1px rgba(var(--caution-rgb), calc(0.25 * var(--shadow-k)));
 }
 
 .palette-btn.current {
-  border-color: rgba(96, 165, 250, 0.72);
-  box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.35);
+  border-color: rgba(var(--primary-rgb), 0.72);
+  box-shadow: 0 0 0 1px rgba(var(--primary-rgb), calc(0.35 * var(--shadow-k)));
 }
 
 .palette-btn.visited {
-  border-color: rgba(148, 163, 184, 0.55);
+  border-color: rgba(var(--neutral-rgb), 0.55);
 }
 
 .exam-score-grid {
@@ -453,17 +471,53 @@
   gap: 0.7rem;
 }
 
+/* Post-Test Result cards (7-8 of them). Wide screens: all on ONE line with equal widths and
+   slightly tighter cards so values like "154000 - 196000" still fit. Mid-size screens: a
+   balanced 4-per-row grid (no lonely orphan card). Phones keep the auto-fit layout above. */
+@media (min-width: 1440px) {
+  .exam-score-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+  }
+
+  .exam-score-grid .score-box {
+    padding: 0.65rem 0.5rem;
+  }
+
+  .exam-score-grid .score-box span {
+    font-size: 0.85rem;
+  }
+
+  .exam-score-grid .score-box strong {
+    font-size: 0.98rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1439px) {
+  .exam-score-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .exam-score-grid .score-box strong {
+    overflow-wrap: anywhere;
+  }
+}
+
 .score-box {
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.75rem;
-  background: rgba(15, 23, 42, 0.65);
+  background: rgba(var(--surface-rgb), 0.65);
   display: grid;
   gap: 0.25rem;
+  justify-items: center;
+  text-align: center;
 }
 
 .score-box strong {
-  color: #93c5fd;
+  color: var(--accent-text);
   font-size: 1.1rem;
 }
 
@@ -479,17 +533,17 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.8rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(var(--surface-rgb), 0.6);
 }
 
 .exam-interpretation-box p {
-  color: #cbd5e1;
+  color: var(--text-soft);
   margin-top: 0.35rem;
 }
 
 .exam-question-state-line {
   margin-top: 0.3rem;
-  color: #93c5fd;
+  color: var(--accent-text);
   font-size: 0.84rem;
 }
 
@@ -506,7 +560,7 @@
     box-shadow: none;
   }
   90% {
-    box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.18), 0 0 16px rgba(96, 165, 250, 0.3);
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), calc(0.18 * var(--shadow-k))), 0 0 16px rgba(var(--primary-rgb), calc(0.3 * var(--shadow-k)));
   }
 }
 
@@ -535,8 +589,8 @@
   display: grid;
   gap: 0.2rem;
   min-width: 120px;
-  text-align: right;
-  background: rgba(30, 41, 59, 0.35);
+  text-align: center;
+  background: rgba(var(--surface-raised-rgb), 0.35);
   transition: border-color 200ms ease, background 200ms ease, color 200ms ease;
 }
 
@@ -551,30 +605,30 @@
 }
 
 .exam-violation-indicator.level-warn {
-  border-color: rgba(250, 204, 21, 0.5);
-  background: rgba(161, 98, 7, 0.2);
+  border-color: rgba(var(--caution-rgb), 0.5);
+  background: rgba(var(--amber-deep-rgb), 0.2);
 }
 
 .exam-violation-indicator.level-warn strong {
-  color: #facc15;
+  color: var(--caution-text);
 }
 
 .exam-violation-indicator.level-alert {
-  border-color: rgba(249, 115, 22, 0.6);
-  background: rgba(194, 65, 12, 0.26);
+  border-color: rgba(var(--orange-strong-rgb), 0.6);
+  background: rgba(var(--orange-deep-rgb), 0.26);
 }
 
 .exam-violation-indicator.level-alert strong {
-  color: #fb923c;
+  color: var(--orange-text);
 }
 
 .exam-violation-indicator.level-critical {
-  border-color: rgba(239, 68, 68, 0.7);
-  background: rgba(185, 28, 28, 0.32);
+  border-color: rgba(var(--danger-rgb), 0.7);
+  background: rgba(var(--danger-deep-rgb), 0.32);
 }
 
 .exam-violation-indicator.level-critical strong {
-  color: #f87171;
+  color: var(--danger-text);
 }
 
 .exam-proctor-cam {
@@ -599,11 +653,11 @@
 }
 
 .exam-proctor-cam.active .exam-proctor-cam-frame {
-  border-color: rgba(34, 197, 94, 0.55);
+  border-color: rgba(var(--success-rgb), 0.55);
 }
 
 .exam-proctor-cam.unavailable .exam-proctor-cam-frame {
-  border-color: rgba(250, 204, 21, 0.55);
+  border-color: rgba(var(--caution-rgb), 0.55);
 }
 
 .exam-proctor-cam-video {
@@ -624,7 +678,7 @@
 }
 
 .exam-proctor-cam.unavailable .exam-proctor-cam-status {
-  color: #facc15;
+  color: var(--caution-text);
 }
 
 .exam-proctor-cam-help {
@@ -674,20 +728,20 @@
 }
 
 .exam-proctor-alert.camera {
-  border-color: rgba(250, 204, 21, 0.5);
+  border-color: rgba(var(--caution-rgb), 0.5);
 }
 
 .exam-proctor-alert.camera strong {
-  color: #facc15;
+  color: var(--caution-text);
 }
 
 .exam-proctor-alert.restored {
-  border-color: rgba(34, 197, 94, 0.5);
+  border-color: rgba(var(--success-rgb), 0.5);
   color: var(--success);
 }
 
 .exam-proctor-alert.focus {
-  border-color: rgba(249, 115, 22, 0.55);
+  border-color: rgba(var(--orange-strong-rgb), 0.55);
 }
 
 .exam-proctor-alert.focus small {
@@ -695,8 +749,8 @@
 }
 
 .exam-proctor-alert.focus.final {
-  border-color: rgba(239, 68, 68, 0.7);
-  color: #f87171;
+  border-color: rgba(var(--danger-rgb), 0.7);
+  color: var(--danger-text);
 }
 
 /* Alerts should not lift on hover like regular panels - they are status, not links. */
@@ -719,21 +773,21 @@
 }
 
 .toast-item.toast-warning {
-  border-color: rgba(250, 204, 21, 0.55);
-  box-shadow: var(--elevation-3), 0 0 0 1px rgba(250, 204, 21, 0.14);
+  border-color: rgba(var(--caution-rgb), 0.55);
+  box-shadow: var(--elevation-3), 0 0 0 1px rgba(var(--caution-rgb), calc(0.14 * var(--shadow-k)));
 }
 
 .toast-item.toast-warning strong {
-  color: #facc15;
+  color: var(--caution-text);
 }
 
 .toast-item.toast-warning.final {
-  border-color: rgba(239, 68, 68, 0.7);
-  box-shadow: var(--elevation-3), 0 0 0 1px rgba(239, 68, 68, 0.18);
+  border-color: rgba(var(--danger-rgb), 0.7);
+  box-shadow: var(--elevation-3), 0 0 0 1px rgba(var(--danger-rgb), calc(0.18 * var(--shadow-k)));
 }
 
 .toast-item.toast-warning.final strong {
-  color: #f87171;
+  color: var(--danger-text);
 }
 
 .toast-item .toast-detail {

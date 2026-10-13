@@ -15,6 +15,7 @@ import { subjectColor } from '../utils/subjectVisuals';
 import { emitAttemptSubmitted, emitGamificationEvent } from '../utils/appEvents';
 import AISidebar from '../components/AISidebar';
 import { PROTECTED_CONTENT_CLASS, protectedContentHandlers } from '../utils/protectedContent';
+import { useTheme } from '../context/ThemeContext';
 
 const makeSessionId = () => {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
@@ -75,6 +76,7 @@ const AIIcon = () => (
 );
 
 const PracticePage = () => {
+  useTheme(); // re-render on theme switch so theme-dependent chart/subject colours update
   const { t } = useTranslation();
   const { formatPercent } = useLocaleFormat();
   const navigate = useNavigate();
@@ -875,13 +877,13 @@ const PracticePage = () => {
                 <div className="practice-session-ring-row">
                   <div className="overall-ring-wrap practice-ring">
                     <svg viewBox="0 0 120 120" className="overall-ring">
-                      <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(148,163,184,0.18)" strokeWidth="12" />
+                      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--chart-ring-track)" strokeWidth="12" />
                       <circle
                         cx="60"
                         cy="60"
                         r="52"
                         fill="none"
-                        stroke="#60a5fa"
+                        stroke="var(--chart-line-a)"
                         strokeWidth="12"
                         strokeLinecap="round"
                         strokeDasharray={2 * Math.PI * 52}

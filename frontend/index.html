@@ -5,16 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="/tutormind-logo.png" />
     <title>TutorMind | AI-Based Personalized Learning Platform</title>
+    <meta name="theme-color" content="#0f172a" />
     <script>
+      /* Apply the saved theme before first paint to avoid a flash of the wrong
+         theme. Dark is the default and the fallback; the OS colour-scheme
+         preference is intentionally ignored. Keep the key in sync with
+         THEME_STORAGE_KEY in src/context/ThemeContext.jsx. */
       (function () {
+        var theme = 'dark';
         try {
           var stored = localStorage.getItem('tutormind-theme');
-          var theme = stored === 'light' || stored === 'dark'
-            ? stored
-            : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-          document.documentElement.setAttribute('data-theme', theme);
-        } catch (e) {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          if (stored === 'light' || stored === 'dark') theme = stored;
+        } catch (e) {}
+        var root = document.documentElement;
+        root.setAttribute('data-theme', theme);
+        if (theme === 'light') {
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', '#f7f6f2');
         }
       })();
     </script>

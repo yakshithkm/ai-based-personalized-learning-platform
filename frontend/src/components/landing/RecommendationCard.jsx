@@ -50,7 +50,7 @@ const RecommendationCard = () => {
       <span className="hero-float-value">
         {t(`home.sampleTopics.${current.key}`)}
         <svg className="hero-float-check" viewBox="0 0 20 20" width="13" height="13" aria-hidden="true">
-          <path d="M4 10.5l3.5 3.5L16 5" fill="none" stroke="#4ade80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M4 10.5l3.5 3.5L16 5" fill="none" stroke="var(--success-text)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </span>
       <span className="hero-float-subvalue">{t('common.questionCount', { count: current.count })}</span>

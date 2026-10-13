@@ -17,13 +17,14 @@ import { translateServerError } from '../i18n/serverErrors';
 import { subjectLabel } from '../i18n/labels';
 import { useLocaleFormat } from '../i18n/format';
 import FeatureLock from '../components/tier/FeatureLock';
+import { useTheme } from '../context/ThemeContext';
 
 const chartTooltipStyle = {
-  backgroundColor: '#111827',
-  border: '1px solid rgba(96, 165, 250, 0.4)',
+  backgroundColor: 'var(--chart-tooltip-bg)',
+  border: '1px solid var(--chart-tooltip-border)',
   borderRadius: '12px',
-  boxShadow: '0 14px 30px rgba(15, 23, 42, 0.6)',
-  color: '#dbeafe',
+  boxShadow: 'var(--chart-tooltip-shadow)',
+  color: 'var(--chart-tooltip-text)',
 };
 
 const StreakIcon = () => (
@@ -81,6 +82,7 @@ const formatMinutesLabel = (totalMinutes, t) => {
 };
 
 const AnalyticsPage = () => {
+  useTheme(); // re-render on theme switch so theme-dependent chart/subject colours update
   const { t } = useTranslation();
   const { formatDate, formatNumber, formatPercent } = useLocaleFormat();
   const navigate = useNavigate();
@@ -325,10 +327,10 @@ const AnalyticsPage = () => {
         </div>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(148, 163, 184, 0.2)" />
-            <XAxis dataKey="day" stroke="#94a3b8" tickLine={false} axisLine={false} fontSize={12} />
-            <YAxis yAxisId="left" stroke="#60a5fa" tickLine={false} axisLine={false} fontSize={12} domain={[0, 100]} />
-            <YAxis yAxisId="right" orientation="right" stroke="#a78bfa" tickLine={false} axisLine={false} fontSize={12} />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+            <XAxis dataKey="day" stroke="var(--chart-axis)" tickLine={false} axisLine={false} fontSize={12} />
+            <YAxis yAxisId="left" stroke="var(--chart-line-a)" tickLine={false} axisLine={false} fontSize={12} domain={[0, 100]} />
+            <YAxis yAxisId="right" orientation="right" stroke="var(--chart-line-b)" tickLine={false} axisLine={false} fontSize={12} />
             <Tooltip contentStyle={chartTooltipStyle} />
             {chartRange === '7d' && (
               <Line
@@ -336,9 +338,9 @@ const AnalyticsPage = () => {
                 type="monotone"
                 dataKey="accuracy"
                 name={t('dashboard.accuracyPercentSeries')}
-                stroke="#60a5fa"
+                stroke="var(--chart-line-a)"
                 strokeWidth={3}
-                dot={{ r: 4, fill: '#60a5fa' }}
+                dot={{ r: 4, fill: 'var(--chart-line-a)' }}
                 activeDot={{ r: 6 }}
                 isAnimationActive
                 animationDuration={700}
@@ -349,9 +351,9 @@ const AnalyticsPage = () => {
               type="monotone"
               dataKey="questionsSolved"
               name={t('dashboard.questionsSolved')}
-              stroke="#a78bfa"
+              stroke="var(--chart-line-b)"
               strokeWidth={3}
-              dot={{ r: 4, fill: '#a78bfa' }}
+              dot={{ r: 4, fill: 'var(--chart-line-b)' }}
               activeDot={{ r: 6 }}
               isAnimationActive
               animationDuration={700}
@@ -373,13 +375,13 @@ const AnalyticsPage = () => {
           <div className="subject-accuracy-body">
             <div className="overall-ring-wrap">
               <svg viewBox="0 0 120 120" className="overall-ring">
-                <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(148,163,184,0.18)" strokeWidth="12" />
+                <circle cx="60" cy="60" r="52" fill="none" stroke="var(--chart-ring-track)" strokeWidth="12" />
                 <circle
                   cx="60"
                   cy="60"
                   r="52"
                   fill="none"
-                  stroke="#60a5fa"
+                  stroke="var(--chart-line-a)"
                   strokeWidth="12"
                   strokeLinecap="round"
                   strokeDasharray={2 * Math.PI * 52}

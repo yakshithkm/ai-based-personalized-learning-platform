@@ -45,6 +45,36 @@
   .about-exam-back-top span {
     display: none;
   }
+
+  /* Logo + language + theme toggle + back arrow must all fit in one row on
+     narrow phones (375px and below). */
+  .about-exam-topbar {
+    column-gap: 0.4rem;
+  }
+
+  .about-exam-topbar .landing-logo {
+    min-width: 0;
+  }
+
+  .about-exam-topbar-actions {
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .about-exam-topbar-actions .lang-caret {
+    display: none;
+  }
+
+  .about-exam-back-top {
+    padding: 0.55rem 0.65rem;
+  }
+}
+
+@media (max-width: 340px) {
+  /* Very small phones: keep the logo mark, drop the wordmark so the actions fit. */
+  .about-exam-topbar .brand-text {
+    display: none;
+  }
 }
 
 /* ---- Page header ---- */
@@ -57,19 +87,19 @@
   align-items: center;
   width: fit-content;
   margin: 0 auto 1rem;
-  border: 1px solid rgba(96, 165, 250, 0.4);
+  border: 1px solid rgba(var(--primary-rgb), 0.4);
   border-radius: var(--radius-pill);
-  color: #bfdbfe;
+  color: var(--accent-text-soft);
   font-size: 0.76rem;
   letter-spacing: 0.08em;
   padding: 0.36rem 0.85rem;
-  background: rgba(37, 99, 235, 0.18);
+  background: rgba(var(--primary-strong-rgb), 0.18);
 }
 
 .about-exam-header h1 {
   font-size: clamp(1.9rem, 4.4vw, 2.9rem);
   margin: 0 0 0.6rem;
-  color: #f3f4f6;
+  color: var(--text-strong);
 }
 
 /* ---- Exam cards ---- */
@@ -98,10 +128,10 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(var(--neutral-rgb), 0.2);
   border-radius: var(--radius-lg);
   padding: 1.4rem;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.66), rgba(2, 6, 23, 0.76));
+  background: linear-gradient(180deg, rgba(var(--surface-rgb), 0.66), rgba(var(--surface-deep-rgb), 0.76));
   box-shadow: var(--elevation-1);
   transition: transform var(--duration-base) var(--ease-out), border-color var(--duration-base) ease,
     box-shadow var(--duration-base) ease;
@@ -109,7 +139,7 @@
 
 .about-exam-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(96, 165, 250, 0.4);
+  border-color: rgba(var(--primary-rgb), 0.4);
   box-shadow: var(--elevation-2);
 }
 
@@ -134,9 +164,9 @@
   width: 44px;
   height: 44px;
   border-radius: var(--radius-md);
-  color: #93c5fd;
-  background: rgba(96, 165, 250, 0.12);
-  border: 1px solid rgba(96, 165, 250, 0.24);
+  color: var(--accent-text);
+  background: rgba(var(--primary-rgb), 0.12);
+  border: 1px solid rgba(var(--primary-rgb), 0.24);
 }
 
 .about-exam-icon svg {
@@ -147,7 +177,7 @@
 .about-exam-card-head h2 {
   margin: 0 0 0.15rem;
   font-size: 1.15rem;
-  color: #f3f4f6;
+  color: var(--text-strong);
 }
 
 .about-exam-fullname {
@@ -159,18 +189,18 @@
 .about-exam-authority {
   margin: 0 0 0.7rem;
   font-size: 0.88rem;
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .about-exam-authority strong {
-  color: #e5e7eb;
+  color: var(--text);
 }
 
 .about-exam-purpose {
   margin: 0 0 1rem;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #aab8d8;
+  color: var(--text-mid);
 }
 
 .about-exam-card h3 {
@@ -178,7 +208,7 @@
   font-size: 0.86rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #93c5fd;
+  color: var(--accent-text);
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -201,7 +231,7 @@
   position: relative;
   padding-left: 1.15rem;
   font-size: 0.87rem;
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .about-exam-list li::before {
@@ -212,7 +242,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(96, 165, 250, 0.7);
+  background: rgba(var(--primary-rgb), 0.7);
 }
 
 .about-exam-chip-list {
@@ -230,7 +260,7 @@
   border: 1px solid var(--border);
   background: var(--surface-0);
   font-size: 0.78rem;
-  color: #e2e8f0;
+  color: var(--text-bright);
 }
 
 .about-exam-subjects-note {
@@ -247,7 +277,7 @@
   margin: 0;
   font-size: 0.87rem;
   line-height: 1.5;
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .about-exam-links {
@@ -286,22 +316,22 @@
 .about-exam-leaving-note {
   margin: 0;
   font-size: 0.74rem;
-  color: rgba(148, 163, 184, 0.75);
+  color: rgba(var(--neutral-rgb), 0.75);
 }
 
 .about-exam-notice {
   margin-top: auto;
   padding: 0.9rem 1rem;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(96, 165, 250, 0.22);
-  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(var(--primary-rgb), 0.22);
+  background: rgba(var(--primary-strong-rgb), 0.08);
 }
 
 .about-exam-notice p {
   margin: 0 0 0.6rem;
   font-size: 0.83rem;
   line-height: 1.5;
-  color: #c7d2fe;
+  color: var(--violet-text);
 }
 
 .about-exam-notice-link {
@@ -310,7 +340,7 @@
   gap: 0.35rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: #93c5fd;
+  color: var(--accent-text);
   text-decoration: none;
 }
 
@@ -354,21 +384,21 @@
 }
 
 .about-exam-table thead th {
-  background: rgba(15, 23, 42, 0.6);
-  color: #93c5fd;
+  background: rgba(var(--surface-rgb), 0.6);
+  color: var(--accent-text);
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .about-exam-table tbody th {
-  color: #f1f5f9;
+  color: var(--text-strong);
   font-weight: 600;
   white-space: nowrap;
 }
 
 .about-exam-table tbody td {
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .about-exam-table tbody tr:last-child th,
@@ -414,21 +444,27 @@
     font-size: 0.95rem;
   }
 
+  /* Two fixed columns (label | value) so every row lines up the same way:
+     labels share one left edge and values share another, left-aligned, instead of
+     the value floating wherever the label's width happened to leave room. */
   .about-exam-table td {
     padding: 0.3rem 0;
     border-bottom: none;
-    display: flex;
-    justify-content: space-between;
-    gap: 0.75rem;
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 38%) minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 0.9rem;
+    text-align: left;
+    overflow-wrap: anywhere;
   }
 
   .about-exam-table td::before {
     content: attr(data-label);
-    flex: 0 0 auto;
     font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--muted);
+    overflow-wrap: normal;
   }
 }
 
@@ -451,10 +487,10 @@
 
 .about-exam-which-card {
   text-align: center;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(var(--neutral-rgb), 0.2);
   border-radius: var(--radius-lg);
   padding: 1.2rem;
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.66), rgba(2, 6, 23, 0.76));
+  background: linear-gradient(180deg, rgba(var(--surface-rgb), 0.66), rgba(var(--surface-deep-rgb), 0.76));
   box-shadow: var(--elevation-1);
 }
 
@@ -465,12 +501,12 @@
 .about-exam-which-card h3 {
   margin: 0 0 0.4rem;
   font-size: 1.02rem;
-  color: #f3f4f6;
+  color: var(--text-strong);
 }
 
 .about-exam-which-card p {
   margin: 0;
-  color: #aab8d8;
+  color: var(--text-mid);
   font-size: 0.9rem;
   line-height: 1.5;
 }

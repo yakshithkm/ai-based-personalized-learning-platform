@@ -21,7 +21,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 }
 
 .user-block-link:hover {
-  border-color: rgba(96, 165, 250, 0.4);
+  border-color: rgba(var(--primary-rgb), 0.4);
   transform: translateY(-1px);
 }
 
@@ -45,8 +45,8 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   place-items: center;
   font-size: 1.6rem;
   font-weight: 700;
-  color: #0b1220;
-  background: linear-gradient(135deg, #60a5fa, #34d399);
+  color: var(--on-vivid);
+  background: linear-gradient(135deg, var(--primary), var(--emerald));
 }
 
 .profile-identity h2 {
@@ -92,12 +92,12 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 
 .profile-ring-track {
   fill: none;
-  stroke: rgba(148, 163, 184, 0.18);
+  stroke: rgba(var(--neutral-rgb), 0.18);
   stroke-width: 9;
 }
 
 .profile-ring-marker {
-  stroke: rgba(15, 23, 42, 0.85);
+  stroke: rgba(var(--surface-rgb), 0.85);
   stroke-width: 1.25;
 }
 
@@ -137,7 +137,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   display: inline-flex;
   align-items: center;
   gap: 0.28rem;
-  color: #4ade80;
+  color: var(--success-text);
   font-size: 0.74rem;
   font-weight: 600;
   white-space: nowrap;
@@ -146,13 +146,13 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 .profile-ring-check-icon {
   width: 0.75rem;
   height: 0.75rem;
-  fill: #4ade80;
+  fill: var(--success-text);
   flex-shrink: 0;
 }
 
 .profile-ring-accept-label {
   margin: 0;
-  color: #cbd5e1;
+  color: var(--text-soft);
   font-size: 0.78rem;
   font-weight: 600;
   white-space: nowrap;
@@ -160,7 +160,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 
 .profile-ring-submissions {
   margin: 0;
-  color: #4ade80;
+  color: var(--success-text);
   font-size: 0.62rem;
   font-weight: 600;
   white-space: nowrap;
@@ -186,7 +186,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.55rem 0.75rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(var(--surface-rgb), 0.6);
 }
 
 .profile-subject-box div {
@@ -208,7 +208,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 
 .profile-subject-acc {
   font-weight: 700;
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .profile-rank-box {
@@ -230,7 +230,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 
 .profile-heatmap-head > p {
   margin: 0;
-  color: #cbd5e1;
+  color: var(--text-soft);
 }
 
 .profile-heatmap-head strong {
@@ -245,7 +245,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 }
 
 .profile-heatmap-summary strong {
-  color: #e2e8f0;
+  color: var(--text-bright);
 }
 
 .profile-heatmap-grid {
@@ -277,7 +277,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 2px;
-  background: rgba(148, 163, 184, 0.12);
+  background: rgba(var(--neutral-rgb), 0.12);
 }
 
 /* Below this width, proportionally-stretched cells would shrink past a
@@ -312,19 +312,19 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 }
 
 .profile-heatmap-cell.level-1 {
-  background: #14532d;
+  background: var(--heat-1);
 }
 
 .profile-heatmap-cell.level-2 {
-  background: #15803d;
+  background: var(--heat-2);
 }
 
 .profile-heatmap-cell.level-3 {
-  background: #22c55e;
+  background: var(--success);
 }
 
 .profile-heatmap-cell.level-4 {
-  background: #4ade80;
+  background: var(--success-text);
 }
 
 .profile-heatmap-month-label {
@@ -349,13 +349,13 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 0.9rem 0.6rem;
-  background: rgba(15, 23, 42, 0.68);
+  background: rgba(var(--surface-rgb), 0.68);
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .profile-badge-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(96, 165, 250, 0.4);
+  border-color: rgba(var(--primary-rgb), 0.4);
 }
 
 .profile-badge-icon {
@@ -364,9 +364,9 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   display: grid;
   place-items: center;
   border-radius: 999px;
-  background: rgba(96, 165, 250, 0.16);
-  border: 1px solid rgba(96, 165, 250, 0.32);
-  color: #bfdbfe;
+  background: rgba(var(--primary-rgb), 0.16);
+  border: 1px solid rgba(var(--primary-rgb), 0.32);
+  color: var(--accent-text-soft);
 }
 
 .profile-badge-icon svg {
@@ -405,21 +405,21 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 }
 
 .profile-skill-advanced {
-  color: #4ade80;
-  background: rgba(34, 197, 94, 0.14);
-  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: var(--success-text);
+  background: rgba(var(--success-rgb), 0.14);
+  border: 1px solid rgba(var(--success-rgb), 0.4);
 }
 
 .profile-skill-intermediate {
-  color: #93c5fd;
-  background: rgba(96, 165, 250, 0.14);
-  border: 1px solid rgba(96, 165, 250, 0.4);
+  color: var(--accent-text);
+  background: rgba(var(--primary-rgb), 0.14);
+  border: 1px solid rgba(var(--primary-rgb), 0.4);
 }
 
 .profile-skill-developing {
-  color: #fca5a5;
-  background: rgba(239, 68, 68, 0.14);
-  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: var(--danger-text-mid);
+  background: rgba(var(--danger-rgb), 0.14);
+  border: 1px solid rgba(var(--danger-rgb), 0.35);
 }
 
 .profile-skill-tier .chip small {
@@ -440,7 +440,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.65rem 0.85rem;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(var(--surface-rgb), 0.6);
 }
 
 .profile-activity-dot {
@@ -451,11 +451,11 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 }
 
 .profile-activity-dot.is-correct {
-  background: #34d399;
+  background: var(--emerald);
 }
 
 .profile-activity-dot.is-incorrect {
-  background: #f87171;
+  background: var(--danger-text);
 }
 
 .profile-activity-main {
@@ -500,7 +500,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 .invite-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(2, 6, 23, 0.6);
+  background: rgba(var(--scrim-rgb), 0.6);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -552,7 +552,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 .invite-link-row input {
   flex: 1 1 220px;
   min-width: 0;
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(var(--surface-rgb), 0.72);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.6rem 0.75rem;
@@ -583,7 +583,7 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
 }
 
 .invite-stat-box {
-  background: rgba(15, 23, 42, 0.72);
+  background: rgba(var(--surface-rgb), 0.72);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 0.7rem 0.8rem;

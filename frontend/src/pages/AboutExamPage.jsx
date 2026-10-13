@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '../components/LanguageSelector';
+import ThemeToggle from '../components/ThemeToggle';
 import { subjectLabel } from '../i18n/labels';
 import BrandLogo from '../components/BrandLogo';
 import Footer from '../components/Footer';
@@ -115,6 +116,7 @@ const AboutExamPage = () => {
         <span />
         <div className="about-exam-topbar-actions">
           <LanguageSelector variant="compact" />
+          <ThemeToggle />
           <button
             type="button"
             className="outline-btn about-exam-back-top"

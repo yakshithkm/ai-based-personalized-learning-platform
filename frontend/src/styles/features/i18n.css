@@ -72,7 +72,7 @@ html:not([lang='en']) .header-dropdown-item {
   gap: 0.4rem;
   min-height: 2.25rem;
   padding: 0.3rem 0.65rem;
-  border: 1px solid var(--border, rgba(148, 163, 184, 0.3));
+  border: 1px solid var(--border, rgba(var(--neutral-rgb), 0.3));
   border-radius: 999px;
   background: var(--panel-soft, rgba(255, 255, 255, 0.04));
   color: var(--text, inherit);
@@ -83,12 +83,12 @@ html:not([lang='en']) .header-dropdown-item {
 }
 
 .lang-trigger:hover {
-  border-color: var(--accent, #3b82f6);
+  border-color: var(--accent, var(--primary-strong));
 }
 
 .lang-trigger:focus-visible,
 .lang-menu:focus-visible {
-  outline: 2px solid var(--accent, #3b82f6);
+  outline: 2px solid var(--accent, var(--primary-strong));
   outline-offset: 2px;
 }
 
@@ -124,10 +124,10 @@ html:not([lang='en']) .header-dropdown-item {
   margin: 0;
   padding: 0.35rem;
   list-style: none;
-  border: 1px solid var(--border, rgba(148, 163, 184, 0.3));
+  border: 1px solid var(--border, rgba(var(--neutral-rgb), 0.3));
   border-radius: 0.85rem;
   background: var(--panel, #131c31);
-  box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
+  box-shadow: 0 18px 40px rgba(var(--shadow-rgb), calc(0.45 * var(--shadow-k)));
 }
 
 .lang-option {
@@ -142,12 +142,12 @@ html:not([lang='en']) .header-dropdown-item {
 }
 
 .lang-option.is-active {
-  background: var(--panel-soft, rgba(148, 163, 184, 0.14));
+  background: var(--panel-soft, rgba(var(--neutral-rgb), 0.14));
 }
 
 .lang-option.is-selected {
   font-weight: 600;
-  color: var(--accent, #60a5fa);
+  color: var(--accent, var(--primary));
 }
 
 .lang-flag {
@@ -304,7 +304,7 @@ html:not([lang='en']) .ai-sidebar-input-row textarea {
 
 .ai-sidebar-input-row textarea {
   scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+  scrollbar-color: rgba(var(--neutral-rgb), 0.45) transparent;
 }
 
 .ai-sidebar-input-row textarea::-webkit-scrollbar {
@@ -320,6 +320,6 @@ html:not([lang='en']) .ai-sidebar-input-row textarea {
 }
 
 .ai-sidebar-input-row textarea::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.45);
+  background: rgba(var(--neutral-rgb), 0.45);
   border-radius: 999px;
 }

@@ -1,13 +1,36 @@
-export const SUBJECT_COLORS = {
+// Dark values are the original palette. Light values are deeper tones so
+// dots, bars and chart arcs keep >=3:1 contrast on white/ivory surfaces.
+// Colours must stay hex: callers append alpha suffixes (e.g. `${color}22`).
+export const SUBJECT_COLORS_DARK = {
   Physics: '#60a5fa',
   Chemistry: '#34d399',
   Mathematics: '#f59e0b',
   Biology: '#f472b6',
 };
 
-export const FALLBACK_SUBJECT_COLOR = '#94a3b8';
+export const SUBJECT_COLORS_LIGHT = {
+  Physics: '#2b5bb0',
+  Chemistry: '#2f855a',
+  Mathematics: '#b7791f',
+  Biology: '#b8456f',
+};
 
-export const subjectColor = (subject) => SUBJECT_COLORS[subject] || FALLBACK_SUBJECT_COLOR;
+export const SUBJECT_COLORS = SUBJECT_COLORS_DARK;
+
+export const FALLBACK_SUBJECT_COLOR = '#94a3b8';
+const FALLBACK_SUBJECT_COLOR_LIGHT = '#62645d';
+
+// Reads the active theme at call time. Pages that call this also call
+// useTheme() so they re-render when the theme is switched.
+const activeTheme = () =>
+  typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme') === 'light'
+    ? 'light'
+    : 'dark';
+
+export const subjectColor = (subject) =>
+  activeTheme() === 'light'
+    ? SUBJECT_COLORS_LIGHT[subject] || FALLBACK_SUBJECT_COLOR_LIGHT
+    : SUBJECT_COLORS_DARK[subject] || FALLBACK_SUBJECT_COLOR;
 
 // Path data only — callers wrap these in their own <svg> so viewBox/size can
 // vary by context (metric card vs. list row vs. legend swatch).

@@ -79,8 +79,8 @@ const AiNetworkHero = () => {
         <svg className="ai-network-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
           <defs>
             <linearGradient id="ai-edge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#60a5fa" />
-              <stop offset="100%" stopColor="#a78bfa" />
+              <stop offset="0%" style={{ stopColor: 'var(--hero-grad-a)' }} />
+              <stop offset="100%" style={{ stopColor: 'var(--hero-grad-b)' }} />
             </linearGradient>
           </defs>
 

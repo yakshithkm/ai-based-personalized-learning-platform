@@ -1,15 +1,16 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, question content protection, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, a server-enforced FREE / PRO / PREMIUM subscription tier system, a peer referral/invite program, non-blocking transactional security emails, multilingual internationalization (English, Kannada, Hindi, Telugu, Tamil, Malayalam) with on-demand font and locale loading, and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, question content protection, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, a server-enforced FREE / PRO / PREMIUM subscription tier system, a peer referral/invite program, non-blocking transactional security emails, multilingual internationalization (English, Kannada, Hindi, Telugu, Tamil, Malayalam) with on-demand font and locale loading, a dual-theme system (dark & light modes with zero-FOUC bootstrapping and semantic CSS tokens), and a dedicated admin portal.
 
 ## Tech Stack
 
 | Layer | Technology |
 |---|---|
-| **Frontend** | React 18 + Vite + React Router v6 + Recharts + `@vladmandic/face-api` (on-device TensorFlow.js) + `i18next` + `react-i18next` + Noto Sans Variable Fonts (Devanagari, Kannada, Malayalam, Tamil, Telugu) |
+| **Frontend** | React 18 + Vite + React Router v6 + Recharts + `@vladmandic/face-api` (on-device TensorFlow.js) + `i18next` + `react-i18next` + Noto Sans Variable Fonts (Devanagari, Kannada, Malayalam, Tamil, Telugu) + Dual-Theme Engine (Dark default & Light mode) |
 | **Backend** | Node.js + Express + MongoDB + Mongoose + JWT + PDFKit + Nodemailer |
 | **Subscription Tiers** | FREE / PRO / PREMIUM · single-source config (`config/tiers.js`) · tier derived from the DB user row on every request · feature gating + atomic usage quotas middleware · server-shaped analytics/recommendations · payment-gateway seam (no gateway integrated) |
 | **Multilingual & i18n** | 6 supported languages (`en`, `kn`, `hi`, `te`, `ta`, `ml`) · dynamic on-demand chunk loading · zero-reload in-place switching · user preference persistence · localized date/number/error formatting |
+| **Dual-Theme System** | Dark (default) & Light themes · semantic CSS design tokens (`styles/theme.css`) · zero-FOUC inline bootstrapping script in `index.html` · smooth `.theme-transition` cross-fade · cross-tab persistence via `localStorage` · accessible animated header toggle · theme-aware data visualizations |
 | **AI Tutor** | Google Gemini API (`@google/genai`) — streaming, server-side only, with multilingual reasoning (6 languages) and scientific/technical notation preservation |
 | **Exam Proctoring & Content Protection** | On-device face presence detection (`@vladmandic/face-api`) + browser focus/visibility monitoring + client-side question anti-copy/anti-leak shield |
 | **Learning Engine** | Deterministic 0–100 ranking engine + prerequisite expansion + before/after effectiveness tracker |
@@ -17,8 +18,9 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 | **Referrals & Community** | Server-authoritative referral codes (`User.referralCode`) + unique referral tracking (`Referral`) + dynamic Web Share & clipboard invite links |
 | **Transactional Email** | Nodemailer with non-blocking fire-and-forget SMTP delivery + fail-safe offline degradation |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
-| **Testing** | Jest + Supertest + mongodb-memory-server (backend: 21 test suites — 16 integration + 5 database-free unit suites, 72 unit tests) · Vitest + Testing Library (frontend: 23 test files, 140 tests) |
+| **Testing** | Jest + Supertest + mongodb-memory-server (backend: 21 test suites — 16 integration + 5 database-free unit suites, 220 tests total: 148 integration + 72 unit tests) · Vitest + Testing Library (frontend: 24 test files, 146 tests) |
 | **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs · Server-side tier authorization · Atomic usage quotas · Idempotent event reporting · Privacy-first local video stream · Question content protection · Non-blocking email boundary |
+
 
 ---
 
@@ -94,16 +96,24 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
     - **Honest Checkout**: The upgrade screen (`PlanUpgradePanel`) shows plan benefits, current plan, subscription status and billing period, then states that online checkout is not available yet. No fake payment page or success message; no trial wording because no trial exists.
     - **Explore Demo**: A clearly labelled, confirm-first "Explore Pro/Premium Demo" action signs in to the matching demo account through the normal login endpoint.
 
+30. **Dual-Theme System (Dark & Light Modes)** — Seamless switching between curated dark and light aesthetics:
+    - **Standardized Semantic Tokens**: Dark (default) and Light mode palettes driven entirely by unified CSS design tokens (`styles/theme.css`). Dark preserves the deep aurora/glass theme (`#0f172a`), while Light delivers a high-contrast ivory surface aesthetic (`#f7f6f2`) with ≥3:1 contrast ratios across text, borders, and charts.
+    - **Zero-FOUC Bootstrapping**: Synchronous inline script in `frontend/index.html` resolves `localStorage.getItem('tutormind-theme')` before first paint, assigning `data-theme` on `<html>` and updating `<meta name="theme-color">` to eliminate any theme flashing.
+    - **Zero-Tree Re-render Transitions**: Styling responds dynamically via CSS custom properties on `<html>` without requiring React component tree re-renders. A short-lived `.theme-transition` class adds a smooth 320ms cross-fade only on user-initiated clicks (never on page load).
+    - **Accessible Header Toggle**: Compact `ThemeToggle` button placed in shared headers (`Layout` and `AdminLayout`), landing navigation & mobile drawer, and floating auth action bars. Features rotating sun/moon SVG icons and full i18n support (`t('theme.switchToLight')` / `t('theme.switchToDark')`) across all 6 supported languages.
+    - **Multi-Tab Sync & Auth Decoupling**: Synchronizes across open tabs in real time via `window.onstorage` (`tutormind-theme`). Operates independently of authentication tokens, persisting seamlessly across login and logout.
+    - **Theme-Aware Data Visualizations & Subjects**: Dynamic subject visuals in `subjectVisuals.js` adapt color values between dark and light modes, ensuring high readability and WCAG-compliant contrast across charts, accuracy badges, and topic progress indicators.
+
 ### Admin Portal
-30. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-31. **Admin Dashboard** — Platform-wide stats overview
-32. **Student Management** — List all students, drill into individual student detail; filter by plan, see each student's plan and subscription state, and change a student's plan through the authorized subscription service (demo accounts are locked)
-33. **Question Bank CRUD** — Create, read, update, and delete questions
-34. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-35. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-36. **Admin Analytics** — Platform-wide analytics section
-37. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`), including the `accessTier` (FREE / PRO / PREMIUM) of each resource
-38. **Product Event Tracking** — Internal telemetry for key user actions
+31. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+32. **Admin Dashboard** — Platform-wide stats overview
+33. **Student Management** — List all students, drill into individual student detail; filter by plan, see each student's plan and subscription state, and change a student's plan through the authorized subscription service (demo accounts are locked)
+34. **Question Bank CRUD** — Create, read, update, and delete questions
+35. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+36. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+37. **Admin Analytics** — Platform-wide analytics section
+38. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`), including the `accessTier` (FREE / PRO / PREMIUM) of each resource
+39. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -113,7 +123,7 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 ai-based-personalized-learning-platform/
 ├── docs/
 │   └── TIER_SYSTEM.md      # Tier system design: matrix, architecture, tests, pricing flow, payment seams
-├── frontend/               # React + Vite SPA (dark-mode glass/aurora theme)
+├── frontend/               # React + Vite SPA (dark & light dual-theme glass/aurora)
 │   ├── public/
 │   │   └── models/         # TinyFaceDetector weights served locally (~190 KB)
 │   ├── scripts/
@@ -123,7 +133,7 @@ ai-based-personalized-learning-platform/
 │       │   ├── (20 pages: 19 student/public pages incl. AboutExamPage, LearnPage, LearningContentPage & PlansPage + 1 legacy admin analytics)
 │       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
 │       │   └── __tests__/  # Vitest integration, proctoring, content protection, single-flight & pricing-flow suites
-│       ├── components/     # Layout, AdminLayout, ProtectedRoute, LanguageSelector,
+│       ├── components/     # Layout, AdminLayout, ProtectedRoute, LanguageSelector, ThemeToggle,
 │       │   │               # AISidebar, AIChatMessage, BrandLogo, EmptyState, Footer,
 │       │   │               # InviteFriendsModal, PasswordField, ResultIcons
 │       │   ├── exam/       # PresenceToast, ProctorAlerts, ViolationIndicator, WebcamMonitor
@@ -143,19 +153,23 @@ ai-based-personalized-learning-platform/
 │       │   │               # locales/ (en, hi, kn, ml, ta, te), __tests__/i18n.test.jsx
 │       ├── api/            # Axios API clients (client.js, examClient.js,
 │       │                   # examProctoringClient.js, learning.js)
-│       ├── context/        # AuthContext, GamificationContext, LanguageContext, ThemeContext (dark-only),
-│       │                   # TierContext, ToastContext
+│       ├── context/        # AuthContext, GamificationContext, LanguageContext,
+│       │   │               # ThemeContext (dark default & light mode provider, localStorage sync,
+│       │   │               # cross-tab listener & zero-FOUC bootstrap), TierContext, ToastContext
+│       │   └── __tests__/  # ThemeContext integration test suite
 │       ├── hooks/          # useExamViolationMonitor, usePresenceMonitor, useWebcamMonitor,
 │       │                   # useMagneticHover, useScrollReveal
 │       ├── lib/            # faceDetector.js (lazy on-device TensorFlow.js TinyFaceDetector)
 │       ├── styles/         # Style modules:
+│       │   ├── theme.css   # Single source of truth for semantic dark/light color tokens
 │       │   ├── features/   # about-exams.css, admin.css, ai-tutor.css, analytics.css,
 │       │   │               # app-shell.css, dashboard.css, exam.css, gamification.css,
 │       │   │               # i18n.css, landing.css, learning.css, practice.css, profile.css,
-│       │   │               # subpages.css, tier.css
+│       │   │               # scrollbar.css, subpages.css, theme-toggle.css, tier.css
 │       │   ├── components.css # Shared components + question content protection styling
 │       │   └── global.css
 │       └── utils/          # Shared utilities: appEvents.js, protectedContent.js,
+│                           # subjectVisuals.js (theme-aware subject palettes & SVG icons),
 │                           # planSelection.js (plan validation + pricing-button routing),
 │                           # tierErrors.js, productEvents.js, visitId.js
 ├── backend/                # Node.js REST API
@@ -755,7 +769,7 @@ Existing users need no migration: a missing `tier` reads as FREE. `npm run migra
 
 ### Backend (Jest + Supertest)
 
-Integration tests run against an in-memory MongoDB instance — no external database required (`mongodb-memory-server` downloads a MongoDB binary on first run, so network access is needed once). The tier **unit** suites need no database at all.
+Integration tests run against an in-memory MongoDB instance — no external database required (`mongodb-memory-server` downloads a MongoDB binary on first run, so network access is needed once). The tier **unit** suites need no database at all. The backend suite encompasses 21 test suites (16 integration test files + 5 unit test files in `tests/unit/`) with 220 tests total (148 integration tests and 72 database-free unit tests).
 
 ```bash
 npm --prefix backend run test        # all suites (integration + unit)
@@ -796,7 +810,8 @@ npm --prefix frontend run test
 npm --prefix frontend run test:watch
 ```
 
-Comprehensive test coverage across 23 test files (140 passing tests):
+Comprehensive test coverage across 24 test files (146 passing tests):
+- `context/__tests__/ThemeContext.test.jsx` — Default dark theme, OS preference isolation, saved light preference restoration, invalid value fallback, instant toggle & persistence, accessible localized action labels, and auth lifecycle decoupling
 - `ExamSimulationPage.contentProtection.test.jsx` & `PracticePage.contentProtection.test.jsx` — Question text and option selection restrictions, copy/cut/drag blocking, and context menu suppression
 - `ProfilePage.inviteFriends.test.jsx` & `InviteFriendsModal.test.jsx` — Invite modal rendering, referral code loading, link copying, Web Share API, mailto composition, and live signup counters
 - `LanguageSelector.test.jsx` — Dropdown rendering, native language labels, route and input state retention during switches, localStorage persistence, and keyboard accessibility (Arrow keys, Enter, Escape)
@@ -868,4 +883,12 @@ Comprehensive test coverage across 23 test files (140 passing tests):
 - Route-based code splitting ensures the initial JS bundle only contains the public landing page; the admin portal is entirely split from student-facing bundles.
 - The admin portal has its own separate authentication (`/admin/login`) and layout (`AdminLayout` with sidebar), isolated from the student shell.
 - PDF reports and certificates are generated server-side via PDFKit and streamed directly to the client.
-- The UI is dark-mode only — the entire design (including the landing page) uses a dark glass/aurora aesthetic. `ThemeContext` always applies `data-theme="dark"` and exposes `theme: 'dark'` to consumers.
+- **Dual-Theme Design System (Dark & Light Modes)**:
+  - **Single Source of Truth**: All color styling across the application is governed by semantic CSS tokens defined in `frontend/src/styles/theme.css`. Components consume semantic CSS custom properties (`--bg`, `--panel`, `--text`, `--primary`, `--border`, RGB channel triplets, etc.) and never hardcode theme colors.
+  - **Dark (Default) Palette**: Retains the signature dark glass/aurora aesthetic (`#0f172a`), radial blue/indigo atmospheric gradients, deep glassmorphic surfaces, and crisp glowing accents. Dark mode serves as the platform default whenever no user preference has been saved.
+  - **Light Palette**: Delivers a crisp, warm ivory/paper aesthetic (`#f7f6f2`), subtle clean borders, gentle elevation shadows, and deep high-contrast text and badge colors ensuring ≥3:1 graphical contrast and WCAG AA readability.
+  - **Zero Flash of Unstyled Theme (Zero-FOUC)**: An inline script in `frontend/index.html` runs synchronously before first paint, reading `localStorage.getItem('tutormind-theme')` and instantly setting `data-theme` on `<html>` and `<meta name="theme-color">` (`#0f172a` for dark, `#f7f6f2` for light), completely eliminating theme flashes on load or refresh.
+  - **Zero-Tree Re-render Transitions**: Theme switching modifies the root `<html data-theme="...">` attribute. Because styles consume CSS custom properties directly, no full component tree re-rendering is needed for color updates. A temporary `.theme-transition` class enables a 320ms smooth cross-fade only during active user toggles (never during initial page boot).
+  - **Cross-Tab Synchronization & Auth Decoupling**: Theme state is maintained in `localStorage` under `tutormind-theme` and synchronized in real time across open browser tabs via `window.onstorage`. Because theme preference is independent of authentication tokens, selections persist across sign-in, sign-out, and session expirations. The operating system's `prefers-color-scheme` media query is intentionally ignored in favor of explicit user choice.
+  - **Accessible Navigation Toggle**: The compact `ThemeToggle` component appears beside the language selector in the shared student header (`Layout`), admin header (`AdminLayout`), landing navigation & mobile drawer (`HomePage`), and floating action bars (`LoginPage` and `RegisterPage`). It renders sun/moon SVG icons, features a subtle entrance rotation micro-animation, and provides localized screen-reader accessibility labels and tooltips (`t('theme.switchToLight')` / `t('theme.switchToDark')`) across all 6 supported languages.
+  - **Theme-Aware Data Visualizations & Subjects**: Dynamic subject tokens in `subjectVisuals.js` automatically adjust between dark tones and deeper light tones (Physics, Chemistry, Mathematics, Biology) so charts (Recharts), topic badges, and performance rings retain high visual distinction and contrast across both backgrounds.

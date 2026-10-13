@@ -12,19 +12,8 @@ import { useToast } from '../context/ToastContext';
 import { useTier } from '../context/TierContext';
 import TierBadge from '../components/tier/TierBadge';
 import { useCountUp } from '../hooks/useScrollReveal';
-
-// Subject accent colors reused across the ring, legend, and skill chips so a
-// subject reads as the same color everywhere on the page.
-const SUBJECT_COLORS = {
-  Physics: '#60a5fa',
-  Chemistry: '#34d399',
-  Mathematics: '#f59e0b',
-  Biology: '#f472b6',
-};
-
-const FALLBACK_COLOR = '#94a3b8';
-
-const subjectColor = (subject) => SUBJECT_COLORS[subject] || FALLBACK_COLOR;
+import { subjectColor } from '../utils/subjectVisuals';
+import { useTheme } from '../context/ThemeContext';
 
 const formatRelativeTime = (dateInput, t) => {
   if (!dateInput) return '';
@@ -94,6 +83,7 @@ const BadgeIcon = ({ tone }) => (
 );
 
 const ProfilePage = () => {
+  useTheme(); // re-render on theme switch so theme-dependent chart/subject colours update
   const { t } = useTranslation();
   const { formatDate, formatNumber, formatPercent } = useLocaleFormat();
   const { tier, isDemo, subscription } = useTier();

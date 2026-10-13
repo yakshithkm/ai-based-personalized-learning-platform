@@ -25,7 +25,7 @@
 .ai-sidebar-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(2, 6, 23, 0.55);
+  background: rgba(var(--scrim-rgb), 0.55);
   z-index: 198; /* now portaled to document.body, so this only needs to beat other top-level UI */
   opacity: 0;
   pointer-events: none;
@@ -132,8 +132,8 @@
 
 .ai-sidebar-maximize-btn:hover,
 .ai-sidebar-close-btn:hover {
-  border-color: rgba(96, 165, 250, 0.4);
-  background: rgba(96, 165, 250, 0.12);
+  border-color: rgba(var(--primary-rgb), 0.4);
+  background: rgba(var(--primary-rgb), 0.12);
 }
 
 /* The maximize toggle only makes sense once there's a persistent left nav
@@ -251,7 +251,7 @@
 .ai-chat-msg-body code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   font-size: 0.85em;
-  background: rgba(148, 163, 184, 0.15);
+  background: rgba(var(--neutral-rgb), 0.15);
   padding: 0.05rem 0.32rem;
   border-radius: 4px;
   overflow-wrap: anywhere;
@@ -259,7 +259,7 @@
 
 .ai-chat-msg-body pre {
   margin: 0.5rem 0 0;
-  background: rgba(2, 6, 23, 0.4);
+  background: rgba(var(--surface-deep-rgb), 0.4);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.55rem 0.65rem;
@@ -287,12 +287,12 @@
 
 .ai-chat-msg-user {
   align-self: flex-end;
-  background: rgba(59, 130, 246, 0.18);
-  border-color: rgba(96, 165, 250, 0.35);
+  background: rgba(var(--primary-mid-rgb), 0.18);
+  border-color: rgba(var(--primary-rgb), 0.35);
 }
 
 .ai-chat-msg-user .ai-chat-msg-label {
-  color: #bfdbfe;
+  color: var(--accent-text-soft);
 }
 
 /* --- Typing indicator --- */
@@ -374,8 +374,8 @@
 
 .ai-chat-error {
   align-self: stretch;
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(var(--danger-rgb), 0.4);
+  background: rgba(var(--danger-rgb), 0.12);
   border-radius: var(--radius-md);
   padding: 0.6rem 0.75rem;
   display: grid;
@@ -385,7 +385,7 @@
 .ai-chat-error p {
   margin: 0;
   font-size: 0.85rem;
-  color: #fecaca;
+  color: var(--danger-text-soft);
 }
 
 .ai-chat-retry-btn {
@@ -410,7 +410,7 @@
   resize: none;
   max-height: 6.5rem;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  border: 1px solid var(--control-border);
   background: var(--surface-0);
   color: var(--text);
   font-family: inherit;
@@ -432,7 +432,7 @@
   border: none;
   border-radius: var(--radius-sm);
   background: linear-gradient(180deg, var(--primary), var(--primary-strong));
-  color: #eff6ff;
+  color: var(--on-primary);
   cursor: pointer;
   transition: transform var(--duration-fast) var(--ease-out), opacity var(--duration-base) ease,
     filter var(--duration-base) ease;

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '../components/LanguageSelector';
+import ThemeToggle from '../components/ThemeToggle';
 import BrandLogo from '../components/BrandLogo';
 import Footer from '../components/Footer';
 import Reveal from '../components/landing/Reveal';
@@ -209,11 +210,14 @@ const HomePage = () => {
       if (event.key === 'Escape') setMobileNavOpen(false);
     };
     document.addEventListener('keydown', onKeyDown);
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    // Lock on <html> (the viewport scroller), not <body>: an overflow on <body>
+    // turns it into its own scroll container, which breaks the sticky header.
+    const root = document.documentElement;
+    const previousOverflow = root.style.overflow;
+    root.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = previousOverflow;
+      root.style.overflow = previousOverflow;
     };
   }, [mobileNavOpen]);
 
@@ -305,6 +309,7 @@ const HomePage = () => {
 
         <div className="landing-actions">
           <LanguageSelector variant="compact" />
+          <ThemeToggle />
           <button className="outline-btn" type="button" onClick={() => goToLogin()}>
             {t('auth.login')}
           </button>
@@ -322,6 +327,61 @@ const HomePage = () => {
         >
           {mobileNavOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
+
+        {/* Lives inside the header so the dropdown is part of it (anchored to its
+            bottom edge and moves with it), not a separate floating card. */}
+        <div
+          className={`landing-mobile-menu ${mobileNavOpen ? 'is-open' : ''}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('home.siteNavigation')}
+        >
+          <nav className="landing-mobile-nav">
+            {navLinks.map((link) =>
+              link.to ? (
+                <Link key={link.to} to={link.to} onClick={() => setMobileNavOpen(false)}>
+                  {t(link.labelKey)}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={`#${link.href}`}
+                  className={activeSection === link.href ? 'is-active' : ''}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection(link.href);
+                  }}
+                >
+                  {t(link.labelKey)}
+                </a>
+              )
+            )}
+          </nav>
+          <div className="landing-mobile-actions">
+            <LanguageSelector variant="field" align="left" />
+            <ThemeToggle className="theme-toggle-wide" />
+            <button
+              className="outline-btn"
+              type="button"
+              onClick={() => {
+                setMobileNavOpen(false);
+                goToLogin();
+              }}
+            >
+              {t('auth.login')}
+            </button>
+            <button
+              className="solid-btn"
+              type="button"
+              onClick={() => {
+                setMobileNavOpen(false);
+                goToRegister();
+              }}
+            >
+              {t('home.startFreeTrial')}
+            </button>
+          </div>
+        </div>
       </header>
 
       {mobileNavOpen && (
@@ -331,58 +391,6 @@ const HomePage = () => {
           onClick={() => setMobileNavOpen(false)}
         />
       )}
-      <div
-        className={`landing-mobile-menu ${mobileNavOpen ? 'is-open' : ''}`}
-        role="dialog"
-        aria-modal="true"
-        aria-label={t('home.siteNavigation')}
-      >
-        <nav className="landing-mobile-nav">
-          {navLinks.map((link) =>
-            link.to ? (
-              <Link key={link.to} to={link.to} onClick={() => setMobileNavOpen(false)}>
-                {t(link.labelKey)}
-              </Link>
-            ) : (
-              <a
-                key={link.href}
-                href={`#${link.href}`}
-                className={activeSection === link.href ? 'is-active' : ''}
-                onClick={(event) => {
-                  event.preventDefault();
-                  scrollToSection(link.href);
-                }}
-              >
-                {t(link.labelKey)}
-              </a>
-            )
-          )}
-        </nav>
-        <div className="landing-mobile-actions">
-          <LanguageSelector variant="field" align="left" />
-          <button
-            className="outline-btn"
-            type="button"
-            onClick={() => {
-              setMobileNavOpen(false);
-              goToLogin();
-            }}
-          >
-            {t('auth.login')}
-          </button>
-          <button
-            className="solid-btn"
-            type="button"
-            onClick={() => {
-              setMobileNavOpen(false);
-              goToRegister();
-            }}
-          >
-            {t('home.startFreeTrial')}
-          </button>
-        </div>
-      </div>
-
       <section className="landing-hero">
         <div className="hero-aurora" aria-hidden="true" />
         <div className="hero-grid-lines" aria-hidden="true" />

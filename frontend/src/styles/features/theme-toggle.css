@@ -1,0 +1,156 @@
+/* Theme toggle (sun/moon). Sits beside the language selector in the shared
+   headers; colours come exclusively from theme tokens. */
+.theme-toggle {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-0);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color var(--duration-base) ease, background var(--duration-base) ease,
+    color var(--duration-base) ease, transform var(--duration-fast) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  border-color: rgba(var(--primary-rgb), 0.5);
+  color: var(--primary);
+}
+
+.theme-toggle:active {
+  transform: scale(0.94);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.theme-toggle-icon {
+  display: grid;
+  place-items: center;
+  animation: themeIconIn 360ms var(--ease-out) both;
+}
+
+.theme-toggle svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes themeIconIn {
+  from {
+    opacity: 0;
+    transform: rotate(-70deg) scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+/* Auth pages: floats at the top-right next to the floating language selector. */
+.auth-float-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Landing mobile menu: full-width row so it stays easy to hit. */
+.theme-toggle.theme-toggle-wide {
+  width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+/* App header on phones. The header already had to be squeezed (see tier.css and
+   the 560px block in index.css) so the bell and avatar stay on screen; the theme
+   toggle adds one more control, so match the compact size of the language button and
+   drop the plan badge a little earlier (the plan stays on the dashboard usage card
+   and /plans). */
+@media (max-width: 560px) {
+  .header-actions .theme-toggle {
+    width: 2.1rem;
+    height: 2.1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  /* The phone compaction in index.css/tier.css stops at 560px, but with the toggle
+     the header no longer fits much above that (tablet portrait). Extend the same
+     treatment: globe-only language button, compact streak, no XP fraction. */
+  .header-actions .lang-trigger {
+    width: 2.1rem;
+    height: 2.1rem;
+    min-height: 0;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .header-actions .lang-current,
+  .header-actions .lang-caret {
+    display: none;
+  }
+
+  .streak-pill .streak-label {
+    display: none;
+  }
+
+  .streak-pill .streak-label-compact {
+    display: inline;
+  }
+
+  .gam-header-pill .gam-header-xp {
+    display: none;
+  }
+}
+
+@media (max-width: 410px) {
+  .header-actions .header-tier-link {
+    display: none;
+  }
+}
+
+@media (max-width: 350px) {
+  .app-header {
+    padding-inline: 0.4rem;
+    gap: 0.25rem;
+  }
+
+  .header-actions {
+    gap: 0.15rem;
+  }
+
+  .header-actions .icon-btn,
+  .header-actions .header-profile-trigger .user-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .header-actions .streak-pill svg {
+    display: none;
+  }
+
+  .header-actions .streak-pill,
+  .header-actions .gam-header-pill {
+    padding-inline: 0.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-icon {
+    animation: none;
+  }
+}

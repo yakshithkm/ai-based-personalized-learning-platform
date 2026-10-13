@@ -1,3 +1,4 @@
+import ThemeToggle from '../ThemeToggle';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -156,6 +157,7 @@ const AdminLayout = ({ children }) => {
               <strong>{user?.name || 'Admin'}</strong>
               <span>{user?.email}</span>
             </div>
+            <ThemeToggle />
           </div>
           <button type="button" className="admin-logout-btn" onClick={onLogout}>
             <LogoutIcon />
