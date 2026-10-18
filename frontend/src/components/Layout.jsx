@@ -4,7 +4,7 @@ import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useGamification } from '../context/GamificationContext';
 import api from '../api/client';
-import { onAttemptSubmitted } from '../utils/appEvents';
+import { isExamInProgress, onAttemptSubmitted } from '../utils/appEvents';
 import BrandLogo from './BrandLogo';
 import Footer from './Footer';
 import LanguageSelector from './LanguageSelector';
@@ -339,6 +339,7 @@ const Layout = ({ children }) => {
   }, []);
 
   const onLogout = () => {
+    if (isExamInProgress() && !window.confirm(t('examSim.logoutConfirm'))) return;
     logout();
     navigate('/login');
   };

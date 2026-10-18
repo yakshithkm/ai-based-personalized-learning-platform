@@ -394,7 +394,6 @@ const ProfilePage = () => {
 
       <section className="panel profile-language-panel" aria-labelledby="profile-language-heading">
         <h3 id="profile-language-heading">{t('language.settingsTitle')}</h3>
-        <p className="chart-caption">{t('language.settingsHint')}</p>
         <LanguageSelector variant="field" align="left" />
       </section>
 

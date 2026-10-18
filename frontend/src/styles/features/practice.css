@@ -247,3 +247,9 @@
     text-align: center;
   }
 }
+
+/* Leave room for the sticky app header when the question set is scrolled into view
+   after "Start Practice". */
+.practice-main-grid {
+  scroll-margin-top: 5rem;
+}

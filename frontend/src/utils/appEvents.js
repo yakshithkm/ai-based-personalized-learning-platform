@@ -34,3 +34,14 @@ export const onGamificationEvent = (handler) => {
   window.addEventListener(GAMIFICATION_EVENT, handler);
   return () => window.removeEventListener(GAMIFICATION_EVENT, handler);
 };
+
+// Whether an exam simulation is currently running. The Exam Simulation page sets this while a
+// test is active so the app shell (Logout button) can ask for confirmation instead of silently
+// leaving a test mid-way. A module-level flag is enough: it is read only at click time.
+let examInProgress = false;
+
+export const setExamInProgress = (value) => {
+  examInProgress = Boolean(value);
+};
+
+export const isExamInProgress = () => examInProgress;

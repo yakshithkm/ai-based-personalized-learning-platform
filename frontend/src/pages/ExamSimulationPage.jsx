@@ -21,6 +21,7 @@ import ViolationIndicator from '../components/exam/ViolationIndicator';
 import ProctorAlerts from '../components/exam/ProctorAlerts';
 import PresenceToast from '../components/exam/PresenceToast';
 import { PROTECTED_CONTENT_CLASS, protectedContentHandlers } from '../utils/protectedContent';
+import { setExamInProgress } from '../utils/appEvents';
 const EXAM_TAB_LOCK_KEY = 'exam-active-tab-lock';
 
 const SECTION_SUBJECT_OPTIONS = {
@@ -1237,6 +1238,12 @@ const ExamSimulationPage = () => {
       },
     });
   }, [currentQuestion?._id]);
+
+  // Tell the app shell a test is running so Logout asks for confirmation first.
+  useEffect(() => {
+    setExamInProgress(Boolean(session && session.status === 'active'));
+    return () => setExamInProgress(false);
+  }, [session?.status]);
 
   useEffect(() => {
     if (!session || session.status !== 'active') return undefined;

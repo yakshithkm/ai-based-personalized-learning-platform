@@ -66,6 +66,28 @@
   transform: translateX(0);
 }
 
+/* Set the AI panel apart from the page behind it: a soft primary tint over the base surface,
+   an accent-coloured left edge, a deeper shadow onto the page, and tinted header / input bars.
+   All tints are low-alpha tokens, so it works in both themes. */
+.ai-sidebar {
+  background:
+    linear-gradient(180deg, rgba(var(--primary-rgb), 0.12), rgba(var(--primary-rgb), 0.05)),
+    linear-gradient(var(--surface-1), var(--surface-1)),
+    var(--panel);
+  border-left: 1px solid rgba(var(--primary-rgb), 0.4);
+  box-shadow: -16px 0 40px rgba(var(--shadow-rgb), calc(0.4 * var(--shadow-k))), var(--elevation-3);
+}
+
+.ai-sidebar .ai-sidebar-head {
+  background: rgba(var(--primary-rgb), 0.08);
+  border-bottom-color: rgba(var(--primary-rgb), 0.24);
+}
+
+.ai-sidebar .ai-sidebar-input-row {
+  background: rgba(var(--primary-rgb), 0.06);
+  border-top-color: rgba(var(--primary-rgb), 0.24);
+}
+
 /* Maximized: fill everything to the right of the left nav column (280px,
    matching .app-shell's grid-template-columns) rather than the whole
    viewport, so the left nav stays visible per spec. Only applies once the
@@ -87,6 +109,22 @@
   padding: 1.1rem 1.1rem 0.85rem;
   border-bottom: 1px solid var(--border);
   flex: 0 0 auto;
+}
+
+/* Desktop: the AI panel slides over the app header, so give both the same height and the
+   header's bottom border and the panel head's bottom border sit on one line. */
+@media (min-width: 781px) {
+  .app-header,
+  .ai-sidebar-head {
+    box-sizing: border-box;
+    min-height: 4.25rem;
+  }
+
+  .ai-sidebar-head {
+    align-items: center;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
 }
 
 .ai-sidebar-head h3 {
@@ -403,6 +441,16 @@
   gap: 0.55rem;
   padding: 0.85rem 1.1rem;
   border-top: 1px solid var(--border);
+}
+
+/* Desktop: line the input bar's top border up with the app footer's top border (visible when
+   the page is scrolled to the bottom). The footer is 1px border + 1.6rem padding + one line of
+   0.82rem text at 1.45 line-height (= 1.189rem) + the 1.5rem page padding beneath it. */
+@media (min-width: 781px) {
+  .ai-sidebar-input-row {
+    box-sizing: border-box;
+    min-height: calc(4.289rem + 1px);
+  }
 }
 
 .ai-sidebar-input-row textarea {

@@ -68,8 +68,8 @@ describe('landing pricing buttons', () => {
   it('logged out: Free -> /register, Pro/Premium -> /register with the plan preserved; honest labels', async () => {
     renderApp('/');
     await waitFor(() => expect(pricingButton('PRO')).not.toBeDisabled());
-    expect(pricingButton('PRO')).toHaveTextContent('Upgrade to Pro');
-    expect(pricingButton('PREMIUM')).toHaveTextContent('Upgrade to Premium');
+    expect(pricingButton('PRO')).toHaveTextContent('View Pro plan');
+    expect(pricingButton('PREMIUM')).toHaveTextContent('View Premium plan');
     expect(document.body.textContent).not.toMatch(/Start Pro trial/);
 
     fireEvent.click(pricingButton('PRO'));

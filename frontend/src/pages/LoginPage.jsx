@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LanguageSelector from '../components/LanguageSelector';
@@ -35,6 +35,7 @@ const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const formRef = useRef(null);
 
   const onChange = (event) => {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -43,6 +44,16 @@ const LoginPage = () => {
   const fillDemoAccount = (account) => {
     setError('');
     setForm({ email: account.email, password: account.password });
+    // The demo list sits below the form, so on small screens the filled form is off-screen.
+    // Bring it back into view (no-op when it is already fully visible, e.g. on desktop).
+    const formEl = formRef.current;
+    if (formEl) {
+      const rect = formEl.getBoundingClientRect();
+      if (rect.top < 0 || rect.bottom > window.innerHeight) {
+        const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+        formEl.scrollIntoView?.({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      }
+    }
   };
 
   const signInAsTierDemo = async (account) => {
@@ -111,7 +122,7 @@ const LoginPage = () => {
             {t('common.backToHome')}
           </Link>
 
-          <form className="auth-card" onSubmit={onSubmit}>
+          <form className="auth-card" onSubmit={onSubmit} ref={formRef}>
             <h3>{t('auth.welcomeBack')}</h3>
             <p>{t('auth.signInSubtitle')}</p>
 

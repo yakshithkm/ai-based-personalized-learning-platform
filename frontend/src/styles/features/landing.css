@@ -15,10 +15,14 @@
   will-change: opacity, transform, filter;
 }
 
+/* Once revealed, drop transform/filter/will-change entirely (not just reset them to 0): a leftover
+   `filter: blur(0)` or `will-change` keeps the element on its own GPU layer, and text on such layers
+   is rasterised once and then scaled, which looks soft in responsive mode and on high-DPI screens. */
 .reveal-on-scroll.is-visible {
   opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
+  transform: none;
+  filter: none;
+  will-change: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1488,4 +1492,126 @@
   .steps-timeline {
     grid-template-columns: 1fr;
   }
+}
+
+/* ---- Navbar brand: larger logo + product name (landing page only) ----
+   Scoped to .landing-page .landing-topbar so the shared .brand-mark / .brand-text
+   used by the app sidebar and other pages are unaffected. */
+.landing-page .landing-topbar .landing-logo {
+  gap: 0.75rem;
+}
+
+.landing-page .landing-topbar .landing-logo .brand-mark {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 10px;
+}
+
+.landing-page .landing-topbar .landing-logo .brand-text {
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+@media (max-width: 560px) {
+  .landing-page .landing-topbar .landing-logo {
+    gap: 0.6rem;
+  }
+
+  .landing-page .landing-topbar .landing-logo .brand-mark {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .landing-page .landing-topbar .landing-logo .brand-text {
+    font-size: 1.3rem;
+  }
+}
+
+/* ---- Hero badge: slightly larger text on large screens ---- */
+@media (min-width: 1200px) {
+  .landing-page .hero-badge {
+    font-size: 0.95rem;
+    padding: 0.42rem 1rem;
+  }
+}
+
+/* Small screens: a slightly smaller, tighter badge so it stays on one line and doesn't crowd the headline. */
+@media (max-width: 560px) {
+  .landing-page .hero-badge {
+    font-size: 0.68rem;
+    padding: 0.28rem 0.7rem;
+  }
+}
+
+/* ---- Navbar brand marquee (scrolling product descriptor next to the logo) ----
+   Shown only on very wide screens, where the navbar has spare room beside the logo.
+   Lower the min-width (and/or the width) if you want it on smaller desktops. */
+.landing-page .landing-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.landing-page .brand-marquee {
+  display: none;
+}
+
+@media (min-width: 1500px) {
+  .landing-page .brand-marquee {
+    display: block;
+    width: 10rem;
+    overflow: hidden;
+    white-space: nowrap;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .landing-page .brand-marquee-track {
+    display: inline-flex;
+    width: max-content;
+    animation: brandMarquee 14s linear infinite;
+  }
+
+  .landing-page .brand-marquee:hover .brand-marquee-track {
+    animation-play-state: paused;
+  }
+
+  .landing-page .brand-marquee-track span {
+    padding-right: 2.5rem;
+    font-size: 0.8rem;
+    color: var(--text-soft);
+  }
+}
+
+@keyframes brandMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-page .brand-marquee-track {
+    animation: none;
+  }
+}
+
+/* ---- Anchor offset: keep section headings clear of the sticky navbar ----
+   Nav links scroll with scrollIntoView, which respects scroll-margin-top. The sticky navbar
+   is ~80px tall; each section has ~3.2rem of top padding above its heading, so a 3rem offset
+   puts the heading about 100px from the top of the window, clear of the navbar. Raise this
+   value if the navbar gets taller. */
+.landing-page section[id] {
+  scroll-margin-top: 3rem;
+}
+
+/* Navbar pill: a soft brand tint and a slightly stronger outline so it stands apart from the
+   top bar behind it (in both themes; the active link keeps its own stronger tint). */
+.landing-page .landing-nav {
+  background: rgba(var(--primary-rgb), 0.09);
+  border-color: rgba(var(--primary-rgb), 0.3);
+  box-shadow: 0 1px 3px rgba(var(--shadow-rgb), calc(0.12 * var(--shadow-k)));
 }

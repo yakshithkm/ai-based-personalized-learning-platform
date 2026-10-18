@@ -16,7 +16,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTier } from '../context/TierContext';
 import { resolvePricingAction } from '../utils/planSelection';
 import { useMagneticHover } from '../hooks/useMagneticHover';
-import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, ArrowRightIcon, MenuIcon, CloseIcon } from '../components/landing/icons';
+import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, CalendarIcon, CheckIcon, MapPinIcon, NoticeIcon, ArrowRightIcon, MenuIcon, CloseIcon } from '../components/landing/icons';
 
 // Anchor links (`href`) smooth-scroll within the landing page; the one
 // route link (`to`) is a real React Router navigation to a separate page
@@ -26,6 +26,7 @@ const navLinks = [
   { labelKey: 'home.nav.subjects', href: 'subjects-section' },
   { labelKey: 'navigation.aboutExam', to: '/about-exams' },
   { labelKey: 'home.nav.how', href: 'how-it-works' },
+  { labelKey: 'home.nav.features', href: 'more-features' },
   { labelKey: 'home.nav.pricing', href: 'pricing-section' },
   { labelKey: 'home.nav.faq', href: 'faq-section' },
 ];
@@ -85,43 +86,38 @@ const steps = [
   },
 ];
 
-// Placeholder testimonials — swap in real student quotes before launch.
-const testimonials = [
-  {
-    key: 'sharma',
-    name: 'A. Sharma',
-    exam: 'NEET',
-  },
-  {
-    key: 'patel',
-    name: 'R. Patel',
-    exam: 'JEE',
-  },
-  {
-    key: 'nair',
-    name: 'K. Nair',
-    exam: 'KCET',
-  },
+// Capabilities that sit around the core practice loop. Each card is verified against the
+// implementation (see the feature notes in the pull request / task summary); keep the copy in
+// home.features.* conservative - no capability should be described that the app does not ship.
+const featureCards = [
+  { key: 'ai', Icon: BoltIcon },
+  { key: 'learn', Icon: TargetIcon },
+  { key: 'plan', Icon: CalendarIcon },
+  { key: 'mistakes', Icon: CheckIcon },
+  { key: 'reports', Icon: ChartIcon },
+  { key: 'motivation', Icon: StarIcon },
+  { key: 'languages', Icon: MapPinIcon },
+  { key: 'exams', Icon: NoticeIcon },
 ];
 
-// Placeholder pricing — replace with real plans/currency before launch.
+// Plan contents mirror backend/src/config/tiers.js. Only the Free plan has a price (nothing).
+// Pro and Premium have no announced price and online payments are not enabled, so no amount is
+// shown for them - add `priceValue` here only once real pricing and billing exist.
 const pricingPlans = [
   {
     key: 'free',
     priceValue: 0,
-    featureCount: 3,
+    featureCount: 4,
     highlighted: false,
   },
   {
     key: 'pro',
-    priceValue: 499,
-    featureCount: 4,
+    featureCount: 5,
     highlighted: true,
   },
   {
     key: 'premium',
-    priceValue: 999,
-    featureCount: 3,
+    featureCount: 4,
     highlighted: false,
   },
 ];
@@ -134,10 +130,16 @@ const faqs = [
     key: 'engine',
   },
   {
+    key: 'ai',
+  },
+  {
     key: 'free',
   },
   {
-    key: 'cancel',
+    key: 'payments',
+  },
+  {
+    key: 'languages',
   },
 ];
 
@@ -283,7 +285,15 @@ const HomePage = () => {
     <div className="landing-page">
       <div className="landing-noise" aria-hidden="true" />
       <header className={`landing-topbar ${isNavScrolled ? 'is-scrolled' : ''}`}>
-        <BrandLogo className="landing-logo" to="/" onClick={scrollToTop} />
+        <div className="landing-brand-group">
+          <BrandLogo className="landing-logo" to="/" onClick={scrollToTop} />
+          <div className="brand-marquee" role="img" aria-label={t('home.nav.marquee')}>
+            <div className="brand-marquee-track" aria-hidden="true">
+              <span>{t('home.nav.marquee')}</span>
+              <span>{t('home.nav.marquee')}</span>
+            </div>
+          </div>
+        </div>
 
         <nav className="landing-nav">
           {navLinks.map((link) =>
@@ -513,29 +523,19 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="landing-section" id="testimonials-section">
-        <Reveal as="h2">{t('home.testimonials.title')}</Reveal>
-        <div className="testimonial-grid">
-          {testimonials.map((item, index) => (
-            <Reveal as="figure" className="testimonial-card" key={item.name} delay={index * 90}>
-              <div className="testimonial-stars" aria-label={t('home.testimonials.stars')}>
-                {Array.from({ length: 5 }).map((_, starIndex) => (
-                  <StarIcon key={starIndex} />
-                ))}
-              </div>
-              <blockquote>{t('home.testimonials.quote', { quote: t(`home.testimonials.${item.key}`) })}</blockquote>
-              <figcaption>
-                <span className="testimonial-avatar" aria-hidden="true">
-                  {item.name
-                    .split(' ')
-                    .map((part) => part[0])
-                    .join('')}
-                </span>
-                <span className="testimonial-meta">
-                  <strong>{item.name}</strong>
-                  <span>{t('home.testimonials.role', { exam: item.exam })}</span>
-                </span>
-              </figcaption>
+      <section className="landing-section" id="more-features">
+        <Reveal as="h2">{t('home.features.title')}</Reveal>
+        <Reveal as="p" className="landing-section-subtext" delay={60}>
+          {t('home.features.subtext')}
+        </Reveal>
+        <div className="pillar-grid">
+          {featureCards.map((card, index) => (
+            <Reveal as="article" className="pillar-card" key={card.key} delay={(index % 4) * 90}>
+              <span className="pillar-icon" aria-hidden="true">
+                <card.Icon />
+              </span>
+              <h3>{t(`home.features.${card.key}.title`)}</h3>
+              <p>{t(`home.features.${card.key}.copy`)}</p>
             </Reveal>
           ))}
         </div>
@@ -560,7 +560,11 @@ const HomePage = () => {
                 {action.isCurrent && <span className="pricing-current-tag">{t('home.pricing.yourPlan')}</span>}
                 <h3>{t(`home.pricing.${plan.key}.name`)}</h3>
                 <p className="pricing-price">
-                  <PriceCounter value={plan.priceValue} />
+                  {plan.priceValue === undefined ? (
+                    t('home.pricing.tba')
+                  ) : (
+                    <PriceCounter value={plan.priceValue} />
+                  )}
                   <span>{t(`home.pricing.${plan.key}.period`)}</span>
                 </p>
                 <p className="pricing-tagline">{t(`home.pricing.${plan.key}.tagline`)}</p>
@@ -582,6 +586,9 @@ const HomePage = () => {
             );
           })}
         </div>
+        <Reveal as="p" className="landing-section-subtext" delay={120}>
+          {t('home.pricing.paymentNote')}
+        </Reveal>
       </section>
 
       <section className="landing-section" id="faq-section">

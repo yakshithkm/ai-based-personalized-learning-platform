@@ -121,6 +121,25 @@ const PracticePage = () => {
   // something that should trigger a re-render on its own.
   const aiStreamAbortRef = useRef(null);
 
+  // Set when the student clicks "Start Practice". On small screens the form and the question
+  // stack vertically, so the freshly loaded question appears below the fold and it is not obvious
+  // anything happened. Once the questions render, scroll them into view.
+  const questionSectionRef = useRef(null);
+  const scrollToQuestionRef = useRef(false);
+
+  useEffect(() => {
+    if (!scrollToQuestionRef.current || !questions.length) return;
+    scrollToQuestionRef.current = false;
+    if (!window.matchMedia?.('(max-width: 900px)')?.matches) return;
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    requestAnimationFrame(() => {
+      questionSectionRef.current?.scrollIntoView?.({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
+    });
+  }, [questions]);
+
   useEffect(() => {
     const loadSubjects = async () => {
       try {
@@ -281,6 +300,7 @@ const PracticePage = () => {
       });
       const newSessionId = makeSessionId();
       setSessionId(newSessionId);
+      scrollToQuestionRef.current = (data.questions || []).length > 0;
       setQuestions(data.questions || []);
       setStartTime(Date.now());
       trackProductEvent('session_started', {
@@ -758,7 +778,7 @@ const PracticePage = () => {
       {error && <section className="dash-card error-text">{error}</section>}
 
       {!!question && (
-        <section className="dash-main-grid practice-main-grid">
+        <section className="dash-main-grid practice-main-grid" ref={questionSectionRef}>
           <article className="dash-card question-card" key={question._id || `${sessionId}-${currentIndex}`}>
             <div className="progress-head">
               <h3>

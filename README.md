@@ -29,13 +29,13 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 ### Student-Facing
 1. **User Authentication** — Register, login, profile via JWT (Bearer token); supports referral code tracking (`?ref=`), preferred UI language selection & persistence (`PATCH /api/auth/preferences`), and non-blocking transactional security emails (welcome email on registration and login confirmation with IST timestamp). Every new account starts on the FREE tier; no client-supplied tier or plan is ever honored.
 2. **Question Bank** — Exam-wise (NEET/JEE/CET), subject-topic hierarchical question sets
-3. **Practice Quiz Flow** — Per-question attempt submission with correctness and explanation feedback (daily quota by plan)
+3. **Practice Quiz Flow** — Per-question attempt submission with correctness and explanation feedback (daily quota by plan); features responsive auto-scrolling to the active question set on small screens upon clicking "Start Practice".
 4. **Ask with AI (AI Tutor)** — Streaming Gemini-powered doubt-resolution sidebar on the Practice Page; multi-turn conversation scoped to the currently attempted question with multilingual response generation (English, Kannada, Hindi, Telugu, Tamil, Malayalam) preserving standard formulas, units, chemical symbols, and code identifiers. Metered per day by plan; PREMIUM gets an "advanced tutor" prompt mode.
 5. **Performance Tracking** — Accuracy, attempt count, and time-per-topic persistence
 6. **Weak Topic Detection** — Threshold-based identification of underperforming topics
 7. **Personalized Recommendations** — ML-driven suggestions with rule-based fallback
 8. **Analytics Dashboard** — Charts (Recharts) for per-subject and per-topic performance; advanced analytics (topic mastery, heatmap, weekly trend, benchmark) are PRO+ and are removed from the API response for FREE users
-9. **Exam Simulation** — Full-length and section-wise mock tests with real-time answer saving, single-flight locking, cooldown throttle, and full state reconciliation on restore (monthly quota by plan)
+9. **Exam Simulation** — Full-length and section-wise mock tests with real-time answer saving, single-flight locking, cooldown throttle, full state reconciliation on restore (monthly quota by plan), and active exam session protection that confirms before user logout to prevent accidental test loss.
 10. **Exam Scoring** — NEET/JEE marking scheme (+4/−1/0), percentile estimate, rank range
 11. **AI Proctoring & Integrity Shield** — Dual-counter browser focus & on-device webcam presence tracking:
     - **Focus Violation Tracking**: Detects tab changes (`visibilitychange`), window blurring (`blur` with a 250ms confirmation delay), and navigation attempts with 4 warning levels and automated submission at 5 violations (`MAX_VIOLATIONS`).
@@ -51,7 +51,7 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 17. **Achievements Page** — Milestone and badge tracking
 18. **Flashcards** — Lightweight review interface
 19. **Session Summary** — Post-practice session breakdown
-20. **Profile Page** — User stats, target exam, account settings, current plan, and an **Invite Friends** entry point with referral code display and statistics
+20. **Profile Page** — User stats, target exam, account settings, current plan, preferred language settings (rendered side-by-side with plan details on desktop viewports), and an **Invite Friends** entry point with referral code display and statistics
 21. **Learn Page** — Personalised learning hub (`/learn`): curated study-material recommendations organised into sections (Weak Areas, Mistake Recovery, Continue Learning, Practice After Learning, Challenges, Explore New); includes a LearnNext hero card with localized AI rationale rephrasing, daily plan, and improvement banners. Sections, content tier and AI polish are shaped by the user's plan.
 22. **Learning Content Detail** — Individual content page (`/learn/:recommendationId`): start, progress, complete, skip, and feedback lifecycle actions with before/after practice measurement
 23. **Gamification & Engagement Engine** — Server-authoritative motivation architecture:
@@ -91,11 +91,10 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
     - **Frontend Presentation Only**: `TierContext` exposes the server-resolved tier, features, limits and usage; `TierGate` / `TierRoute` / `FeatureLock` / `UsageMeters` / `UpgradePrompt` render that state, and one global, translated dialog explains any tier refusal. The sidebar "Unlock Your Potential" card is shown to FREE accounts only.
     - **Tier Demo Accounts**: Free / Pro / Premium demo logins on the login page go through the normal authentication endpoint and are subject to the same authorization as real users.
 29. **Pricing & Plan Selection** — The landing page "Simple, transparent pricing" cards and the `/plans` upgrade screen:
-    - **Plan-Aware Buttons**: Logged-out visitors go to `/register` (Free) or `/register?plan=PRO|PREMIUM`; signed-in users see "Open dashboard", "Upgrade to Pro/Premium", a disabled "Current Plan", or "View my plan" depending on their real tier. Clicking a pricing button never changes a tier.
+    - **Plan-Aware Buttons & Honest Pricing**: Logged-out visitors see "Start free" (Free), "View Pro plan" (Pro), or "View Premium plan" (Premium) directing to `/register` or `/register?plan=PRO|PREMIUM`; signed-in users see "Open dashboard", "Current Plan" (disabled), or "View my plan" depending on their real tier. Pro and Premium display "TBA" ("pricing not announced") with transparent notices confirming online payments are not enabled yet. Clicking a pricing button never changes a tier.
     - **Selection Preserved**: `?plan=` survives registration, login, direct navigation to `/plans?plan=…` while logged out, and page refresh. Values are validated (`FREE` / `PRO` / `PREMIUM` only).
     - **Honest Checkout**: The upgrade screen (`PlanUpgradePanel`) shows plan benefits, current plan, subscription status and billing period, then states that online checkout is not available yet. No fake payment page or success message; no trial wording because no trial exists.
     - **Explore Demo**: A clearly labelled, confirm-first "Explore Pro/Premium Demo" action signs in to the matching demo account through the normal login endpoint.
-
 30. **Dual-Theme System (Dark & Light Modes)** — Seamless switching between curated dark and light aesthetics:
     - **Standardized Semantic Tokens**: Dark (default) and Light mode palettes driven entirely by unified CSS design tokens (`styles/theme.css`). Dark preserves the deep aurora/glass theme (`#0f172a`), while Light delivers a high-contrast ivory surface aesthetic (`#f7f6f2`) with ≥3:1 contrast ratios across text, borders, and charts.
     - **Zero-FOUC Bootstrapping**: Synchronous inline script in `frontend/index.html` resolves `localStorage.getItem('tutormind-theme')` before first paint, assigning `data-theme` on `<html>` and updating `<meta name="theme-color">` to eliminate any theme flashing.
@@ -103,17 +102,24 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
     - **Accessible Header Toggle**: Compact `ThemeToggle` button placed in shared headers (`Layout` and `AdminLayout`), landing navigation & mobile drawer, and floating auth action bars. Features rotating sun/moon SVG icons and full i18n support (`t('theme.switchToLight')` / `t('theme.switchToDark')`) across all 6 supported languages.
     - **Multi-Tab Sync & Auth Decoupling**: Synchronizes across open tabs in real time via `window.onstorage` (`tutormind-theme`). Operates independently of authentication tokens, persisting seamlessly across login and logout.
     - **Theme-Aware Data Visualizations & Subjects**: Dynamic subject visuals in `subjectVisuals.js` adapt color values between dark and light modes, ensuring high readability and WCAG-compliant contrast across charts, accuracy badges, and topic progress indicators.
+31. **Modern Landing Experience & Global UX Polish** — High-performance marketing presentation and fluid client-side navigation:
+    - **Hero & Interactive Product Previews**: Dynamic headline ("Know Exactly What to Practice Next"), live recommendation cycle card (`RecommendationCard`), interactive count-up readiness dashboard preview (`DashboardPreview`), and AI neural network canvas (`AiNetworkHero`).
+    - **Header Brand Marquee**: Responsive navbar brand group with enlarged logo and an infinite-looping product descriptor ticker for ultra-wide viewports (≥1500px).
+    - **Pillar Capabilities Matrix**: Transparent 8-pillar capability showcase ("More than a question bank") highlighting AI doubt assistance, learning recommendations, dynamic study plans, mistake recovery, exam reports, gamification, 6-language localization, and the official exam directory.
+    - **Comprehensive FAQ**: In-depth explanations covering question-bank depth, AI doubt assistance reliability and limitations, upcoming payment infrastructure, free tier benefits, and localized Indic script support.
+    - **Global Scroll Synchronization (`ScrollToTop`)**: Automatically resets window scroll offset to `(0, 0)` on route changes while honoring `#anchor` jumps.
+    - **GPU-Safe Text Rendering**: Clean scroll reveal transitions removing leftover CSS transforms, filters, and will-change constraints once visible to prevent text softening on Retina/high-DPI screens.
 
 ### Admin Portal
-31. **Admin Login** — Separate admin authentication flow (`/admin/login`)
-32. **Admin Dashboard** — Platform-wide stats overview
-33. **Student Management** — List all students, drill into individual student detail; filter by plan, see each student's plan and subscription state, and change a student's plan through the authorized subscription service (demo accounts are locked)
-34. **Question Bank CRUD** — Create, read, update, and delete questions
-35. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
-36. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
-37. **Admin Analytics** — Platform-wide analytics section
-38. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`), including the `accessTier` (FREE / PRO / PREMIUM) of each resource
-39. **Product Event Tracking** — Internal telemetry for key user actions
+32. **Admin Login** — Separate admin authentication flow (`/admin/login`)
+33. **Admin Dashboard** — Platform-wide stats overview
+34. **Student Management** — List all students, drill into individual student detail; filter by plan, see each student's plan and subscription state, and change a student's plan through the authorized subscription service (demo accounts are locked)
+35. **Question Bank CRUD** — Create, read, update, and delete questions
+36. **Subjects & Topics Catalog** — Read-only subject overview; full CRUD on topics via `TopicMeta`
+37. **Exam Session Monitoring** — Read-only list and detail view of all exam sessions
+38. **Admin Analytics** — Platform-wide analytics section
+39. **Learning Content Management** — Full CRUD for the learning-content library that powers the recommendation engine (`/admin/learning-content`), including the `accessTier` (FREE / PRO / PREMIUM) of each resource
+40. **Product Event Tracking** — Internal telemetry for key user actions
 
 ---
 
@@ -129,6 +135,7 @@ ai-based-personalized-learning-platform/
 │   ├── scripts/
 │   │   └── copy-face-models.mjs # postinstall script copying model weights to public/models
 │   └── src/
+│       ├── App.jsx         # App shell & routing (includes global ScrollToTop route restoration)
 │       ├── pages/          # Route-level page components
 │       │   ├── (20 pages: 19 student/public pages incl. AboutExamPage, LearnPage, LearningContentPage & PlansPage + 1 legacy admin analytics)
 │       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
@@ -168,8 +175,8 @@ ai-based-personalized-learning-platform/
 │       │   │               # scrollbar.css, subpages.css, theme-toggle.css, tier.css
 │       │   ├── components.css # Shared components + question content protection styling
 │       │   └── global.css
-│       └── utils/          # Shared utilities: appEvents.js, protectedContent.js,
-│                           # subjectVisuals.js (theme-aware subject palettes & SVG icons),
+│       └── utils/          # Shared utilities: appEvents.js (event bus + exam-in-progress state tracking),
+│                           # protectedContent.js, subjectVisuals.js (theme-aware subject palettes & SVG icons),
 │                           # planSelection.js (plan validation + pricing-button routing),
 │                           # tierErrors.js, productEvents.js, visitId.js
 ├── backend/                # Node.js REST API
@@ -578,6 +585,8 @@ Landing pricing card
   |- Premium  -> /register?plan=PREMIUM -> /plans?plan=PREMIUM  -> (future checkout)
 ```
 
+Logged-out visitors see explicit, informative buttons: "Start free" for Free, "View Pro plan" for Pro, and "View Premium plan" for Premium. Pro and Premium pricing is explicitly displayed as "TBA" ("pricing not announced") with a transparent note: *"Pro and Premium cannot be bought online yet: no prices are announced and no payment is taken. Selecting a plan saves your choice through sign-up and opens the Plans page, where each plan's current limits are listed."*
+
 Signed-in users get buttons based on their real tier (`resolvePricingAction` in `frontend/src/utils/planSelection.js`):
 
 | Current tier | Free card | Pro card | Premium card |
@@ -824,8 +833,8 @@ Comprehensive test coverage across 24 test files (146 passing tests):
 - `LearnPage.test.jsx` — Learning hub rendering, section display, empty/error/cold-start states, and lifecycle interactions
 - `components/tier/__tests__/tier.test.jsx` — TierGate/TierRoute lock UI, quota/expiry/fair-use dialogs, Hindi rendering
 - `utils/__tests__/planSelection.test.js` — Plan validation (only FREE/PRO/PREMIUM), `?plan=` URL helpers, all nine current-tier × selected-plan pricing-button outcomes, logged-out routing
-- `PricingPlanFlow.test.jsx` — Landing buttons for logged-out / Free / Pro users, plan preserved through register and login (and never sent to the API), logged-out direct navigation to `/plans?plan=…`, honest checkout message with no success text, current-plan states, confirm-then-login demo action, invalid `?plan=` ignored
-- Smoke tests for `HomePage`, `AboutExamPage`, `ProfilePage`, `Layout`, and `PasswordField`
+- `PricingPlanFlow.test.jsx` — Landing buttons for logged-out ("Start free", "View Pro plan", "View Premium plan") / Free / Pro users, plan preserved through register and login (and never sent to the API), logged-out direct navigation to `/plans?plan=…`, honest checkout message with no success text, current-plan states, confirm-then-login demo action, invalid `?plan=` ignored
+- Smoke tests for `HomePage` (headline "Know Exactly What to Practice Next", "More than a question bank" feature pillars, pricing landmarks, footer, and absence of fake testimonials), `AboutExamPage`, `ProfilePage`, `Layout`, and `PasswordField`
 - Utility suites for `markdownLite`
 
 ---
@@ -892,3 +901,15 @@ Comprehensive test coverage across 24 test files (146 passing tests):
   - **Cross-Tab Synchronization & Auth Decoupling**: Theme state is maintained in `localStorage` under `tutormind-theme` and synchronized in real time across open browser tabs via `window.onstorage`. Because theme preference is independent of authentication tokens, selections persist across sign-in, sign-out, and session expirations. The operating system's `prefers-color-scheme` media query is intentionally ignored in favor of explicit user choice.
   - **Accessible Navigation Toggle**: The compact `ThemeToggle` component appears beside the language selector in the shared student header (`Layout`), admin header (`AdminLayout`), landing navigation & mobile drawer (`HomePage`), and floating action bars (`LoginPage` and `RegisterPage`). It renders sun/moon SVG icons, features a subtle entrance rotation micro-animation, and provides localized screen-reader accessibility labels and tooltips (`t('theme.switchToLight')` / `t('theme.switchToDark')`) across all 6 supported languages.
   - **Theme-Aware Data Visualizations & Subjects**: Dynamic subject tokens in `subjectVisuals.js` automatically adjust between dark tones and deeper light tones (Physics, Chemistry, Mathematics, Biology) so charts (Recharts), topic badges, and performance rings retain high visual distinction and contrast across both backgrounds.
+- **Landing Experience & Honest Pricing Architecture**:
+  - Replaced placeholder testimonials with an honest 8-pillar capability overview ("More than a question bank" at `#more-features`) linking practice, explanations, planning, revision, and motivation directly to student performance data.
+  - Transparent pricing presentation: Pro and Premium plans display "TBA" ("pricing not announced") with prominent disclaimer notes confirming online checkout is inactive and no payments are collected.
+  - Sticky navbar offset: `scroll-margin-top: 3rem` ensures anchor navigation keeps section headings clear of the fixed topbar.
+  - Navbar brand marquee: Ultra-wide viewports (≥1500px) render an infinite-looping product descriptor ticker with linear-gradient masks and hover-to-pause.
+- **Client-Side Navigation, Session Guarding & Responsive Ergonomics**:
+  - **Global Scroll Synchronization (`ScrollToTop`)**: Automatically scrolls to `(0, 0)` upon route changes in `frontend/src/App.jsx`, resolving mid-page navigation landings while preserving in-page `#anchor` jumps.
+  - **Active Exam In-Progress Logout Guard**: `ExamSimulationPage` sets an active session indicator (`setExamInProgress(true)`) and `Layout.jsx` intercepts user logout attempts to prompt for confirmation (`examSim.logoutConfirm`) to prevent accidental session abandonment and runaway exam timers.
+  - **Responsive Question Auto-Scroll**: Starting practice on small viewports (≤900px) automatically scrolls the question card smoothly into view with top scroll margins (`scroll-margin-top: 5rem`) to accommodate the sticky app header.
+  - **Demo Account Viewport Restoration**: Clicking a demo account on the login page brings the prefilled credentials form back into viewport on mobile devices.
+  - **Desktop Profile Grid Alignment**: Desktop viewports (≥1100px) align the plan summary and language preference panels side-by-side in a two-column row.
+  - **GPU Layer Cleanup for Crisp Typography**: Once revealed, `.reveal-on-scroll.is-visible` removes `transform`, `filter`, and `will-change` layer constraints, ensuring sharp text rendering across Retina and high-DPI displays.

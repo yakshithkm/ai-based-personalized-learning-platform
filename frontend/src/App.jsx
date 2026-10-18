@@ -1,6 +1,6 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import AdminLayout from './components/admin/AdminLayout';
@@ -45,6 +45,17 @@ const AdminExamsPage = lazy(() => import('./pages/admin/AdminExamsPage'));
 const AdminExamDetailPage = lazy(() => import('./pages/admin/AdminExamDetailPage'));
 const AdminAnalyticsSectionPage = lazy(() => import('./pages/admin/AdminAnalyticsSectionPage'));
 
+// Client-side navigation keeps the previous page's scroll offset, so opening a page from
+// the bottom of another (e.g. About Exam from the FAQ section) would land mid-page.
+// Reset to the top on every route change, except for in-page #anchor links.
+const ScrollToTop = () => {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+};
+
 const PageFallback = () => {
   const { t } = useTranslation();
   return <div className="center-screen">{t('common.loading')}</div>;
@@ -53,6 +64,7 @@ const PageFallback = () => {
 const App = () => {
   return (
     <Suspense fallback={<PageFallback />}>
+      <ScrollToTop />
       <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/about-exams" element={<AboutExamPage />} />

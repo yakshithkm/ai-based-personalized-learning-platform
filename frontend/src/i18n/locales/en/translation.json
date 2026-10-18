@@ -749,6 +749,7 @@
   },
   "examSim": {
     "confirmSubmit": "Submit test now? You cannot change answers after submission.",
+    "logoutConfirm": "You have an exam simulation in progress. If you log out now, your test will not be submitted and the timer may keep running. Log out anyway?",
     "strictOn": "Strict navigation enabled: only current question can be answered in sequence.",
     "flexibleOn": "Flexible navigation enabled: use the palette to jump between questions.",
     "modeExplanation": "Exam mode mirrors real test pressure. Practice mode is better for hints and on-the-spot explanations.",
@@ -853,17 +854,19 @@
       "why": "Why TutorMind",
       "subjects": "Subjects",
       "how": "How it works",
+      "features": "Features",
+      "marquee": "AI-Based Personalized Learning Platform (NEET, JEE & KCET)",
       "pricing": "Pricing",
       "faq": "FAQ"
     },
-    "startFreeTrial": "Start free trial",
+    "startFreeTrial": "Get Started",
     "closeMenu": "Close menu",
     "openMenu": "Open menu",
     "siteNavigation": "Site navigation",
     "hero": {
       "badge": "AI-powered prep for NEET · JEE · KCET",
-      "title": "AI that understands how you learn",
-      "text": "TutorMind tracks every practice attempt, finds the topics quietly costing you marks, and builds your next session automatically — so you always know exactly what to practice next.",
+      "title": "Know Exactly What to Practice Next",
+      "text": "TutorMind tracks every practice attempt, finds the topics quietly costing you marks, and builds your next session automatically - so your practice time goes where it counts most.",
       "seeHow": "See how it works",
       "weakTopicFound": "Weak topic found",
       "sampleTopic": "Thermodynamics",
@@ -884,61 +887,61 @@
     },
     "preview": {
       "readinessAria": "Sample exam readiness score {{score}} out of 100",
-      "caption": "JEE Main · Preview",
+      "caption": "Sample data · Preview",
       "trend": "Accuracy trend · last 7 sessions",
       "weakDetected": "Weak topics detected",
       "streak": "Practice streak"
     },
     "why": {
-      "subtext": "Every practice session is analyzed to improve exam-readiness with actionable guidance — not just another question bank."
+      "subtext": "Every answer you give updates your topic-level stats, so practice, revision and recommendations follow your own performance — not just another question bank."
     },
     "pillars": {
       "adaptive": {
         "title": "Adaptive practice engine",
-        "copy": "Every attempt updates a live model of your strengths, so the next question is always the right level of challenge — not too easy, not demoralizing."
+        "copy": "Difficulty moves between Easy, Medium and Hard based on your topic accuracy, answer speed, recent streak and repeated mistakes — using fixed, rule-based logic."
       },
       "weak": {
         "title": "Weak-topic detection",
-        "copy": "TutorMind watches accuracy and time-per-question across every subject to surface exactly where you’re losing marks, before the exam does."
+        "copy": "Topics where your accuracy is trailing are ranked by how urgently they need attention, so you can see where marks are leaking before the exam does."
       },
       "sim": {
         "title": "Exam-day simulation",
-        "copy": "Full-length, negative-marking-aware mock tests that mirror real NEET/JEE/KCET timing, so exam day feels like just another practice session."
+        "copy": "Timed full-length mocks (180 questions) for NEET, JEE and CET, plus 45-question section tests, marked +4 / −1. Tab-switch and camera checks help you practise under exam conditions. These are practice papers, not official ones."
       },
       "analytics": {
         "title": "Actionable analytics",
-        "copy": "No vanity charts — every insight comes with a next step: which topic to revise, which question type to drill, and when to retest."
+        "copy": "Accuracy, time per question, subject performance and trends over time, built from your real attempt history, plus an exam readiness indicator on your dashboard."
       }
     },
     "personal": {
       "eyebrow": "Personalized learning",
-      "title": "A study plan that rewrites itself around you",
-      "text": "Instead of a fixed syllabus checklist, TutorMind keeps a live performance profile per topic — accuracy, response time, and how recently you practiced it — and uses that to decide what you see next.",
-      "b1": "Detects weak topics before a mock test does",
-      "b2": "Prioritizes questions you're due to review",
-      "b3": "Adjusts difficulty as you improve, automatically"
+      "title": "Practice and revision that follow your performance",
+      "text": "TutorMind keeps a performance profile for each topic — accuracy, response time and how recently you practised — and uses it to choose what to practise and revise next. It is rule-based personalization from your own attempts, not a forecast of your exam result.",
+      "b1": "Flags weak topics from your own accuracy",
+      "b2": "Schedules wrong answers for spaced review in the Mistake Bank",
+      "b3": "Raises or lowers question difficulty as you improve"
     },
     "subjects": {
       "title": "Built for NEET, JEE, and KCET preparation",
-      "subtext": "Pick your exam track — every question bank is mapped to the syllabus that matters for it.",
+      "subtext": "Choose your exam track and practise the subjects it covers. Question-bank depth varies by subject and topic, and it is still growing.",
       "neet": {
         "focus": "Biology, Physics & Chemistry",
-        "detail": "NCERT-aligned question banks with diagram-heavy Botany & Zoology coverage."
+        "detail": "Physics, Chemistry and Biology practice, plus 180-question full mocks and section tests."
       },
       "jee": {
         "focus": "Physics, Chemistry & Mathematics",
-        "detail": "Concept-linked problem sets from JEE Main difficulty up through Advanced-style multi-step problems."
+        "detail": "Physics, Chemistry and Mathematics practice, plus 180-question full mocks and section tests."
       },
       "cet": {
         "focus": "PCM/PCB tracks",
-        "detail": "State-syllabus-matched practice for Karnataka CET aspirants, alongside NEET/JEE prep."
+        "detail": "Physics, Chemistry, Mathematics and Biology practice for Karnataka CET, plus full mocks and section tests."
       }
     },
     "how": {
       "title": "How It Works",
       "practice": {
         "title": "Practice questions",
-        "copy": "Start with a diagnostic set or jump straight into a subject and topic you want to drill."
+        "copy": "Start with a short baseline set, or jump straight into a subject and topic you want to drill."
       },
       "analyze": {
         "title": "System analyzes performance",
@@ -946,59 +949,55 @@
       },
       "recommend": {
         "title": "Get personalized recommendations",
-        "copy": "Your next practice set adapts automatically, prioritizing the topics most likely to move your score."
+        "copy": "Learn Next, your daily plan and weak-topic practice are drawn from your latest stats, prioritizing the topics where you are weakest."
       }
-    },
-    "testimonials": {
-      "title": "What students are saying",
-      "stars": "5 out of 5 stars",
-      "quote": "“{{quote}}”",
-      "role": "{{exam}} aspirant",
-      "sharma": "The weak-topic breakdown told me Organic Chemistry was quietly costing me marks weeks before I noticed it myself.",
-      "patel": "Exam simulation mode is the closest thing to the real JEE timing pressure I found while prepping from home.",
-      "nair": "I stopped guessing what to revise. The recommendations just tell me what to practice next."
     },
     "pricing": {
       "title": "Simple, transparent pricing",
-      "subtext": "Start free. Upgrade when you're ready to go all-in on exam prep.",
+      "subtext": "Start free and see what each plan includes. Pro and Premium are shown for comparison — online payments are not enabled yet.",
       "mostPopular": "Most popular",
       "free": {
         "name": "Free",
-        "period": "forever",
+        "period": "to start",
         "tagline": "Get started and see how adaptive practice feels.",
-        "f1": "Daily practice sets",
-        "f2": "Basic performance tracking",
-        "f3": "1 exam simulation / month",
-        "cta": "Start free"
+        "f1": "Dashboard, basic analytics and weak-topic detection",
+        "f2": "Up to 20 practice answers a day",
+        "f3": "Limited AI doubt help, study plan and Mistake Bank",
+        "cta": "Start free",
+        "f4": "2 exam simulations a month"
       },
       "pro": {
         "name": "Pro",
-        "period": "/ month",
+        "period": "pricing not announced",
         "tagline": "For students actively preparing for an upcoming exam.",
-        "f1": "Unlimited adaptive practice",
-        "f2": "Full weak-topic analytics",
-        "f3": "Unlimited exam simulations",
-        "f4": "Priority recommendation refresh",
-        "cta": "Upgrade to Pro"
+        "f1": "Up to 100 practice answers a day",
+        "f2": "Advanced analytics and recommendations",
+        "f3": "30 AI doubt messages a day",
+        "f4": "10 exam simulations a month",
+        "cta": "View Pro plan",
+        "f5": "Detailed PDF exam reports and certificates"
       },
       "premium": {
         "name": "Premium",
-        "period": "/ month",
+        "period": "pricing not announced",
         "tagline": "Maximum support for the final exam stretch.",
         "f1": "Everything in Pro",
-        "f2": "Deep-dive performance reports",
-        "f3": "Custom revision roadmap",
-        "cta": "Upgrade to Premium"
+        "f2": "No plan limits on practice, AI and exams (fair-use ceilings apply)",
+        "f3": "Advanced AI tutor with longer conversation history",
+        "cta": "View Premium plan",
+        "f4": "Readiness predictions, adaptive learning paths and premium content"
       },
       "openDashboard": "Open dashboard",
       "viewMyPlan": "View my plan",
-      "yourPlan": "Your current plan"
+      "yourPlan": "Your current plan",
+      "tba": "TBA",
+      "paymentNote": "Pro and Premium cannot be bought online yet: no prices are announced and no payment is taken. Selecting a plan saves your choice through sign-up and opens the Plans page, where each plan's current limits are listed."
     },
     "faq": {
       "title": "Frequently asked questions",
       "exams": {
         "q": "Which exams does TutorMind cover?",
-        "a": "TutorMind is built specifically for NEET, JEE (Main-style), and Karnataka CET preparation, with subject coverage across Physics, Chemistry, Mathematics, and Biology."
+        "a": "TutorMind covers NEET, JEE and Karnataka CET preparation, with practice in Physics, Chemistry, Mathematics and Biology as each exam requires. Question-bank depth varies by subject and topic, and it is still growing."
       },
       "engine": {
         "q": "How does the recommendation engine decide what to show me next?",
@@ -1006,17 +1005,61 @@
       },
       "free": {
         "q": "Is there a free plan?",
-        "a": "Yes — the Free plan includes daily practice sets and basic performance tracking so you can try the adaptive experience before upgrading."
+        "a": "Yes — the Free plan includes the dashboard, basic analytics, a limited number of daily practice answers and AI doubt questions, and 2 exam simulations a month, so you can try TutorMind first."
       },
-      "cancel": {
-        "q": "Can I cancel or change plans anytime?",
-        "a": "Yes, plans are month-to-month and you can upgrade, downgrade, or cancel from your account settings at any time."
+      "ai": {
+        "q": "Can I trust the AI doubt help?",
+        "a": "It explains questions you have already attempted and answers follow-ups, but it is AI-generated and can be wrong. Treat it as a study aid, check important facts against your textbooks or teachers, and note that daily limits depend on your plan."
+      },
+      "payments": {
+        "q": "Can I buy Pro or Premium online?",
+        "a": "Not yet. Online payments are not enabled and no prices are announced. You can pick a plan during sign-up and compare what each includes on the Plans page; nothing is charged."
+      },
+      "languages": {
+        "q": "Which languages are supported?",
+        "a": "The interface is available in English, Kannada, Hindi, Telugu, Tamil and Malayalam, and AI doubt replies follow the language you pick. Question text is not translated, and technical terms may stay in English."
       }
     },
     "cta": {
       "title": "Start your smart preparation today",
       "text": "Join TutorMind and let your practice sessions tell you exactly what to study next.",
-      "button": "Get Started Free"
+      "button": "Get Started"
+    },
+    "features": {
+      "title": "More than a question bank",
+      "subtext": "The tools around practice — explanations, planning, revision and motivation — all work from the same performance data.",
+      "ai": {
+        "title": "AI doubt help",
+        "copy": "After you answer a question, ask follow-up doubts about it on the practice screen. Replies are AI-generated explanations — useful for understanding, but not guaranteed to be correct and not a substitute for a teacher."
+      },
+      "learn": {
+        "title": "Learning recommendations",
+        "copy": "Weak topics are paired with study material and a practice set, so you can go from spotting a gap to understanding it and practising it. Suggestions come from your accuracy, mistakes and recent activity."
+      },
+      "plan": {
+        "title": "Study plan",
+        "copy": "See your priority topics, a recommended time split and today's study sessions, all ranked from your own performance."
+      },
+      "mistakes": {
+        "title": "Mistake Bank",
+        "copy": "Every wrong answer from practice and exam simulations is logged for spaced review, with retry tracking and repeated-pattern alerts so the same mistake stops coming back."
+      },
+      "reports": {
+        "title": "Exam results and reports",
+        "copy": "Exam results show your score and subject-wise performance. Pro and Premium plans can also download a PDF report and a certificate."
+      },
+      "motivation": {
+        "title": "Streaks, XP and achievements",
+        "copy": "Earn XP and levels for practice, learning and exams, keep a daily streak and unlock achievements. They are there to help you stay consistent, not a promise of better scores."
+      },
+      "languages": {
+        "title": "Six interface languages",
+        "copy": "Use the app in English, Kannada, Hindi, Telugu, Tamil or Malayalam; AI doubt replies follow your selected language. Question text is not translated."
+      },
+      "exams": {
+        "title": "About Exam",
+        "copy": "Read what NEET, JEE and Karnataka CET are for, who conducts them and where to find official links. Always confirm dates and eligibility on the official sites."
+      }
     }
   },
   "aboutExam": {

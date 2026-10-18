@@ -45,13 +45,15 @@ describe('HomePage (landing page) smoke test', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText('AI that understands how you learn')).toBeInTheDocument();
+    expect(screen.getByText('Know Exactly What to Practice Next')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Why TutorMind' })).toBeInTheDocument();
     expect(
       screen.getByRole('heading', { name: 'Built for NEET, JEE, and KCET preparation' })
     ).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Simple, transparent pricing' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Frequently asked questions' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'More than a question bank' })).toBeInTheDocument();
+    expect(screen.queryByText('What students are saying')).not.toBeInTheDocument();
     expect(screen.getByText(/TutorMind. All rights reserved/)).toBeInTheDocument();
 
     vi.unstubAllGlobals();
