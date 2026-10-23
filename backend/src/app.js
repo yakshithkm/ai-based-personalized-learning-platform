@@ -23,6 +23,8 @@ const { validateObjectIdParam } = require('./middleware/validateObjectIdParam');
 const { getDebugIntents } = require('./controllers/examController');
 
 const app = express();
+// Behind Render's proxy: trust exactly one hop so req.ip is the real client IP.
+app.set('trust proxy', 1);
 
 app.use(helmet());
 // Auth is Bearer-token based (Authorization header, see frontend/src/api/client.js) - no
