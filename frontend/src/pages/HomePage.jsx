@@ -16,7 +16,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTier } from '../context/TierContext';
 import { resolvePricingAction } from '../utils/planSelection';
 import { useMagneticHover } from '../hooks/useMagneticHover';
-import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, CalendarIcon, CheckIcon, MapPinIcon, NoticeIcon, ArrowRightIcon, MenuIcon, CloseIcon } from '../components/landing/icons';
+import { TargetIcon, BoltIcon, ChartIcon, BrainIcon, SearchIcon, ClockIcon, TrendUpIcon, StarIcon, CalendarIcon, CheckIcon, MapPinIcon, CardsIcon, ArrowRightIcon, MenuIcon, CloseIcon } from '../components/landing/icons';
 
 // Anchor links (`href`) smooth-scroll within the landing page; the one
 // route link (`to`) is a real React Router navigation to a separate page
@@ -97,7 +97,7 @@ const featureCards = [
   { key: 'reports', Icon: ChartIcon },
   { key: 'motivation', Icon: StarIcon },
   { key: 'languages', Icon: MapPinIcon },
-  { key: 'exams', Icon: NoticeIcon },
+  { key: 'flashcards', Icon: CardsIcon },
 ];
 
 // Plan contents mirror backend/src/config/tiers.js. Only the Free plan has a price (nothing).
@@ -107,17 +107,17 @@ const pricingPlans = [
   {
     key: 'free',
     priceValue: 0,
-    featureCount: 4,
+    featureCount: 5,
     highlighted: false,
   },
   {
     key: 'pro',
-    featureCount: 5,
+    featureCount: 6,
     highlighted: true,
   },
   {
     key: 'premium',
-    featureCount: 4,
+    featureCount: 5,
     highlighted: false,
   },
 ];

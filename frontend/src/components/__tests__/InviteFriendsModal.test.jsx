@@ -24,6 +24,16 @@ describe('InviteFriendsModal', () => {
     expect(screen.queryByText('Invite Friends')).not.toBeInTheDocument();
   });
 
+  it('renders in a body-level portal so the dim layer covers the whole app shell', async () => {
+    apiGetMock.mockResolvedValue({ data: { referralCode: 'ABC123XY', friendsInvited: 0, successfulSignups: 0 } });
+    const { container } = renderModal(true);
+    const dialog = await screen.findByRole('dialog');
+    const backdrop = dialog.parentElement;
+    expect(container.contains(backdrop)).toBe(false);
+    expect(backdrop.parentElement).toBe(document.body);
+    expect(backdrop).toHaveClass('invite-modal-backdrop');
+  });
+
   it('opens, loads the referral code/stats from the server, and builds the invite link', async () => {
     apiGetMock.mockResolvedValue({
       data: { referralCode: 'ABC123XY', friendsInvited: 5, successfulSignups: 3 },

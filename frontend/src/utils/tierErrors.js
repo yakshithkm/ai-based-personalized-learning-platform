@@ -38,11 +38,13 @@ export const onUsageChanged = (handler) => {
   return () => window.removeEventListener(USAGE_CHANGED_EVENT, handler);
 };
 
-// Successful requests to these endpoints spend quota (practice attempt, exam start, Learn page load).
+// Successful requests to these endpoints spend quota (practice attempt, exam start, Learn page load,
+// AI flashcard generation).
 const QUOTA_ENDPOINTS = [
   ['post', /^\/attempts\/?$/],
   ['post', /^\/exams\/sessions\/?$/],
   ['get', /^\/recommendations\/learning\/?$/],
+  ['post', /^\/flashcards\/generate\/?$/],
 ];
 export const consumesQuota = (method, url = '') => {
   const verb = String(method).toLowerCase();

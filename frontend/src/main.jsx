@@ -28,6 +28,7 @@ import './styles/features/subpages.css';
 import './styles/features/analytics.css';
 import './styles/features/admin.css';
 import './styles/features/ai-tutor.css';
+import './styles/features/flashcards.css';
 import './styles/features/learning.css';
 import './styles/features/gamification.css';
 import './styles/features/about-exams.css';

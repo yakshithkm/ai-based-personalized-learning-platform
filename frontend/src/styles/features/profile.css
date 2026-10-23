@@ -504,7 +504,9 @@ Shared primitives (.panel, .chip, .stats-grid, .metric-card, .solid-btn,
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  z-index: 90;
+  /* 50: above the app shell (header/sidebar/dropdowns top out at 40) but below the toast stack
+     (60), so "Invite link copied" stays visible over the dimmed page. */
+  z-index: 50;
   padding: 20px;
   padding-top: 7vh;
   overflow-y: auto;

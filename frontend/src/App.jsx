@@ -27,6 +27,9 @@ const LearnPage = lazy(() => import('./pages/LearnPage'));
 const LearningContentPage = lazy(() => import('./pages/LearningContentPage'));
 const MistakeBankPage = lazy(() => import('./pages/MistakeBankPage'));
 const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'));
+const FlashcardCreatePage = lazy(() => import('./pages/FlashcardCreatePage'));
+const FlashcardDeckPage = lazy(() => import('./pages/FlashcardDeckPage'));
+const FlashcardStudyPage = lazy(() => import('./pages/FlashcardStudyPage'));
 const AchievementsPage = lazy(() => import('./pages/AchievementsPage'));
 const AboutExamPage = lazy(() => import('./pages/AboutExamPage'));
 const PlansPage = lazy(() => import('./pages/PlansPage'));
@@ -209,6 +212,39 @@ const App = () => {
           <ProtectedRoute>
             <Layout>
               <FlashcardsPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/flashcards/create"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <FlashcardCreatePage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/flashcards/:deckId"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <FlashcardDeckPage />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/flashcards/:deckId/study"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <FlashcardStudyPage />
             </Layout>
           </ProtectedRoute>
         }

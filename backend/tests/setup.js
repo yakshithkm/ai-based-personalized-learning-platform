@@ -12,6 +12,9 @@ beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const uri = mongoServer.getUri();
   await mongoose.connect(uri);
+  // Wait for every model's indexes (e.g. the unique GamificationEvent dedupe index) to exist
+  // before any test runs; otherwise a cold first run can race the index build.
+  await Promise.all(Object.values(mongoose.models).map((model) => model.init()));
 }, 30000);
 
 afterEach(async () => {

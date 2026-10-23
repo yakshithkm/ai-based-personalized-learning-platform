@@ -111,6 +111,20 @@
 .lr-feedback .lr-selected { border-color: var(--primary); background: rgba(var(--primary-rgb), 0.16); }
 .lr-feedback-btn { display: inline-flex; align-items: center; gap: 0.4rem; }
 .lr-feedback-btn svg { width: 1rem; height: 1rem; flex: none; }
+
+/* Lesson feedback buttons on phones: fill the row, labels centred. Each button is sized as a third
+   of the row but never narrower than its label, so a pair (Helpful / Not helpful) splits 50/50,
+   three short labels share one row on wider phones, and a label that is too wide to share
+   (e.g. "Too difficult" on a narrow phone) takes a full row of its own. */
+@media (max-width: 640px) {
+  .lr-feedback-row > .outline-btn {
+    flex: 1 1 calc(33.333% - 0.34rem);
+    min-width: fit-content;
+    box-sizing: border-box;
+    justify-content: center;
+    text-align: center;
+  }
+}
 .lr-thanks { margin: 0; color: var(--success); font-size: 0.88rem; }
 
 /* --- dashboard teaser --- */

@@ -1,0 +1,267 @@
+/* Flashcards (dashboard, create/review, deck, study). Consumes only the shared design tokens
+   (theme.css / index.css) so both themes work; no hardcoded theme colours.
+   Grid children carry min-width: 0 (see engineering notes on CSS Grid min-width: auto). */
+
+.fc-sr-only {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* --- shared bits --- */
+.fc-page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.fc-page-head > div { min-width: 0; flex: 1 1 260px; }
+.fc-page-head h2, .fc-page-head p { margin-top: 0; }
+.fc-notice { margin: 0.5rem 0 0; color: var(--muted); font-size: 0.88rem; overflow-wrap: anywhere; }
+.fc-counter { color: var(--muted); font-size: 0.82rem; margin-left: 0.4rem; white-space: nowrap; }
+.fc-danger-outline { color: var(--danger-text); border-color: rgba(var(--danger-rgb), 0.45); }
+.fc-danger-outline:hover { background: rgba(var(--danger-rgb), 0.12); }
+a[aria-disabled='true'] { opacity: 0.55; cursor: not-allowed; pointer-events: auto; transform: none !important; }
+
+.fc-field { display: grid; gap: 0.35rem; min-width: 0; font-size: 0.9rem; }
+.fc-field > span { color: var(--text-soft); font-weight: 600; }
+.fc-field small { color: var(--muted); }
+.fc-field-grow { flex: 1 1 220px; }
+.fc-field textarea {
+  width: 100%; box-sizing: border-box; resize: vertical; min-height: 3rem;
+  border: 1px solid var(--control-border); background: var(--bg-soft); color: var(--text);
+  padding: 0.7rem 0.9rem; border-radius: 12px; font: inherit; line-height: 1.45;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.fc-field textarea:focus { outline: 2px solid var(--ring); border-color: var(--primary); }
+.fc-field [aria-invalid='true'] { border-color: var(--danger); }
+
+/* --- stats --- */
+/* Centred stat cards. A wrapping flex row (not a fixed grid) so that on any width a lone last item
+   grows to the full row and sits centred, instead of being stuck at the left of an empty row. */
+.fc-stats { display: flex; flex-wrap: wrap; gap: 0.75rem; text-align: center; }
+.fc-stats > div { display: grid; justify-items: center; gap: 0.1rem; flex: 1 1 110px; min-width: 0; }
+.fc-stats strong { font-size: 1.5rem; line-height: 1.1; color: var(--text-strong); }
+.fc-stats span { color: var(--muted); font-size: 0.82rem; overflow-wrap: anywhere; }
+.fc-stats-inline { margin: 0.9rem 0 0.4rem; }
+
+/* --- filters + grid + pagination --- */
+.fc-filters { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: flex-end; }
+.fc-filters .fc-field { flex: 0 1 200px; }
+.fc-filters .fc-field-grow { flex: 1 1 240px; }
+.fc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 1rem; align-items: stretch; }
+.fc-grid > * { min-width: 0; }
+.fc-pagination { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; color: var(--muted); }
+
+/* --- deck card --- */
+.fc-deck-card { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.fc-deck-head { display: grid; gap: 0.45rem; }
+.fc-deck-title { margin: 0; font-size: 1.1rem; overflow-wrap: anywhere; }
+.fc-deck-title a { color: inherit; text-decoration: none; }
+.fc-deck-title a:hover { color: var(--accent-text); }
+.fc-deck-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.fc-deck-meta { margin: 0; color: var(--muted); font-size: 0.86rem; overflow-wrap: anywhere; }
+.fc-due-badge {
+  display: inline-block; margin-left: 0.5rem; padding: 0.1rem 0.55rem; border-radius: var(--radius-pill);
+  font-size: 0.74rem; font-weight: 700; color: var(--caution-text-soft);
+  background: rgba(var(--warning-rgb), 0.14); border: 1px solid rgba(var(--warning-rgb), 0.4);
+}
+.fc-deck-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 0.75rem; }
+.fc-deck-actions .solid-btn, .fc-deck-actions .outline-btn { padding: 0.5rem 0.85rem; font-size: 0.88rem; text-align: center; }
+
+.fc-progress { display: grid; gap: 0.3rem; margin: 0.4rem 0; }
+.fc-progress small { color: var(--muted); font-size: 0.8rem; }
+.fc-progress-bar { height: 8px; border-radius: var(--radius-pill); background: rgba(var(--neutral-rgb), 0.2); overflow: hidden; }
+.fc-progress-bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--success)); transition: width var(--duration-base) var(--ease-out); }
+
+/* --- forms (create / add card) --- */
+.fc-form { display: grid; gap: 1rem; }
+.fc-form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8rem; }
+.fc-form-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.fc-lesson-banner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.6rem;
+  padding: 0.7rem 0.9rem; border-radius: var(--radius-md); font-size: 0.9rem;
+  background: rgba(var(--primary-rgb), 0.12); border: 1px solid rgba(var(--primary-rgb), 0.35);
+}
+.fc-lesson-banner > span { min-width: 0; overflow-wrap: anywhere; }
+.fc-editor-list, .fc-card-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.8rem; }
+.fc-editor-row, .fc-card-row {
+  display: grid; gap: 0.6rem; min-width: 0; padding: 0.9rem; border-radius: var(--radius-md);
+  border: 1px solid var(--border); background: var(--surface-0);
+}
+.fc-editor-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.fc-editor-actions, .fc-card-actions { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.fc-editor-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 0.8rem; }
+
+/* --- deck page --- */
+.fc-deck-header-row { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.fc-deck-header-row > div:first-child { min-width: 0; flex: 1 1 260px; }
+.fc-deck-header h2 { margin: 0.4rem 0 0.3rem; overflow-wrap: anywhere; }
+.fc-deck-header-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.fc-study-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
+.fc-card-row { grid-template-columns: minmax(0, 1fr) auto; align-items: start; }
+.fc-card-row .fc-edit-form { grid-column: 1 / -1; display: grid; gap: 0.7rem; }
+.fc-card-body { min-width: 0; display: grid; gap: 0.3rem; }
+.fc-card-front { margin: 0; font-weight: 600; color: var(--text-strong); overflow-wrap: anywhere; }
+.fc-card-index { color: var(--muted); font-weight: 500; margin-right: 0.2rem; }
+.fc-card-back { margin: 0; color: var(--text-soft); overflow-wrap: anywhere; white-space: pre-wrap; }
+.fc-card-meta { margin: 0.2rem 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; font-size: 0.8rem; color: var(--muted); }
+.fc-card-meta .fc-due-badge { margin-left: 0; }
+.fc-status { padding: 0.1rem 0.55rem; border-radius: var(--radius-pill); font-weight: 700; border: 1px solid var(--border); }
+.fc-status-known { color: var(--success-text-soft); background: rgba(var(--success-rgb), 0.12); border-color: rgba(var(--success-rgb), 0.35); }
+.fc-status-review { color: var(--danger-text-soft); background: rgba(var(--danger-rgb), 0.14); border-color: rgba(var(--danger-rgb), 0.4); }
+.fc-add-form { display: grid; gap: 0.7rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+.fc-add-form h4 { margin: 0; }
+.fc-add-form .outline-btn { justify-self: start; }
+.fc-history { list-style: none; margin: 0.6rem 0 0; padding: 0; display: grid; gap: 0.5rem; }
+.fc-history li { display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; padding: 0.55rem 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 0.9rem; color: var(--text-soft); }
+
+/* --- study --- */
+.fc-study { display: grid; gap: 1rem; max-width: 780px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+.fc-study:hover { transform: none; }
+.fc-study-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+.fc-study-count { color: var(--text-soft); font-weight: 600; }
+
+.fc-flip {
+  display: block; width: 100%; padding: 0; margin: 0; border: 0; background: none; color: inherit;
+  font: inherit; text-align: left; cursor: pointer; perspective: 1400px;
+  min-height: clamp(240px, 38vh, 340px); border-radius: var(--radius-lg); position: relative;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.fc-flip:focus-visible { outline: 3px solid var(--ring); outline-offset: 4px; }
+.fc-flip-inner {
+  position: absolute; inset: 0; display: block; transform-style: preserve-3d;
+  transition: transform 0.55s var(--ease-out);
+}
+.fc-flip.is-flipped .fc-flip-inner { transform: rotateY(180deg); }
+.fc-face {
+  position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  gap: 0.8rem; padding: 1.4rem 1.2rem; box-sizing: border-box; text-align: center; overflow-y: auto;
+  border-radius: var(--radius-lg); border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--surface-0), var(--surface-1));
+  box-shadow: var(--elevation-2);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.fc-face-back { transform: rotateY(180deg); border-color: rgba(var(--primary-rgb), 0.45); }
+.fc-flip:hover .fc-face { border-color: rgba(var(--primary-rgb), 0.5); }
+.fc-face-label { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; }
+.fc-face-text { font-size: clamp(1.05rem, 2.6vw, 1.45rem); line-height: 1.45; color: var(--text-strong); overflow-wrap: anywhere; white-space: pre-wrap; max-width: 100%; }
+.fc-face-hint { font-size: 0.78rem; color: var(--muted); }
+
+.fc-study-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
+.fc-study-controls .outline-btn { padding: 0.7rem 0.5rem; font-size: 0.9rem; }
+.fc-btn-know { color: var(--success-text); border-color: rgba(var(--success-rgb), 0.5); }
+.fc-btn-know:hover:not(:disabled), .fc-btn-know[aria-pressed='true'] { background: rgba(var(--success-rgb), 0.16); }
+.fc-btn-review { color: var(--danger-text); border-color: rgba(var(--danger-rgb), 0.5); }
+.fc-btn-review:hover:not(:disabled), .fc-btn-review[aria-pressed='true'] { background: rgba(var(--danger-rgb), 0.16); }
+.fc-rated { margin: 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
+.fc-study-secondary { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+.fc-shortcuts { margin: 0; text-align: center; color: var(--text-faint); font-size: 0.78rem; }
+.fc-inline-error {
+  padding: 0.7rem 0.9rem; border-radius: var(--radius-md); font-size: 0.9rem; color: var(--danger-text-soft);
+  background: rgba(var(--danger-rgb), 0.12); border: 1px solid rgba(var(--danger-rgb), 0.4);
+}
+
+/* --- summary --- */
+.fc-summary { display: grid; gap: 0.8rem; max-width: 780px; width: 100%; margin: 0 auto; box-sizing: border-box; }
+.fc-summary h2 { margin: 0; }
+.fc-missed h3 { margin: 0.4rem 0; font-size: 1rem; }
+.fc-missed ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.3rem; color: var(--text-soft); overflow-wrap: anywhere; }
+
+/* --- responsive --- */
+@media (max-width: 640px) {
+  .fc-study-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fc-card-row { grid-template-columns: minmax(0, 1fr); }
+  .fc-flip { min-height: clamp(220px, 46vh, 320px); }
+  .fc-deck-actions .solid-btn, .fc-deck-actions .outline-btn { flex: 1 1 calc(50% - 0.5rem); }
+
+  /* Button rows on phones. Two buttons that fit together share the row 50/50; a button that is alone
+     on its row (or whose label is too wide to share) takes the full width. Labels are centred.
+     `min-width: fit-content` keeps each button at least as wide as its label (never wider than the
+     row), which is what lets a long label push its neighbour onto the next line. */
+  .fc-form-actions, .fc-study-actions, .fc-deck-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  .fc-form-actions > .solid-btn, .fc-form-actions > .outline-btn,
+  .fc-study-actions > .solid-btn, .fc-study-actions > .outline-btn,
+  .fc-deck-header-actions > .solid-btn, .fc-deck-header-actions > .outline-btn {
+    flex: 1 1 calc(50% - 0.3rem);
+    min-width: fit-content;
+    box-sizing: border-box;
+    text-align: center;
+    justify-content: center;
+  }
+  .fc-deck-header-row > .fc-deck-header-actions { flex: 1 1 100%; }
+  .fc-page-head > .solid-btn { flex: 1 1 100%; box-sizing: border-box; text-align: center; justify-content: center; }
+  .fc-form-actions > .fc-counter { flex: 1 1 100%; margin-left: 0; text-align: center; }
+  .fc-add-form .outline-btn { justify-self: stretch; text-align: center; }
+
+  /* Dashboard filters: search, topic and sort each take the full width. */
+  .fc-filters .fc-field { flex: 1 1 100%; }
+  .fc-filters select, .fc-filters input { width: 100%; box-sizing: border-box; }
+
+  /* Card rows (deck page: ↑ ↓ Edit Delete) and card editors (create page: Regenerate Remove): the same
+     rule, so they become centred 50/50 pairs instead of small left-aligned buttons. */
+  .fc-card-actions, .fc-editor-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+  .fc-card-actions > .outline-btn, .fc-editor-actions > .outline-btn {
+    flex: 1 1 calc(50% - 0.25rem);
+    min-width: fit-content;
+    box-sizing: border-box;
+    text-align: center;
+    justify-content: center;
+  }
+  .fc-editor-head > .fc-editor-actions { flex: 1 1 100%; }
+
+  /* Study screen controls and the Flashcards dialogs: the same 50/50 / full-width rule.
+     Dialog rules are scoped to .fc-modal-backdrop, so admin dialogs keep their layout. */
+  .fc-study-controls, .fc-study-secondary, .fc-modal-backdrop .admin-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+  .fc-study-controls > .outline-btn,
+  .fc-study-secondary > .outline-btn,
+  .fc-modal-backdrop .admin-modal-actions > .outline-btn,
+  .fc-modal-backdrop .admin-modal-actions > .solid-btn,
+  .fc-modal-backdrop .admin-modal-actions > .admin-danger-btn {
+    flex: 1 1 calc(50% - 0.3rem);
+    min-width: fit-content;
+    box-sizing: border-box;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Stat cards on phones: always two columns. An odd last item (e.g. the 5th stat on the deck page)
+     spans the full row so it is centred. */
+  .fc-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fc-stats > div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+/* --- reduced motion: no 3D turn, just a quick cross-fade between faces --- */
+@media (prefers-reduced-motion: reduce) {
+  .fc-flip-inner { transition: none; transform: none !important; transform-style: flat; }
+  .fc-face { backface-visibility: visible; -webkit-backface-visibility: visible; transition: opacity 0.12s linear; }
+  .fc-face-back { transform: none; opacity: 0; visibility: hidden; }
+  .fc-flip.is-flipped .fc-face-front { opacity: 0; visibility: hidden; }
+  .fc-flip.is-flipped .fc-face-back { opacity: 1; visibility: visible; }
+  .fc-progress-bar > span { transition: none; }
+}
+
+/* --- modals: centred in the viewport, above the sticky header and sidebar ---
+   Used by the Rename dialog and (opt-in) by ConfirmDialog. Both render into document.body, so the
+   z-index competes with the app shell directly instead of being trapped in the page's stacking
+   context. z-index 50 sits above the shell (header/sidebar/dropdowns top out at 40) but below the
+   toast stack (60), so error/success toasts stay visible over a dimmed page. `margin: auto` on the
+   dialog centres it and still lets a tall dialog scroll on short screens (align-items: center
+   would clip its top). */
+.admin-modal-backdrop.fc-modal-backdrop {
+  z-index: 50;
+  align-items: stretch;
+  padding: 1rem;
+}
+.fc-modal-backdrop > .admin-modal {
+  margin: auto;
+}
