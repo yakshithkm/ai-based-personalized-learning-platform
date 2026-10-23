@@ -10,6 +10,7 @@ const { rebuildPerformanceForUser } = require('../src/services/performanceServic
 const { classifyMistake } = require('../src/services/feedbackService');
 const { DEMO_PROFILES } = require('../src/data/demoProfiles');
 const { applySubscription } = require('../src/services/tier/subscriptionService');
+const { seedFlashcardsForUser, removeFlashcardData } = require('./seedDemoFlashcards');
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const REPETITION_DAYS = [1, 3, 7];
@@ -68,6 +69,7 @@ const cleanupDemoUser = async (email) => {
     ExamSession.deleteMany({ user: userId }),
     ProductEvent.deleteMany({ user: userId }),
     UsageCounter.deleteMany({ user: userId }),
+    removeFlashcardData(userId),
   ]);
   await User.deleteOne({ _id: userId });
   return userId;
@@ -390,6 +392,10 @@ const seedOneProfile = async (profile, now) => {
 
   await rebuildPerformanceForUser(user._id);
 
+  // Flashcard decks + study history, created through the real flashcard service (tier deck limit,
+  // validation, spaced-repetition scheduling) with backdated study sessions.
+  const flashcards = await seedFlashcardsForUser({ user, profile, now });
+
   return {
     email: user.email,
     name: user.name,
@@ -399,6 +405,9 @@ const seedOneProfile = async (profile, now) => {
     correctAttempts: attemptDocs.filter((a) => a.isCorrect).length,
     mistakes: mistakeDocs.length,
     activeDays: calendar.length,
+    flashcardDecks: flashcards.decks,
+    flashcardCards: flashcards.cards,
+    flashcardSessions: flashcards.sessions,
   };
 };
 

@@ -174,3 +174,12 @@ export const NoticeIcon = (props) => (
     <path d="M8.6 11h6.8M8.6 14.2h6.8M8.6 17.4h4.2" />
   </svg>
 );
+
+// Flashcards: a card in front with the edge of a second card behind it.
+export const CardsIcon = (props) => (
+  <svg {...base} {...props} aria-hidden="true">
+    <rect x="3.5" y="8" width="14" height="12" rx="2.2" />
+    <path d="M7 4.5h11.3a2.2 2.2 0 0 1 2.2 2.2v9.3" />
+    <path d="M7.2 12.4h6.6M7.2 15.6h4" />
+  </svg>
+);

@@ -1,6 +1,6 @@
 # AI-Based Personalized Learning Platform (NEET, JEE, CET)
 
-Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, question content protection, adaptive learning features, a learning-content recommendation engine, a server-authoritative gamification & achievement system, a server-enforced FREE / PRO / PREMIUM subscription tier system, a peer referral/invite program, non-blocking transactional security emails, multilingual internationalization (English, Kannada, Hindi, Telugu, Tamil, Malayalam) with on-demand font and locale loading, a dual-theme system (dark & light modes with zero-FOUC bootstrapping and semantic CSS tokens), and a dedicated admin portal.
+Full-stack personalized exam preparation platform with AI-assisted doubt resolution, on-device AI proctoring, question content protection, adaptive learning features, a learning-content recommendation engine, a Leitner-style spaced-repetition flashcard system with AI card generation, a server-authoritative gamification & achievement system, a server-enforced FREE / PRO / PREMIUM subscription tier system, a peer referral/invite program, non-blocking transactional security emails, multilingual internationalization (English, Kannada, Hindi, Telugu, Tamil, Malayalam) with on-demand font and locale loading, a dual-theme system (dark & light modes with zero-FOUC bootstrapping and semantic CSS tokens), and a dedicated admin portal.
 
 ## Tech Stack
 
@@ -15,10 +15,11 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 | **Exam Proctoring & Content Protection** | On-device face presence detection (`@vladmandic/face-api`) + browser focus/visibility monitoring + client-side question anti-copy/anti-leak shield |
 | **Learning Engine** | Deterministic 0–100 ranking engine + prerequisite expansion + before/after effectiveness tracker |
 | **Gamification** | Server-authoritative XP ledger (`GamificationEvent`) + level curve + streak shields + achievement engine + historical backfill |
+| **Flashcards** | Leitner-style spaced-repetition deck system · AI card generation from topics/text/lessons (shares daily AI quota) · deck limits by tier (Free 5 / Pro 30 / Premium unlimited) · 4-model persistence layer (`FlashcardDeck`, `Flashcard`, `FlashcardProgress`, `FlashcardSession`) |
 | **Referrals & Community** | Server-authoritative referral codes (`User.referralCode`) + unique referral tracking (`Referral`) + dynamic Web Share & clipboard invite links |
 | **Transactional Email** | Nodemailer with non-blocking fire-and-forget SMTP delivery + fail-safe offline degradation |
 | **ML Service** | Python + Flask + scikit-learn + NumPy |
-| **Testing** | Jest + Supertest + mongodb-memory-server (backend: 21 test suites — 16 integration + 5 database-free unit suites, 220 tests total: 148 integration + 72 unit tests) · Vitest + Testing Library (frontend: 24 test files, 146 tests) |
+| **Testing** | Jest + Supertest + mongodb-memory-server (backend: 27 test suites — 18 integration + 9 database-free unit suites) · Vitest + Testing Library (frontend: 27 test files) |
 | **Security** | Helmet · express-rate-limit · express-mongo-sanitize · bcryptjs · Server-side tier authorization · Atomic usage quotas · Idempotent event reporting · Privacy-first local video stream · Question content protection · Non-blocking email boundary |
 
 
@@ -49,7 +50,13 @@ Full-stack personalized exam preparation platform with AI-assisted doubt resolut
 15. **Weak Topics Page** — Dedicated view of low-accuracy topics with drill-down
 16. **Study Plan Page** — AI-generated prioritised study schedule (number of topics by plan)
 17. **Achievements Page** — Milestone and badge tracking
-18. **Flashcards** — Lightweight review interface
+18. **Flashcards** — Full spaced-repetition flashcard system:
+    - **Decks dashboard** (`/flashcards`): search, sort (recent / studied / title), pagination, per-deck stats (due cards, difficult cards, progress).
+    - **Deck creation** (`/flashcards/create`): AI-generate cards from a topic, pasted text, or a TutorMind learning-content lesson — or build manually. Cards are previewed and edited before saving.
+    - **Deck detail** (`/flashcards/:deckId`): card list, per-card progress, deck rename, and full study history.
+    - **Study sessions** (`/flashcards/:deckId/study`): flip-card interface with Know-it / Need-to-review ratings, session summary, and shuffle control.
+    - **Leitner SRS** (`services/flashcards/srs.js`): "Know it" moves a card up one box (next review after 1, 3, 7, 14, then 30 days); "Need to review" returns it to box 0, due immediately. Explicitly not SM-2/FSRS — simple and explainable.
+    - **Plan limits**: deck count per plan (Free: 5, Pro: 30, Premium: unlimited with 200-deck hard ceiling). AI generation shares the daily `AI` quota. Completing a session awards `FLASHCARD_SESSION_COMPLETED` XP once per session.
 19. **Session Summary** — Post-practice session breakdown
 20. **Profile Page** — User stats, target exam, account settings, current plan, preferred language settings (rendered side-by-side with plan details on desktop viewports), and an **Invite Friends** entry point with referral code display and statistics
 21. **Learn Page** — Personalised learning hub (`/learn`): curated study-material recommendations organised into sections (Weak Areas, Mistake Recovery, Continue Learning, Practice After Learning, Challenges, Explore New); includes a LearnNext hero card with localized AI rationale rephrasing, daily plan, and improvement banners. Sections, content tier and AI polish are shaped by the user's plan.
@@ -137,9 +144,11 @@ ai-based-personalized-learning-platform/
 │   └── src/
 │       ├── App.jsx         # App shell & routing (includes global ScrollToTop route restoration)
 │       ├── pages/          # Route-level page components
-│       │   ├── (20 pages: 19 student/public pages incl. AboutExamPage, LearnPage, LearningContentPage & PlansPage + 1 legacy admin analytics)
+│       │   ├── (23 pages: 22 student/public pages incl. AboutExamPage, LearnPage, LearningContentPage,
+│       │   │   PlansPage & 4 Flashcard pages + 1 legacy admin analytics)
 │       │   ├── admin/      # 11 admin portal pages (incl. AdminLearningContentPage)
-│       │   └── __tests__/  # Vitest integration, proctoring, content protection, single-flight & pricing-flow suites
+│       │   └── __tests__/  # Vitest integration, proctoring, content protection, single-flight,
+│       │                   # pricing-flow & flashcard suites (17 test files)
 │       ├── components/     # Layout, AdminLayout, ProtectedRoute, LanguageSelector, ThemeToggle,
 │       │   │               # AISidebar, AIChatMessage, BrandLogo, EmptyState, Footer,
 │       │   │               # InviteFriendsModal, PasswordField, ResultIcons
@@ -151,6 +160,7 @@ ai-based-personalized-learning-platform/
 │       │   ├── learning/   # LearnNextCard, LearnNextTeaser, RecommendationCard, DailyPlan,
 │       │   │               # ImprovementBanner, LearningPath, PersonalizedPlanPanel,
 │       │   │               # ContentFeedback, learningUi
+│       │   ├── flashcards/ # CardEditorRow, DeckCard, FlipCard, RenameDeckModal, __tests__/
 │       │   ├── landing/    # AiNetworkHero, DashboardPreview, RecommendationCard,
 │       │   │               # FaqAccordion, PriceCounter, Reveal, icons
 │       │   ├── __smoke__/  # Layout and PasswordField smoke tests (2 suites)
@@ -178,19 +188,23 @@ ai-based-personalized-learning-platform/
 │       └── utils/          # Shared utilities: appEvents.js (event bus + exam-in-progress state tracking),
 │                           # protectedContent.js, subjectVisuals.js (theme-aware subject palettes & SVG icons),
 │                           # planSelection.js (plan validation + pricing-button routing),
-│                           # tierErrors.js, productEvents.js, visitId.js
+│                           # flashcards.js (shared flashcard helpers), tierErrors.js,
+│                           # productEvents.js, visitId.js
 ├── backend/                # Node.js REST API
 │   ├── src/
-│   │   ├── controllers/    # 20 route handlers (auth, referral, questions, attempts,
+│   │   ├── controllers/    # 21 route handlers (auth, referral, questions, attempts,
 │   │   │                   # analytics, exam, examReport, recommendation,
-│   │   │                   # learningRecommendation, gamification, ai, tier, admin × 8)
-│   │   ├── models/         # 19 Mongoose models — see Database Models (incl. Referral, UsageCounter,
-│   │   │                   # UsageVisit, User.preferredLanguage & User tier/subscription fields)
-│   │   ├── routes/         # 11 Express routers (auth, referral, questions, attempts,
-│   │   │                   # analytics, recommendations, exams, gamification, admin, ai, tier)
+│   │   │                   # learningRecommendation, gamification, ai, tier, flashcard, admin × 8)
+│   │   ├── models/         # 23 Mongoose models — see Database Models (incl. Referral, UsageCounter,
+│   │   │                   # UsageVisit, User.preferredLanguage & User tier/subscription fields,
+│   │   │                   # FlashcardDeck, Flashcard, FlashcardProgress, FlashcardSession)
+│   │   ├── routes/         # 12 Express routers (auth, referral, questions, attempts,
+│   │   │                   # analytics, recommendations, exams, gamification, admin, ai, tier, flashcards)
 │   │   ├── services/       # service modules — see Service Layer
 │   │   │   ├── ai/         # aiService.js (multilingual directives), geminiService.js
 │   │   │   ├── billing/    # billingProvider.js (payment-gateway seam; no provider integrated)
+│   │   │   ├── flashcards/ # flashcardService.js (deck/card CRUD, study sessions, stats),
+│   │   │   │               # srs.js (Leitner box logic), validation.js (input sanitization)
 │   │   │   ├── gamification/ # gamificationService.js, backfillService.js, config.js
 │   │   │   ├── learning/   # index.js + 14 focused modules (ranking, needDetection,
 │   │   │   │               # learnerProfile, lifecycle, practiceSet, dailyPlan,
@@ -218,6 +232,7 @@ ai-based-personalized-learning-platform/
 │   ├── backfillGamification.js # CLI script for gamification historical backfill
 │   ├── scripts/
 │   │   └── backfillGamification.js # Multi-user backfill runner
+│   ├── seedFlashcardDemo.js # Demo flashcard decks seed script (3 decks × 3 tiers)
 │   └── resetDemo.js        # Demo data reset script
 ├── ml-service/             # Python Flask microservice
 │   ├── app.py              # /health + /analyze endpoints (port 8000)
@@ -364,7 +379,10 @@ To clear plan-usage counters (e.g. to re-test quotas): `npm run reset:usage -- f
 | `/weak-topics` | Weak Topics | ✅ |
 | `/study-plan` | Study Plan | ✅ |
 | `/mistake-bank` | Mistake Bank | ✅ |
-| `/flashcards` | Flashcards | ✅ |
+| `/flashcards` | Flashcards dashboard (decks, search, sort, progress) | ✅ |
+| `/flashcards/create` | Create a deck (AI generation or manual) and review cards before saving | ✅ |
+| `/flashcards/:deckId` | Deck detail: cards, progress, history | ✅ |
+| `/flashcards/:deckId/study` | Study session (flip, rate, summary) | ✅ |
 | `/achievements` | Achievements | ✅ |
 | `/admin-analytics` | Admin Analytics (legacy) | ✅ Admin only |
 
@@ -471,6 +489,27 @@ The admin portal uses a dedicated `AdminLayout` shell (sidebar navigation), comp
 | `POST` | `/:id/skip` | Skip a recommendation |
 | `POST` | `/:id/feedback` | Submit feedback on a recommendation |
 
+### Flashcards (`/api/flashcards`)
+
+All routes require authentication and the Flashcards feature; ownership is enforced per query (`{ _id, user: req.user._id }`) and another student's deck returns `404`.
+
+| Method | Route | Purpose |
+|---|---|---|
+| GET | `/summary` | Totals across the student's decks (decks, cards, due, difficult) |
+| POST | `/generate` | AI-generate cards from a topic, pasted text or a lesson (`learningContentId`); returns validated, **unsaved** cards. Spends 1 unit of the daily AI quota (refunded on failure) |
+| GET / POST | `/decks` | List (search, `topic`, `sort=recent\|studied\|title`, pagination) / create a deck with its cards |
+| GET / PATCH / DELETE | `/decks/:deckId` | Deck + cards + per-card progress / rename / delete (cascades cards, progress, sessions) |
+| GET | `/decks/:deckId/history` | Completed study sessions |
+| POST | `/decks/:deckId/cards` | Add a card |
+| PATCH / DELETE | `/decks/:deckId/cards/:cardId` | Edit (keeps review history) / delete (removes its progress) |
+| PUT | `/decks/:deckId/cards/order` | Reorder (`cardIds` must list every card once) |
+| POST | `/decks/:deckId/sessions` | Start or resume a session (`mode`: `all\|due\|difficult`, `shuffle`, `restart`) |
+| POST | `/sessions/:id/shuffle`, `/answers`, `/complete` | Shuffle remaining order / record `known\|review` for a card / finish and get the summary |
+
+**Spaced repetition** is a simple Leitner-style box scheme (`services/flashcards/srs.js`): "Know it" moves a card up one box (next review after 1, 3, 7, 14, then 30 days); "Need to review" returns it to box 0, due immediately. A card is *difficult* if its last answer was "Need to review", or it was missed twice and is still in box 0-2. It is explainable and deliberately **not** SM-2/FSRS.
+
+**Plan limits:** deck count per plan (`TIER_LIMITS.flashcardDecks`: Free 5, Pro 30, Premium unlimited with a 200-deck fair-use ceiling). AI generation shares the daily `AI` quota. Completing a session with at least `min(3, deck size)` rated cards awards the existing `FLASHCARD_SESSION_COMPLETED` XP once per session.
+
 ### Gamification (`/api/gamification`)
 | Method | Path | Description |
 |---|---|---|
@@ -569,6 +608,7 @@ Request -> protect (JWT -> User row) -> req.tierContext (stored tier + subscript
 | Exam report & certificate PDFs | — | ✔ | ✔ |
 | Mistake bank | 10 items | 100 | Full |
 | Study plan | 2 topics | 6 topics | Full |
+| Flashcard decks | 5 | 30 | Unlimited* |
 | Adaptive challenges, premium learning content | — | — | ✔ |
 | Gamification, 6 UI languages | ✔ | ✔ | ✔ |
 
@@ -742,6 +782,10 @@ TutorMind provides a built-in peer invite program to encourage collaborative exa
 | `GamificationProfile` | Server-authoritative user gamification state (XP, level, level progress, daily/weekly XP, streaks, streak shields, personal bests, historical counters) |
 | `GamificationEvent` | Append-only event ledger with unique `(user, dedupeKey)` index preventing XP double-counting and farming |
 | `UserAchievement` | Immutable unlock records with unique `(user, achievementId)` index ensuring achievements cannot be lost |
+| `FlashcardDeck` | Flashcard deck header — title, description, topic, difficulty, card style, source (`manual`/`topic`/`text`/`lesson`), language, and last studied timestamp |
+| `Flashcard` | Individual card within a deck — front, back, display order |
+| `FlashcardProgress` | Per-card Leitner state per student — box (0-5), review counts, last outcome, next review date |
+| `FlashcardSession` | One study session record — mode (`all`/`due`/`difficult`), card sequence, shuffle state, completion summary |
 | `ProductEvent` | Internal telemetry events |
 
 Existing users need no migration: a missing `tier` reads as FREE. `npm run migrate:tiers` is an optional, idempotent tidy-up.
@@ -757,6 +801,7 @@ Existing users need no migration: a missing `tier` reads as FREE. `npm run migra
 | `examSimulationService` | Core exam session lifecycle, scoring, state reconciliation, focus & presence proctoring enforcement |
 | `recommendationService` | ML-backed + rule-based topic recommendations |
 | `gamification/` (3 modules) | Server-authoritative gamification engine: XP calculation & anti-farming deduplication (`gamificationService`), historical backfill reconstruction (`backfillService`), and central awards/level-curve/achievements config (`config`) |
+| `flashcards/` (3 modules) | Flashcard system: `flashcardService` (deck/card CRUD, session management, stats, AI generation quota charge), `srs` (Leitner-style box algorithm — not SM-2), `validation` (input sanitization for cards, decks, sessions) |
 | `emailService` | Transactional email dispatcher for login notifications and registration welcome messages using Nodemailer with fail-safe error boundaries |
 | `analyticsService` | Per-topic and platform analytics aggregation, habit tracking, and gamification profile integration |
 | `analysisService` | Post-exam intelligence and adaptive study plan generation |
@@ -778,7 +823,7 @@ Existing users need no migration: a missing `tier` reads as FREE. `npm run migra
 
 ### Backend (Jest + Supertest)
 
-Integration tests run against an in-memory MongoDB instance — no external database required (`mongodb-memory-server` downloads a MongoDB binary on first run, so network access is needed once). The tier **unit** suites need no database at all. The backend suite encompasses 21 test suites (16 integration test files + 5 unit test files in `tests/unit/`) with 220 tests total (148 integration tests and 72 database-free unit tests).
+Integration tests run against an in-memory MongoDB instance — no external database required (`mongodb-memory-server` downloads a MongoDB binary on first run, so network access is needed once). The tier and flashcard **unit** suites need no database at all. The backend suite encompasses **27 test suites** (18 integration test files + 9 database-free unit files in `tests/unit/`).
 
 ```bash
 npm --prefix backend run test        # all suites (integration + unit)
@@ -791,10 +836,12 @@ npm run test:backend
 |---|---|
 | `api.test.js` | Basic route smoke tests |
 | `authEmail.test.js` | Login security confirmation email delivery, graceful handling of SMTP failures, and offline fallback |
+| `demo.flashcards.test.js` | Demo flashcard deck seeding, card counts per tier, SRS state initialization |
 | `emailService.test.js` | Nodemailer transport configuration, HTML/text formatting, and configuration guards |
 | `exam.simulation.test.js` | Full exam session lifecycle |
 | `exam.intent.ordering.test.js` | Question ordering, nonce rotation, and intent logic |
 | `exam.proctoring.test.js` | Focus violation recording, camera presence tracking, auto-submit reasons, duplicate prevention, and counter bounds |
+| `flashcards.api.test.js` | Full flashcard REST API: deck CRUD, card CRUD, study sessions, AI generation quota, ownership enforcement, plan limits (deck count) |
 | `intelligence.validation.test.js` | Scoring and intelligence analysis |
 | `intelligence.adversarial.test.js` | Adversarial / edge-case scenarios |
 | `gamification.test.js` | XP calculation, speed & difficulty bonuses, anti-farming deduplication, level curve progression, and achievement unlocks |
@@ -810,6 +857,10 @@ npm run test:backend
 | `unit/tier.usageWindow.test.js` | Usage period windows and visit de-duplication |
 | `unit/tier.aiStream.test.js` | AI streaming quota charge and refund behaviour |
 | `unit/tier.routes.wiring.test.js` | Real Express app: FREE / legacy / expired users refused on every Pro/Premium route, 401 when anonymous, non-admin cannot reach admin tier endpoint, checkout is 501 |
+| `unit/flashcards.srs.test.js` | Leitner box transitions, due-date calculations, difficult-card detection, edge cases |
+| `unit/flashcards.validation.test.js` | Card/deck/session input validation, text length limits, enum guards |
+| `unit/flashcards.generator.test.js` | AI card generation prompt construction, output parsing, deduplication |
+| `unit/demoFlashcards.catalog.test.js` | Demo flashcard catalog shape and content invariants |
 
 ### Frontend (Vitest + Testing Library)
 
@@ -819,7 +870,7 @@ npm --prefix frontend run test
 npm --prefix frontend run test:watch
 ```
 
-Comprehensive test coverage across 24 test files (146 passing tests):
+Comprehensive test coverage across **27 test files**:
 - `context/__tests__/ThemeContext.test.jsx` — Default dark theme, OS preference isolation, saved light preference restoration, invalid value fallback, instant toggle & persistence, accessible localized action labels, and auth lifecycle decoupling
 - `ExamSimulationPage.contentProtection.test.jsx` & `PracticePage.contentProtection.test.jsx` — Question text and option selection restrictions, copy/cut/drag blocking, and context menu suppression
 - `ProfilePage.inviteFriends.test.jsx` & `InviteFriendsModal.test.jsx` — Invite modal rendering, referral code loading, link copying, Web Share API, mailto composition, and live signup counters
@@ -830,6 +881,9 @@ Comprehensive test coverage across 24 test files (146 passing tests):
 - `ExamSimulationPage.singleFlight.test.jsx` & `ExamSimulationPage.singleFlightController.test.jsx` — Rapid-click deduplication and rate-limit cooldown countdown
 - `ExamSimulationPage.integrity.test.jsx` & `ExamSimulationPage.race.test.jsx` — State reconciliation, sequence ordering, out-of-order rejection, and duplicate suppression
 - `ExamSimulationPage.crossClient.integrity.test.jsx` — Multi-tab/device session conflict resolution
+- `FlashcardsPage.test.jsx` — Deck list rendering, search, sort, empty state, tier deck-limit enforcement, and navigation
+- `FlashcardStudyPage.test.jsx` — Flip-card interaction, Know/Review rating, session completion summary, shuffle, and SRS state updates
+- `components/flashcards/__tests__/FlipCard.test.jsx` — FlipCard render, flip animation, front/back content, and accessibility
 - `LearnPage.test.jsx` — Learning hub rendering, section display, empty/error/cold-start states, and lifecycle interactions
 - `components/tier/__tests__/tier.test.jsx` — TierGate/TierRoute lock UI, quota/expiry/fair-use dialogs, Hindi rendering
 - `utils/__tests__/planSelection.test.js` — Plan validation (only FREE/PRO/PREMIUM), `?plan=` URL helpers, all nine current-tier × selected-plan pricing-button outcomes, logged-out routing

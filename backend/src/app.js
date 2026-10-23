@@ -16,6 +16,7 @@ const aiRoutes = require('./routes/aiRoutes');
 const gamificationRoutes = require('./routes/gamificationRoutes');
 const referralRoutes = require('./routes/referralRoutes');
 const tierRoutes = require('./routes/tierRoutes');
+const flashcardRoutes = require('./routes/flashcardRoutes');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
 const { protect } = require('./middleware/authMiddleware');
 const { validateObjectIdParam } = require('./middleware/validateObjectIdParam');
@@ -69,6 +70,7 @@ app.use('/api/recommendations', apiLimiter);
 app.use('/api/admin', apiLimiter);
 app.use('/api/referrals', apiLimiter);
 app.use('/api/tier', apiLimiter);
+app.use('/api/flashcards', apiLimiter);
 
 // AI tutor calls hit Gemini's free-tier quota per request (unlike the other
 // routes above, which only hit MongoDB), so it gets its own tighter limit
@@ -82,6 +84,17 @@ const aiLimiter = rateLimit({
   message: { message: 'Too many AI tutor requests. Please wait a moment and try again.' },
 });
 app.use('/api/ai', aiLimiter);
+
+// Flashcard generation also calls Gemini, so it gets the same kind of extra per-IP guardrail
+// (on top of the plan's daily AI quota and the general limiter above).
+const flashcardGenerateLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many flashcard generation requests. Please wait a moment and try again.' },
+});
+app.use('/api/flashcards/generate', flashcardGenerateLimiter);
 
 // Login/register are brute-force/credential-stuffing/signup-spam targets, so they get a
 // tighter limit on top of the general one.
@@ -109,6 +122,7 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/gamification', gamificationRoutes);
 app.use('/api/referrals', referralRoutes);
 app.use('/api/tier', tierRoutes);
+app.use('/api/flashcards', flashcardRoutes);
 
 app.get(
   '/api/exam/session/:sessionId/debug-intents',

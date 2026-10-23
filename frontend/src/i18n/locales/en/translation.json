@@ -306,9 +306,234 @@
   },
   "flashcards": {
     "intro": "Quick-fire spaced-repetition review cards for formulas, definitions, and reactions.",
-    "comingSoonTitle": "Flashcards are coming soon",
-    "comingSoonText": "This feature needs a bit more building on our end before it's ready — we didn't want to ship a fake deck of cards in the meantime. In the meantime, Mistake Bank gives you spaced-repetition review on questions you've actually gotten wrong.",
-    "openMistakeBank": "Open Mistake Bank"
+    "actions": {
+      "delete": "Delete",
+      "edit": "Edit",
+      "rename": "Rename",
+      "study": "Study"
+    },
+    "backToDecks": "Back to decks",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "loading": "Loading flashcards",
+    "createDeck": "Create flashcards",
+    "fromLesson": "Make flashcards from this lesson",
+    "create": {
+      "title": "Create flashcards",
+      "intro": "Tell TutorMind what you want to learn. Generate cards with AI, then review and edit them before saving — or start with an empty deck and write your own.",
+      "topic": "Topic or subject",
+      "topicPlaceholder": "e.g. Cell division, Newton’s laws, Integral calculus",
+      "source": "Source material (optional)",
+      "sourcePlaceholder": "Paste your notes or text here. When you add text, cards are built only from it.",
+      "sourceHelp": "File uploads aren’t supported yet — paste the text instead.",
+      "difficulty": "Difficulty",
+      "count": "Number of cards",
+      "style": "Card style",
+      "aiNotice": "AI-generated cards can contain mistakes. Review them before you save.",
+      "generate": "Generate flashcards",
+      "generating": "Generating...",
+      "generatingHint": "This can take up to a minute. Please keep this page open.",
+      "startManual": "Start with an empty deck",
+      "usingLesson": "Using lesson: {{title}}",
+      "usingLessonUntitled": "Using a TutorMind lesson as the source",
+      "removeLesson": "Don’t use lesson",
+      "lessonRemoved": "The lesson source was removed.",
+      "useLesson": "Use lesson",
+      "reviewTitle": "Review your flashcards",
+      "reviewIntro": "Edit, remove or regenerate any card. Nothing is saved until you press Save deck.",
+      "deckTitle": "Deck title",
+      "titleRequired": "Give your deck a title.",
+      "cardN": "Card {{n}}",
+      "removeCardN": "Remove card {{n}}",
+      "front": "Front (question or term)",
+      "back": "Back (answer)",
+      "cardInvalid": "Every card needs a front and a back.",
+      "regenerate": "Regenerate",
+      "regenerating": "Regenerating...",
+      "remove": "Remove",
+      "addCard": "Add a card",
+      "cardTotal_one": "{{count}} card",
+      "cardTotal_other": "{{count}} cards",
+      "noCards": "Add at least one card before saving.",
+      "save": "Save deck",
+      "startOver": "Start over",
+      "discardTitle": "Discard these cards?",
+      "discardMessage": "Your generated cards and edits will be lost.",
+      "discard": "Discard",
+      "droppedNote": "{{count}} generated cards were skipped because they were invalid or duplicates.",
+      "fewerNote": "The AI returned {{returned}} of the {{requested}} cards you asked for.",
+      "quotaReached": "You’ve reached your plan’s limit for AI generation. Try again later or upgrade your plan.",
+      "deckLimit": "You’ve reached the flashcard deck limit for your plan."
+    },
+    "deck": {
+      "cardCount_one": "{{count}} card",
+      "cardCount_other": "{{count}} cards",
+      "created": "Created {{date}}",
+      "studied": "Studied {{when}}",
+      "neverStudied": "Not studied yet",
+      "dueCount": "{{count}} due",
+      "knownProgress": "{{known}} of {{total}} cards known",
+      "noCardsHint": "Add cards to this deck to study it.",
+      "listLabel": "Your flashcard decks"
+    },
+    "deckPage": {
+      "addHeading": "Add a card",
+      "cardLimit": "A deck can hold up to {{count}} cards.",
+      "cardsHeading": "Cards ({{count}})",
+      "deleteCardTitle": "Delete this card?",
+      "deleteCardMessage": "The card and its review history will be removed.",
+      "dueIn_one": "Due in {{count}} day",
+      "dueIn_other": "Due in {{count}} days",
+      "dueNow": "Due now",
+      "historyEmpty": "No completed study sessions yet.",
+      "historyHeading": "Study history",
+      "historyRow": "{{reviewed}} reviewed · {{known}} known · {{needReview}} to review",
+      "moveDown": "Move card down",
+      "moveUp": "Move card up",
+      "noCards": "This deck has no cards yet. Add one below.",
+      "notFoundText": "This deck doesn’t exist or isn’t available to your account.",
+      "notFoundTitle": "Deck not found",
+      "progress": "Deck progress",
+      "resume": "Resume session ({{answered}}/{{total}})",
+      "reviewedTimes_one": "Reviewed {{count}} time",
+      "reviewedTimes_other": "Reviewed {{count}} times",
+      "srsNote": "Scheduling uses a simple box system: cards you know come back after 1, 3, 7, 14, then 30 days; cards you miss come back right away. It is a simple, explainable schedule, not a scientifically validated algorithm.",
+      "statDue": "Due now",
+      "statKnown": "Known",
+      "statNew": "New",
+      "statReview": "Need review",
+      "statTotal": "Cards",
+      "status_new": "New",
+      "status_known": "Known",
+      "status_review": "Needs review",
+      "studyAll": "Study all cards",
+      "studyDifficult": "Practice difficult ({{count}})",
+      "studyDue": "Study due ({{count}})"
+    },
+    "delete": {
+      "confirm": "Delete",
+      "message": "Delete “{{title}}”? Its {{count}} cards and all review history will be permanently removed.",
+      "title": "Delete this deck?"
+    },
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "empty": {
+      "text": "Create your first deck from a topic or your own notes. Cards are saved to your account so you can revise them any time.",
+      "title": "No flashcard decks yet"
+    },
+    "errors": {
+      "answerFailed": "Couldn’t save your answer. Check your connection and try again.",
+      "couldntLoad": "Couldn’t load flashcards",
+      "deleteFailed": "Couldn’t delete. Please try again.",
+      "finishFailed": "Couldn’t finish the session. Please try again.",
+      "generateFailed": "Couldn’t generate flashcards. Please try again.",
+      "generic": "Something went wrong. Please try again.",
+      "loadFailed": "Couldn’t load your flashcards. Please try again.",
+      "saveFailed": "Couldn’t save your changes. Please try again."
+    },
+    "filters": {
+      "allTopics": "All topics",
+      "clear": "Clear filters",
+      "label": "Filter decks",
+      "search": "Search",
+      "searchPlaceholder": "Search by deck title or topic",
+      "sort": "Sort by",
+      "sort_recent": "Recently created",
+      "sort_studied": "Recently studied",
+      "sort_title": "Title (A–Z)",
+      "topic": "Topic"
+    },
+    "mode": {
+      "all": "All cards",
+      "due": "Due cards",
+      "difficult": "Difficult cards"
+    },
+    "noResults": {
+      "text": "No decks match your search or filters.",
+      "title": "No matching decks"
+    },
+    "pagination": {
+      "label": "Deck pages",
+      "next": "Next",
+      "previous": "Previous",
+      "pageOf": "Page {{page}} of {{total}}"
+    },
+    "rename": {
+      "label": "Deck title",
+      "title": "Rename deck"
+    },
+    "stats": {
+      "cards": "Cards",
+      "decks": "Decks",
+      "difficult": "Difficult",
+      "due": "Due now",
+      "label": "Flashcard summary"
+    },
+    "study": {
+      "answer": "Answer",
+      "backToDeck": "Back to deck",
+      "cardOf": "Card {{current}} of {{total}}",
+      "couldntStart": "Couldn’t start the session",
+      "exit": "Exit",
+      "finish": "Finish session",
+      "flipBackHint": "Click or press Space to see the question",
+      "flipFirst": "Flip the card to rate it.",
+      "flipHint": "Click or press Space to reveal the answer",
+      "know": "Know it",
+      "needReview": "Need to review",
+      "next": "Next",
+      "nothingToStudy": "Nothing to study right now",
+      "previous": "Previous",
+      "progress": "{{done}} of {{total}} rated",
+      "question": "Question",
+      "ratedKnown": "You marked this card as known.",
+      "ratedReview": "You marked this card as needing review.",
+      "restart": "Restart",
+      "restartMessage": "This closes the current session and starts a new one. Cards you already rated keep their review progress.",
+      "restartTitle": "Restart this session?",
+      "resumed": "Welcome back — continuing your session.",
+      "shortcuts": "Shortcuts: ← → to move, Space or Enter to flip",
+      "showAnswer": "Show answer",
+      "showQuestion": "Show question",
+      "shuffle": "Shuffle",
+      "starting": "Starting your session",
+      "noDue": "No cards are due for review right now. Come back later or study all cards.",
+      "noDifficult": "You have no difficult cards right now.",
+      "emptyDeck": "This deck has no cards to study yet."
+    },
+    "style": {
+      "definitions": "Definitions",
+      "qa": "Question and answer",
+      "conceptual": "Conceptual explanations",
+      "interview": "Interview-style questions"
+    },
+    "summary": {
+      "accuracy": "Accuracy",
+      "eyebrow": "Session complete",
+      "known": "Known",
+      "missedHeading": "Cards to review again",
+      "needReview": "Need review",
+      "noneText": "You didn’t rate any cards, so nothing was recorded.",
+      "noneTitle": "Session ended",
+      "practiceDifficult": "Practice difficult cards ({{count}})",
+      "reviewed": "Reviewed",
+      "studyAgain": "Study again",
+      "title": "Nice work!",
+      "unreviewed": "{{count}} cards were not rated in this session."
+    },
+    "toast": {
+      "cardAdded": "Card added",
+      "cardDeleted": "Card deleted",
+      "cardSaved": "Card saved",
+      "created": "Deck saved",
+      "deleted": "Deck deleted",
+      "renamed": "Deck renamed"
+    }
   },
   "achievements": {
     "loadFailed": "Failed to load achievements",
@@ -964,7 +1189,8 @@
         "f2": "Up to 20 practice answers a day",
         "f3": "Limited AI doubt help, study plan and Mistake Bank",
         "cta": "Start free",
-        "f4": "2 exam simulations a month"
+        "f4": "2 exam simulations a month",
+        "f5": "Flashcards: up to 5 saved decks, with AI generation inside your daily AI limit"
       },
       "pro": {
         "name": "Pro",
@@ -975,7 +1201,8 @@
         "f3": "30 AI doubt messages a day",
         "f4": "10 exam simulations a month",
         "cta": "View Pro plan",
-        "f5": "Detailed PDF exam reports and certificates"
+        "f5": "Detailed PDF exam reports and certificates",
+        "f6": "Flashcards: up to 30 saved decks, with AI generation inside your daily AI limit"
       },
       "premium": {
         "name": "Premium",
@@ -985,7 +1212,8 @@
         "f2": "No plan limits on practice, AI and exams (fair-use ceilings apply)",
         "f3": "Advanced AI tutor with longer conversation history",
         "cta": "View Premium plan",
-        "f4": "Readiness predictions, adaptive learning paths and premium content"
+        "f4": "Readiness predictions, adaptive learning paths and premium content",
+        "f5": "Flashcards with no deck limit (fair-use ceilings apply)"
       },
       "openDashboard": "Open dashboard",
       "viewMyPlan": "View my plan",
@@ -1056,9 +1284,9 @@
         "title": "Six interface languages",
         "copy": "Use the app in English, Kannada, Hindi, Telugu, Tamil or Malayalam; AI doubt replies follow your selected language. Question text is not translated."
       },
-      "exams": {
-        "title": "About Exam",
-        "copy": "Read what NEET, JEE and Karnataka CET are for, who conducts them and where to find official links. Always confirm dates and eligibility on the official sites."
+      "flashcards": {
+        "title": "Flashcards",
+        "copy": "Generate flashcards from a topic, pasted notes or a lesson, then review and edit them before saving. Flip through a deck, mark what you know, and missed cards come back sooner on a simple review schedule. AI-generated cards can contain mistakes, so check them before you rely on them."
       }
     }
   },
@@ -1387,7 +1615,8 @@
       "RECOMMENDATIONS": "Recommendations today",
       "EXAMS": "Exam simulations this month",
       "of": "{{used}} / {{limit}}",
-      "unlimitedUsed": "{{used}} used · Unlimited"
+      "unlimitedUsed": "{{used}} used · Unlimited",
+      "FLASHCARD_DECKS": "Flashcard decks"
     },
     "plans": {
       "title": "Plans",

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { translateServerError } from '../i18n/serverErrors';
 import api from '../api/client';
@@ -110,7 +111,9 @@ const InviteFriendsModal = ({ open, onClose }) => {
     }
   };
 
-  return (
+  // Portaled to <body>: a fixed overlay rendered inside the page is trapped in the page's stacking
+  // context, so the sticky header and sidebar would sit above it and escape the dimming.
+  return createPortal(
     <div className="invite-modal-backdrop" role="presentation" onClick={onClose}>
       <div
         className="gam-modal invite-friends-modal"
@@ -179,7 +182,8 @@ const InviteFriendsModal = ({ open, onClose }) => {
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

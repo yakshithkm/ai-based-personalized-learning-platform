@@ -159,4 +159,67 @@ async function* streamReply({ systemInstruction, contents, signal }) {
   }
 }
 
-module.exports = { streamReply, GeminiServiceError, MODEL };
+// Output budget for structured (JSON) generation. A 25-card deck needs far more room than a
+// sidebar reply, and the hidden "thinking" tokens come out of the same budget.
+const JSON_MAX_OUTPUT_TOKENS = 8192;
+const JSON_TIMEOUT_MS = 45000;
+const TIMEOUT_MESSAGE = 'The AI took too long to respond. Please try again.';
+
+/**
+ * Single-shot (non-streaming) structured generation: asks Gemini for JSON matching
+ * `responseJsonSchema` and returns the raw JSON text for the caller to validate. Reuses this
+ * file's client, model, error translation and no-retry policy. Enforces a hard timeout and honours
+ * an optional caller `signal` (e.g. client disconnect).
+ */
+async function generateJson({ systemInstruction, contents, responseJsonSchema, signal, temperature = 0.5 }) {
+  const client = getClient();
+  if (!client) {
+    console.error('[gemini] AI is not configured: GEMINI_API_KEY is missing.');
+    throw new GeminiServiceError(CONFIG_MISSING_MESSAGE, { code: 'CONFIG_MISSING', statusCode: 503 });
+  }
+
+  const controller = new AbortController();
+  let timedOut = false;
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, JSON_TIMEOUT_MS);
+  const onCallerAbort = () => controller.abort();
+  if (signal) {
+    if (signal.aborted) controller.abort();
+    else signal.addEventListener('abort', onCallerAbort, { once: true });
+  }
+
+  try {
+    const response = await client.models.generateContent({
+      model: MODEL,
+      contents,
+      config: {
+        systemInstruction,
+        maxOutputTokens: JSON_MAX_OUTPUT_TOKENS,
+        temperature,
+        thinkingConfig: { thinkingLevel: THINKING_LEVEL },
+        responseMimeType: 'application/json',
+        responseJsonSchema,
+        abortSignal: controller.signal,
+      },
+    });
+
+    if (response?.candidates?.[0]?.finishReason === 'MAX_TOKENS') {
+      console.warn('[gemini] structured response hit MAX_TOKENS - output may be truncated.');
+    }
+    const text = response?.text;
+    if (!text) throw new GeminiServiceError(UPSTREAM_ERROR_MESSAGE, { code: 'EMPTY_RESPONSE', statusCode: 502 });
+    return text;
+  } catch (error) {
+    if (timedOut) {
+      throw new GeminiServiceError(TIMEOUT_MESSAGE, { code: 'TIMEOUT', statusCode: 504 });
+    }
+    throw translateGeminiError(error);
+  } finally {
+    clearTimeout(timer);
+    if (signal) signal.removeEventListener('abort', onCallerAbort);
+  }
+}
+
+module.exports = { streamReply, generateJson, GeminiServiceError, MODEL };

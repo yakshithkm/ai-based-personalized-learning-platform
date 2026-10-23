@@ -17,7 +17,9 @@ const run = async () => {
       console.log(
         `- ${r.email} (${r.targetExam}, ${r.tier}) - ${r.name}\n` +
           `    attempts: ${r.attempts}, accuracy: ${accuracy}%, ` +
-          `mistakes logged: ${r.mistakes}, active days: ${r.activeDays}`
+          `mistakes logged: ${r.mistakes}, active days: ${r.activeDays}\n` +
+          `    flashcards: ${r.flashcardDecks} decks, ${r.flashcardCards} cards, ` +
+          `${r.flashcardSessions} study sessions`
       );
     });
     console.log('\nDone. Log in with the demo credentials to see the seeded profile.');

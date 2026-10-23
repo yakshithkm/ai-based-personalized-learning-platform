@@ -249,6 +249,15 @@ const LearningContentPage = () => {
               {t('learn.content.startPractice', { count: completed.practice?.count || 5 })}
             </Link>
             <Link className="outline-btn" to="/learn">{t('learn.content.backToLearn')}</Link>
+            {content.hasBody && (
+              <Link
+                className="outline-btn"
+                to={`/flashcards/create?content=${content.id}`}
+                state={{ lessonTitle: content.title, topic: content.topic }}
+              >
+                {t('flashcards.fromLesson')}
+              </Link>
+            )}
           </div>
           <ContentFeedback recommendationId={recommendationId} initial={completed.progress || {}} />
         </section>

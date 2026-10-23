@@ -68,7 +68,8 @@ const FEATURE_PERMISSIONS = Object.freeze({
   ADAPTIVE_LEARNING_PATHS:    { FREE: false,     PRO: false, PREMIUM: true },
   STUDY_PLAN:                 { FREE: 'LIMITED', PRO: true, PREMIUM: true },
   MISTAKE_BANK:               { FREE: 'LIMITED', PRO: true, PREMIUM: true },
-  // The Flashcards page is a "coming soon" placeholder today; the entry reserves its tiering.
+  // FREE keeps full study access but is capped to TIER_LIMITS.FREE.flashcardDecks decks; AI card
+  // generation spends the shared daily AI quota (usage key 'AI').
   FLASHCARDS:                 { FREE: 'LIMITED', PRO: true, PREMIUM: true },
   EXAM_SIMULATION:            { FREE: 'LIMITED', PRO: true, PREMIUM: true },
   DETAILED_EXAM_REPORT:       { FREE: false,     PRO: true, PREMIUM: true },
@@ -98,6 +99,7 @@ const TIER_LIMITS = Object.freeze({
     mistakeBankItems: 10,
     studyPlanTopics: 2,
     aiHistoryMessages: 4,
+    flashcardDecks: 5,
     // Learning-content sections served by /recommendations/learning (see services/learning).
     learningSections: ['learnNext', 'weakAreas', 'dailyPlan'],
   },
@@ -110,6 +112,7 @@ const TIER_LIMITS = Object.freeze({
     mistakeBankItems: 100,
     studyPlanTopics: 6,
     aiHistoryMessages: 8,
+    flashcardDecks: 30,
     learningSections: [
       'learnNext', 'weakAreas', 'dailyPlan', 'mistakeRecovery',
       'continueLearning', 'practiceAfterLearning', 'exploreNew', 'improvements',
@@ -124,6 +127,7 @@ const TIER_LIMITS = Object.freeze({
     mistakeBankItems: Infinity,
     studyPlanTopics: Infinity,
     aiHistoryMessages: 12,
+    flashcardDecks: Infinity,
     learningSections: [
       'learnNext', 'weakAreas', 'dailyPlan', 'mistakeRecovery', 'continueLearning',
       'practiceAfterLearning', 'exploreNew', 'improvements', 'challenges',
